@@ -1,0 +1,61 @@
+Important features from the apps we have analyze for the competitive analysis
+
+(1)Headspace:
+	simple login
+	great UI
+	navigation bar always bottom
+	show some of the features before the app starts
+	mindful Videos and medidate/sleepy music
+	yoga videos 
+
+(2)Neuronation:
+	great UI
+	only static instruction for exercise for body and mind peaceness 
+	daywise progress report on graph
+
+(3)Cognifit:
+	video coach for Concentration, Coordination, Memory etc.
+	concentration, focus, general , iq etc. tests
+	daywise personalized graph of progress
+	different types of games like memory, cordination, perception, attention, reasoning etc.
+	User Course 
+	relaxed music 
+
+(4)I am Sober: 
+	be free from addiction with some instruction and cab talk to someone also about it
+	track how many days i have been free from the addiction
+
+(5)Happify: 
+	assessment  , gender,job thing, age
+	Compliments
+	GAME - Uplift
+
+(6)Moodmission: 
+	chatbot
+	missions
+
+(7)7 cups:
+	Chatbot
+	listeners
+	Group discussion
+	mental health support 
+	growth path
+	mindfulness - story
+	online therapy
+
+(8)Brainwell:
+	games
+	select the correct color
+	select the odd one
+	climb castle -- correct,incorrect,accuracy,
+
+(9)Elevate:
+	games
+	maths,reading,correct the word,speaking
+	final score 
+
+(10)Focus:
+	age
+	what do you want to achieve - fun,improve memory,stay focused etc
+	whack the balls (diff. colors)
+	path with bombs(memorize path and make way to connect)
