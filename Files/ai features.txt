@@ -1,0 +1,20 @@
+-AI features
+
+-mood tracking(usind ML techniques)
+-personalised recommendations(music,games for concentration,exercises,meditation,affrimations,motivation)
+-music(ai will suggest music according to mood)
+-suggestions to improve sleep cycle
+
+
+-modules
+
+-gamification(Reward users for completing activities, achieving milestones, or consistently using the app.)
+-games for coordination,focus and memory
+-AI module for suggestions, tracking,motivational thoughts,
+-course for music and videos etc
+-progress tracker(day wise)
+
+
+
+
+
