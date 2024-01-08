@@ -8,11 +8,11 @@
 
 -modules
 
--gamification(Reward users for completing activities, achieving milestones, or consistently using the app.)
--games for coordination,focus and memory
--AI module for suggestions, tracking,motivational thoughts,
--course for music and videos etc
--progress tracker(day wise)
+-gamification(Reward users for completing activities, achieving milestones, or consistently using the app)
+-games for coordination,focus and memory etc.
+-AI module for suggestions, tracking, motivational thoughts etc.
+-course for music and videos
+-progress tracker(day wise, week wise)
 
 
 
