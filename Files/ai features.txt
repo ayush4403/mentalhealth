@@ -3,16 +3,28 @@
 -mood tracking(usind ML techniques)
 -personalised recommendations(music,games for concentration,exercises,meditation,affrimations,motivation)
 -music(ai will suggest music according to mood)
--suggestions to improve sleep cycle
+-suggestions to improve sleep cycle(progress week wise analysis)
+
 
 
 -modules
 
+<<<<<<< HEAD
+-gamification(Reward users for completing activities, achieving milestones, or consistently using the app)
+-games for coordination,focus and memory etc.
+-AI module for suggestions, tracking, motivational thoughts etc.
+-course for music and videos
+-progress tracker(day wise, week wise)
+=======
 -gamification(Reward users for completing activities, achieving milestones, or consistently using the app.)
 -games for coordination,focus and memory
 -AI module for suggestions, tracking,motivational thoughts,
--course for music and videos etc
+-music and videos etc
 -progress tracker(day wise)
+-Reminders
+
+
+>>>>>>> add68ea06ef718052455f6df71cc835a11efe210
 
 
 
