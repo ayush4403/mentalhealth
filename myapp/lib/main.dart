@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/splash.dart';
+import 'package:myapp/signup.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -29,10 +30,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 58, 183, 179)),
         useMaterial3: true,
       ),
-      home: const MyApp(),
+      home: const SignUpScreen(),
     );
   }
 }
