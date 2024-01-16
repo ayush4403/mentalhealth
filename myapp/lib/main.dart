@@ -1,8 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/signin.dart';
 import 'package:myapp/signup.dart';
 
 
-void main() {
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -34,7 +40,8 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 58, 183, 179)),
         useMaterial3: true,
       ),
-      home: const SignUpScreen(),
+      debugShowCheckedModeBanner: false,
+      home: const SignInScreen(),
     );
   }
 }
