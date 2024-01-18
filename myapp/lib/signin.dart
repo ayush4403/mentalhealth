@@ -1,12 +1,11 @@
 import 'package:myapp/home.dart';
-
 import '../resetpassword.dart';
 import '../signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../reusable_widgets/reusable_widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/color_utils.dart';
-
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -29,68 +28,90 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
   Future<void> _handleSignIn() async {
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailTextController.text,
+      password: _passwordTextController.text,
+    );
 
-      final UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-        email: _emailTextController.text,
-        password: _passwordTextController.text,
-      );
+    final User? user = userCredential.user;
 
-      final User? user = userCredential.user;
-
-
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ),
-          );
-
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomePage(),
+      ),
+    );
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            hexStringToColor("CB2B93"),
-            hexStringToColor("9546C4"),
-            hexStringToColor("5E61F4")
-          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).size.height * 0.2, 20, 0),
-            child: Column(
-              children: <Widget>[
-                reusableTextField("Enter Email", Icons.person_outline, false,
-                    _emailTextController, TextInputType.emailAddress),
-                const SizedBox(
-                  height: 20,
-                ),
-                reusableTextField("Enter Password", Icons.lock_outline, true,
-                    _passwordTextController, TextInputType.visiblePassword),
-                const SizedBox(
-                  height: 5,
-                ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 0.0),
+        child: Column(
+          children: <Widget>[
 
-                firebaseUIButton(context, "Sign In", _handleSignIn),
-                signUpOption(),
-                forgotPasswordOption()
-              ],
+            SvgPicture.asset(
+              'assets/Sign_in.svg',
+              width: MediaQuery.of(context).size.width, // Adjust the width as needed
+              height:MediaQuery.of(context).size.height*0.3 , // Adjust the height as needed
             ),
-          ),
+            Container(
+              width:  MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.7,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 193, 31, 231),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      20, MediaQuery.of(context).size.width * 0.1, 20, 0),
+                  child: Column(
+                    children: <Widget>[
+                      const Text(
+                          'Welcome to MindfulMe',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      reusableTextField(
+                          "Enter Email",
+                          Icons.person_outline,
+                          false,
+                          _emailTextController,
+                          TextInputType.emailAddress),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      reusableTextField(
+                          "Enter Password",
+                          Icons.lock_outline,
+                          true,
+                          _passwordTextController,
+                          TextInputType.visiblePassword),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      firebaseUIButton(context, "Sign In", _handleSignIn),
+                      signUpOption(),
+                      forgotPasswordOption(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

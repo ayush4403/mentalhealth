@@ -4,21 +4,19 @@ import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class SignUpScreen extends StatefulWidget{
- const SignUpScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
- @override
+  @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
-class _SignUpScreenState extends State<SignUpScreen> {
 
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
-  TextEditingController();
-
-
+      TextEditingController();
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -28,9 +26,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
   bool isValidEmail(String email) {
-    final emailRegex =
-    RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
     return emailRegex.hasMatch(email);
   }
 
@@ -47,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     try {
       // Create a new user without signing them in
       final UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userEmail,
         password: password,
       );
@@ -59,16 +57,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // Send email verification
         await user.sendEmailVerification();
 
-
         _showSnackBar(
             "A verification email has been sent to your inbox. Please verify your email.");
         _userNameTextController.clear();
         _emailTextController.clear();
         _passwordTextController.clear();
         _confirmPasswordTextController.clear();
-
       }
-    } catch (error,stackTrace) {
+    } catch (error, stackTrace) {
       print("Error: $error");
       print("Stack Trace: $stackTrace");
       if (error is FirebaseAuthException) {
@@ -83,6 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
     }
   }
+
   bool _validateFields() {
     final String userName = _userNameTextController.text.trim();
     final String userEmail = _emailTextController.text.trim();
@@ -182,5 +179,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
 }
