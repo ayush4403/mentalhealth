@@ -45,73 +45,74 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 0.0),
-        child: Column(
-          children: <Widget>[
-
-            SvgPicture.asset(
-              'assets/Sign_in.svg',
-              width: MediaQuery.of(context).size.width, // Adjust the width as needed
-              height:MediaQuery.of(context).size.height*0.3 , // Adjust the height as needed
-            ),
-            Container(
-              width:  MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.7,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 193, 31, 231),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
-                ),
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 0.0),
+          child: Column(
+            children: <Widget>[
+              SvgPicture.asset(
+                'assets/Sign_in.svg',
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.3,
               ),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      20, MediaQuery.of(context).size.width * 0.1, 20, 0),
-                  child: Column(
-                    children: <Widget>[
-                      const Text(
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.7,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 193, 31, 231),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        20, MediaQuery.of(context).size.width * 0.1, 20, 0),
+                    child: Column(
+                      children: <Widget>[
+                        const Text(
                           'Welcome to MindfulMe',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      reusableTextField(
-                          "Enter Email",
-                          Icons.person_outline,
-                          false,
-                          _emailTextController,
-                          TextInputType.emailAddress),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      reusableTextField(
-                          "Enter Password",
-                          Icons.lock_outline,
-                          true,
-                          _passwordTextController,
-                          TextInputType.visiblePassword),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      firebaseUIButton(context, "Sign In", _handleSignIn),
-                      signUpOption(),
-                      forgotPasswordOption(),
-                    ],
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        reusableTextField(
+                            "Enter Email",
+                            Icons.person_outline,
+                            false,
+                            _emailTextController,
+                            TextInputType.emailAddress),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        reusableTextField(
+                            "Enter Password",
+                            Icons.lock_outline,
+                            true,
+                            _passwordTextController,
+                            TextInputType.visiblePassword),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        firebaseUIButton(context, "Sign In", _handleSignIn),
+                        signUpOption(),
+                        forgotPasswordOption(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

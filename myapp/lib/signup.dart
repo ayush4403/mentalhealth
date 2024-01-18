@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/svg.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -115,68 +116,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            hexStringToColor("CB2B93"),
-            hexStringToColor("9546C4"),
-            hexStringToColor("5E61F4")
-          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 120, 20, 0),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter UserName",
-                  Icons.person_outline,
-                  false,
-                  _userNameTextController,
-                  TextInputType.text,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Email Id",
-                  Icons.person_outline,
-                  false,
-                  _emailTextController,
-                  TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Password",
-                  Icons.lock_outlined,
-                  true,
-                  _passwordTextController,
-                  TextInputType.visiblePassword,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Confirm Password",
-                  Icons.lock_outlined,
-                  true,
-                  _confirmPasswordTextController,
-                  TextInputType.visiblePassword,
-                ),
-                firebaseUIButton(context, "Sign Up", _registerUser),
-              ],
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SvgPicture.asset(
+              'assets/Sign_in.svg',
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
             ),
-          ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.7,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 193, 31, 231),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+              ),
+              child: Padding(
+                padding:  EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.width*0.001, 20, 0),
+                child: ListView(
+                  children: <Widget>[
+                    const Center(
+                      child: Text(
+                        "SignUp",
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    reusableTextField(
+                      "Enter UserName",
+                      Icons.person_outline,
+                      false,
+                      _userNameTextController,
+                      TextInputType.text,
+                    ),
+                    const SizedBox(height: 20),
+                    reusableTextField(
+                      "Enter Email Id",
+                      Icons.person_outline,
+                      false,
+                      _emailTextController,
+                      TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 20),
+                    reusableTextField(
+                      "Enter Password",
+                      Icons.lock_outlined,
+                      true,
+                      _passwordTextController,
+                      TextInputType.visiblePassword,
+                    ),
+                    const SizedBox(height: 20),
+                    reusableTextField(
+                      "Confirm Password",
+                      Icons.lock_outlined,
+                      true,
+                      _confirmPasswordTextController,
+                      TextInputType.visiblePassword,
+                    ),
+                    firebaseUIButton(context, "Sign Up", _registerUser),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
 }
