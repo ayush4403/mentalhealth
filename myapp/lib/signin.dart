@@ -29,6 +29,10 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+
+
+
+
   Future<void> _handleSignIn() async {
     final UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
