@@ -2,7 +2,7 @@
     <application
         android:label="myapp"
         android:name="androidx.multidex.MultiDexApplication"
-        android:icon="@mipmap/cerbotech_big">
+        android:icon="@mipmap/logos">
 
         <activity
             android:name=".MainActivity"
