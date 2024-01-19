@@ -57,6 +57,9 @@ dev_dependencies:
 flutter:
   assets:
     - assets/cerbotech.jpg
+    - assets/Signin.svg
+    - assets/Sign_up.svg
+    - assets/My_password.svg
     - assets/Sign_in.svg
 
   # The following line ensures that the Material Icons font is
