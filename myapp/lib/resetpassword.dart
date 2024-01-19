@@ -70,7 +70,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height*0.7,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 42, 164, 225),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30.0),

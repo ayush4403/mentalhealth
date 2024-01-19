@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     try {
-      // Create a new user without signing them in
+
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userEmail,
@@ -128,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.7,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 42, 164, 225),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),

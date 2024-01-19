@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Welcome to Flutter!',
               style: TextStyle(
                 fontSize: 24,
