@@ -121,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: <Widget>[
             SvgPicture.asset(
-              'assets/Sign_in.svg',
+              'assets/Sign_up.svg',
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,
             ),
@@ -129,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.7,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 193, 31, 231),
+                color: Color.fromARGB(255, 42, 164, 225),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),
