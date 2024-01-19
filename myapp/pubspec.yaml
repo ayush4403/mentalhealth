@@ -62,6 +62,7 @@ flutter:
     - assets/Sign_in.svg
     - assets/cerbotech_big.png
     - assets/newlogo.svg
+    - assets/logos.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
