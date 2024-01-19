@@ -49,7 +49,7 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
-    margin:  EdgeInsets.fromLTRB(80, MediaQuery.of(context).size.width*0.05, 80, 20),
+    margin:  EdgeInsets.fromLTRB(70, MediaQuery.of(context).size.width*0.05, 70, 20),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
     child: ElevatedButton(
       onPressed: () {
