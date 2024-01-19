@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:myapp/signin.dart';
 import 'package:myapp/signup.dart';
 
-
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -13,7 +10,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -37,8 +33,8 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 40, 48, 247)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 40, 48, 247)),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

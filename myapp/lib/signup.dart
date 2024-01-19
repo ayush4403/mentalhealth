@@ -6,7 +6,7 @@ import '../utils/color_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen( {super.key} );
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -128,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.7,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 42, 164, 225),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),

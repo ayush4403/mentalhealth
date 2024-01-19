@@ -7,7 +7,7 @@ import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+  const ResetPassword( {super.key} );
 
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
