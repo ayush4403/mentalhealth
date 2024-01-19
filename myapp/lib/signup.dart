@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     try {
-      // Create a new user without signing them in
+
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userEmail,
