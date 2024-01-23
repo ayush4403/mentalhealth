@@ -37,6 +37,7 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
   flutter_svg: ^2.0.9
+  lottie: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,15 @@ flutter:
     - assets/cerbotech_big.png
     - assets/newlogo.svg
     - assets/logos.jpg
+    - assets/gif1.json
+    - assets/gif2.json
+    - assets/gif3.json
+    - assets/gif4.json
+    - assets/gif5.json
+    - assets/getStarted.json
+    - assets/signin.json
+    - assets/signup.json
+    - assets/password.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

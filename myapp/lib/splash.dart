@@ -5,7 +5,9 @@ import 'dart:math';
 //import 'package:first/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myapp/get_started.dart';
 import 'package:myapp/signin.dart';
+import 'package:myapp/welcome_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,14 +22,14 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(context as BuildContext,
-          MaterialPageRoute(builder: (context) => SignInScreen()));
+          MaterialPageRoute(builder: (context) => Welcome()));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 42, 164, 225),
+        backgroundColor:const Color.fromARGB(255, 42, 164, 225),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               Container(
-                child: Center(
+                child: const Center(
                     child: Text(
                   'MindfulMe',
                   style: TextStyle(

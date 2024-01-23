@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/color_utils.dart';
+import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen( {super.key} );
@@ -55,14 +56,14 @@ class _SignInScreenState extends State<SignInScreen> {
           padding: const EdgeInsets.only(top: 0.0),
           child: Column(
             children: <Widget>[
-              SvgPicture.asset(
-                'assets/Signin.svg',
+              Lottie.asset(
+                'assets/signin.json',
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.34,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.7,
+                height: MediaQuery.of(context).size.height * 0.66,
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 42, 164, 225),
                   borderRadius: BorderRadius.only(

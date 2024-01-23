@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
+import 'package:lottie/lottie.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword( {super.key} );
@@ -22,14 +23,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Reset Password Link Sent'),
-          content: Text('A reset password link has been sent to your inbox.'),
+          title: const Text('Reset Password Link Sent'),
+          content: const Text('A reset password link has been sent to your inbox.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -41,14 +42,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Email Not Found'),
-          content: Text('The email address is not registered. Please check your email or register.'),
+          title: const Text('Email Not Found'),
+          content: const Text('The email address is not registered. Please check your email or register.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -62,14 +63,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       body:SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              SvgPicture.asset(
-                'assets/My_password.svg',
+              Lottie.asset(
+                'assets/password.json',
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.34,
               ),
               Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.7,
+                  height: MediaQuery.of(context).size.height*0.66,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 42, 164, 225),
                     borderRadius: BorderRadius.only(
