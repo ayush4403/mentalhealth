@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
+import 'package:lottie/lottie.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+  const ResetPassword( {super.key} );
 
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
@@ -60,14 +61,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       body:SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              SvgPicture.asset(
-                'assets/My_password.svg',
+              Lottie.asset(
+                'assets/password.json',
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.34,
               ),
               Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.7,
+                  height: MediaQuery.of(context).size.height*0.66,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 42, 164, 225),
                     borderRadius: BorderRadius.only(

@@ -4,9 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lottie/lottie.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen( {super.key} );
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -120,14 +121,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SvgPicture.asset(
-              'assets/Sign_up.svg',
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-            ),
+            Lottie.asset(
+                'assets/signup.json',
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.34,
+              ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.66,
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 42, 164, 225),
                 borderRadius: BorderRadius.only(

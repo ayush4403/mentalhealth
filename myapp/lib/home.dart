@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+  const MyApp( {super.key} );
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,17 +15,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const  HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+
+  const HomePage( {super.key} );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
       ),
       body: Center(
         child: Column(
@@ -35,14 +41,14 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
-            FlutterLogo(size: 100),
-            SizedBox(height: 20),
+           const SizedBox(height: 20),
+            const FlutterLogo(size: 100),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Add functionality here
               },
-              child: Text('Press Me'),
+              child: const Text('Press Me'),
             ),
           ],
         ),
