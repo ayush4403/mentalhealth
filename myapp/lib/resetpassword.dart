@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
@@ -14,7 +12,7 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
   bool _isSent = false;
 
   void _showResetPasswordDialog() {
@@ -22,14 +20,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Reset Password Link Sent'),
-          content: Text('A reset password link has been sent to your inbox.'),
+          title: const Text('Reset Password Link Sent'),
+          content: const Text('A reset password link has been sent to your inbox.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -41,14 +39,14 @@ class _ResetPasswordState extends State<ResetPassword> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Email Not Found'),
-          content: Text('The email address is not registered. Please check your email or register.'),
+          title: const Text('Email Not Found'),
+          content: const Text('The email address is not registered. Please check your email or register.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
