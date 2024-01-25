@@ -1,11 +1,12 @@
 import 'package:myapp/home.dart';
-import '../resetpassword.dart';
-import '../signup.dart';
+import 'package:myapp/Question/quiz.dart';
+import 'resetpassword.dart';
+import 'signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../reusable_widgets/reusable_widgets.dart';
+import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../utils/color_utils.dart';
+import '../../utils/color_utils.dart';
 import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomePage(),
+        builder: (context) => QuizScreen(),
       ),
     );
   }
@@ -57,7 +58,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: <Widget>[
               Lottie.asset(
-                'assets/signin.json',
+                'assets/GIF/signin.json',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.34,
               ),
@@ -65,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.66,
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 42, 164, 225),
+                  color: Color.fromARGB(255, 89, 201, 253),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),

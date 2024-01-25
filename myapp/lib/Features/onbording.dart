@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/content_model.dart';
+import 'package:myapp/Features/content_model.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/signin.dart';
+import 'package:myapp/Registration/signin.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -12,7 +12,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentPage = 0; // Variable to keep track of the current slide index
-
+  bool isButtonPressed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Column(
                         children: [
                           Lottie.asset(
-                            'assets/gif${i + 1}.json',
+                            'assets/GIF/gif${i + 1}.json',
                             height: 350,
                             width: 350,
                             fit: BoxFit.fill,
@@ -71,20 +71,57 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Positioned(
             top: 50,
             right: 25,
-            child: ElevatedButton(
-              onPressed: () {
+            child: GestureDetector(
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => const SignInScreen(),
+                  ),
                 );
               },
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Skip'),
-                  SizedBox(width: 5),
-                  Icon(Icons.accessible_forward_sharp),
-                ],
+              onTapDown: (_) {
+                setState(() {
+                  isButtonPressed = true;
+                });
+              },
+              onTapUp: (_) {
+                setState(() {
+                  isButtonPressed = false;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16,
+                ),
+                decoration: BoxDecoration(
+                  color: isButtonPressed
+                      ? Colors.white
+                      : const Color.fromARGB(255, 58, 143, 131),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Skip',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.normal,
+                        color: isButtonPressed
+                            ? const Color.fromARGB(255, 58, 143, 131)
+                            : Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 5), // Adjust the spacing between text and icon
+                    Icon(Icons.skip_next,
+                      color:isButtonPressed
+                          ? const Color.fromARGB(255, 58, 143,131)
+                          : Colors.white,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -112,7 +149,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 10,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: currentPage == index ? Colors.black : Colors.white,
+        color: currentPage == index ? const Color.fromARGB(255, 58, 143,131) : Colors.white,
       ),
     );
   }

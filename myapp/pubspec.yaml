@@ -56,23 +56,25 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/cerbotech.jpg
-    - assets/Signin.svg
-    - assets/Sign_up.svg
-    - assets/My_password.svg
-    - assets/Sign_in.svg
-    - assets/cerbotech_big.png
-    - assets/newlogo.svg
-    - assets/logos.jpg
-    - assets/gif1.json
-    - assets/gif2.json
-    - assets/gif3.json
-    - assets/gif4.json
-    - assets/gif5.json
-    - assets/getStarted.json
-    - assets/signin.json
-    - assets/signup.json
-    - assets/password.json
+    - assets/Images/cerbotech.jpg
+    - assets/SVGS/Signin.svg
+    - assets/SVGS/Sign_up.svg
+    - assets/SVGS/My_password.svg
+    - assets/SVGS/Sign_in.svg
+    - assets/Images/cerbotech_big.png
+    - assets/SVGS/newlogo.svg
+    - assets/Images/logos.jpg
+    - assets/Images/mental_started.png
+    - assets/Images/mental-health.png
+    - assets/GIF/gif1.json
+    - assets/GIF/gif2.json
+    - assets/GIF/gif3.json
+    - assets/GIF/gif4.json
+    - assets/GIF/gif5.json
+    - assets/GIF/getStarted.json
+    - assets/GIF/signin.json
+    - assets/GIF/signup.json
+    - assets/GIF/password.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

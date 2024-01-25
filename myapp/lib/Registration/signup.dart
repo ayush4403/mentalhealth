@@ -1,9 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg/svg.dart';
-import '../reusable_widgets/reusable_widgets.dart';
-import '../utils/color_utils.dart';
-import 'package:firebase_core/firebase_core.dart';
+import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -67,8 +65,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _confirmPasswordTextController.clear();
       }
     } catch (error, stackTrace) {
-      print("Error: $error");
-      print("Stack Trace: $stackTrace");
+      if (kDebugMode) {
+        print("Error: $error");
+      }
+      if (kDebugMode) {
+        print("Stack Trace: $stackTrace");
+      }
       if (error is FirebaseAuthException) {
         if (error.code == 'email-already-in-use') {
           _showSnackBar(
@@ -122,7 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: <Widget>[
             Lottie.asset(
-                'assets/signup.json',
+                'assets/GIF/signup.json',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.34,
               ),
@@ -130,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.66,
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 42, 164, 225),
+                color: Color.fromARGB(255, 89, 201, 253),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),

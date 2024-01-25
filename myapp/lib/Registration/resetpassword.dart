@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../reusable_widgets/reusable_widgets.dart';
-import '../utils/color_utils.dart';
+import 'package:myapp/Registration/signin.dart';
+import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -26,7 +25,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>const SignInScreen()));
               },
               child: const Text('OK'),
             ),
@@ -62,7 +61,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           child: Column(
             children: <Widget>[
               Lottie.asset(
-                'assets/password.json',
+                'assets/GIF/password.json',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.34,
               ),
@@ -70,7 +69,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height*0.66,
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 42, 164, 225),
+                    color: Color.fromARGB(255, 89, 201, 253),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(30.0),
