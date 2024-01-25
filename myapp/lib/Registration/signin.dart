@@ -1,3 +1,4 @@
+
 import 'package:myapp/home.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
@@ -21,7 +22,6 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   String _userName = "";
   String _userEmail = "";
-  bool obscureText = true;
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -33,11 +33,8 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> _handleSignIn() async {
-    setState(() {
-      obscureText = !obscureText;
-    });
     final UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailTextController.text,
       password: _passwordTextController.text,
     );
@@ -95,21 +92,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         reusableTextField(
                             "Enter Email",
                             Icons.person_outline,
-                            false as TextEditingController,
-                            _emailTextController as TextInputType,
-                            TextInputType.emailAddress as VoidCallback,
-                        ),
+                            false,
+                            _emailTextController,
+                            TextInputType.emailAddress),
                         const SizedBox(
                           height: 20,
                         ),
                         reusableTextField(
                             "Enter Password",
                             Icons.lock_outline,
-                            true as TextEditingController,
-                            _passwordTextController as TextInputType,
-                            TextInputType.visiblePassword as VoidCallback,
-
-                        ),
+                            true,
+                            _passwordTextController,
+                            TextInputType.visiblePassword),
                         const SizedBox(
                           height: 5,
                         ),
