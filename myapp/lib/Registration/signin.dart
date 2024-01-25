@@ -1,12 +1,9 @@
-import 'package:myapp/home.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../utils/color_utils.dart';
 import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatefulWidget {
