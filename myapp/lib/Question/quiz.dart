@@ -15,33 +15,41 @@ class _QuizScreenState extends State<QuizScreen> {
   List<Map<String, dynamic>> questions = [
     {
       'question': 'On a scale of 1 to 10, how would you rate your overall well-being today?',
-      'image': 'assets/GIF/gif1.json',
+      'image': 'assets/GIF/Qgif1.json',
       'isSlider': true,
     },
     {
-      'question': 'Are you often very critical of your self?',
-      'image': 'assets/GIF/gif5.json',
+      'question': 'Are you often very critical of yourself?',
+      'image': 'assets/GIF/Qgif2.json',
       'options': ['Extremely', 'Frequently', 'Rarely', 'Not at all'],
     },
     {
       'question': 'How satisfied are you with your current social interaction and connections?',
-      'image': 'assets/GIF/gif2.json',
-      'options': ['Very Well', 'Moderately', 'Struggling','Not at all'],
+      'image': 'assets/GIF/Qgif3.json',
+      'options': ['Very Well', 'Moderately', 'Struggling', 'Not at all'],
     },
     {
       'question': 'Are you currently experiencing stress related to work or academic responsibilities?',
-      'image': 'assets/GIF/gif3.json',
+      'image': 'assets/GIF/Qgif4.json',
       'options': ['Occasionally', 'Moderately', 'Frequently', 'Not at all'],
     },
     {
       'question': 'How much are you currently coping up with stress or difficult emotions?',
-      'image': 'assets/GIF/gif4.json',
-      'options': ['Very Well', 'Moderately', 'Struggling','Not at all'],
+      'image': 'assets/GIF/Qgif5.json',
+      'options': ['Very Well', 'Moderately', 'Struggling', 'Not at all'],
     },
   ];
 
   int currentQuestionIndex = 0;
   List<Map<String, dynamic>> userSelectedOptions = [];
+  bool isNextButtonEnabled() {
+    if (questions[currentQuestionIndex]['isSlider'] == true) {
+      return true;
+    } else {
+      return userSelectedOptions.isNotEmpty;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,26 +71,6 @@ class _QuizScreenState extends State<QuizScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Top Bar with Back and Skip buttons
-              Padding(
-                padding: const EdgeInsets.fromLTRB(1, 1, 1, 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Back button
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => navigateBack(),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.6), // Add space between buttons
-                    // Skip button
-                    IconButton(
-                      icon: const Icon(Icons.skip_next, color: Colors.white),
-                      onPressed: () => nextQuestion(),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 15.0),
               if (questions[currentQuestionIndex]['image'] != null)
                 Lottie.asset(
@@ -95,9 +83,10 @@ class _QuizScreenState extends State<QuizScreen> {
               Text(
                 questions[currentQuestionIndex]['question'],
                 style: const TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 60.0),
               // Options
@@ -115,25 +104,33 @@ class _QuizScreenState extends State<QuizScreen> {
                       max: 10.0,
                       divisions: 9,
                       label: sliderValue.round().toString(),
-                      activeColor: Colors.amberAccent,
+                      activeColor: const Color.fromARGB(255, 58, 143, 131),
                     ),
                   ],
                 ),
 
               if (currentQuestionIndex != 0)
-              ...List.generate(
-                questions[currentQuestionIndex]['options'].length,
-                    (index) => ElevatedButton(
-                  onPressed: () => checkAnswer(index),
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black, backgroundColor: Colors.white,
-                    textStyle: const TextStyle(fontSize: 18.0),
+                ...List.generate(
+                  questions[currentQuestionIndex]['options'].length,
+                      (index) => ElevatedButton(
+                    onPressed: () => checkAnswer(index),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      textStyle: const TextStyle(fontSize: 18.0),
+                    ),
+                    child: Text(questions[currentQuestionIndex]['options'][index]),
                   ),
-                  child:
-                  Text(questions[currentQuestionIndex]['options'][index]),
                 ),
-              ),
               const SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: isNextButtonEnabled() ? nextQuestion : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isNextButtonEnabled() ? const Color.fromARGB(255, 58, 143, 131) : Colors.white,
+                ),
+                child: const Text('Next'),
+              ),
+
             ],
           ),
         ),
@@ -159,22 +156,21 @@ class _QuizScreenState extends State<QuizScreen> {
     }
 
     userSelectedOptions.add(selectedOption);
-    nextQuestion();
+    setState(() {}); // Trigger a rebuild to update the state of the "Next" button
   }
 
-  void updateSliderValue(double newValue) {
-    setState(() {
-      sliderValue = newValue;
-    });
-  }
 
   void nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       setState(() {
         currentQuestionIndex++;
       });
+      userSelectedOptions = []; // Clear selected options for the next question
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
       if (kDebugMode) {
         print('User Selected Options: $userSelectedOptions');
       }
@@ -183,14 +179,6 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         currentQuestionIndex = 0;
         userSelectedOptions = [];
-      });
-    }
-  }
-
-  void navigateBack() {
-    if (currentQuestionIndex > 0) {
-      setState(() {
-        currentQuestionIndex--;
       });
     }
   }
