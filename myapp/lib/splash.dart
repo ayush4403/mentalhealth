@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     _backgroundColorAnimation = ColorTween(
       begin:Colors.white,
-      end: const Color.fromARGB(255, 42, 164, 225), // Change this to your desired end color
+      end: const Color.fromARGB(255, 42, 164, 225),
     ).animate(_animationController);
 
     Timer(const Duration(seconds: 1), () {

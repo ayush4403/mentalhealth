@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+import 'package:myapp/home.dart';
+>>>>>>> 670ed63ac2c8cd03ad969f8bd18ea29c0cb92150
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
@@ -29,20 +34,36 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> _handleSignIn() async {
-    final UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailTextController.text,
-      password: _passwordTextController.text,
-    );
+    try {
+      final UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
 
-    final User? user = userCredential.user;
+      final User? user = userCredential.user;
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => QuizScreen(),
-      ),
-    );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QuizScreen(),
+        ),
+      );
+    } catch (e) {
+      String errorMessage = 'An error occurred during sign-in.';
+
+      if (e is FirebaseAuthException) {
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No user found with this email.';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Incorrect password.';
+        } else {
+          errorMessage = e.message ?? 'An unexpected error occurred.';
+        }
+      }
+
+      _showSnackBar(errorMessage);
+    }
   }
 
   @override
