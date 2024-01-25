@@ -21,6 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   String _userName = "";
   String _userEmail = "";
+  bool obscureText = true;
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -32,6 +33,9 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> _handleSignIn() async {
+    setState(() {
+      obscureText = !obscureText;
+    });
     final UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailTextController.text,
@@ -91,18 +95,21 @@ class _SignInScreenState extends State<SignInScreen> {
                         reusableTextField(
                             "Enter Email",
                             Icons.person_outline,
-                            false,
-                            _emailTextController,
-                            TextInputType.emailAddress),
+                            false as TextEditingController,
+                            _emailTextController as TextInputType,
+                            TextInputType.emailAddress as VoidCallback,
+                        ),
                         const SizedBox(
                           height: 20,
                         ),
                         reusableTextField(
                             "Enter Password",
                             Icons.lock_outline,
-                            true,
-                            _passwordTextController,
-                            TextInputType.visiblePassword),
+                            true as TextEditingController,
+                            _passwordTextController as TextInputType,
+                            TextInputType.visiblePassword as VoidCallback,
+
+                        ),
                         const SizedBox(
                           height: 5,
                         ),

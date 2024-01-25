@@ -13,16 +13,18 @@ Image logoWidget(String imageName) {
 TextField reusableTextField(
     String text,
     IconData icon,
-    bool isPasswordType,
     TextEditingController controller,
     TextInputType keyboardType,
+    VoidCallback togglePasswordVisibility,
     ) {
+  bool obscureText = keyboardType == TextInputType.visiblePassword;
+
   return TextField(
     controller: controller,
     keyboardType: keyboardType,
-    obscureText: isPasswordType,
-    enableSuggestions: !isPasswordType,
-    autocorrect: !isPasswordType,
+    obscureText: obscureText,
+    enableSuggestions: !obscureText,
+    autocorrect: !obscureText,
     cursorColor: Colors.white,
     style: const TextStyle(color: Colors.white),
     decoration: InputDecoration(
@@ -30,6 +32,18 @@ TextField reusableTextField(
         icon,
         color: Colors.white,
       ),
+      suffixIcon: obscureText
+          ? IconButton(
+        icon: Icon(
+          obscureText ? Icons.visibility : Icons.visibility_off,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          // Toggle the password visibility
+          togglePasswordVisibility();
+        },
+      )
+          : null,
       labelText: text,
       labelStyle: const TextStyle(color: Colors.white),
       filled: true,
@@ -42,6 +56,8 @@ TextField reusableTextField(
     ),
   );
 }
+
+
 
 
 

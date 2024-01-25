@@ -71,6 +71,11 @@ flutter:
     - assets/GIF/gif3.json
     - assets/GIF/gif4.json
     - assets/GIF/gif5.json
+    - assets/GIF/Qgif1.json
+    - assets/GIF/Qgif2.json
+    - assets/GIF/Qgif3.json
+    - assets/GIF/Qgif4.json
+    - assets/GIF/Qgif5.json
     - assets/GIF/getStarted.json
     - assets/GIF/signin.json
     - assets/GIF/signup.json
