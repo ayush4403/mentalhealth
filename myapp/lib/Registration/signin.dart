@@ -31,9 +31,14 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-
   Future<void> _handleSignIn() async {
     try {
+      // Check if email and password are not empty
+      if (_emailTextController.text.isEmpty || _passwordTextController.text.isEmpty) {
+        _showSnackBar('Please enter both email and password.');
+        return;
+      }
+
       final UserCredential userCredential =
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailTextController.text,
@@ -57,13 +62,14 @@ class _SignInScreenState extends State<SignInScreen> {
         } else if (e.code == 'wrong-password') {
           errorMessage = 'Incorrect password.';
         } else {
-          errorMessage = e.message ?? 'An unexpected error occurred.';
+          errorMessage = 'Incorrect email or password';
         }
       }
 
       _showSnackBar(errorMessage);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

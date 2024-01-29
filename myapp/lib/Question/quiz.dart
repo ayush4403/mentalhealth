@@ -12,6 +12,7 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   double sliderValue = 5.0;
+  bool isButtonPressed = false;
   List<Map<String, dynamic>> questions = [
     {
       'question': 'On a scale of 1 to 10, how would you rate your overall well-being today?',
@@ -41,6 +42,7 @@ class _QuizScreenState extends State<QuizScreen> {
   ];
 
   int currentQuestionIndex = 0;
+
   List<Map<String, dynamic>> userSelectedOptions = [];
   bool isNextButtonEnabled() {
     if (questions[currentQuestionIndex]['isSlider'] == true) {
@@ -75,20 +77,20 @@ class _QuizScreenState extends State<QuizScreen> {
               if (questions[currentQuestionIndex]['image'] != null)
                 Lottie.asset(
                   questions[currentQuestionIndex]['image'],
-                  height: 250.0,
-                  width: 220,
+                  height: MediaQuery.of(context).size.height*0.35,
+                  width: MediaQuery.of(context).size.width*0.3,
                   fit: BoxFit.fill,
                 ),
-              const SizedBox(height: 10.0),
+              SizedBox(height:MediaQuery.of(context).size.height*0.01),
               Text(
                 questions[currentQuestionIndex]['question'],
                 style: const TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 60.0),
+               SizedBox(height:MediaQuery.of(context).size.height*0.04),
               // Options
               if (currentQuestionIndex == 0 && questions[0]['isSlider'] == true)
                 Column(
@@ -115,14 +117,13 @@ class _QuizScreenState extends State<QuizScreen> {
                       (index) => ElevatedButton(
                     onPressed: () => checkAnswer(index),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
+                      backgroundColor:(selectedOptionIndexes[currentQuestionIndex] == index) ? Colors.amber : Colors.white,
                       textStyle: const TextStyle(fontSize: 18.0),
                     ),
                     child: Text(questions[currentQuestionIndex]['options'][index]),
                   ),
                 ),
-              const SizedBox(height: 20.0),
+              SizedBox(height: MediaQuery.of(context).size.height*0.02),
               ElevatedButton(
                 onPressed: isNextButtonEnabled() ? nextQuestion : null,
                 style: ElevatedButton.styleFrom(
@@ -137,8 +138,10 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
     );
   }
-
+  List<int> selectedOptionIndexes = List.filled(5, -1);
   void checkAnswer(int selectedOptionIndex) {
+    selectedOptionIndexes[currentQuestionIndex] = selectedOptionIndex;
+
     Map<String, dynamic> selectedOption;
 
     if (questions[currentQuestionIndex]['isSlider'] == true) {
@@ -149,6 +152,7 @@ class _QuizScreenState extends State<QuizScreen> {
       };
     } else {
       // For questions with options
+
       selectedOption = {
         'index': selectedOptionIndex,
         'value': questions[currentQuestionIndex]['options'][selectedOptionIndex],

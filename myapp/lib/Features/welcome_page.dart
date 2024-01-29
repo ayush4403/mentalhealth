@@ -22,32 +22,32 @@ class _WelcomeState extends State<Welcome> {
           children: [
             Lottie.asset(
               'assets/GIF/getStarted.json',
-              height: 350,
-              width: 350,
+              height: MediaQuery.of(context).size.height*0.38,
+              width: MediaQuery.of(context).size.width*0.9,
               fit: BoxFit.fill,
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
             const Text(
               'Hey Welcome!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             const SizedBox(
               width: 350,
               child: Text(
                 'Your mindful mental health companion for everyone, anywhere 🍃',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             GestureDetector(
               onTap: () {
                 Navigator.push(
