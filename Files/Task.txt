@@ -1,0 +1,9 @@
+Task:
+
+1)splash screen and loading screen -zeel
+2)features -pratham
+3)login and sign up page -manan
+4)questions -ayush
+
+
+
