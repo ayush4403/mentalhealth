@@ -31,23 +31,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                   itemBuilder: (_, i) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 160, 30, 40),
+                      padding: const EdgeInsets.fromLTRB(30, 140, 30, 40),
                       child: Column(
                         children: [
                           Lottie.asset(
                             'assets/GIF/gif${i + 1}.json',
-                            height: 350,
-                            width: 350,
+                            height:MediaQuery.of(context).size.height*0.3 ,
+                            width: MediaQuery.of(context).size.width*0.75,
                             fit: BoxFit.fill,
                           ),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
                           ),
                           Text(
                             contents[i].title,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 28,
+                            style: TextStyle(
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -58,7 +58,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             contents[i].discription,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 18, color: Colors.black),
+                                fontSize: 16, color: Colors.black),
                           ),
                         ],
                       ),
@@ -99,7 +99,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   color: isButtonPressed
                       ? Colors.white
                       : const Color.fromARGB(255, 58, 143, 131),
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -114,7 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             : Colors.white,
                       ),
                     ),
-                    const SizedBox(width: 5), // Adjust the spacing between text and icon
+                    const SizedBox(width: 2), // Adjust the spacing between text and icon
                     Icon(Icons.skip_next,
                       color:isButtonPressed
                           ? const Color.fromARGB(255, 58, 143,131)
@@ -126,7 +126,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           Positioned(
-            bottom: 20,
+            bottom: 40,
             left: 0,
             right: 0,
             child: Row(
