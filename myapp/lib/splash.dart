@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myapp/Features/welcome_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -100,14 +101,27 @@ class _SplashScreenState extends State<SplashScreen>
                         height: 150,
                       ),
                     ),
+<<<<<<< HEAD
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                Center(
+                  child: Hero(
+                    tag: 'moto',
+                    child: FadeTransition(
+                      opacity: _animationController,
+=======
                     const SizedBox(
                       height: 20,
                     ),
                     const Hero(
                       tag: 'moto',
+>>>>>>> 3ed242ffe02408f2c25286794cd157e96aa324a3
                       child: Text(
                         'MindfulMe',
-                        style: TextStyle(
+                        style:GoogleFonts.montserrat(
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
                           color:
