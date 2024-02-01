@@ -10,7 +10,7 @@ final theme = ThemeData(
     brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 0, 111, 186),
   ),
-  textTheme: GoogleFonts.quicksandTextTheme(), // add 500
+  textTheme: GoogleFonts.montserratTextTheme(), // add 500
 );
 
 void main() async {

@@ -15,7 +15,8 @@ class _QuizScreenState extends State<QuizScreen> {
   bool isButtonPressed = false;
   List<Map<String, dynamic>> questions = [
     {
-      'question': 'On a scale of 1 to 10, how would you rate your overall well-being today?',
+      'question':
+          'On a scale of 1 to 10, how would you rate your overall well-being today?',
       'image': 'assets/GIF/Qgif1.json',
       'isSlider': true,
     },
@@ -25,17 +26,20 @@ class _QuizScreenState extends State<QuizScreen> {
       'options': ['Extremely', 'Frequently', 'Rarely', 'Not at all'],
     },
     {
-      'question': 'How satisfied are you with your current social interaction and connections?',
+      'question':
+          'How satisfied are you with your current social interaction and connections?',
       'image': 'assets/GIF/Qgif3.json',
       'options': ['Very Well', 'Moderately', 'Struggling', 'Not at all'],
     },
     {
-      'question': 'Are you currently experiencing stress related to work or academic responsibilities?',
+      'question':
+          'Are you currently experiencing stress related to work or academic responsibilities?',
       'image': 'assets/GIF/Qgif4.json',
       'options': ['Occasionally', 'Moderately', 'Frequently', 'Not at all'],
     },
     {
-      'question': 'How much are you currently coping up with stress or difficult emotions?',
+      'question':
+          'How much are you currently coping up with stress or difficult emotions?',
       'image': 'assets/GIF/Qgif5.json',
       'options': ['Very Well', 'Moderately', 'Struggling', 'Not at all'],
     },
@@ -52,7 +56,6 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +65,8 @@ class _QuizScreenState extends State<QuizScreen> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 42, 164, 225),
-                Color.fromARGB(255, 42, 164, 225)
+                Color.fromARGB(255, 0, 111, 186),
+                Color.fromARGB(255, 0, 111, 186),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -77,20 +80,21 @@ class _QuizScreenState extends State<QuizScreen> {
               if (questions[currentQuestionIndex]['image'] != null)
                 Lottie.asset(
                   questions[currentQuestionIndex]['image'],
-                  height: MediaQuery.of(context).size.height*0.35,
-                  width: MediaQuery.of(context).size.width*0.3,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  width: MediaQuery.of(context).size.width * 0.3,
                   fit: BoxFit.fill,
                 ),
-              SizedBox(height:MediaQuery.of(context).size.height*0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               Text(
                 questions[currentQuestionIndex]['question'],
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-               SizedBox(height:MediaQuery.of(context).size.height*0.04),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               // Options
               if (currentQuestionIndex == 0 && questions[0]['isSlider'] == true)
                 Column(
@@ -106,7 +110,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       max: 10.0,
                       divisions: 9,
                       label: sliderValue.round().toString(),
-                      activeColor: const Color.fromARGB(255, 58, 143, 131),
+                      activeColor: Colors.cyan,
                     ),
                   ],
                 ),
@@ -114,30 +118,43 @@ class _QuizScreenState extends State<QuizScreen> {
               if (currentQuestionIndex != 0)
                 ...List.generate(
                   questions[currentQuestionIndex]['options'].length,
-                      (index) => ElevatedButton(
+                  (index) => ElevatedButton(
                     onPressed: () => checkAnswer(index),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:(selectedOptionIndexes[currentQuestionIndex] == index) ? Colors.amber : Colors.white,
+                      backgroundColor:
+                          (selectedOptionIndexes[currentQuestionIndex] == index)
+                              ? const Color.fromARGB(255, 7, 110, 255)
+                              : const Color.fromARGB(255, 0, 86, 97),
                       textStyle: const TextStyle(fontSize: 18.0),
                     ),
-                    child: Text(questions[currentQuestionIndex]['options'][index]),
+                    child: Text(
+                      questions[currentQuestionIndex]['options'][index],
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.02),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               ElevatedButton(
                 onPressed: isNextButtonEnabled() ? nextQuestion : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isNextButtonEnabled() ? const Color.fromARGB(255, 58, 143, 131) : Colors.white,
+                  backgroundColor:
+                      isNextButtonEnabled() ? Colors.cyan : Colors.white,
                 ),
-                child: const Text('Next'),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-
             ],
           ),
         ),
       ),
     );
   }
+
   List<int> selectedOptionIndexes = List.filled(5, -1);
   void checkAnswer(int selectedOptionIndex) {
     selectedOptionIndexes[currentQuestionIndex] = selectedOptionIndex;
@@ -155,14 +172,15 @@ class _QuizScreenState extends State<QuizScreen> {
 
       selectedOption = {
         'index': selectedOptionIndex,
-        'value': questions[currentQuestionIndex]['options'][selectedOptionIndex],
+        'value': questions[currentQuestionIndex]['options']
+            [selectedOptionIndex],
       };
     }
 
     userSelectedOptions.add(selectedOption);
-    setState(() {}); // Trigger a rebuild to update the state of the "Next" button
+    setState(
+        () {}); // Trigger a rebuild to update the state of the "Next" button
   }
-
 
   void nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
