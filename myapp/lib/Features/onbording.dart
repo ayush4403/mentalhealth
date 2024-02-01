@@ -46,20 +46,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             contents[i].title,
                             textAlign: TextAlign.center,
-<<<<<<< HEAD
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-=======
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
->>>>>>> e3b3f63eaeacaf6f2679dfcb644f0e6579558aca
+                              style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+
                           ),
                           const SizedBox(
                             height: 20,
