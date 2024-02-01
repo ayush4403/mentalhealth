@@ -1,17 +1,16 @@
-
-import 'package:myapp/home.dart';
+//import 'package:myapp/home.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../utils/color_utils.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
+//import '../../utils/color_utils.dart';
 import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen( {super.key} );
+  const SignInScreen({super.key});
 
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -20,8 +19,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-  String _userName = "";
-  String _userEmail = "";
+  //String _userName = "";
+  //String _userEmail = "";
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -31,16 +30,18 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
   Future<void> _handleSignIn() async {
     try {
       // Check if email and password are not empty
-      if (_emailTextController.text.isEmpty || _passwordTextController.text.isEmpty) {
+      if (_emailTextController.text.isEmpty ||
+          _passwordTextController.text.isEmpty) {
         _showSnackBar('Please enter both email and password.');
         return;
       }
 
       final UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailTextController.text,
         password: _passwordTextController.text,
       );
@@ -70,7 +71,6 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.66,
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 89, 201, 253),
+                  color: Color.fromARGB(255, 0, 111, 186),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),
@@ -101,12 +101,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         20, MediaQuery.of(context).size.width * 0.1, 20, 0),
                     child: Column(
                       children: <Widget>[
-                        const Text(
+                        Text(
                           'Welcome to MindfulMe',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         const SizedBox(
                           height: 50,
@@ -148,8 +151,16 @@ class _SignInScreenState extends State<SignInScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Don't have an account?",
-            style: TextStyle(color: Colors.white70)),
+        const Text(
+          "Don't have an account?",
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.white70,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
         GestureDetector(
           onTap: () {
             Navigator.push(context,
@@ -157,9 +168,18 @@ class _SignInScreenState extends State<SignInScreen> {
           },
           child: const Text(
             " Sign Up",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
+              decorationColor: Colors.white,
+            ),
           ),
-        )
+        ),
+        const SizedBox(
+          height: 30,
+        ),
       ],
     );
   }
@@ -180,7 +200,8 @@ class _SignInScreenState extends State<SignInScreen> {
           child: const Text(
             " Forgot Password?",
             style: TextStyle(
-              color: Colors.white70,
+              fontSize: 15,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
