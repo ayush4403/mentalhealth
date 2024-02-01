@@ -46,15 +46,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             contents[i].title,
                             textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-
-
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           const SizedBox(
                             height: 20,
@@ -63,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             contents[i].discription,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               fontSize:
                                   MediaQuery.of(context).size.width * 0.052,
                             ),

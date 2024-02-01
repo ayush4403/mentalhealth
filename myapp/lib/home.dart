@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/audio.dart';
+//import 'package:myapp/Activities/audio.dart';
+import 'package:myapp/Activities/quotes/daily_quote.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +46,8 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-               Navigator.push(context, MaterialPageRoute(builder:(context) =>  const Audio()) );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DailyQuotePage()));
               },
               child: const Text('Press Me'),
             ),
