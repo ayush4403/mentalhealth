@@ -5,7 +5,7 @@ import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen( {super.key} );
+  const SignUpScreen({super.key});
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -43,7 +43,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     try {
-
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userEmail,
@@ -124,34 +123,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: <Widget>[
             Lottie.asset(
-                'assets/GIF/signup.json',
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.34,
-              ),
+              'assets/GIF/signup.json',
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.34,
+            ),
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.66,
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 89, 201, 253),
+                color: Color.fromARGB(255, 0, 111, 186),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),
                 ),
               ),
               child: Padding(
-                padding:  EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.width*0.001, 20, 0),
+                padding: EdgeInsets.fromLTRB(
+                    20, MediaQuery.of(context).size.width * 0.001, 20, 0),
                 child: ListView(
                   children: <Widget>[
-                    const Center(
+                    Center(
                       child: Text(
                         "SignUp",
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     reusableTextField(
                       "Enter UserName",
                       Icons.person_outline,
@@ -183,6 +188,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       _confirmPasswordTextController,
                       TextInputType.visiblePassword,
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     firebaseUIButton(context, "Sign Up", _registerUser),
                   ],
                 ),
@@ -193,5 +201,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
 }

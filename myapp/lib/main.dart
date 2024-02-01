@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.light,
+    brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 0, 111, 186),
   ),
   textTheme: GoogleFonts.montserratTextTheme(), // add 500
