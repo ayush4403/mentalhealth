@@ -4,14 +4,14 @@ import 'package:just_audio/just_audio.dart';
 import 'dart:async';
 enum AudioSourceOption { Network, Asset }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Audio extends StatefulWidget {
+  const Audio({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<Audio> {
   final _player = AudioPlayer();
   double selectedSpeed = 1.0;
   double selectedVolume = 1.0;
@@ -207,22 +207,22 @@ class _HomePageState extends State<HomePage> {
         SizedBox(width: 10),
         DropdownButton<double>(
           value: selectedDuration,
-          items: [
+          items: const [
             DropdownMenuItem(
               value: 0.0,
-              child: Text("No Limit"),
+              child: Text("No Limit",style: TextStyle(color: Colors.white),),
             ),
             DropdownMenuItem(
               value: 60.0,
-              child: Text("1 Minute"),
+              child: Text("1 Minute",style: TextStyle(color: Colors.white),),
             ),
             DropdownMenuItem(
               value: 120.0,
-              child: Text("2 Minutes"),
+              child: Text("2 Minutes",style: TextStyle(color: Colors.white),),
             ),
             DropdownMenuItem(
               value: 180.0,
-              child: Text("3 Minutes"),
+              child: Text("3 Minutes",style: TextStyle(color: Colors.white),),
             ),
           ],
           onChanged: (value) {

@@ -61,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             contents[i].discription,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               fontSize:
                                   MediaQuery.of(context).size.width * 0.052,
                             ),
