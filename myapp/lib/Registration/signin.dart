@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 
 import 'package:myapp/home.dart';
->>>>>>> 670ed63ac2c8cd03ad969f8bd18ea29c0cb92150
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
