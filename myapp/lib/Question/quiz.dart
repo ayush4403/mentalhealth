@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:myapp/Activities/audio.dart';
+import 'package:myapp/cardview.dart';
 import 'package:myapp/home.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -191,7 +193,8 @@ class _QuizScreenState extends State<QuizScreen> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
+
       );
       if (kDebugMode) {
         print('User Selected Options: $userSelectedOptions');
