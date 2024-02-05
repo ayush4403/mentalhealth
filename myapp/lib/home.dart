@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-//import 'package:myapp/Activities/audio.dart';
 import 'package:myapp/Activities/quotes/daily_quote.dart';
+import 'package:myapp/cardview.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const FirstScreen());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class FirstScreen extends StatefulWidget {
+  const FirstScreen({super.key});
 
+  @override
+  State<FirstScreen> createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Simple Flutter Home Page',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        canvasColor: Colors.black, // Set the canvas color to black
       ),
       home: const HomePage(),
     );
@@ -47,13 +53,39 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DailyQuotePage()));
+                    MaterialPageRoute(builder: (context) => CardView()));
               },
               child: const Text('Press Me'),
             ),
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0, // set the current index to the first tab (Home)
+        items:const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_soccer),
+            label: 'Activities',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Report',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.games),
+            label: 'Games',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+      // Add padding to create space between the bottom bar and the bottom of the screen
     );
   }
 }
