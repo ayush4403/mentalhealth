@@ -6,18 +6,9 @@ void main() {
   runApp(const FirstScreen());
 }
 
-<<<<<<< HEAD
-class FirstScreen extends StatefulWidget {
-=======
 class FirstScreen extends StatelessWidget {
->>>>>>> f901e93769d25b890e4545ee2292bdc8d69faa38
   const FirstScreen({super.key});
 
-  @override
-  State<FirstScreen> createState() => _FirstScreenState();
-}
-
-class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,34 +55,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-<<<<<<< HEAD
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0, // set the current index to the first tab (Home)
-        items:const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_soccer),
-            label: 'Activities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Report',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.games),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      // Add padding to create space between the bottom bar and the bottom of the screen
-=======
       bottomNavigationBar:Padding(
         padding: const EdgeInsets.all(20),
         child: BottomNavigationBar(
@@ -125,7 +88,6 @@ class HomePage extends StatelessWidget {
 
       // Add padding to create space between the bottom bar and the bottom of the screen
 
->>>>>>> f901e93769d25b890e4545ee2292bdc8d69faa38
     );
   }
 }
