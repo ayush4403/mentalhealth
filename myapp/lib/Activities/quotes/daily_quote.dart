@@ -1,10 +1,9 @@
 // daily_quotes.dart
 
-import 'dart:typed_data';
-
+//import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'dummy_data.dart';
+//import 'dummy_data.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DailyQuotePage extends StatefulWidget {
@@ -20,9 +19,11 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
     super.initState();
     _fetchQuotesFromStorage();
   }
+
   Future<void> _fetchQuotesFromStorage() async {
     try {
-      Reference storageReference = FirebaseStorage.instance.ref().child('quotes.txt');
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('quotes.txt');
       final List<int>? data = (await storageReference.getData())?.toList();
       final String quotesContent = String.fromCharCodes(data as Iterable<int>);
       List<String> quotes = quotesContent.split('\n');

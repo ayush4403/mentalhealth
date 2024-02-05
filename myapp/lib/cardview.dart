@@ -117,16 +117,16 @@ class ActivityList extends StatelessWidget {
                       Text(
                         activities[index],
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       Text(
                         descripation[index],
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.normal,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.normal,
+                            ),
                         textAlign: TextAlign.center,
                       ),
                       Padding(

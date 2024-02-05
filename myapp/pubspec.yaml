@@ -92,6 +92,16 @@ flutter:
     - assets/GIF/signup.json
     - assets/GIF/password.json
     - assets/audio/
+    - assets/GIF/Card_view/1_morning_meditation.json
+    - assets/GIF/Card_view/2_night_music.json
+    - assets/GIF/Card_view/3_brain_training_games.json
+    - assets/GIF/Card_view/4_mental_marathon.json
+    - assets/GIF/Card_view/5_img_rdd.json
+    - assets/GIF/Card_view/6_motivation quotes.json
+    - assets/GIF/Card_view/7_study_music.json
+    - assets/GIF/Card_view/8_memory_technique.json
+    - assets/GIF/Card_view/9_upcoming_events.json
+    - assets/GIF/Card_view/10_stress_buster_music.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

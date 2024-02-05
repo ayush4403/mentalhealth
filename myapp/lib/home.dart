@@ -36,11 +36,16 @@ class _HomePageState extends State<HomePage> {
           });
         },
         children: [
-          Container(color: Colors.red, child: const Center(child: Text('Home'))),
+          Container(
+              color: Colors.red, child: const Center(child: Text('Home'))),
           CardView(),
-          Container(color: Colors.blue, child: const Center(child: Text('Report'))),
-          Container(color: Colors.orange, child: const Center(child: Text('Games'))),
-          Container(color: Colors.purple, child: const Center(child: Text('Profile'))),
+          Container(
+              color: Colors.blue, child: const Center(child: Text('Report'))),
+          Container(
+              color: Colors.orange, child: const Center(child: Text('Games'))),
+          Container(
+              color: Colors.purple,
+              child: const Center(child: Text('Profile'))),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
