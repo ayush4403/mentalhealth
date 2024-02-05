@@ -193,15 +193,7 @@ class _QuizScreenState extends State<QuizScreen> {
     } else {
       Navigator.push(
         context,
-<<<<<<< HEAD
-        MaterialPageRoute(builder: (context) => FirstScreen()),
-=======
         MaterialPageRoute(builder: (context) => HomePage()),
-<<<<<<< HEAD
-
->>>>>>> f901e93769d25b890e4545ee2292bdc8d69faa38
-=======
->>>>>>> dc10104511bcfe26bf2b70942f182a1ea1848657
       );
       if (kDebugMode) {
         print('User Selected Options: $userSelectedOptions');
