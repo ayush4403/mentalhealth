@@ -1,5 +1,4 @@
 // daily_quotes.dart
-
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dummy_data.dart';
