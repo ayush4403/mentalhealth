@@ -2,6 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:async';
+import 'package:firebase_storage/firebase_storage.dart';
 enum AudioSourceOption { Network, Asset }
 
 class Audio extends StatefulWidget {
@@ -29,6 +30,19 @@ class _HomePageState extends State<Audio> {
     _durationTimer.cancel();
     super.dispose();
   }
+
+
+  Future<String> getAudioUrl(String audioFileName) async {
+    try {
+
+      Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
+      return await audioRef.getDownloadURL();
+    } catch (e) {
+      print("Error getting audio URL: $e");
+      return '';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +79,11 @@ class _HomePageState extends State<Audio> {
   }
 
   Future<void> _setupAudioPlayer(AudioSourceOption option) async {
-    _player.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stacktrace) {
-          print("A stream error occurred: $e");
-        });
+    String audioFileName = 'autumn-sky-meditation-7618.mp3'; // Replace with your actual file name
+    String audioUrl = await getAudioUrl(audioFileName);
     try {
       if (option == AudioSourceOption.Network) {
-        await _player.setAudioSource(AudioSource.uri(Uri.parse(
-            "https://orangefreesounds.com/wp-content/uploads/2023/10/Calm-sea-sound-effect.mp3")));
+        await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
       } else if (option == AudioSourceOption.Asset) {
         await _player.setAudioSource(
             AudioSource.asset("assets/audio/song3.mp3"));
