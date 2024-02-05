@@ -1,7 +1,10 @@
 // daily_quotes.dart
+
+//import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'dummy_data.dart';
+//import 'dummy_data.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DailyQuotePage extends StatefulWidget {
   @override
@@ -14,15 +17,33 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
   @override
   void initState() {
     super.initState();
-    _setCurrentQuote();
+    _fetchQuotesFromStorage();
   }
 
-  void _setCurrentQuote() {
-    // Generate a random index to select a quote
-    int randomIndex = Random().nextInt(motivationalQuotes.length);
-    setState(() {
-      _currentQuote = motivationalQuotes[randomIndex];
-    });
+  Future<void> _fetchQuotesFromStorage() async {
+    try {
+      // Reference to the quotes.txt file in Firebase Cloud Storage
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('quotes.txt');
+
+      // Download the quotes.txt file
+      final List<int>? data = (await storageReference.getData())?.toList();
+
+      // Convert byte data to string
+      final String quotesContent = String.fromCharCodes(data as Iterable<int>);
+
+      // Split the content into a list of quotes
+      List<String> quotes = quotesContent.split('\n');
+
+      // Generate a random index to select a quote
+      int randomIndex = Random().nextInt(quotes.length);
+
+      setState(() {
+        _currentQuote = quotes[randomIndex];
+      });
+    } catch (e) {
+      print('Error fetching quotes: $e');
+    }
   }
 
   @override
@@ -50,7 +71,7 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: _setCurrentQuote,
+                onPressed: _fetchQuotesFromStorage,
                 child: const Text('Generate New Quote'),
               ),
             ],

@@ -52,13 +52,13 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Navigate after animation completes
     _animationController.addStatusListener(
-      (status) {
+          (status) {
         if (status == AnimationStatus.completed) {
           Navigator.pushReplacement(
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  const Welcome(),
+              const Welcome(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(1.0, 0.0);
@@ -114,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen>
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
                           color:
-                              Colors.white, // Set your desired text color here
+                          Colors.white, // Set your desired text color here
                         ),
                       ),
                     ),
