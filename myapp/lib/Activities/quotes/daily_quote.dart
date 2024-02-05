@@ -22,19 +22,10 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
   }
   Future<void> _fetchQuotesFromStorage() async {
     try {
-      // Reference to the quotes.txt file in Firebase Cloud Storage
       Reference storageReference = FirebaseStorage.instance.ref().child('quotes.txt');
-
-      // Download the quotes.txt file
       final List<int>? data = (await storageReference.getData())?.toList();
-
-      // Convert byte data to string
       final String quotesContent = String.fromCharCodes(data as Iterable<int>);
-
-      // Split the content into a list of quotes
       List<String> quotes = quotesContent.split('\n');
-
-      // Generate a random index to select a quote
       int randomIndex = Random().nextInt(quotes.length);
 
       setState(() {
