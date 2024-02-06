@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,6 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
+
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -63,6 +66,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _passwordTextController.clear();
         _confirmPasswordTextController.clear();
       }
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isUserLoggedIn', true);
+
     } catch (error, stackTrace) {
       if (kDebugMode) {
         print("Error: $error");

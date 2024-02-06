@@ -1,4 +1,5 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -44,13 +47,19 @@ class _SignInScreenState extends State<SignInScreen> {
       );
 
       final User? user = userCredential.user;
+      if (user != null) {
+        // Set a flag in SharedPreferences to indicate successful sign-in
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isUserLoggedIn', true);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => QuizScreen(),
-        ),
-      );
+        // Navigate to the next screen (QuizScreen in this case)
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => QuizScreen(),
+                ),);}
+
+
     } catch (e) {
       String errorMessage = 'An error occurred during sign-in.';
 

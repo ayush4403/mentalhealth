@@ -1,40 +1,41 @@
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'dart:async';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-enum AudioSourceOption { Network, Asset }
 
-class Audio extends StatefulWidget {
-  const Audio({Key? key}) : super(key: key);
+class AudioPlayerWidget extends StatefulWidget {
+  final String audioFileName;
+  final String title;
+
+  const AudioPlayerWidget({
+    Key? key,
+    required this.audioFileName,
+    required this.title,
+  }) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
 }
 
-class _HomePageState extends State<Audio> {
+class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   final _player = AudioPlayer();
-  double selectedSpeed = 1.0;
-  double selectedVolume = 1.0;
   double selectedDuration = 0.0;
-  late Timer _durationTimer;
+
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    _setupAudioPlayer(AudioSourceOption.Network);
+    _setupAudioPlayer();
   }
+
   @override
   void dispose() {
-    // Cancel the timer when the widget is disposed
-    _durationTimer.cancel();
+    _player.dispose();
     super.dispose();
   }
 
-
   Future<String> getAudioUrl(String audioFileName) async {
     try {
-
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
@@ -43,69 +44,42 @@ class _HomePageState extends State<Audio> {
     }
   }
 
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Audio Player"),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 25.0,
-          ),
-          child: Card(
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  _sourceSelect(),
-                  _progessBar(),
-                  _controlButtons(),
-                  _playbackControlButton(),
-                  _timerSelector(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _setupAudioPlayer(AudioSourceOption option) async {
-    String audioFileName = 'autumn-sky-meditation-7618.mp3'; // Replace with your actual file name
-    String audioUrl = await getAudioUrl(audioFileName);
+  Future<void> _setupAudioPlayer() async {
+    String audioUrl = await getAudioUrl(widget.audioFileName);
     try {
-      if (option == AudioSourceOption.Network) {
-        await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
-      } else if (option == AudioSourceOption.Asset) {
-        await _player.setAudioSource(
-            AudioSource.asset("assets/audio/song3.mp3"));
-      }
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
       print("Error loading audio source: $e");
     }
   }
 
-  Widget _sourceSelect() {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      MaterialButton(
-        color: Colors.purple,
-        child: Text("Network"),
-        onPressed: () => _setupAudioPlayer(AudioSourceOption.Network),
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.blueGrey, // Change color as per your preference
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 8),
+            _progessBar(),
+            SizedBox(height: 8),
+            _playbackControlButton(),
+            SizedBox(height: 8),
+            _timerSelector(),
+          ],
+        ),
       ),
-      MaterialButton(
-        color: Colors.purple,
-        child: Text("Asset"),
-        onPressed: () => _setupAudioPlayer(AudioSourceOption.Asset),
-      ),
-    ]);
+    );
   }
 
   Widget _progessBar() {
@@ -161,56 +135,6 @@ class _HomePageState extends State<Audio> {
     );
   }
 
-  Widget _controlButtons() {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      StreamBuilder(
-        stream: _player.speedStream,
-        builder: (context, snapshot) {
-          return Row(children: [
-            const Icon(
-              Icons.speed,
-            ),
-            Slider(
-              min: 1,
-              max: 3,
-              value: selectedSpeed,
-              divisions: 3,
-              onChanged: (value) {
-                setState(() {
-                  selectedSpeed = value;
-                });
-                _player.setSpeed(value);
-              },
-            )
-          ]);
-        },
-      ),
-      StreamBuilder(
-        stream: _player.volumeStream,
-        builder: (context, snapshot) {
-          return Row(children: [
-            const Icon(
-              Icons.volume_up,
-            ),
-            Slider(
-              min: 0,
-              max: 3,
-              value: selectedVolume,
-              divisions: 4,
-              onChanged: (value) {
-                setState(() {
-                  selectedVolume = value;
-                });
-                _player.setVolume(value);
-              },
-            )
-          ]);
-        },
-      ),
-    ]);
-  }
-
-  // ... (previous code)
   Widget _timerSelector() {
     return Row(
       children: [
@@ -221,19 +145,31 @@ class _HomePageState extends State<Audio> {
           items: const [
             DropdownMenuItem(
               value: 0.0,
-              child: Text("No Limit",style: TextStyle(color: Colors.white),),
+              child: Text(
+                "No Limit",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             DropdownMenuItem(
               value: 60.0,
-              child: Text("1 Minute",style: TextStyle(color: Colors.white),),
+              child: Text(
+                "1 Minute",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             DropdownMenuItem(
               value: 120.0,
-              child: Text("2 Minutes",style: TextStyle(color: Colors.white),),
+              child: Text(
+                "2 Minutes",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             DropdownMenuItem(
               value: 180.0,
-              child: Text("3 Minutes",style: TextStyle(color: Colors.white),),
+              child: Text(
+                "3 Minutes",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
           onChanged: (value) {
@@ -261,7 +197,4 @@ class _HomePageState extends State<Audio> {
       ],
     );
   }
-
-
-
 }

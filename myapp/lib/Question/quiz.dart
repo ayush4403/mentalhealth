@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 //import 'package:myapp/Activities/audio.dart';
 //import 'package:myapp/cardview.dart';
 import 'package:myapp/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -13,6 +15,7 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+
   double sliderValue = 5.0;
   bool isButtonPressed = false;
   List<Map<String, dynamic>> questions = [
@@ -184,13 +187,17 @@ class _QuizScreenState extends State<QuizScreen> {
         () {}); // Trigger a rebuild to update the state of the "Next" button
   }
 
-  void nextQuestion() {
+
+  Future<void> nextQuestion() async {
     if (currentQuestionIndex < questions.length - 1) {
       setState(() {
         currentQuestionIndex++;
       });
       userSelectedOptions = []; // Clear selected options for the next question
     } else {
+      // Set hasCompletedQuiz to true
+      await setHasCompletedQuiz();
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
@@ -203,7 +210,15 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         currentQuestionIndex = 0;
         userSelectedOptions = [];
+        selectedOptionIndexes = List.filled(5, -1); // Clear selected indexes
       });
     }
   }
+
+
+  Future<void> setHasCompletedQuiz() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('hasCompletedQuiz', true);
+  }
 }
+

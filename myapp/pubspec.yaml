@@ -44,6 +44,7 @@ dependencies:
   just_audio: ^0.9.36
   audio_video_progress_bar: ^2.0.1
   firebase_storage: ^11.6.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
