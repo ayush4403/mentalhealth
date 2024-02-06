@@ -1,9 +1,8 @@
+//import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/Activities/audio.dart';
-import 'package:myapp/Activities/mindfulmeditation.dart';
-
-import 'Activities/quotes/daily_quote.dart';
+import 'package:myapp/Activities/Morning%20MEditation/mindfulmeditation.dart';
+import 'package:myapp/Activities/quotes/daily_quote.dart';
 
 class CardView extends StatelessWidget {
   @override
@@ -93,11 +92,10 @@ class ActivityList extends StatelessWidget {
         MaterialPageRoute(builder: (context) => DailyQuotePage()),
       );
     }
-
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MindfulMeditation()),
+        MaterialPageRoute(builder: (context) => MindfulMeditation()),
       );
     }
   }
@@ -135,16 +133,16 @@ class ActivityList extends StatelessWidget {
                       Text(
                         activities[index],
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       Text(
                         descripation[index],
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.normal,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.normal,
+                            ),
                         textAlign: TextAlign.center,
                       ),
                       Padding(
@@ -153,8 +151,8 @@ class ActivityList extends StatelessWidget {
                           width: 200, // Specify the desired width
                           height: 40, // Specify the desired height
                           child: ElevatedButton(
-                            onPressed: () =>
-                                handleStartButtonTap(context,activities[index]),
+                            onPressed: () => handleStartButtonTap(
+                                context, activities[index]),
                             child: const Text(
                               'Start',
                               style: TextStyle(fontSize: 15),

@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
@@ -8,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -20,7 +18,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -46,6 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
         password: _passwordTextController.text,
       );
 
+      // ignore: unused_local_variable
       final User? user = userCredential.user;
       if (user != null) {
         // Set a flag in SharedPreferences to indicate successful sign-in
@@ -54,12 +52,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
         // Navigate to the next screen (QuizScreen in this case)
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => QuizScreen(),
-                ),);}
-
-
+          context,
+          MaterialPageRoute(
+            builder: (context) => QuizScreen(),
+          ),
+        );
+      }
     } catch (e) {
       String errorMessage = 'An error occurred during sign-in.';
 
@@ -88,7 +86,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: <Widget>[
               Lottie.asset(
-                'assets/GIF/signin.json',
+                'assets/GIF/Registration/signin.json',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.34,
               ),

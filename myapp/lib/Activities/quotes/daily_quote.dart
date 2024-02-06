@@ -33,6 +33,7 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
         _currentQuote = quotes[randomIndex];
       });
     } catch (e) {
+      // ignore: avoid_print
       print('Error fetching quotes: $e');
     }
   }
@@ -41,8 +42,24 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daily Motivational Quote'),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        title: const Text(
+          'Daily Motivational Quote',
+          style: TextStyle(
+            color: Colors.white, // Change text color to white
+            fontSize: 20, // Change font size
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

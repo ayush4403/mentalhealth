@@ -13,6 +13,7 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController _emailTextController = TextEditingController();
+  // ignore: unused_field
   bool _isSent = false;
 
   void _showResetPasswordDialog() {
@@ -69,7 +70,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: Column(
           children: <Widget>[
             Lottie.asset(
-              'assets/GIF/password.json',
+              'assets/GIF/Registration/password.json',
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.34,
             ),

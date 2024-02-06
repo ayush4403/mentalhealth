@@ -39,6 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final String userName = _userNameTextController.text.trim();
     final String userEmail = _emailTextController.text.trim();
     final String password = _passwordTextController.text;
+    // ignore: unused_local_variable
     final String confirmPassword = _confirmPasswordTextController.text;
 
     if (!_validateFields()) {
@@ -130,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: <Widget>[
             Lottie.asset(
-              'assets/GIF/signup.json',
+              'assets/GIF/Registration/signup.json',
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.34,
             ),

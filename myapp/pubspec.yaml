@@ -63,36 +63,34 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/Images/cerbotech.jpg
-    - assets/SVGS/Signin.svg
-    - assets/SVGS/Sign_up.svg
-    - assets/SVGS/My_password.svg
-    - assets/SVGS/Sign_in.svg
-    - assets/Images/cerbotech_big.png
-    - assets/SVGS/brain_training.svg
-    - assets/SVGS/image_based_riddle.svg
-    - assets/SVGS/meditation.svg
-    - assets/SVGS/mental_marathon.svg
-    - assets/SVGS/night_music.svg
-    - assets/SVGS/newlogo.svg
+  #logo and splash screen image
+    - assets/SVGS/Splash/newlogo.svg
     - assets/Images/logos.jpg
-    - assets/Images/mental_started.png
-    - assets/Images/mental-health.png
-    - assets/GIF/gif1.json
-    - assets/GIF/gif2.json
-    - assets/GIF/gif3.json
-    - assets/GIF/gif4.json
-    - assets/GIF/gif5.json
-    - assets/GIF/Qgif1.json
-    - assets/GIF/Qgif2.json
-    - assets/GIF/Qgif3.json
-    - assets/GIF/Qgif4.json
-    - assets/GIF/Qgif5.json
-    - assets/GIF/getStarted.json
-    - assets/GIF/signin.json
-    - assets/GIF/signup.json
-    - assets/GIF/password.json
+
+  #Features's page images
+    - assets/GIF/Features/gif1.json
+    - assets/GIF/Features/gif2.json
+    - assets/GIF/Features/gif3.json
+    - assets/GIF/Features/gif4.json
+    - assets/GIF/Features/gif5.json
+    - assets/GIF/Features/getStarted.json
+
+  #Questions's page images
+    - assets/GIF/Questions/Qgif1.json
+    - assets/GIF/Questions/Qgif2.json
+    - assets/GIF/Questions/Qgif3.json
+    - assets/GIF/Questions/Qgif4.json
+    - assets/GIF/Questions/Qgif5.json
+
+  #Registration page images
+    - assets/GIF/Registration/signin.json
+    - assets/GIF/Registration/signup.json
+    - assets/GIF/Registration/password.json
+
+  #Audio file
     - assets/audio/
+
+  #CardView stuff
     - assets/GIF/Card_view/1_morning_meditation.json
     - assets/GIF/Card_view/2_night_music.json
     - assets/GIF/Card_view/3_brain_training_games.json
