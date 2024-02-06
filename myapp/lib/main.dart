@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Registration/signin.dart';
 import 'package:myapp/splash.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myapp/Question/quiz.dart'; // Import your quiz screen
 
@@ -28,23 +29,20 @@ void main() async {
       runApp(const MyApp());
     } else {
       // Navigate to the quiz screen if the user hasn't completed the quiz
-      runApp(
-        const MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: QuizScreen(),
-        ),
-      );
+      runApp(   const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: QuizScreen(),
+      ),);
     }
   } else {
     // Navigate to the sign-in screen if the user is not logged in
-    runApp(
-      const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SignInScreen(),
-      ),
-    );
+    runApp(   const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SignInScreen(),
+    ),);
   }
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
