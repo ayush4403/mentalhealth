@@ -19,30 +19,30 @@ class _QuizScreenState extends State<QuizScreen> {
     {
       'question':
           'On a scale of 1 to 10, how would you rate your overall well-being today?',
-      'image': 'assets/GIF/Qgif1.json',
+      'image': 'assets/GIF/Questions/Qgif1.json',
       'isSlider': true,
     },
     {
       'question': 'Are you often very critical of yourself?',
-      'image': 'assets/GIF/Qgif2.json',
+      'image': 'assets/GIF/Questions/Qgif2.json',
       'options': ['Extremely', 'Frequently', 'Rarely', 'Not at all'],
     },
     {
       'question':
           'How satisfied are you with your current social interaction and connections?',
-      'image': 'assets/GIF/Qgif3.json',
+      'image': 'assets/GIF/Questions/Qgif3.json',
       'options': ['Very Well', 'Moderately', 'Struggling', 'Not at all'],
     },
     {
       'question':
           'Are you currently experiencing stress related to work or academic responsibilities?',
-      'image': 'assets/GIF/Qgif4.json',
+      'image': 'assets/GIF/Questions/Qgif4.json',
       'options': ['Occasionally', 'Moderately', 'Frequently', 'Not at all'],
     },
     {
       'question':
           'How much are you currently coping up with stress or difficult emotions?',
-      'image': 'assets/GIF/Qgif5.json',
+      'image': 'assets/GIF/Questions/Qgif5.json',
       'options': ['Very Well', 'Moderately', 'Struggling', 'Not at all'],
     },
   ];

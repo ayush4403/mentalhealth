@@ -1,4 +1,3 @@
-
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
@@ -17,7 +16,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -43,6 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
         password: _passwordTextController.text,
       );
 
+      // ignore: unused_local_variable
       final User? user = userCredential.user;
 
       Navigator.push(
@@ -79,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             children: <Widget>[
               Lottie.asset(
-                'assets/GIF/signin.json',
+                'assets/GIF/Registration/signin.json',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.34,
               ),
