@@ -16,7 +16,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
-  TextEditingController();
+      TextEditingController();
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       final UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userEmail,
         password: password,
       );
@@ -123,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: <Widget>[
             Lottie.asset(
-              'assets/GIF/signup.json',
+              'assets/GIF/Registration/signup.json',
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.34,
             ),
@@ -149,9 +149,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             .textTheme
                             .headlineMedium!
                             .copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                     const SizedBox(

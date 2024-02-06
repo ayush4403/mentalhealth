@@ -41,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
       }
 
       final UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailTextController.text,
         password: _passwordTextController.text,
       );
@@ -107,9 +107,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               .textTheme
                               .headlineMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                         const SizedBox(
                           height: 50,
