@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -16,7 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _userNameTextController = TextEditingController();
   final TextEditingController _confirmPasswordTextController =
-  TextEditingController();
+      TextEditingController();
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -36,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final String userName = _userNameTextController.text.trim();
     final String userEmail = _emailTextController.text.trim();
     final String password = _passwordTextController.text;
+    // ignore: unused_local_variable
     final String confirmPassword = _confirmPasswordTextController.text;
 
     if (!_validateFields()) {
@@ -44,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       final UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: userEmail,
         password: password,
       );
@@ -63,6 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _passwordTextController.clear();
         _confirmPasswordTextController.clear();
       }
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isUserLoggedIn', true);
     } catch (error, stackTrace) {
       if (kDebugMode) {
         print("Error: $error");
@@ -118,12 +122,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Lottie.asset(
-              'assets/GIF/signup.json',
+              'assets/GIF/Registration/signup.json',
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.34,
             ),
@@ -149,9 +154,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             .textTheme
                             .headlineMedium!
                             .copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                     const SizedBox(
