@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -15,7 +14,6 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
   double sliderValue = 5.0;
   bool isButtonPressed = false;
   List<Map<String, dynamic>> questions = [
@@ -187,7 +185,6 @@ class _QuizScreenState extends State<QuizScreen> {
         () {}); // Trigger a rebuild to update the state of the "Next" button
   }
 
-
   Future<void> nextQuestion() async {
     if (currentQuestionIndex < questions.length - 1) {
       setState(() {
@@ -215,10 +212,8 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
-
   Future<void> setHasCompletedQuiz() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('hasCompletedQuiz', true);
   }
 }
-

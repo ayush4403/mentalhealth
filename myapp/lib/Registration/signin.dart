@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myapp/Activities/audio.dart';
 
 class MindfulMeditation extends StatefulWidget {
   const MindfulMeditation({Key? key}) : super(key: key);
@@ -46,7 +44,8 @@ class _MindfulMeditationState extends State<MindfulMeditation> {
             ),
           ),
 
-          SizedBox(height: 20), // Leave space between the card and other content
+          SizedBox(
+              height: 20), // Leave space between the card and other content
 
           // Add to playlist and recommendation
           Container(
