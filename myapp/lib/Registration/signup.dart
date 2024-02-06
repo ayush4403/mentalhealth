@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -36,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final String userName = _userNameTextController.text.trim();
     final String userEmail = _emailTextController.text.trim();
     final String password = _passwordTextController.text;
+    // ignore: unused_local_variable
     final String confirmPassword = _confirmPasswordTextController.text;
 
     if (!_validateFields()) {
@@ -63,6 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _passwordTextController.clear();
         _confirmPasswordTextController.clear();
       }
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isUserLoggedIn', true);
     } catch (error, stackTrace) {
       if (kDebugMode) {
         print("Error: $error");
@@ -118,6 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(

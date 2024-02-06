@@ -1,13 +1,11 @@
-import 'package:myapp/home.dart';
 import 'package:myapp/Question/quiz.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../reusable_widgets/reusable_widgets.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
-//import '../../utils/color_utils.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -19,8 +17,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-  //String _userName = "";
-  //String _userEmail = "";
 
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -46,14 +42,21 @@ class _SignInScreenState extends State<SignInScreen> {
         password: _passwordTextController.text,
       );
 
+      // ignore: unused_local_variable
       final User? user = userCredential.user;
+      if (user != null) {
+        // Set a flag in SharedPreferences to indicate successful sign-in
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isUserLoggedIn', true);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => QuizScreen(),
-        ),
-      );
+        // Navigate to the next screen (QuizScreen in this case)
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => QuizScreen(),
+          ),
+        );
+      }
     } catch (e) {
       String errorMessage = 'An error occurred during sign-in.';
 
@@ -74,6 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
