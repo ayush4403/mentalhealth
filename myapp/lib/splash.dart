@@ -96,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen>
                     Hero(
                       tag: 'logo',
                       child: SvgPicture.asset(
-                        'assets/SVGS/newlogo.svg',
+                        'assets/SVGS/Splash/newlogo.svg',
                         width: 150,
                         height: 150,
                       ),
