@@ -1,7 +1,7 @@
 //import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/Activities/Morning%20MEditation/mindfulmeditation.dart';
+import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/quotes/daily_quote.dart';
 
 class CardView extends StatelessWidget {
