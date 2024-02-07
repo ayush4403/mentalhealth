@@ -16,7 +16,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 89, 201, 253),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Stack(
         children: [
           Column(
@@ -31,34 +31,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                   itemBuilder: (_, i) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 160, 30, 40),
+                      padding: const EdgeInsets.fromLTRB(30, 140, 30, 40),
                       child: Column(
                         children: [
                           Lottie.asset(
                             'assets/GIF/gif${i + 1}.json',
-                            height: 350,
-                            width: 350,
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.75,
                             fit: BoxFit.fill,
                           ),
                           const SizedBox(
-                            height: 40,
+                            height: 50,
                           ),
                           Text(
                             contents[i].title,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           const SizedBox(
-                            height: 40,
+                            height: 20,
                           ),
                           Text(
                             contents[i].discription,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 18, color: Colors.black),
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.052,
+                            ),
                           ),
                         ],
                       ),
@@ -92,14 +98,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 16,
+                  vertical: 5,
+                  horizontal: 20,
                 ),
                 decoration: BoxDecoration(
                   color: isButtonPressed
                       ? Colors.white
-                      : const Color.fromARGB(255, 58, 143, 131),
-                  borderRadius: BorderRadius.circular(25),
+                      : const Color.fromARGB(255, 47, 207, 255),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -110,14 +116,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         fontSize: 17,
                         fontWeight: FontWeight.normal,
                         color: isButtonPressed
-                            ? const Color.fromARGB(255, 58, 143, 131)
+                            ? const Color.fromARGB(255, 47, 207, 255)
                             : Colors.white,
                       ),
                     ),
-                    const SizedBox(width: 5), // Adjust the spacing between text and icon
-                    Icon(Icons.skip_next,
-                      color:isButtonPressed
-                          ? const Color.fromARGB(255, 58, 143,131)
+                    const SizedBox(
+                        width: 2), // Adjust the spacing between text and icon
+                    Icon(
+                      Icons.skip_next,
+                      color: isButtonPressed
+                          ? const Color.fromARGB(255, 47, 207, 255)
                           : Colors.white,
                     )
                   ],
@@ -126,7 +134,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           Positioned(
-            bottom: 20,
+            bottom: 40,
             left: 0,
             right: 0,
             child: Row(
@@ -149,7 +157,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 10,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: currentPage == index ? const Color.fromARGB(255, 58, 143,131) : Colors.white,
+        color: currentPage == index
+            ? const Color.fromARGB(255, 47, 207, 255)
+            : Colors.white,
       ),
     );
   }

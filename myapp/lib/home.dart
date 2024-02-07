@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+//import 'package:myapp/Activities/audio.dart';
+import 'package:myapp/Activities/quotes/daily_quote.dart';
 
 void main() {
-  runApp( const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  const MyApp( {super.key} );
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,14 +16,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const  HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-
-  const HomePage( {super.key} );
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +41,13 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-           const SizedBox(height: 20),
+            const SizedBox(height: 20),
             const FlutterLogo(size: 100),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Add functionality here
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DailyQuotePage()));
               },
               child: const Text('Press Me'),
             ),

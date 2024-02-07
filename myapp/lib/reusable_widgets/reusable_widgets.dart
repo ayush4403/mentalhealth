@@ -11,12 +11,12 @@ Image logoWidget(String imageName) {
 }
 
 TextField reusableTextField(
-    String text,
-    IconData icon,
-    bool isPasswordType,
-    TextEditingController controller,
-    TextInputType keyboardType,
-    ) {
+  String text,
+  IconData icon,
+  bool isPasswordType,
+  TextEditingController controller,
+  TextInputType keyboardType,
+) {
   return TextField(
     controller: controller,
     keyboardType: keyboardType,
@@ -43,31 +43,41 @@ TextField reusableTextField(
   );
 }
 
-
-
 Container firebaseUIButton(BuildContext context, String title, Function onTap) {
   return Container(
-    width: MediaQuery.of(context).size.width,
-    height: 50,
-    margin:  EdgeInsets.fromLTRB(70, MediaQuery.of(context).size.width*0.05, 70, 20),
+    width: MediaQuery.of(context).size.width * 0.3,
+    height: 40,
+    margin: EdgeInsets.fromLTRB(
+        70, MediaQuery.of(context).size.width * 0.05, 70, 20),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
     child: ElevatedButton(
       onPressed: () {
         onTap();
       },
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return Colors.white;
-            }
-            return const Color.fromARGB(255, 58, 143,131);
-          }),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.pressed)) {
+            return Colors
+                .white; // Change background color to white when pressed
+          }
+          return const Color.fromARGB(
+              255, 47, 207, 255); // Default background color
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.pressed)) {
+            return Colors.cyan; // Change text color to cyan when pressed
+          }
+          return Colors.white; // Default text color
+        }),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      ),
       child: Text(
         title,
-        style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     ),
   );

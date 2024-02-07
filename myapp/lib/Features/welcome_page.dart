@@ -15,39 +15,39 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 89, 201, 253),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Lottie.asset(
               'assets/GIF/getStarted.json',
-              height: 350,
-              width: 350,
+              height: MediaQuery.of(context).size.height * 0.38,
+              width: MediaQuery.of(context).size.width * 0.9,
               fit: BoxFit.fill,
             ),
-            const SizedBox(height: 50),
-            const Text(
+            const SizedBox(height: 20),
+            Text(
               'Hey Welcome!',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-            const SizedBox(height: 30),
-            const SizedBox(
+            const SizedBox(height: 20),
+            SizedBox(
               width: 350,
               child: Text(
                 'Your mindful mental health companion for everyone, anywhere 🍃',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      fontWeight: FontWeight.normal,
+                    ),
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -69,13 +69,13 @@ class _WelcomeState extends State<Welcome> {
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 16,
+                  vertical: 5,
+                  horizontal: 15,
                 ),
                 decoration: BoxDecoration(
                   color: isButtonPressed
                       ? Colors.white
-                      : const Color.fromARGB(255, 58, 143, 131),
+                      : const Color.fromARGB(255, 47, 207, 255),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Row(
@@ -87,16 +87,18 @@ class _WelcomeState extends State<Welcome> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: isButtonPressed
-                            ? const Color.fromARGB(255, 58, 143, 131)
+                            ? const Color.fromARGB(255, 47, 207, 255)
                             : Colors.white,
                       ),
                     ),
-                    const SizedBox(width: 9), // Adjust the spacing between text and icon
-                  Icon(Icons.add_reaction_rounded,
-                    color:isButtonPressed
-                      ? const Color.fromARGB(255, 58, 143,131)
-                      : Colors.white,
-                  )
+                    const SizedBox(
+                        width: 9), // Adjust the spacing between text and icon
+                    Icon(
+                      Icons.add_reaction_rounded,
+                      color: isButtonPressed
+                          ? const Color.fromARGB(255, 47, 207, 255)
+                          : Colors.white,
+                    ),
                   ],
                 ),
               ),

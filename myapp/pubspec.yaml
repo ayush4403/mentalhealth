@@ -39,6 +39,10 @@ dependencies:
   flutter_svg: ^2.0.9
   lottie: ^3.0.0
   google_fonts: ^6.1.0
+  flutter_riverpod: ^2.4.9
+  audioplayers: ^5.2.1
+  just_audio: ^0.9.36
+  audio_video_progress_bar: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +85,7 @@ flutter:
     - assets/GIF/signin.json
     - assets/GIF/signup.json
     - assets/GIF/password.json
+    - assets/audio/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
