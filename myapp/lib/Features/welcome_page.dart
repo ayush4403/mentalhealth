@@ -21,7 +21,7 @@ class _WelcomeState extends State<Welcome> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Lottie.asset(
-              'assets/GIF/getStarted.json',
+              'assets/GIF/Features/getStarted.json',
               height: MediaQuery.of(context).size.height * 0.38,
               width: MediaQuery.of(context).size.width * 0.9,
               fit: BoxFit.fill,

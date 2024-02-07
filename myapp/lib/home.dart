@@ -1,58 +1,86 @@
 import 'package:flutter/material.dart';
-//import 'package:myapp/Activities/audio.dart';
-import 'package:myapp/Activities/quotes/daily_quote.dart';
+import 'package:myapp/Activities/cardview.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Simple Flutter Home Page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
-    );
-  }
+  _HomePageState createState() => _HomePageState();
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: currentIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
+      backgroundColor: Colors.white,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        children: [
+          Container(
+              color: Colors.red, child: const Center(child: Text('Home'))),
+          CardView(),
+          Container(
+              color: Colors.blue, child: const Center(child: Text('Report'))),
+          Container(
+              color: Colors.orange, child: const Center(child: Text('Games'))),
+          Container(
+              color: Colors.purple,
+              child: const Center(child: Text('Profile'))),
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Welcome to Flutter!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const FlutterLogo(size: 100),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DailyQuotePage()));
-              },
-              child: const Text('Press Me'),
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Colors.blue,
+        currentIndex: currentIndex,
+        onTap: (index) {
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_filled),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_soccer),
+            label: 'Activities',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Report',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.games),
+            label: 'Games',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

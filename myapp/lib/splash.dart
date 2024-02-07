@@ -51,32 +51,30 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
 
     // Navigate after animation completes
-    _animationController.addStatusListener(
-          (status) {
-        if (status == AnimationStatus.completed) {
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-              const Welcome(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.easeInOutCubic;
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const Welcome(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOutCubic;
 
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-                var offsetAnimation = animation.drive(tween);
+              var offsetAnimation = animation.drive(tween);
 
-                return SlideTransition(position: offsetAnimation, child: child);
-              },
-            ),
-          );
-        }
-      },
-    );
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -98,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen>
                     Hero(
                       tag: 'logo',
                       child: SvgPicture.asset(
-                        'assets/SVGS/newlogo.svg',
+                        'assets/SVGS/Splash/newlogo.svg',
                         width: 150,
                         height: 150,
                       ),
@@ -114,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
                           color:
-                          Colors.white, // Set your desired text color here
+                              Colors.white, // Set your desired text color here
                         ),
                       ),
                     ),

@@ -35,7 +35,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: Column(
                         children: [
                           Lottie.asset(
-                            'assets/GIF/gif${i + 1}.json',
+                            'assets/GIF/Features/gif${i + 1}.json',
                             height: MediaQuery.of(context).size.height * 0.3,
                             width: MediaQuery.of(context).size.width * 0.75,
                             fit: BoxFit.fill,
