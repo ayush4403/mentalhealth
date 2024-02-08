@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
+import 'package:myapp/Activities/STRESSBUSTER/stressfirstscreen.dart';
+//import 'package:myapp/Activities/quotes/daily_quote.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
+//import 'package:myapp/Activities/Stress_Buster/stress_buster.dart';
 
 class CardView extends StatelessWidget {
   @override
@@ -98,7 +101,6 @@ class ActivityList extends StatelessWidget {
     // ignore: avoid_print
     print('Started: $activity');
 
-    // Navigate to a specific screen when "Start" is pressed for "Morning Meditation"
     if (activity == 'Motivation Quotes') {
       Navigator.push(
         context,
@@ -108,7 +110,13 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MindfulMeditation()),
+        MaterialPageRoute(builder: (context) => MorningMeditation()),
+      );
+    }
+    if (activity == 'Stress Buster Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MusicList()),
       );
     }
   }
