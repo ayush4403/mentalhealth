@@ -1,9 +1,5 @@
-// daily_quotes.dart
-
-//import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:math';
-//import 'dummy_data.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DailyQuotePage extends StatefulWidget {
@@ -41,28 +37,10 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-        title: const Text(
-          'Daily Motivational Quote',
-          style: TextStyle(
-            color: Colors.white, // Change text color to white
-            fontSize: 20, // Change font size
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -76,7 +54,7 @@ class _DailyQuotePageState extends State<DailyQuotePage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: _fetchQuotesFromStorage,

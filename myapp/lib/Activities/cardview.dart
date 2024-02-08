@@ -1,8 +1,7 @@
-//import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
-import 'package:myapp/Activities/quotes/daily_quote.dart';
+import 'package:myapp/Activities/quotes/daily_quotes.dart';
 
 class CardView extends StatelessWidget {
   @override
@@ -62,7 +61,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/10_stress_buster_music.json',
   ];
 
-  final List<String> descripation = [
+  final List<String> description = [
     'Start your day with calmness and focus through guided meditation.',
     'Wind down and relax with soothing melodies before bedtime.',
     'Sharpen your cognitive skills and keep your mind active with engaging challenges.',
@@ -75,6 +74,19 @@ class ActivityList extends StatelessWidget {
     'Relieve tension and stress with calming melodies and rhythms.',
   ];
 
+  final List<Color> cardColors = [
+    Colors.blue[100]!,
+    Colors.red[100]!,
+    Colors.green[100]!,
+    Colors.yellow[100]!,
+    Colors.orange[100]!,
+    Colors.purple[100]!,
+    Colors.teal[100]!,
+    Colors.indigo[100]!,
+    Colors.amber[100]!,
+    Colors.deepOrange[100]!,
+  ];
+
   void handleActivityTap(String activity) {
     // Handle the onPressed action for each activity here
     // ignore: avoid_print
@@ -83,19 +95,20 @@ class ActivityList extends StatelessWidget {
 
   void handleStartButtonTap(BuildContext context, String activity) {
     // Handle the onPressed action for the "Start" button here
+    // ignore: avoid_print
     print('Started: $activity');
 
     // Navigate to a specific screen when "Start" is pressed for "Morning Meditation"
     if (activity == 'Motivation Quotes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => DailyQuotePage()),
+        MaterialPageRoute(builder: (context) => DailyQuotesScreen()),
       );
     }
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MindfulMeditation()),
+        MaterialPageRoute(builder: (context) => const MindfulMeditation()),
       );
     }
   }
@@ -106,12 +119,12 @@ class ActivityList extends StatelessWidget {
       itemCount: activities.length,
       itemBuilder: (context, index) {
         return Card(
-          elevation: 3,
+          elevation: 10,
           margin: const EdgeInsets.all(8),
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.blue[100], // Background color for the activity
+              color: cardColors[index], // Assign color based on index
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -138,7 +151,7 @@ class ActivityList extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        descripation[index],
+                        description[index],
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.normal,
