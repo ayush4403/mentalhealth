@@ -1,96 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
+import 'package:myapp/Activities/Morning_Meditation/GuidedMed.dart';
+//import 'package:myapp/Activities/Stress_Buster/stress_buster.dart';
+import 'package:myapp/Activities/Morning_Meditation/Visualize.dart';
 
-class MindfulMeditation extends StatefulWidget {
-  const MindfulMeditation({Key? key}) : super(key: key);
-
+class MorningMeditation extends StatefulWidget {
   @override
-  _MindfulMeditationState createState() => _MindfulMeditationState();
+  MorningMeditationState createState() => MorningMeditationState();
 }
 
-class _MindfulMeditationState extends State<MindfulMeditation> {
+class MorningMeditationState extends State<MorningMeditation> {
+  int _selectedIndex = 0;
+
+  static List<Widget> _fragments = <Widget>[
+    Guided(),
+    Visualize(),
+    BrainEntrainment(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  String br = 'BrainBeats';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mindful Meditation'),
-        backgroundColor: Colors.blue,
+        title: Text('MorningMeditation'),
       ),
-      backgroundColor: Colors.blue, // Set background color to blue
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 20), // Leave space from the top
-
-          // Container with rounded corners
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Music Title', // Replace with actual music title
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            color: Colors.white,
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(
+                _fragments.length,
+                (index) => InkWell(
+                  onTap: () {
+                    _onItemTapped(index);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(
+                        index == 0
+                            ? Icons.format_quote
+                            : index == 1
+                                ? Icons.chat
+                                : Icons.insert_chart,
+                        color:
+                            _selectedIndex == index ? Colors.blue : Colors.grey,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        index == 0
+                            ? 'Guided'
+                            : index == 1
+                                ? 'Visualize'
+                                : 'BrainBeats',
+                        style: TextStyle(
+                          color: _selectedIndex == index
+                              ? Colors.blue
+                              : Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  // Progress bar, play/pause buttons, timer selection, etc.
-                  // Add your audio player UI components here
-                ],
+                ),
               ),
             ),
           ),
-
-          SizedBox(
-              height: 20), // Leave space between the card and other content
-
-          // Add to playlist and recommendation
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Add to Playlist', // Replace with appropriate text
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                // Add your playlist and recommendation UI components here
-              ],
-            ),
-          ),
-
-          Spacer(), // Add spacer to push the bottom navigation to the bottom
-
-          // Bottom navigation bar
-          Container(
-            color: Colors.blue,
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () {}, // Add functionality for favorite icon
-                  icon: Icon(Icons.favorite_border, color: Colors.white),
-                ),
-                IconButton(
-                  onPressed: () {}, // Add functionality for share icon
-                  icon: Icon(Icons.share, color: Colors.white),
-                ),
-                IconButton(
-                  onPressed: () {}, // Add functionality for star icon
-                  icon: Icon(Icons.star_border, color: Colors.white),
-                ),
-              ],
-            ),
+          Expanded(
+            child: _fragments.elementAt(_selectedIndex),
           ),
         ],
       ),
