@@ -46,6 +46,7 @@ dependencies:
   firebase_storage: ^11.6.1
   shared_preferences: ^2.2.2
   path_provider: ^2.1.0
+  video_player: ^2.8.2
 
 dev_dependencies:
   flutter_test:
@@ -64,11 +65,14 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-  #logo and splash screen image
+    #logo and splash screen image
     - assets/SVGS/Splash/newlogo.svg
     - assets/Images/logos.jpg
 
-  #Features's page images
+    #video
+    - assets/Video/newvideo.mp4
+
+    #Features's page images
     - assets/GIF/Features/gif1.json
     - assets/GIF/Features/gif2.json
     - assets/GIF/Features/gif3.json
@@ -76,22 +80,22 @@ flutter:
     - assets/GIF/Features/gif5.json
     - assets/GIF/Features/getStarted.json
 
-  #Questions's page images
+    #Questions's page images
     - assets/GIF/Questions/Qgif1.json
     - assets/GIF/Questions/Qgif2.json
     - assets/GIF/Questions/Qgif3.json
     - assets/GIF/Questions/Qgif4.json
     - assets/GIF/Questions/Qgif5.json
 
-  #Registration page images
+    #Registration page images
     - assets/GIF/Registration/signin.json
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
 
-  #Audio file
+    #Audio file
     - assets/audio/
 
-  #CardView stuff
+    #CardView stuff
     - assets/GIF/Card_view/1_morning_meditation.json
     - assets/GIF/Card_view/2_night_music.json
     - assets/GIF/Card_view/3_brain_training_games.json
