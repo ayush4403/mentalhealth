@@ -49,7 +49,7 @@ class ActivityList extends StatelessWidget {
     'Study Music',
     'Memory Technique',
     'Upcoming Events',
-    'Stress Buster Music',
+    'Music',
   ];
 
   final List<String> activityImages = [
