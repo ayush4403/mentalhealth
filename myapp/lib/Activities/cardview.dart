@@ -4,6 +4,7 @@ import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/STRESSBUSTER/stressfirstscreen.dart';
 //import 'package:myapp/Activities/quotes/daily_quote.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
+//import 'package:myapp/video.dart';
 //import 'package:myapp/Activities/Stress_Buster/stress_buster.dart';
 
 class CardView extends StatelessWidget {
@@ -48,7 +49,7 @@ class ActivityList extends StatelessWidget {
     'Study Music',
     'Memory Technique',
     'Upcoming Events',
-    'Stress Buster Music',
+    'Music',
   ];
 
   final List<String> activityImages = [

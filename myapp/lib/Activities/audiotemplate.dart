@@ -81,26 +81,26 @@ class _AudioCardState extends State<AudioCard> {
             processingState == ProcessingState.buffering) {
           return Container(
             margin: const EdgeInsets.all(8.0),
-            width: 64,
-            height: 64,
+            width: 40,
+            height: 40,
             child: const CircularProgressIndicator(),
           );
         } else if (playing != true) {
           return IconButton(
             icon: const Icon(Icons.play_arrow),
-            iconSize: 64,
+            iconSize: 40,
             onPressed: _player.play,
           );
         } else if (processingState != ProcessingState.completed) {
           return IconButton(
             icon: const Icon(Icons.pause),
-            iconSize: 64,
+            iconSize: 40,
             onPressed: _player.pause,
           );
         } else {
           return IconButton(
             icon: const Icon(Icons.replay),
-            iconSize: 64,
+            iconSize: 40,
             onPressed: () => _player.seek(Duration.zero),
           );
         }
@@ -120,28 +120,28 @@ class _AudioCardState extends State<AudioCard> {
               value: 0.0,
               child: Text(
                 "No Limit",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
             DropdownMenuItem(
               value: 60.0,
               child: Text(
                 "1 Minute",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
             DropdownMenuItem(
               value: 120.0,
               child: Text(
                 "2 Minutes",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
             DropdownMenuItem(
               value: 180.0,
               child: Text(
                 "3 Minutes",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
               ),
             ),
           ],
@@ -175,44 +175,36 @@ class _AudioCardState extends State<AudioCard> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.99,
-      height:
-          MediaQuery.of(context).size.height * 0.3, // Fixed width for the card
-      child: Card(
-        elevation: 9,
-        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Container(
+        child: Card(
+          elevation: 9,
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
+          child: Stack(
             children: [
               // Image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  widget.imageUrl,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
+              Transform.translate(
+                offset: Offset(130, -50), // Adjust as needed
+                child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                  child: Image.asset(
+                    widget.imageUrl,
+                    width: 120, // Adjust image width as needed
+                    height: 120, // Adjust image height as needed
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              SizedBox(width: 12),
-              Expanded(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Title
-                    Text(
-                      widget.title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 100), // Placeholder for the image
                     _progessBar(),
                     _playbackControlButton(),
-                    _timerSelector()
+                    _timerSelector(),
                   ],
                 ),
               ),
