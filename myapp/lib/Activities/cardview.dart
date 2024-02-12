@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
-import 'package:myapp/Activities/STRESSBUSTER/stressfirstscreen.dart';
+import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 //import 'package:myapp/Activities/quotes/daily_quote.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
 //import 'package:myapp/video.dart';
@@ -114,7 +114,7 @@ class ActivityList extends StatelessWidget {
         MaterialPageRoute(builder: (context) => MorningMeditation()),
       );
     }
-    if (activity == 'Stress Buster Music') {
+    if (activity == 'Music') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MusicList()),
