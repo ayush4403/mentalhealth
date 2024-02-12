@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() {
             currentIndex = index;
@@ -59,25 +60,29 @@ class _HomePageState extends State<HomePage> {
             curve: Curves.easeInOut,
           );
         },
+        backgroundColor: Colors.black, // Set background color
+        type: BottomNavigationBarType
+            .fixed, // Set type to fixed for more than 3 items
+        elevation: 0, // Remove shadow
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
+            icon: Icon(Icons.home_sharp),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.sports_soccer),
+            icon: Icon(Icons.local_activity_sharp),
             label: 'Activities',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
+            icon: Icon(Icons.insert_chart_outlined),
             label: 'Report',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.games),
+            icon: Icon(Icons.videogame_asset),
             label: 'Games',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_4),
             label: 'Profile',
           ),
         ],
