@@ -18,9 +18,11 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(
+      () {
+        _selectedIndex = index;
+      },
+    );
   }
 
   @override
