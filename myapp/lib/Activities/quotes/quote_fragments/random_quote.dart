@@ -107,3 +107,21 @@ class _RandomQuoteState extends State<RandomQuote> {
     );
   }
 }
+
+class DetailScreen extends StatelessWidget {
+  final String imagePath;
+
+  const DetailScreen({super.key, required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Quote Details'),
+      ),
+      body: Center(
+        child: Image.asset(imagePath),
+      ),
+    );
+  }
+}
