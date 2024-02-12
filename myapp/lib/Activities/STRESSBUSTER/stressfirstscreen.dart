@@ -152,6 +152,7 @@ class _MusicListScreenState extends State<MusicListScreen>
           SizedBox(height: 12),
           Column(
             children: musicList.asMap().entries.map((entry) {
+              // ignore: unused_local_variable
               int index = entry.key;
               MusicData musicData = entry.value;
               return Padding(
