@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-//import 'package:myapp/Activities/quotes/extra_quote.dart';
+import 'package:myapp/Activities/quotes/extra_quote.dart';
 import 'package:myapp/Activities/quotes/quote_fragments/person_grid.dart';
-//import 'package:myapp/Activities/quotes/random_quote.dart';
+import 'package:myapp/Activities/quotes/random_quote.dart';
 
 class DailyQuotesScreen extends StatefulWidget {
   const DailyQuotesScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _DailyQuotesScreenState createState() => _DailyQuotesScreenState();
 }
 
@@ -16,6 +15,7 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
 
   static final List<Widget> _fragments = <Widget>[
     const PersonScreen(),
+    RandomQuote(),
   ];
 
   void _onItemTapped(int index) {
