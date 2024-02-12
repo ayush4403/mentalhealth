@@ -1,42 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/images_view.dart';
 
-class PersonScreen extends StatefulWidget {
-  const PersonScreen({super.key});
+class Quotetopic extends StatefulWidget {
+  const Quotetopic({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _PersonScreenState createState() => _PersonScreenState();
+  QuotetopicState createState() => QuotetopicState();
 }
 
-class _PersonScreenState extends State<PersonScreen>
+class QuotetopicState extends State<Quotetopic>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
   final List<String> images = [
-    'assets/Images/quotes/GuruGopalDas.jpg',
-    'assets/Images/quotes/Swami_Vivekananda.jpg',
-    'assets/Images/quotes/Sadhguru.jpg',
-    'assets/Images/quotes/dr_apj.jpg',
-    'assets/Images/quotes/Virat_Kohli.jpg',
-    'assets/Images/quotes/Dhoni.jpg',
-    'assets/Images/quotes/al_en.jpg',
-    'assets/Images/quotes/bill_gates.jpg',
-    'assets/Images/quotes/elon_musk.jpg',
-    'assets/Images/quotes/Andrew_Tate.jpg',
+    'assets/Images/types_quotes/education.jpg',
+    'assets/Images/types_quotes/diet.jpg',
+    'assets/Images/types_quotes/career.jpg',
+    'assets/Images/types_quotes/financial.jpg',
+    'assets/Images/types_quotes/gym_1.jpg',
+    'assets/Images/types_quotes/productivity.jpg',
+    'assets/Images/types_quotes/mentalhealth.jpg',
+    'assets/Images/types_quotes/sociallife.jpg',
+    'assets/Images/types_quotes/Self-Improvement.jpg',
+    'assets/Images/types_quotes/Motivation.jpg',
   ];
 
   final List<String> names = [
-    'Guru Gopal Das',
-    'Swami Vivekananda',
-    'Sadhguru',
-    'Dr. APJ Abdul Kalam',
-    'Virat Kohli',
-    'Mahendra Singh Dhoni',
-    'Albert Einstein',
-    'Bill Gates',
-    'Elon Musk',
-    'Andrew Tate',
+    'Education',
+    'Diet',
+    'Career',
+    'Financial',
+    'Fitness',
+    'Productivity',
+    'Mental Health',
+    'Social Life',
+    'Self-Improvement',
+    'Motivation',
   ];
 
   @override
@@ -85,8 +86,7 @@ class _PersonScreenState extends State<PersonScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetailScreen(imagePath: images[index]),
+                        builder: (context) => ImageWithText(),
                       ),
                     );
                   },
@@ -151,24 +151,6 @@ class _PersonScreenState extends State<PersonScreen>
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DetailScreen({super.key, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quote Details'),
-      ),
-      body: Center(
-        child: Image.asset(imagePath),
       ),
     );
   }
