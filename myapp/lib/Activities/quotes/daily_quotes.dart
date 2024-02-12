@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/quotes/extra_quote.dart';
-import 'package:myapp/Activities/quotes/grid_view/person_grid.dart';
-import 'package:myapp/Activities/quotes/random_quote.dart';
+//import 'package:myapp/Activities/quotes/extra_quote.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/person_grid.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/random_quote.dart';
+//import 'package:myapp/Activities/quotes/random_quote.dart';
 
 class DailyQuotesScreen extends StatefulWidget {
   const DailyQuotesScreen({super.key});
@@ -16,8 +17,6 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
 
   static final List<Widget> _fragments = <Widget>[
     const PersonScreen(),
-    RandomQuote(),
-    DailyQuotePage(),
     RandomQuote(),
   ];
 
@@ -85,48 +84,6 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
             child: _fragments.elementAt(_selectedIndex),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class DailyThoughtsFragment extends StatelessWidget {
-  const DailyThoughtsFragment({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Daily Thoughts Fragment',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class ChatsFragment extends StatelessWidget {
-  const ChatsFragment({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Chats Fragment',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class CallsFragment extends StatelessWidget {
-  const CallsFragment({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Calls Fragment',
-        style: TextStyle(fontSize: 24),
       ),
     );
   }
