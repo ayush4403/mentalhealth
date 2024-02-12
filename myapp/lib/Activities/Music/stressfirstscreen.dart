@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/STRESSBUSTER/stressSecond.dart';
+import 'package:myapp/Activities/Music/stressSecond.dart';
 
 void main() {
   runApp(MusicList());

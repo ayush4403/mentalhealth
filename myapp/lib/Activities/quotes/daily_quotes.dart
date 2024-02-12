@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/quotes/extra_quote.dart';
-import 'package:myapp/Activities/quotes/grid_persons/person_grid.dart';
+import 'package:myapp/Activities/quotes/grid_view/person_grid.dart';
 import 'package:myapp/Activities/quotes/random_quote.dart';
 
 class DailyQuotesScreen extends StatefulWidget {
