@@ -86,7 +86,9 @@ class QuotetopicState extends State<Quotetopic>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ImageWithText(names[index]),
+                        builder: (context) => ImageWithText(
+                          queryname: names[index],
+                        ),
                       ),
                     );
                   },
