@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/quotes/daily_quote.dart';
-import 'package:myapp/Activities/quotes/person_quote.dart';
+import 'package:myapp/Activities/quotes/extra_quote.dart';
+import 'package:myapp/Activities/quotes/grid_persons/person_grid.dart';
+import 'package:myapp/Activities/quotes/random_quote.dart';
 
 class DailyQuotesScreen extends StatefulWidget {
+  const DailyQuotesScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _DailyQuotesScreenState createState() => _DailyQuotesScreenState();
 }
 
@@ -11,10 +15,10 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _fragments = <Widget>[
+    const PersonScreen(),
+    RandomQuote(),
     DailyQuotePage(),
-    PersonQuote(),
-    DailyQuotePage(),
-    CallsFragment(),
+    RandomQuote(),
   ];
 
   void _onItemTapped(int index) {
@@ -87,6 +91,8 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
 }
 
 class DailyThoughtsFragment extends StatelessWidget {
+  const DailyThoughtsFragment({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -99,6 +105,8 @@ class DailyThoughtsFragment extends StatelessWidget {
 }
 
 class ChatsFragment extends StatelessWidget {
+  const ChatsFragment({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -111,6 +119,8 @@ class ChatsFragment extends StatelessWidget {
 }
 
 class CallsFragment extends StatelessWidget {
+  const CallsFragment({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Center(

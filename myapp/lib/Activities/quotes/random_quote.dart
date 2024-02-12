@@ -3,29 +3,12 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class RandomQuote extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Daily Quotes',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: PersonQuote(),
-    );
-  }
+  _RandomQuoteState createState() => _RandomQuoteState();
 }
 
-class PersonQuote extends StatefulWidget {
-  @override
-  _PersonQuoteState createState() => _PersonQuoteState();
-}
-
-class _PersonQuoteState extends State<PersonQuote> {
+class _RandomQuoteState extends State<RandomQuote> {
   String _imageUrl = '';
   String _quote = '';
   bool _isLoading = false;
@@ -91,7 +74,7 @@ class _PersonQuoteState extends State<PersonQuote> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

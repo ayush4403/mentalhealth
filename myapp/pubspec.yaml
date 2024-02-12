@@ -103,6 +103,18 @@ flutter:
     - assets/GIF/Card_view/9_upcoming_events.json
     - assets/GIF/Card_view/10_stress_buster_music.json
 
+  #Quotes iamges
+    - assets/Images/quotes/Swami_Vivekananda.jpg
+    - assets/Images/quotes/Virat_Kohli.jpg
+    - assets/Images/quotes/Dhoni.jpg
+    - assets/Images/quotes/dr_apj.jpg
+    - assets/Images/quotes/GuruGopalDas.jpg
+    - assets/Images/quotes/Andrew_Tate.jpg
+    - assets/Images/quotes/Sadhguru.jpg
+    - assets/Images/quotes/elon_musk.jpg
+    - assets/Images/quotes/bill_gates.jpg
+    - assets/Images/quotes/al_en.jpg
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

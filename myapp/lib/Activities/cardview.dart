@@ -44,7 +44,7 @@ class ActivityList extends StatelessWidget {
     'Brain Training Games',
     'Mental Marathon',
     'Image Based Riddles',
-    'Motivation Quotes',
+    'Daily Thoughts',
     'Study Music',
     'Memory Technique',
     'Upcoming Events',
@@ -101,7 +101,7 @@ class ActivityList extends StatelessWidget {
     // ignore: avoid_print
     print('Started: $activity');
 
-    if (activity == 'Motivation Quotes') {
+    if (activity == 'Daily Thoughts') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DailyQuotesScreen()),
@@ -169,8 +169,8 @@ class ActivityList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: SizedBox(
-                          width: 200, // Specify the desired width
-                          height: 40, // Specify the desired height
+                          width: 200,
+                          height: 40,
                           child: ElevatedButton(
                             onPressed: () => handleStartButtonTap(
                                 context, activities[index]),
