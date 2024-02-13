@@ -36,7 +36,7 @@ class QuotetopicState extends State<Quotetopic>
     'Productivity',
     'Mental Health',
     'Social Life',
-    'Self-Improvement',
+    'Self Improvement',
     'Motivation',
   ];
 

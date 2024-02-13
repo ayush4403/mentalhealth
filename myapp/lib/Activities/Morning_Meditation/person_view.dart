@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-class ImageWithText extends StatefulWidget {
+class PersonImageWithText extends StatefulWidget {
   final String queryname;
 
-  const ImageWithText({super.key, required this.queryname});
+  const PersonImageWithText({super.key, required this.queryname});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ImageWithTextState createState() => _ImageWithTextState();
+  _PersonImageWithTextState createState() => _PersonImageWithTextState();
 }
 
-class _ImageWithTextState extends State<ImageWithText> {
+class _PersonImageWithTextState extends State<PersonImageWithText> {
   late Future<List<Map<String, dynamic>>> _imageData;
   final _random = Random();
   Map<String, List<String>> quoteMap = {
@@ -181,32 +180,14 @@ class _ImageWithTextState extends State<ImageWithText> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text(
-          widget.queryname,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        title: Text(widget.queryname),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _imageData,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -231,10 +212,10 @@ class ImageItem extends StatelessWidget {
   final String customDescription;
 
   const ImageItem({
-    super.key,
+    Key? key,
     required this.imageUrl,
     required this.customDescription,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -250,20 +231,11 @@ class ImageItem extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          child: Text(
-            customDescription,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+        SizedBox(height: 20),
+        Text(
+          customDescription,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16),
         ),
       ],
     );
