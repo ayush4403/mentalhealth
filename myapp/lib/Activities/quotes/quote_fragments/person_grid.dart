@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/person_view.dart';
 
 class PersonScreen extends StatefulWidget {
   const PersonScreen({super.key});
@@ -26,127 +27,6 @@ class _PersonScreenState extends State<PersonScreen>
     'assets/Images/quotes/Andrew_Tate.jpg',
   ];
 
-  final List<String> alberteinstein = [
-    'assets/Images/persons/AlberEinstein/1.jpg',
-    'assets/Images/persons/AlberEinstein/2.jpg',
-    'assets/Images/persons/AlberEinstein/3.jpg',
-    'assets/Images/persons/AlberEinstein/4.jpg',
-    'assets/Images/persons/AlberEinstein/5.jpg',
-    'assets/Images/persons/AlberEinstein/6.jpg',
-    'assets/Images/persons/AlberEinstein/7.jpg',
-    'assets/Images/persons/AlberEinstein/8.jpg',
-    'assets/Images/persons/AlberEinstein/9.jpg',
-    'assets/Images/persons/AlberEinstein/10.jpg',
-  ];
-  final List<String> andrewtate = [
-    'assets/Images/persons/AndrewTate/1.jpg',
-    'assets/Images/persons/AndrewTate/2.jpg',
-    'assets/Images/persons/AndrewTate/3.jpg',
-    'assets/Images/persons/AndrewTate/4.jpg',
-    'assets/Images/persons/AndrewTate/5.jpg',
-    'assets/Images/persons/AndrewTate/6.jpg',
-    'assets/Images/persons/AndrewTate/7.jpg',
-    'assets/Images/persons/AndrewTate/8.jpg',
-    'assets/Images/persons/AndrewTate/9.jpg',
-    'assets/Images/persons/AndrewTate/10.jpg',
-  ];
-  final List<String> apj = [
-    'assets/Images/persons/APJ/1.jpg',
-    'assets/Images/persons/APJ/2.jpg',
-    'assets/Images/persons/APJ/3.jpg',
-    'assets/Images/persons/APJ/4.jpg',
-    'assets/Images/persons/APJ/5.jpg',
-    'assets/Images/persons/APJ/6.jpg',
-    'assets/Images/persons/APJ/7.jpg',
-    'assets/Images/persons/APJ/8.jpg',
-    'assets/Images/persons/APJ/9.jpg',
-    'assets/Images/persons/APJ/10.jpg',
-  ];
-  final List<String> billgates = [
-    'assets/Images/persons/BillGates/1.jpg',
-    'assets/Images/persons/BillGates/2.jpg',
-    'assets/Images/persons/BillGates/3.jpg',
-    'assets/Images/persons/BillGates/4.jpg',
-    'assets/Images/persons/BillGates/5.jpg',
-    'assets/Images/persons/BillGates/6.jpg',
-    'assets/Images/persons/BillGates/7.jpg',
-    'assets/Images/persons/BillGates/8.jpg',
-    'assets/Images/persons/BillGates/9.jpg',
-    'assets/Images/persons/BillGates/10.jpg',
-  ];
-  final List<String> elon_musk = [
-    'assets/Images/persons/ElonMusk/1.jpg',
-    'assets/Images/persons/ElonMusk/2.jpg',
-    'assets/Images/persons/ElonMusk/3.jpg',
-    'assets/Images/persons/ElonMusk/4.jpg',
-    'assets/Images/persons/ElonMusk/5.jpg',
-    'assets/Images/persons/ElonMusk/6.jpg',
-    'assets/Images/persons/ElonMusk/7.jpg',
-    'assets/Images/persons/ElonMusk/8.jpg',
-    'assets/Images/persons/ElonMusk/9.jpg',
-    'assets/Images/persons/ElonMusk/10.jpg',
-  ];
-  final List<String> gurugopaldas = [
-    'assets/Images/persons/GuruGopalDas/1.jpg',
-    'assets/Images/persons/GuruGopalDas/2.jpg',
-    'assets/Images/persons/GuruGopalDas/3.jpg',
-    'assets/Images/persons/GuruGopalDas/4.jpg',
-    'assets/Images/persons/GuruGopalDas/5.jpg',
-    'assets/Images/persons/GuruGopalDas/6.jpg',
-    'assets/Images/persons/GuruGopalDas/7.jpg',
-    'assets/Images/persons/GuruGopalDas/8.jpg',
-    'assets/Images/persons/GuruGopalDas/9.jpg',
-    'assets/Images/persons/GuruGopalDas/10.jpg',
-  ];
-  final List<String> msd = [
-    'assets/Images/persons/MSD/1.jpg',
-    'assets/Images/persons/MSD/2.jpg',
-    'assets/Images/persons/MSD/3.jpg',
-    'assets/Images/persons/MSD/4.jpg',
-    'assets/Images/persons/MSD/5.jpg',
-    'assets/Images/persons/MSD/6.jpg',
-    'assets/Images/persons/MSD/7.jpg',
-    'assets/Images/persons/MSD/8.jpg',
-    'assets/Images/persons/MSD/9.jpg',
-    'assets/Images/persons/MSD/10.jpg',
-  ];
-  final List<String> sadhguru = [
-    'assets/Images/persons/SadhGuru/1.jpg',
-    'assets/Images/persons/SadhGuru/2.jpg',
-    'assets/Images/persons/SadhGuru/3.jpg',
-    'assets/Images/persons/SadhGuru/4.jpg',
-    'assets/Images/persons/SadhGuru/5.jpg',
-    'assets/Images/persons/SadhGuru/6.jpg',
-    'assets/Images/persons/SadhGuru/7.jpg',
-    'assets/Images/persons/SadhGuru/8.jpg',
-    'assets/Images/persons/SadhGuru/9.jpg',
-    'assets/Images/persons/SadhGuru/10.jpg',
-  ];
-  final List<String> swamivivekananda = [
-    'assets/Images/persons/SwamiVivekananda/1.jpg',
-    'assets/Images/persons/SwamiVivekananda/2.jpg',
-    'assets/Images/persons/SwamiVivekananda/3.jpg',
-    'assets/Images/persons/SwamiVivekananda/4.jpg',
-    'assets/Images/persons/SwamiVivekananda/5.jpg',
-    'assets/Images/persons/SwamiVivekananda/6.jpg',
-    'assets/Images/persons/SwamiVivekananda/7.jpg',
-    'assets/Images/persons/SwamiVivekananda/8.jpg',
-    'assets/Images/persons/SwamiVivekananda/9.jpg',
-    'assets/Images/persons/SwamiVivekananda/10.jpg',
-  ];
-  final List<String> viratkohli = [
-    'assets/Images/persons/ViratKohli/1.jpg',
-    'assets/Images/persons/ViratKohli/2.jpg',
-    'assets/Images/persons/ViratKohli/3.jpg',
-    'assets/Images/persons/ViratKohli/4.jpg',
-    'assets/Images/persons/ViratKohli/5.jpg',
-    'assets/Images/persons/ViratKohli/6.jpg',
-    'assets/Images/persons/ViratKohli/7.jpg',
-    'assets/Images/persons/ViratKohli/8.jpg',
-    'assets/Images/persons/ViratKohli/9.jpg',
-    'assets/Images/persons/ViratKohli/10.jpg',
-  ];
-
   final List<String> names = [
     'Guru Gopal Das',
     'Swami Vivekananda',
@@ -158,6 +38,18 @@ class _PersonScreenState extends State<PersonScreen>
     'Bill Gates',
     'Elon Musk',
     'Andrew Tate',
+  ];
+  final List<String> queryname = [
+    'GuruGopalDas',
+    'SwamiVivekananda',
+    'Sadhguru',
+    'APJ',
+    'ViratKohli',
+    'MSD',
+    'SadhGuru',
+    'BillGates',
+    'ElonMusk',
+    'AndrewTate',
   ];
 
   @override
@@ -206,8 +98,9 @@ class _PersonScreenState extends State<PersonScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetailScreen(imagePath: images[index]),
+                        builder: (context) => PersonImageWithText(
+                          queryname: queryname[index],
+                        ),
                       ),
                     );
                   },
@@ -272,21 +165,6 @@ class _PersonScreenState extends State<PersonScreen>
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DetailScreen({super.key, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Image.asset(imagePath),
       ),
     );
   }
