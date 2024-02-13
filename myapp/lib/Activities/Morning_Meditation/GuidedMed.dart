@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/audiotemplate.dart';
 
 class Guided extends StatefulWidget {
   const Guided({Key? key}) : super(key: key);
@@ -13,32 +14,19 @@ class _GuidedState extends State<Guided> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Guided Meditation'),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Music Player
           Container(
-            padding: EdgeInsets.all(16.0),
             color: Colors.blueGrey[100],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
-                  onPressed: () {
-                    setState(() {
-                      isPlaying = !isPlaying;
-                    });
-                  },
-                ),
-                SizedBox(width: 16.0),
-                Text(
-                  isPlaying ? 'Playing' : 'Paused',
-                  style: TextStyle(fontSize: 18.0),
-                ),
+                const AudioCard(
+                    imageUrl: 'assets/Images/persons/AlbertEinstein/1.jpg',
+                    title: '5 min Music',
+                    audioFileName: 'autumn-sky-meditation-7618.mp3')
               ],
             ),
           ),
