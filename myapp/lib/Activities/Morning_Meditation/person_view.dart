@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-class ImageWithText extends StatefulWidget {
+class PersonImageWithText extends StatefulWidget {
   final String queryname;
 
-  const ImageWithText({super.key, required this.queryname});
+  const PersonImageWithText({super.key, required this.queryname});
 
   @override
-  _ImageWithTextState createState() => _ImageWithTextState();
+  _PersonImageWithTextState createState() => _PersonImageWithTextState();
 }
 
-class _ImageWithTextState extends State<ImageWithText> {
+class _PersonImageWithTextState extends State<PersonImageWithText> {
   late Future<List<Map<String, dynamic>>> _imageData;
   final _random = Random();
   Map<String, List<String>> quoteMap = {
