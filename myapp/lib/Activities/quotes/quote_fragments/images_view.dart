@@ -9,6 +9,7 @@ class ImageWithText extends StatefulWidget {
   const ImageWithText({super.key, required this.queryname});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ImageWithTextState createState() => _ImageWithTextState();
 }
 
@@ -163,11 +164,15 @@ class _ImageWithTextState extends State<ImageWithText> {
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      return List<Map<String, dynamic>>.from(data.map((dynamic item) => {
+      return List<Map<String, dynamic>>.from(
+        data.map(
+          (dynamic item) => {
             'imageUrl': item['urls']['regular'],
             'description': quoteMap[widget.queryname]![
                 _random.nextInt(quoteMap[widget.queryname]!.length)],
-          }));
+          },
+        ),
+      );
     } else {
       throw Exception('Failed to load images');
     }
@@ -176,14 +181,32 @@ class _ImageWithTextState extends State<ImageWithText> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text(widget.queryname),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          widget.queryname,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _imageData,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -208,10 +231,10 @@ class ImageItem extends StatelessWidget {
   final String customDescription;
 
   const ImageItem({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.customDescription,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -227,11 +250,20 @@ class ImageItem extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        SizedBox(height: 20),
-        Text(
-          customDescription,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: Text(
+            customDescription,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );
