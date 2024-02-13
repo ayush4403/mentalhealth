@@ -31,7 +31,7 @@ class _PersonImageWithTextState extends State<PersonImageWithText> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(Duration(hours: 24), (timer) {
       setState(() {
         _currentIndex = (_currentIndex + 1) % _getCurrentImageListLength();
         _imageData = fetchImageData();
