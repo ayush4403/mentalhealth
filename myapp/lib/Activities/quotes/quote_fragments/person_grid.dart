@@ -103,6 +103,7 @@ class _PersonScreenState extends State<PersonScreen>
                         ),
                       ),
                     );
+                    print(queryname[index]);
                   },
                   child: Card(
                     key: ValueKey<String>(images[index]),
