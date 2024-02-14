@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   late PageController _pageController;
+  bool shownavbar = true;
 
   @override
   void initState() {
@@ -49,43 +50,47 @@ class _HomePageState extends State<HomePage> {
               child: const Center(child: Text('Profile'))),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.blue,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        },
-        backgroundColor: Colors.black, // Set background color
-        type: BottomNavigationBarType
-            .fixed, // Set type to fixed for more than 3 items
-        elevation: 0, // Remove shadow
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_sharp),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_activity_sharp),
-            label: 'Activities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.insert_chart_outlined),
-            label: 'Report',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.videogame_asset),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_4),
-            label: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: Visibility(
+        visible: shownavbar,
+        child: BottomNavigationBar(
+          unselectedItemColor: Colors.white,
+          selectedItemColor: Colors.blue,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          },
+          backgroundColor: Colors.black, // Set background color
+          type: BottomNavigationBarType
+              .fixed, // Set type to fixed for more than 3 items
+          elevation: 0, // Remove shadow
+
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_sharp),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.local_activity_sharp),
+              label: 'Activities',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.insert_chart_outlined),
+              label: 'Report',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.videogame_asset),
+              label: 'Games',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_4),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }
