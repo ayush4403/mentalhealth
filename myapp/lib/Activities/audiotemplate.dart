@@ -24,6 +24,7 @@ class AudioCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioCardState createState() => _AudioCardState();
 }
 
@@ -66,6 +67,7 @@ class _AudioCardState extends State<AudioCard> {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
+      // ignore: avoid_print
       print("Error getting audio URL: $e");
       return '';
     }
@@ -132,7 +134,7 @@ class _AudioCardState extends State<AudioCard> {
     return Row(
       children: [
         const Icon(Icons.timer),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         DropdownButton<double>(
           value: selectedDuration,
           items: const [
@@ -198,6 +200,7 @@ class _AudioCardState extends State<AudioCard> {
     print('Audio file name: ${widget.audioFileName}');
     return Container(
       width: MediaQuery.of(context).size.width,
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Card(
           elevation: 9,

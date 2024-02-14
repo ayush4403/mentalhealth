@@ -1,14 +1,14 @@
 final List<String> alberteinstein = [
-  'assets/Images/persons/AlberEinstein/1.jpg',
-  'assets/Images/persons/AlberEinstein/2.jpg',
-  'assets/Images/persons/AlberEinstein/3.jpg',
-  'assets/Images/persons/AlberEinstein/4.jpg',
-  'assets/Images/persons/AlberEinstein/5.jpg',
-  'assets/Images/persons/AlberEinstein/6.jpg',
-  'assets/Images/persons/AlberEinstein/7.jpg',
-  'assets/Images/persons/AlberEinstein/8.jpg',
-  'assets/Images/persons/AlberEinstein/9.jpg',
-  'assets/Images/persons/AlberEinstein/10.jpg',
+  'assets/Images/persons/AlbertEinstein/1.jpg',
+  'assets/Images/persons/AlbertEinstein/2.jpg',
+  'assets/Images/persons/AlbertEinstein/3.jpg',
+  'assets/Images/persons/AlbertEinstein/4.jpg',
+  'assets/Images/persons/AlbertEinstein/5.jpg',
+  'assets/Images/persons/AlbertEinstein/6.jpg',
+  'assets/Images/persons/AlbertEinstein/7.jpg',
+  'assets/Images/persons/AlbertEinstein/8.jpg',
+  'assets/Images/persons/AlbertEinstein/9.jpg',
+  'assets/Images/persons/AlbertEinstein/10.jpg',
 ];
 final List<String> andrewtate = [
   'assets/Images/persons/AndrewTate/1.jpg',
@@ -114,7 +114,7 @@ final List<String> viratkohli = [
   'assets/Images/persons/ViratKohli/5.jpg',
   'assets/Images/persons/ViratKohli/6.jpg',
   'assets/Images/persons/ViratKohli/7.jpg',
-  'assets/Images/persons/ViratKohli/8.jpg',
+  'assets/Images/persons/ViratKohli/8.jpeg',
   'assets/Images/persons/ViratKohli/9.jpg',
   'assets/Images/persons/ViratKohli/10.jpg',
 ];
@@ -168,7 +168,7 @@ Map<String, List<String>> quoteMap = {
     "Don't compare yourself with anyone in this world. If you do so, you are insulting yourself.",
     "If you can't make it good, at least make it look good.",
   ],
-  'ElomMusk': [
+  'ElonMusk': [
     "When something is important enough, you do it even if the odds are not in your favor.",
     "Persistence is very important. You should not give up unless you are forced to give up.",
     "I think it is possible for ordinary people to choose to be extraordinary.",
@@ -216,7 +216,7 @@ Map<String, List<String>> quoteMap = {
     "If you want to be successful, don’t seek success – seek competence, empowerment; do nothing short of the best that you can do.",
     "The most important thing is that you are alive – that's the biggest thing. If you are alive, there is possibility. If you are not alive, there is no possibility.",
   ],
-  'SwamiViveknand': [
+  'SwamiVivekananda': [
     "Arise, awake, and stop not until the goal is reached.",
     "You cannot believe in God until you believe in yourself.",
     "Strength is life, weakness is death.",

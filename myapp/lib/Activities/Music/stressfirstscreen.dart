@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Music/stressSecond.dart';
 
 void main() {
-  runApp(MusicList());
+  runApp(const MusicList());
 }
 
 class MusicList extends StatelessWidget {
+  const MusicList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,14 +15,17 @@ class MusicList extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MusicListScreen(),
+      home: const MusicListScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MusicListScreen extends StatefulWidget {
+  const MusicListScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MusicListScreenState createState() => _MusicListScreenState();
 }
 
@@ -35,7 +40,7 @@ class _MusicListScreenState extends State<MusicListScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
       vsync: this,
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
@@ -56,48 +61,23 @@ class _MusicListScreenState extends State<MusicListScreen>
 
   late final List<MusicData> musicDataListCalm = [
     MusicData(
-      title: 'Calm 1',
+      title: 'Law of attration',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'MORNING MEDITATION/Guided/Guided 1.mp3',
-    ),
-    MusicData(
-      title: 'Calm 2',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
-    ),
-    MusicData(
-      title: 'Calm 4',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
-    ),
-    MusicData(
-      title: 'Calm 3',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
+      audioUrl: 'Gratitude thought/Music/Law_of_Attraction.mp3',
     ),
   ];
   late final List<MusicData> musicDataListStressBuster = [
     MusicData(
-      title: 'Stress 1',
+      title: 'Anti stress and body healing',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'Winter-Spa-chosic.mp3',
-    ),
-    MusicData(
-      title: 'Stress 2',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
+      audioUrl: 'Gratitude thought/Music/Anti_Stress_and_Body_Healing.mp3',
     ),
   ];
   late final List<MusicData> musicDataListChanting = [
     MusicData(
-      title: 'Chanting 1',
+      title: 'Om mantra chanting',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'Winter-Spa-chosic.mp3',
-    ),
-    MusicData(
-      title: 'Chanting 2',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
+      audioUrl: 'Gratitude thought/Music/OM_Mantra_Chanting.mp3',
     ),
   ];
 
@@ -111,7 +91,7 @@ class _MusicListScreenState extends State<MusicListScreen>
               selectedCategory = 'Chanting';
             });
           },
-          child: Text('Chanting'),
+          child: const Text('Chanting'),
         ),
         ElevatedButton(
           onPressed: () {
@@ -119,7 +99,7 @@ class _MusicListScreenState extends State<MusicListScreen>
               selectedCategory = 'Stress Buster';
             });
           },
-          child: Text('Stress Buster'),
+          child: const Text('Stress Buster'),
         ),
         ElevatedButton(
           onPressed: () {
@@ -127,7 +107,7 @@ class _MusicListScreenState extends State<MusicListScreen>
               selectedCategory = 'Calm';
             });
           },
-          child: Text('Calm'),
+          child: const Text('Calm'),
         ),
       ],
     );
@@ -135,28 +115,29 @@ class _MusicListScreenState extends State<MusicListScreen>
 
   Widget _buildCategory(String categoryTitle, List<MusicData> musicList) {
     if (selectedCategory != categoryTitle) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             categoryTitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Column(
             children: musicList.asMap().entries.map((entry) {
               // ignore: unused_local_variable
               int index = entry.key;
               MusicData musicData = entry.value;
               return Padding(
-                padding: EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.only(bottom: 16),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -199,7 +180,7 @@ class _MusicListScreenState extends State<MusicListScreen>
                                 children: [
                                   Text(
                                     musicData.title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -223,15 +204,31 @@ class _MusicListScreenState extends State<MusicListScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text('Music'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: const Text(
+          'Music',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: FutureBuilder(
         future: _controller.forward(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting ||
               !_animationCompleted) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -240,20 +237,21 @@ class _MusicListScreenState extends State<MusicListScreen>
               children: [
                 FadeTransition(
                   opacity: _animation,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Text(
-                      'Choose and listen to your music',
+                      'Choose and listen to your music 🎧',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildButtonsRow(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Expanded(
                   child: ListView(
                     children: [
