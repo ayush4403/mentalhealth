@@ -58,7 +58,7 @@ class _MusicListScreenState extends State<MusicListScreen>
     MusicData(
       title: 'Calm 1',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'Winter-Spa-chosic.mp3',
+      audioUrl: 'MORNING MEDITATION/Guided/Guided 1.mp3',
     ),
     MusicData(
       title: 'Calm 2',
