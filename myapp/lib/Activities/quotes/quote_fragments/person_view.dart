@@ -60,7 +60,7 @@ class _PersonImageWithTextState extends State<PersonImageWithText> {
         return gurugopaldas;
       case 'MSD':
         return msd;
-      case 'Sadhguru':
+      case 'SadhGuru':
         return sadhguru;
       case 'SwamiVivekananda':
         return swamivivekananda;
@@ -102,7 +102,7 @@ class _PersonImageWithTextState extends State<PersonImageWithText> {
         return gurugopaldas;
       case 'MSD':
         return msd;
-      case 'Sadhguru':
+      case 'SadhGuru':
         return sadhguru;
       case 'SwamiVivekananda':
         return swamivivekananda;

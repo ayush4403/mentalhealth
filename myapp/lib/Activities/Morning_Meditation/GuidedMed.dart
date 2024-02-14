@@ -20,10 +20,10 @@ class _GuidedState extends State<Guided> {
           // Music Player
           Container(
             color: Colors.blueGrey[100],
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const AudioCard(
+                AudioCard(
                     imageUrl: 'assets/Images/persons/AlbertEinstein/1.jpg',
                     title: '5 min Music',
                     audioFileName: 'autumn-sky-meditation-7618.mp3')
@@ -32,15 +32,25 @@ class _GuidedState extends State<Guided> {
           ),
           // Duration Cards
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildDurationCard('5 minutes'),
-                SizedBox(height: 16.0),
-                _buildDurationCard('10 minutes'),
-                SizedBox(height: 16.0),
-                _buildDurationCard('15 minutes'),
+                _buildDurationCard(
+                  '5 minutes',
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                _buildDurationCard(
+                  '10 minutes',
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                _buildDurationCard(
+                  '15 minutes',
+                ),
               ],
             ),
           ),

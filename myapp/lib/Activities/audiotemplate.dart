@@ -7,15 +7,24 @@ class AudioCard extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String audioFileName;
+  final bool showProgressBar;
+  final bool showPlaybackControlButton;
+  final bool showTimerSelector;
+  final bool imageshow;
 
   const AudioCard({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
-    Key? key,
-  }) : super(key: key);
+    this.showProgressBar = true,
+    this.showPlaybackControlButton = true,
+    this.showTimerSelector = true,
+    this.imageshow = true,
+    super.key,
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioCardState createState() => _AudioCardState();
 }
 
@@ -41,6 +50,7 @@ class _AudioCardState extends State<AudioCard> {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
+      // ignore: avoid_print
       print("Error getting audio URL: $e");
       return '';
     }
@@ -51,6 +61,7 @@ class _AudioCardState extends State<AudioCard> {
     try {
       await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
+      // ignore: avoid_print
       print("Error loading audio source: $e");
     }
   }
@@ -112,7 +123,7 @@ class _AudioCardState extends State<AudioCard> {
     return Row(
       children: [
         const Icon(Icons.timer),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         DropdownButton<double>(
           value: selectedDuration,
           items: const [
@@ -175,36 +186,40 @@ class _AudioCardState extends State<AudioCard> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return Container(
       width: MediaQuery.of(context).size.width,
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Card(
           elevation: 9,
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
           child: Stack(
             children: [
-              // Image
-              Transform.translate(
-                offset: Offset(130, -50), // Adjust as needed
-                child: ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                  child: Image.asset(
-                    widget.imageUrl,
-                    width: 120, // Adjust image width as needed
-                    height: 120, // Adjust image height as needed
-                    fit: BoxFit.cover,
+              if (widget.imageshow)
+                Transform.translate(
+                  offset: const Offset(130, -50),
+                  child: ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(10)),
+                    child: Image.asset(
+                      widget.imageUrl,
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 100), // Placeholder for the image
-                    _progessBar(),
-                    _playbackControlButton(),
-                    _timerSelector(),
+                    const SizedBox(height: 100), // Placeholder for the image
+                    if (widget.showProgressBar) _progessBar(),
+                    if (widget.showPlaybackControlButton)
+                      _playbackControlButton(),
+                    if (widget.showTimerSelector) _timerSelector(),
                   ],
                 ),
               ),
