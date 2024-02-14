@@ -20,8 +20,8 @@ class AudioCard extends StatefulWidget {
     this.showPlaybackControlButton = true,
     this.showTimerSelector = true,
     this.imageshow = true,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -37,6 +37,23 @@ class _AudioCardState extends State<AudioCard> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
+  }
+
+  @override
+  void didUpdateWidget(AudioCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.audioFileName != widget.audioFileName) {
+      _updateAudioSource(widget.audioFileName);
+    }
+  }
+
+  Future<void> _updateAudioSource(String audioFileName) async {
+    try {
+      final audioUrl = await getAudioUrl(audioFileName);
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
+    } catch (e) {
+      print("Error loading audio source: $e");
+    }
   }
 
   @override
@@ -57,13 +74,7 @@ class _AudioCardState extends State<AudioCard> {
   }
 
   Future<void> _setupAudioPlayer() async {
-    String audioUrl = await getAudioUrl(widget.audioFileName);
-    try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
-    } catch (e) {
-      // ignore: avoid_print
-      print("Error loading audio source: $e");
-    }
+    await _updateAudioSource(widget.audioFileName);
   }
 
   Widget _progessBar() {
@@ -186,7 +197,7 @@ class _AudioCardState extends State<AudioCard> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: sized_box_for_whitespace
+    print('Audio file name: ${widget.audioFileName}');
     return Container(
       width: MediaQuery.of(context).size.width,
       // ignore: avoid_unnecessary_containers
@@ -198,10 +209,10 @@ class _AudioCardState extends State<AudioCard> {
             children: [
               if (widget.imageshow)
                 Transform.translate(
-                  offset: const Offset(130, -50),
+                  offset: Offset(130, -50),
                   child: ClipRRect(
                     borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(10)),
+                        BorderRadius.vertical(top: Radius.circular(10)),
                     child: Image.asset(
                       widget.imageUrl,
                       width: 120,
@@ -215,7 +226,7 @@ class _AudioCardState extends State<AudioCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 100), // Placeholder for the image
+                    SizedBox(height: 100), // Placeholder for the image
                     if (widget.showProgressBar) _progessBar(),
                     if (widget.showPlaybackControlButton)
                       _playbackControlButton(),
