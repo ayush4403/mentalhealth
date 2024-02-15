@@ -15,7 +15,7 @@ class MorningMeditationState extends State<MorningMeditation> {
   static List<Widget> _fragments = <Widget>[
     Guided(),
     Visualize(),
-    BrainEntrainment(),
+    BrainBeats(),
   ];
 
   void _onItemTapped(int index) {
