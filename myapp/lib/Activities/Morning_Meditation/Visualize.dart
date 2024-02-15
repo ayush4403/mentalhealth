@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/showvisualize.dart';
-import 'package:myapp/Activities/audiotemplate.dart';
 
 class Visualize extends StatefulWidget {
   const Visualize({super.key});
