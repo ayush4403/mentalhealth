@@ -25,6 +25,10 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  bool shonavbar(bool visibility) {
+    return visibility;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

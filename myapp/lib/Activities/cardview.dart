@@ -4,6 +4,7 @@ import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 //import 'package:myapp/Activities/quotes/daily_quote.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
+import 'package:myapp/home.dart';
 //import 'package:myapp/video.dart';
 //import 'package:myapp/Activities/Stress_Buster/stress_buster.dart';
 
@@ -14,13 +15,6 @@ class CardView extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
           title: const Text(
             'Activities',
             style: TextStyle(
