@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Music/stressSecond.dart';
 
@@ -6,7 +8,7 @@ void main() {
 }
 
 class MusicList extends StatelessWidget {
-  const MusicList({super.key});
+  const MusicList({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +24,18 @@ class MusicList extends StatelessWidget {
 }
 
 class MusicListScreen extends StatefulWidget {
-  const MusicListScreen({super.key});
+  const MusicListScreen({Key? key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _MusicListScreenState createState() => _MusicListScreenState();
 }
 
 class _MusicListScreenState extends State<MusicListScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  // ignore: unused_field
   late Animation<double> _animation;
+  // ignore: unused_field
   bool _animationCompleted = false;
   late String selectedCategory;
 
@@ -61,26 +64,44 @@ class _MusicListScreenState extends State<MusicListScreen>
 
   late final List<MusicData> musicDataListCalm = [
     MusicData(
-      title: 'Law of attration',
-      imageUrl: 'assets/Images/logos.jpg',
+      title: 'Law of attraction',
+      imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
+      audioUrl: 'Gratitude thought/Music/Anti_Addication_Music.mp3',
+    ),
+    MusicData(
+      title: 'Anti stress and body healing',
+      imageUrl: 'assets/Images/types_quotes/gym_1.jpg',
       audioUrl: 'Gratitude thought/Music/Law_of_Attraction.mp3',
     ),
   ];
+
   late final List<MusicData> musicDataListStressBuster = [
     MusicData(
       title: 'Anti stress and body healing',
-      imageUrl: 'assets/Images/logos.jpg',
+      imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
       audioUrl: 'Gratitude thought/Music/Anti_Stress_and_Body_Healing.mp3',
     ),
   ];
+
   late final List<MusicData> musicDataListChanting = [
     MusicData(
       title: 'Om mantra chanting',
-      imageUrl: 'assets/Images/logos.jpg',
+      imageUrl: 'assets/Images/Music/om_mantra.jpg',
       audioUrl: 'Gratitude thought/Music/OM_Mantra_Chanting.mp3',
     ),
   ];
+  final List<String> images = [
+    'assets/Images/Music/Law_of_attraction_1.jpg',
+    'assets/Images/Music/om_mantra.jpg',
+    'assets/Images/types_quotes/gym_1.jpg',
+  ];
 
+  late List<List<MusicData>> allMusicData = [
+    // Add all music data lists
+    musicDataListCalm,
+    musicDataListStressBuster,
+    musicDataListChanting,
+  ];
   Widget _buildButtonsRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,6 +134,7 @@ class _MusicListScreenState extends State<MusicListScreen>
     );
   }
 
+  int _currentCategoryIndex = 0;
   Widget _buildCategory(String categoryTitle, List<MusicData> musicList) {
     if (selectedCategory != categoryTitle) {
       return const SizedBox.shrink();
@@ -167,7 +189,9 @@ class _MusicListScreenState extends State<MusicListScreen>
                               borderRadius: BorderRadius.circular(8),
                               child: Image.asset(
                                 musicData.imageUrl,
-                                fit: BoxFit.fitHeight,
+                                height: 200,
+                                width: 150,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
@@ -204,7 +228,6 @@ class _MusicListScreenState extends State<MusicListScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -223,51 +246,102 @@ class _MusicListScreenState extends State<MusicListScreen>
         ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
-      body: FutureBuilder(
-        future: _controller.forward(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting ||
-              !_animationCompleted) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 20),
+            _buildCarousel(allMusicData[_currentCategoryIndex]),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FadeTransition(
-                  opacity: _animation,
-                  child: const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Choose and listen to your music 🎧',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                for (int i = 0; i < allMusicData.length; i++)
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _currentCategoryIndex = i;
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentCategoryIndex == i
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                _buildButtonsRow(),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: ListView(
-                    children: [
-                      _buildCategory('Chanting', musicDataListChanting),
-                      _buildCategory(
-                        'Stress Buster',
-                        musicDataListStressBuster,
-                      ),
-                      _buildCategory('Calm', musicDataListCalm),
-                    ],
-                  ),
-                ),
               ],
+            ),
+            const SizedBox(height: 20),
+            _buildButtonsRow(),
+            _buildCategory('Chanting', musicDataListChanting),
+            _buildCategory(
+              'Stress Buster',
+              musicDataListStressBuster,
+            ),
+            _buildCategory('Calm', musicDataListCalm),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCarousel(List<MusicData> musicList) {
+    final PageController controller = PageController();
+
+    // Start automatic sliding using a timer
+    Timer? timer;
+
+    void startTimer() {
+      timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
+        if (controller.page == null || controller.page! >= images.length - 1) {
+          controller.jumpToPage(0);
+        } else {
+          controller.nextPage(
+              duration: const Duration(milliseconds: 500), curve: Curves.ease);
+        }
+      });
+    }
+
+    void cancelTimer() {
+      timer?.cancel();
+    }
+
+    startTimer();
+
+    return GestureDetector(
+      onTap: () {
+        cancelTimer();
+        startTimer();
+      },
+      child: SizedBox(
+        height: 300,
+        child: PageView.builder(
+          controller: controller,
+          itemCount: musicList.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey.withOpacity(0.2),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  images[index],
+                  fit: BoxFit.cover,
+                ),
+              ),
             );
-          }
-        },
+          },
+        ),
       ),
     );
   }
@@ -283,4 +357,36 @@ class MusicData {
     required this.imageUrl,
     required this.audioUrl,
   });
+}
+
+class MusicDetailsScreen extends StatelessWidget {
+  final MusicData musicData;
+
+  const MusicDetailsScreen({super.key, required this.musicData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      appBar: AppBar(
+        title: Text(musicData.title),
+      ),
+      body: Column(
+        children: [
+          Image.asset(
+            musicData.imageUrl,
+            height: 200,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Play music
+            },
+            child: const Text('Play Music'),
+          ),
+        ],
+      ),
+    );
+  }
 }

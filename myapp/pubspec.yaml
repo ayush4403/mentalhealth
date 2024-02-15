@@ -253,6 +253,10 @@ flutter:
     - assets/Images/types_quotes/sociallife.jpg
     - assets/Images/types_quotes/Motivation.jpg
 
+    #music images
+    - assets/Images/Music/Law_of_attraction_1.jpg
+    - assets/Images/Music/om_mantra.jpg
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
