@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/cardview.dart';
+import 'package:myapp/homeui.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,8 +43,7 @@ class _HomePageState extends State<HomePage> {
           });
         },
         children: [
-          Container(
-              color: Colors.red, child: const Center(child: Text('Home'))),
+          HomePageUI(),
           CardView(),
           Container(
               color: Colors.blue, child: const Center(child: Text('Report'))),
