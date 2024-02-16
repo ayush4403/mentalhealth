@@ -95,6 +95,13 @@ flutter:
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
 
+    #Visualize Gif images
+    - assets/GIF/Visualise/VZ1.json
+    - assets/GIF/Visualise/VZ2.json
+    - assets/GIF/Visualise/VZ3.json
+    - assets/GIF/Visualise/VZ4.json
+    - assets/GIF/Visualise/VZ1.json
+
     #Audio file
     - assets/audio/
 

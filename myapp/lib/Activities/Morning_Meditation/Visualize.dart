@@ -12,25 +12,25 @@ class Visualize extends StatefulWidget {
 class _VisualizeState extends State<Visualize> {
   late final List<MusicData> musicDataListChanting = [
     MusicData(
-      title: 'Visualize1',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'MORNING MEDITATION/Visualize/Visualize 1.mp3',
-    ),
+        title: 'Visualize1',
+        imageUrl: 'assets/Images/logos.jpg',
+        audioUrl: 'MORNING MEDITATION/Visualize/Visualize 1.mp3',
+        gifurl: 'assets/GIF/Visualise/VZ1.json'),
     MusicData(
-      title: 'Visualize2',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'MORNING MEDITATION/Visualize/Visualize 3.mp3',
-    ),
+        title: 'Visualize2',
+        imageUrl: 'assets/Images/logos.jpg',
+        audioUrl: 'MORNING MEDITATION/Visualize/Visualize 3.mp3',
+        gifurl: 'assets/GIF/Visualise/VZ2.json'),
     MusicData(
-      title: 'Visualize3',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'MORNING MEDITATION/Visualize/Visualize 5.mp3',
-    ),
+        title: 'Visualize3',
+        imageUrl: 'assets/Images/logos.jpg',
+        audioUrl: 'MORNING MEDITATION/Visualize/Visualize 5.mp3',
+        gifurl: 'assets/GIF/Visualise/VZ3.json'),
     MusicData(
-      title: 'Visualize4',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'MORNING MEDITATION/Visualize/Visualize 7.mp3',
-    ),
+        title: 'Visualize4',
+        imageUrl: 'assets/Images/logos.jpg',
+        audioUrl: 'MORNING MEDITATION/Visualize/Visualize 7.mp3',
+        gifurl: 'assets/GIF/Visualise/VZ4.json'),
   ];
 
   Widget _buildCategory(String Category, List<MusicData> musicList) {
@@ -64,6 +64,7 @@ class _VisualizeState extends State<Visualize> {
                           title: musicData.title,
                           imageUrl: musicData.imageUrl,
                           audioUrl: musicData.audioUrl,
+                          gifurl: musicData.gifurl,
                         ),
                       ),
                     );
@@ -133,10 +134,11 @@ class MusicData {
   final String title;
   final String imageUrl;
   final String audioUrl;
+  final String gifurl;
 
-  MusicData({
-    required this.title,
-    required this.imageUrl,
-    required this.audioUrl,
-  });
+  MusicData(
+      {required this.title,
+      required this.imageUrl,
+      required this.audioUrl,
+      required this.gifurl});
 }

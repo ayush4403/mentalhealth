@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/cardview.dart';
+import 'package:myapp/games.dart';
 import 'package:myapp/homeui.dart';
+import 'package:myapp/report.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,8 +28,23 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void add() {
+    currentIndex = 1;
+  }
+
   bool shonavbar(bool visibility) {
     return visibility;
+  }
+
+  void randomFunction() {
+    // Generate a random number between 0 and 1
+
+    // Navigate to a random page based on the generated number
+    _pageController.animateToPage(
+      1,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -45,10 +62,12 @@ class _HomePageState extends State<HomePage> {
         children: [
           HomePageUI(),
           CardView(),
-          Container(
-              color: Colors.blue, child: const Center(child: Text('Report'))),
-          Container(
-              color: Colors.orange, child: const Center(child: Text('Games'))),
+          ReportCard(
+              key: Key(''),
+              title: 'Report',
+              description: 'Reports of gamification',
+              onTap: randomFunction),
+          GamesPage(),
           Container(
               color: Colors.purple,
               child: const Center(child: Text('Profile'))),

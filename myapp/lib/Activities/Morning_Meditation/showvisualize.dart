@@ -8,12 +8,14 @@ class VisualizeScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String audioUrl;
+  final String gifurl;
   final VoidCallback? onAudioPlay;
 
   VisualizeScreen(
       {required this.title,
       required this.imageUrl,
       required this.audioUrl,
+      required this.gifurl,
       this.onAudioPlay});
 
   @override
@@ -31,6 +33,7 @@ class _VisualizeScreenState extends State<VisualizeScreen> {
     super.initState();
 
     _initializeAudio();
+    print("heeloo" + widget.gifurl);
   }
 
   void _initializeAudio() async {
@@ -69,44 +72,26 @@ class _VisualizeScreenState extends State<VisualizeScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Stack(
-        children: [
-          // Background GIF
-          SizedBox.expand(
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: Lottie.asset('assets/GIF/Features/getStarted.json'),
-            ),
-          ),
-          // Audio Player Container
-          AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
-            bottom:
-                _audioPlaying ? MediaQuery.of(context).size.height * 0.2 : 0,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _cardVisible = !_cardVisible;
-                });
-              },
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 500),
-                opacity: _cardVisible ? 1.0 : 0.0,
-                child: AudioCardVisualize(
-                  imageUrl: widget.imageUrl,
-                  title: widget.title,
-                  audioFileName: widget.audioUrl,
-                  imageshow: false,
-                  showTimerSelector: false,
-                  onAudioPlay: _handleAudioPlay,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        // Background GIF
+
+        Lottie.asset(widget.gifurl,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.1),
+
+        // ignore: avoid_print
+        SizedBox(
+          height: 30,
+        ),
+        AudioCardVisualize(
+          imageUrl: widget.imageUrl,
+          title: widget.title,
+          audioFileName: widget.audioUrl,
+          imageshow: false,
+          showTimerSelector: false,
+          onAudioPlay: _handleAudioPlay,
+        ),
+      ]),
     );
   }
 
