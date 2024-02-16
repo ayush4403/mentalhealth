@@ -48,6 +48,7 @@ dependencies:
   path_provider: ^2.1.0
   video_player: ^2.8.2
   http: ^1.2.0
+  icons_plus: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -257,6 +258,12 @@ flutter:
     #music images
     - assets/Images/Music/Law_of_attraction_1.jpg
     - assets/Images/Music/om_mantra.jpg
+
+    #Morning Meditation images/svg/json.
+    - assets/Images/Morning_meditation/vs_1.jpg
+    - assets/Images/Morning_meditation/vs_2.jpg
+    - assets/Images/Morning_meditation/vs_3.jpg
+    - assets/Images/Morning_meditation/vs_4.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

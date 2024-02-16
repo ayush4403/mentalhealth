@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
 
 class BrainBeats extends StatefulWidget {
-  const BrainBeats({Key? key}) : super(key: key);
+  const BrainBeats({super.key});
 
   @override
   State<BrainBeats> createState() => BrainBeatsState();
@@ -25,12 +25,12 @@ class BrainBeatsState extends State<BrainBeats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Music Player
               Expanded(
                 child: Container(
                   child: Stack(
@@ -69,7 +69,7 @@ class BrainBeatsState extends State<BrainBeats> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -90,9 +90,9 @@ class BrainBeatsState extends State<BrainBeats> {
 
   Widget _buildDurationButton(String duration) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Material(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         color: Colors.blue,
         child: InkWell(
           onTap: () {
@@ -100,6 +100,7 @@ class BrainBeatsState extends State<BrainBeats> {
             setState(() {
               selectedAudioUrl = musicUrls[duration] ?? '';
             });
+            // ignore: avoid_print
             print('Selected audio URL: $selectedAudioUrl');
           },
           child: Container(
@@ -108,7 +109,7 @@ class BrainBeatsState extends State<BrainBeats> {
             alignment: Alignment.center,
             child: Text(
               duration,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -121,8 +122,10 @@ class BrainBeatsState extends State<BrainBeats> {
 }
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: BrainBeats(),
-  ));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: BrainBeats(),
+    ),
+  );
 }

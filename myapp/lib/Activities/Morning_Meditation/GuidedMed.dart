@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
 
 class Guided extends StatefulWidget {
-  const Guided({Key? key}) : super(key: key);
+  const Guided({super.key});
 
   @override
   State<Guided> createState() => _GuidedState();
@@ -25,6 +25,7 @@ class _GuidedState extends State<Guided> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Stack(
         children: [
           Column(
@@ -32,6 +33,7 @@ class _GuidedState extends State<Guided> {
             children: [
               // Music Player
               Expanded(
+                // ignore: avoid_unnecessary_containers
                 child: Container(
                   child: Stack(
                     children: [
@@ -69,7 +71,7 @@ class _GuidedState extends State<Guided> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -90,16 +92,19 @@ class _GuidedState extends State<Guided> {
 
   Widget _buildDurationButton(String duration) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Material(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         color: Colors.blue,
         child: InkWell(
           onTap: () {
             // Update selected audio URL
-            setState(() {
-              selectedAudioUrl = musicUrls[duration] ?? '';
-            });
+            setState(
+              () {
+                selectedAudioUrl = musicUrls[duration] ?? '';
+              },
+            );
+            // ignore: avoid_print
             print('Selected audio URL: $selectedAudioUrl');
           },
           child: Container(
@@ -108,7 +113,7 @@ class _GuidedState extends State<Guided> {
             alignment: Alignment.center,
             child: Text(
               duration,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -121,8 +126,10 @@ class _GuidedState extends State<Guided> {
 }
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Guided(),
-  ));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Guided(),
+    ),
+  );
 }

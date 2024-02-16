@@ -1,8 +1,9 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/showvisualize.dart';
 
 class Visualize extends StatefulWidget {
-  const Visualize({super.key});
+  const Visualize({Key? key}) : super(key: key);
 
   @override
   State<Visualize> createState() => _VisualizeState();
@@ -11,118 +12,123 @@ class Visualize extends StatefulWidget {
 class _VisualizeState extends State<Visualize> {
   late final List<MusicData> musicDataListChanting = [
     MusicData(
-      title: 'Visualize1',
-      imageUrl: 'assets/Images/logos.jpg',
+      title: 'Visualize 1',
+      imageUrl: 'assets/Images/Morning_meditation/vs_1.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 1.mp3',
     ),
     MusicData(
-      title: 'Visualize2',
-      imageUrl: 'assets/Images/logos.jpg',
+      title: 'Visualize 2',
+      imageUrl: 'assets/Images/Morning_meditation/vs_2.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 3.mp3',
     ),
     MusicData(
-      title: 'Visualize3',
-      imageUrl: 'assets/Images/logos.jpg',
+      title: 'Visualize 3',
+      imageUrl: 'assets/Images/Morning_meditation/vs_3.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 5.mp3',
     ),
     MusicData(
-      title: 'Visualize4',
-      imageUrl: 'assets/Images/logos.jpg',
+      title: 'Visualize 4',
+      imageUrl: 'assets/Images/Morning_meditation/vs_4.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 7.mp3',
     ),
   ];
 
-  Widget _buildCategory(String Category, List<MusicData> musicList) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            Category,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Column(
-            children: musicList.asMap().entries.map((entry) {
-              // ignore: unused_local_variable
-              int index = entry.key;
-              MusicData musicData = entry.value;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VisualizeScreen(
-                          title: musicData.title,
-                          imageUrl: musicData.imageUrl,
-                          audioUrl: musicData.audioUrl,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Card(
-                    elevation: 3, // Apply elevation here
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width *
-                          0.9, // Adjust card width
-                      height: MediaQuery.of(context).size.height *
-                          0.16, // Adjust card height
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                musicData.imageUrl,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    musicData.title,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
+  // Color options
+  final List<Color> colors = [
+    Colors.blue[100]!,
+    Colors.red[100]!,
+    Colors.green[100]!,
+    Colors.yellow[100]!,
+    Colors.orange[100]!,
+    Colors.purple[100]!,
+    Colors.teal[100]!,
+    Colors.indigo[100]!,
+    Colors.amber[100]!,
+    Colors.deepOrange[100]!,
+  ];
+
+  // Randomly shuffle the colors
+  late final List<Color> shuffledColors = []
+    ..addAll(colors)
+    ..shuffle(Random());
+
+  // Generate a random unique index for each card
+  late List<int> cardColorIndices =
+      List.generate(musicDataListChanting.length, (index) => index);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 8, 168, 236),
-      child: ListView(
-        children: [_buildCategory('', musicDataListChanting)],
+      color: const Color.fromARGB(255, 0, 111, 186),
+      child: ListView.builder(
+        itemCount: musicDataListChanting.length,
+        itemBuilder: (context, index) {
+          int colorIndex = cardColorIndices.removeAt(0);
+          return _buildCategory(
+              musicDataListChanting[index], shuffledColors[colorIndex]);
+        },
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget _buildCategory(MusicData musicData, Color cardColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VisualizeScreen(
+                title: musicData.title,
+                imageUrl: musicData.imageUrl,
+                audioUrl: musicData.audioUrl,
+              ),
+            ),
+          );
+        },
+        child: Card(
+          elevation: 3,
+          margin: const EdgeInsets.all(3),
+          color: cardColor,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.16,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      musicData.imageUrl,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          musicData.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

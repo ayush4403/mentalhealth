@@ -299,14 +299,19 @@ class _MusicListScreenState extends State<MusicListScreen>
     Timer? timer;
 
     void startTimer() {
-      timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
-        if (controller.page == null || controller.page! >= images.length - 1) {
-          controller.jumpToPage(0);
-        } else {
-          controller.nextPage(
-              duration: const Duration(milliseconds: 500), curve: Curves.ease);
-        }
-      });
+      timer = Timer.periodic(
+        const Duration(seconds: 2),
+        (Timer timer) {
+          if (controller.page == null ||
+              controller.page! >= images.length - 1) {
+            controller.jumpToPage(0);
+          } else {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          }
+        },
+      );
     }
 
     void cancelTimer() {
