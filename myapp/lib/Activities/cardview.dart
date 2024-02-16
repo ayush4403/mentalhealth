@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
+import 'package:myapp/Activities/Night_Music/nightmusic.dart';
+import 'package:myapp/Activities/Study_Music/nightmusic.dart';
+
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
 
 class CardView extends StatelessWidget {
@@ -108,6 +111,18 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MusicList()),
+      );
+    }
+    if (activity == 'Study Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudyMusicScreen()),
+      );
+    }
+    if (activity == 'Night Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NightMusicScreen()),
       );
     }
   }

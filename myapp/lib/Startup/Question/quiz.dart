@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/home.dart';
+import 'package:myapp/Startup/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Features/content_model.dart';
+import 'package:myapp/Startup/Features/content_model.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/Registration/signin.dart';
+import 'package:myapp/Startup/Registration/signin.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

@@ -49,6 +49,7 @@ dependencies:
   video_player: ^2.8.2
   http: ^1.2.0
   icons_plus: ^5.0.0
+  video_player_control_panel: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +95,13 @@ flutter:
     - assets/GIF/Registration/signin.json
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
+
+    #Visualize Gif images
+    - assets/GIF/Visualise/VZ1.json
+    - assets/GIF/Visualise/VZ2.json
+    - assets/GIF/Visualise/VZ3.json
+    - assets/GIF/Visualise/VZ4.json
+    - assets/GIF/Visualise/VZ1.json
 
     #Audio file
     - assets/audio/

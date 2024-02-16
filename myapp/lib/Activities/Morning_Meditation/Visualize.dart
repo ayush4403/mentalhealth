@@ -15,21 +15,25 @@ class _VisualizeState extends State<Visualize> {
       title: 'Visualize 1',
       imageUrl: 'assets/Images/Morning_meditation/vs_1.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 1.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ1.json',
     ),
     MusicData(
       title: 'Visualize 2',
       imageUrl: 'assets/Images/Morning_meditation/vs_2.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 3.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ2.json',
     ),
     MusicData(
       title: 'Visualize 3',
       imageUrl: 'assets/Images/Morning_meditation/vs_3.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 5.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ3.json',
     ),
     MusicData(
       title: 'Visualize 4',
       imageUrl: 'assets/Images/Morning_meditation/vs_4.jpg',
       audioUrl: 'MORNING MEDITATION/Visualize/Visualize 7.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ4.json',
     ),
   ];
 
@@ -84,6 +88,7 @@ class _VisualizeState extends State<Visualize> {
                 title: musicData.title,
                 imageUrl: musicData.imageUrl,
                 audioUrl: musicData.audioUrl,
+                gifurl: musicData.gifurl,
               ),
             ),
           );
@@ -138,10 +143,11 @@ class MusicData {
   final String title;
   final String imageUrl;
   final String audioUrl;
+  final String gifurl;
 
-  MusicData({
-    required this.title,
-    required this.imageUrl,
-    required this.audioUrl,
-  });
+  MusicData(
+      {required this.title,
+      required this.imageUrl,
+      required this.audioUrl,
+      required this.gifurl});
 }

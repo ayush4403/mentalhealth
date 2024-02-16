@@ -11,6 +11,7 @@ class AudioCardVisualize extends StatefulWidget {
   final bool showPlaybackControlButton;
   final bool showTimerSelector;
   final bool imageshow;
+  final VoidCallback onAudioPlay; // Add callback function
 
   const AudioCardVisualize({
     required this.imageUrl,
@@ -20,6 +21,7 @@ class AudioCardVisualize extends StatefulWidget {
     this.showPlaybackControlButton = true,
     this.showTimerSelector = true,
     this.imageshow = true,
+    required this.onAudioPlay, // Receive callback function
     Key? key,
   }) : super(key: key);
 
@@ -74,6 +76,11 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
 
   Future<void> _setupAudioPlayer() async {
     await _updateAudioSource(widget.audioFileName);
+    _player.playerStateStream.listen((state) {
+      if (state.playing) {
+        widget.onAudioPlay(); // Trigger animation when audio starts playing
+      }
+    });
   }
 
   Widget _progessBar() {

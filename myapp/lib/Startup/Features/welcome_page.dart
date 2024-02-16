@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Features/onbording.dart';
+import 'package:myapp/Startup/Features/onbording.dart';
 import 'package:lottie/lottie.dart';
 
 class Welcome extends StatefulWidget {
