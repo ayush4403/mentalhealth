@@ -240,8 +240,8 @@ class _MusicListScreenState extends State<MusicListScreen>
               children: [
                 FadeTransition(
                   opacity: _animation,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  child: const Padding(
+                    padding:  EdgeInsets.all(16.0),
                     child: Text(
                       'Choose and listen to your music',
                       style: TextStyle(

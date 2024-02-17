@@ -156,20 +156,24 @@ class _ImageWithTextState extends State<ImageWithText> {
   }
 
   Future<List<Map<String, dynamic>>> fetchImageData() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://api.unsplash.com/photos/random?count=10&query=${widget.queryname}&client_id=XhrMaB2QalO0YMRnfM6iaXwNfYDDIlDUbeK49ABfWyg'),
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://api.unsplash.com/photos/random?count=10&query=${widget.queryname}&client_id=XhrMaB2QalO0YMRnfM6iaXwNfYDDIlDUbeK49ABfWyg'),
+      );
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return List<Map<String, dynamic>>.from(data.map((dynamic item) => {
-            'imageUrl': item['urls']['regular'],
-            'description': quoteMap[widget.queryname]![
-                _random.nextInt(quoteMap[widget.queryname]!.length)],
-          }));
-    } else {
-      throw Exception('Failed to load images');
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body);
+        return List<Map<String, dynamic>>.from(data.map((dynamic item) => {
+              'imageUrl': item['urls']['regular'],
+              'description': quoteMap[widget.queryname]![
+                  _random.nextInt(quoteMap[widget.queryname]!.length)],
+            }));
+      } else {
+        throw Exception('Failed to load images: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Failed to load images: $error');
     }
   }
 
