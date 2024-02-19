@@ -37,7 +37,7 @@ class _BrainListState extends State<BrainList> {
     ),
     MusicData(
       title: 'BrainList 5 ',
-      imageUrl: 'assets/Images/Morning_meditation/vs_5.jpg',
+      imageUrl: 'assets/Images/Morning_meditation/vs_3.jpg',
       audioUrl: 'MORNING MEDITATION/BrainBeats/I-CREATIVITY.mp3',
       gifurl: 'assets/GIF/Visualise/VZ5.json',
     ),

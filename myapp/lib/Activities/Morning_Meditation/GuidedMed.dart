@@ -38,7 +38,7 @@ class _GuidedListState extends State<GuidedList> {
     ),
     MusicData(
       title: 'GuidedList 5 (15 min)',
-      imageUrl: 'assets/Images/Morning_meditation/vs_5.jpg',
+      imageUrl: 'assets/Images/Morning_meditation/vs_2.jpg',
       audioUrl: 'MORNING MEDITATION/Guided/GuidedList 9.mp3',
       gifurl: 'assets/GIF/Visualise/VZ5.json',
     ),
