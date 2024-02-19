@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:myapp/Activities/Gratitude/VideoApp.dart';
+import 'package:myapp/Activities/Mental_Marathon/QuizModule.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/Night_Music/nightmusic.dart';
 import 'package:myapp/Activities/Study_Music/nightmusic.dart';
+import 'package:myapp/Activities/kindness/KindnessPage.dart';
 
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
 
@@ -35,12 +38,12 @@ class ActivityList extends StatelessWidget {
   final List<String> activities = [
     'Morning Meditation',
     'Night Music',
-    'Brain Training Games',
+    'Gratitude',
     'Mental Marathon',
     'Image Based Riddles',
     'Daily Thoughts',
     'Study Music',
-    'Memory Technique',
+    'Kindness Challenge',
     'Upcoming Events',
     'Music',
   ];
@@ -51,9 +54,9 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/3_brain_training_games.json',
     'assets/GIF/Card_view/4_mental_marathon.json',
     'assets/GIF/Card_view/5_img_rdd.json',
-    'assets/GIF/Card_view/6_motivation quotes.json',
+    'assets/GIF/Card_view/thoughts.json',
     'assets/GIF/Card_view/7_study_music.json',
-    'assets/GIF/Card_view/8_memory_technique.json',
+    'assets/GIF/Card_view/kindness.json',
     'assets/GIF/Card_view/9_upcoming_events.json',
     'assets/GIF/Card_view/10_stress_buster_music.json',
   ];
@@ -123,6 +126,24 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => NightMusicScreen()),
+      );
+    }
+    if (activity == 'Mental Marathon') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuizModule()),
+      );
+    }
+    if (activity == 'Gratitude') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => VideoApp()),
+      );
+    }
+    if (activity == 'Kindness Challenge') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => KindnessPageClass()),
       );
     }
   }

@@ -35,27 +35,27 @@ class _NightMusicViewScreenState extends State<NightMusicViewScreen> {
     MusicData(
       title: 'Night Music 1',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'F-MEDITATION SLEEP-INNER AWARENESS.mp3',
+      audioUrl: 'Night Music/F-MEDITATION SLEEP-INNER AWARENESS.mp3',
     ),
     MusicData(
       title: 'Night Music 2',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'I-ACCELERATED LEARNING.mp3',
+      audioUrl: 'Night Music/I-ACCELERATED LEARNING.mp3',
     ),
     MusicData(
       title: 'Night Music 3',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'I-FRONTAL LOBE.mp3',
+      audioUrl: 'Night Music/I-FRONTAL LOBE.mp3',
     ),
     MusicData(
       title: 'Night Music 4',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'I-PROBLEM SOLVING SKILL.mp3',
+      audioUrl: 'Night Music/I-PROBLEM SOLVING SKILL.mp3',
     ),
     MusicData(
       title: 'Night Music 5',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'M-INCREASE MEMORY RETENTION.mp3',
+      audioUrl: 'Night Music/M-INCREASE MEMORY RETENTION.mp3',
     ),
   ];
 
@@ -101,12 +101,6 @@ class _NightMusicViewScreenState extends State<NightMusicViewScreen> {
               ),
             ),
             SizedBox(height: 8),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [_buildCategory(context, musicList)],
-              ),
-            ),
           ],
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/Activities/quotes/audiocard.dart';
+import 'package:myapp/Activities/audiocard.dart';
 import 'package:video_player/video_player.dart';
 
 class VisualizeScreen extends StatefulWidget {
@@ -11,12 +11,13 @@ class VisualizeScreen extends StatefulWidget {
   final String gifurl;
   final VoidCallback? onAudioPlay;
 
-  VisualizeScreen(
-      {required this.title,
-      required this.imageUrl,
-      required this.audioUrl,
-      required this.gifurl,
-      this.onAudioPlay});
+  VisualizeScreen({
+    required this.title,
+    required this.imageUrl,
+    required this.audioUrl,
+    required this.gifurl,
+    this.onAudioPlay,
+  });
 
   @override
   _VisualizeScreenState createState() => _VisualizeScreenState();
@@ -25,9 +26,7 @@ class VisualizeScreen extends StatefulWidget {
 class _VisualizeScreenState extends State<VisualizeScreen> {
   late VideoPlayerController _videoController;
   final _audioPlayer = AudioPlayer();
-  // ignore: unused_field
   bool _audioPlaying = false;
-  // ignore: unused_field
   bool _cardVisible = true;
 
   @override
@@ -35,7 +34,7 @@ class _VisualizeScreenState extends State<VisualizeScreen> {
     super.initState();
 
     _initializeAudio();
-    print("heeloo" + widget.gifurl);
+    print("hello" + widget.gifurl);
   }
 
   void _initializeAudio() async {
@@ -74,26 +73,42 @@ class _VisualizeScreenState extends State<VisualizeScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        // Background GIF
-
-        Lottie.asset(widget.gifurl,
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.1),
-
-        // ignore: avoid_print
-        SizedBox(
-          height: 30,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue[300]!, Colors.blue[800]!],
+          ),
         ),
-        AudioCardVisualize(
-          imageUrl: widget.imageUrl,
-          title: widget.title,
-          audioFileName: widget.audioUrl,
-          imageshow: false,
-          showTimerSelector: false,
-          onAudioPlay: _handleAudioPlay,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Lottie.asset(
+                widget.gifurl,
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.height * 0.3,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Opacity(
+              opacity: 0.9,
+              child: AudioCardVisualize(
+                imageUrl: widget.imageUrl,
+                title: widget.title,
+                audioFileName: widget.audioUrl,
+                imageshow: false,
+                showTimerSelector: false,
+                onAudioPlay: _handleAudioPlay,
+              ),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 

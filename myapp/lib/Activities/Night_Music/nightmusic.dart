@@ -60,24 +60,24 @@ class _NightMusicScreenState extends State<NightMusicScreen>
   final List<MusicData> allMusicData = [
     // Add all music data lists
     MusicData(
-      title: 'Law of attraction',
+      title: 'Sleep Music',
       imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
-      audioUrl: 'Gratitude thought/Music/Anti_Addication_Music.mp3',
+      audioUrl: 'Night Music/F-MEDITATION SLEEP-INNER AWARENESS.mp3',
     ),
     MusicData(
-      title: 'Anti stress and body healing',
+      title: 'sleep music',
       imageUrl: 'assets/Images/types_quotes/gym_1.jpg',
-      audioUrl: 'Gratitude thought/Music/Law_of_Attraction.mp3',
+      audioUrl: 'Night Music/I-ACCELERATED LEARNING.mp3',
     ),
     MusicData(
-      title: 'Anti stress and body healing',
+      title: 'sleep music',
       imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
-      audioUrl: 'Gratitude thought/Music/Anti_Stress_and_Body_Healing.mp3',
+      audioUrl: 'Night Music/I-FRONTAL LOBE.mp3',
     ),
     MusicData(
-      title: 'Om mantra chanting',
+      title: 'sleep music',
       imageUrl: 'assets/Images/Music/om_mantra.jpg',
-      audioUrl: 'Gratitude thought/Music/OM_Mantra_Chanting.mp3',
+      audioUrl: 'Night Music/I-PROBLEM SOLVING SKILL.mp3',
     ),
   ];
 
@@ -167,9 +167,35 @@ class _NightMusicScreenState extends State<NightMusicScreen>
     );
   }
 
-  Widget _buildCategoryslider(BuildContext context, List<MusicData> musicList) {
+  Widget _buildCategorySlider(BuildContext context, List<MusicData> musicList) {
     // Shuffle the musicList to display random cards
-    musicList.shuffle();
+
+    final PageController controller = PageController();
+
+    // Start automatic sliding using a timer
+    Timer? timer;
+
+    void startTimer() {
+      timer = Timer.periodic(
+        const Duration(seconds: 2),
+        (Timer timer) {
+          if (controller.page == null ||
+              controller.page! >= musicList.length - 1) {
+            controller.jumpToPage(0);
+          } else {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          }
+        },
+      );
+    }
+
+    void cancelTimer() {
+      timer?.cancel();
+    }
+
+    startTimer();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -180,48 +206,49 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: musicList.map((musicData) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: PageView.builder(
+                    controller: controller,
+                    itemCount: musicList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
                             ),
-                            child: Image.asset(
-                              musicData.imageUrl,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.fitWidth,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                  ),
+                                  child: Image.asset(
+                                    musicList[index].imageUrl,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              musicData.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              }).toList(),
+                ),
+              ],
             ),
           ),
         ],
@@ -256,7 +283,7 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 20),
-            _buildCategoryslider(context, allMusicData),
+            _buildCategorySlider(context, allMusicData),
             _buildCategory(allMusicData),
           ],
         ),
