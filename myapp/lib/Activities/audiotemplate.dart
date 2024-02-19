@@ -146,23 +146,23 @@ class _AudioCardState extends State<AudioCard> {
               ),
             ),
             DropdownMenuItem(
-              value: 60.0,
-              child: Text(
-                "1 Minute",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            DropdownMenuItem(
-              value: 120.0,
-              child: Text(
-                "2 Minutes",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            DropdownMenuItem(
               value: 180.0,
               child: Text(
-                "3 Minutes",
+                "3 Minute",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 240.0,
+              child: Text(
+                "4 Minutes",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 300.0,
+              child: Text(
+                "5 Minutes",
                 style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
               ),
             ),
@@ -217,7 +217,7 @@ class _AudioCardState extends State<AudioCard> {
                       widget.imageUrl,
                       width: 120,
                       height: 120,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
@@ -226,7 +226,7 @@ class _AudioCardState extends State<AudioCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 100), // Placeholder for the image
+                    SizedBox(height: 10), // Placeholder for the image
                     if (widget.showProgressBar) _progessBar(),
                     if (widget.showPlaybackControlButton)
                       _playbackControlButton(),

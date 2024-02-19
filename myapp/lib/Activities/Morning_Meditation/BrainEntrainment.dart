@@ -13,11 +13,11 @@ class BrainBeatsState extends State<BrainBeats> {
 
   // Define a map to store music URLs for different durations
   Map<String, String> musicUrls = {
-    '5 min': 'MORNING MEDITATION/Guided/Guided 1.mp3',
-    '7 min': 'MORNING MEDITATION/Guided/Guided 3.mp3',
-    '9 min': 'MORNING MEDITATION/Guided/Guided 5.mp3',
-    '13 min': 'MORNING MEDITATION/Guided/Guided 7.mp3',
-    '15 min': 'MORNING MEDITATION/Guided/Guided 8.mp3',
+    '5 min': 'MORNING MEDITATION/BrainBeats/B-BALANCE BRAIN AND BODY.mp3.mp3',
+    '7 min': 'MORNING MEDITATION/BrainBeats/F-FOCUS.mp3.mp3',
+    '9 min': 'MORNING MEDITATION/BrainBeats/F-SELF CONCIOUSNEES-.mp3',
+    '13 min': 'MORNING MEDITATION/BrainBeats/F-alertness-relaxed.mp3',
+    '15 min': 'MORNING MEDITATION/BrainBeats/I-CREATIVITY.mp3',
   };
 
   String selectedAudioUrl = '';
@@ -77,7 +77,7 @@ class BrainBeatsState extends State<BrainBeats> {
                 imageUrl: 'assets/Images/persons/AlbertEinstein/1.jpg',
                 title: '5 min Music',
                 audioFileName: selectedAudioUrl,
-                showTimerSelector: false,
+                showTimerSelector: true,
                 imageshow: false,
               ),
               // Duration Cards

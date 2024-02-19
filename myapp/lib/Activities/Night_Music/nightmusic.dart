@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/Music/stressSecond.dart';
 import 'package:myapp/Activities/Night_Music/nightmusicview.dart';
 
 void main() {
@@ -41,18 +43,6 @@ class _NightMusicScreenState extends State<NightMusicScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
-      ..addListener(() {
-        setState(() {
-          _animationCompleted = true;
-        });
-      });
-    _controller.forward();
-    selectedCategory = 'Chanting';
   }
 
   @override
@@ -61,7 +51,14 @@ class _NightMusicScreenState extends State<NightMusicScreen>
     super.dispose();
   }
 
-  late final List<MusicData> musicDataListCalm = [
+  final List<String> images = [
+    'assets/Images/Music/Law_of_attraction_1.jpg',
+    'assets/Images/Music/om_mantra.jpg',
+    'assets/Images/types_quotes/gym_1.jpg',
+  ];
+
+  final List<MusicData> allMusicData = [
+    // Add all music data lists
     MusicData(
       title: 'Law of attraction',
       imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
@@ -72,79 +69,26 @@ class _NightMusicScreenState extends State<NightMusicScreen>
       imageUrl: 'assets/Images/types_quotes/gym_1.jpg',
       audioUrl: 'Gratitude thought/Music/Law_of_Attraction.mp3',
     ),
-  ];
-
-  late final List<MusicData> musicDataListStressBuster = [
     MusicData(
       title: 'Anti stress and body healing',
       imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
       audioUrl: 'Gratitude thought/Music/Anti_Stress_and_Body_Healing.mp3',
     ),
-  ];
-
-  late final List<MusicData> musicDataListChanting = [
     MusicData(
       title: 'Om mantra chanting',
       imageUrl: 'assets/Images/Music/om_mantra.jpg',
       audioUrl: 'Gratitude thought/Music/OM_Mantra_Chanting.mp3',
     ),
   ];
-  final List<String> images = [
-    'assets/Images/Music/Law_of_attraction_1.jpg',
-    'assets/Images/Music/om_mantra.jpg',
-    'assets/Images/types_quotes/gym_1.jpg',
-  ];
 
-  late List<List<MusicData>> allMusicData = [
-    // Add all music data lists
-    musicDataListCalm,
-    musicDataListStressBuster,
-    musicDataListChanting,
-  ];
-  Widget _buildButtonsRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              selectedCategory = 'Chanting';
-            });
-          },
-          child: const Text('Chanting'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              selectedCategory = 'Stress Buster';
-            });
-          },
-          child: const Text('Stress Buster'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              selectedCategory = 'Calm';
-            });
-          },
-          child: const Text('Calm'),
-        ),
-      ],
-    );
-  }
-
-  int _currentCategoryIndex = 0;
-  Widget _buildCategory(String categoryTitle, List<MusicData> NightMusic) {
-    if (selectedCategory != categoryTitle) {
-      return const SizedBox.shrink();
-    }
+  Widget _buildCategory(List<MusicData> NightMusic) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            categoryTitle,
+            'Night Music',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -154,7 +98,6 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           const SizedBox(height: 12),
           Column(
             children: NightMusic.asMap().entries.map((entry) {
-              // ignore: unused_local_variable
               int index = entry.key;
               MusicData musicData = entry.value;
               return Padding(
@@ -224,6 +167,68 @@ class _NightMusicScreenState extends State<NightMusicScreen>
     );
   }
 
+  Widget _buildCategoryslider(BuildContext context, List<MusicData> musicList) {
+    // Shuffle the musicList to display random cards
+    musicList.shuffle();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: musicList.map((musicData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                            ),
+                            child: Image.asset(
+                              musicData.imageUrl,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              musicData.title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -236,7 +241,7 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           },
         ),
         title: const Text(
-          'Music',
+          'Night Music',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -251,40 +256,8 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 20),
-            _buildCarousel(allMusicData[_currentCategoryIndex]),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (int i = 0; i < allMusicData.length; i++)
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _currentCategoryIndex = i;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentCategoryIndex == i
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            _buildButtonsRow(),
-            _buildCategory('Chanting', musicDataListChanting),
-            _buildCategory(
-              'Stress Buster',
-              musicDataListStressBuster,
-            ),
-            _buildCategory('Calm', musicDataListCalm),
+            _buildCategoryslider(context, allMusicData),
+            _buildCategory(allMusicData),
           ],
         ),
       ),
@@ -298,14 +271,19 @@ class _NightMusicScreenState extends State<NightMusicScreen>
     Timer? timer;
 
     void startTimer() {
-      timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
-        if (controller.page == null || controller.page! >= images.length - 1) {
-          controller.jumpToPage(0);
-        } else {
-          controller.nextPage(
-              duration: const Duration(milliseconds: 500), curve: Curves.ease);
-        }
-      });
+      timer = Timer.periodic(
+        const Duration(seconds: 2),
+        (Timer timer) {
+          if (controller.page == null ||
+              controller.page! >= images.length - 1) {
+            controller.jumpToPage(0);
+          } else {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          }
+        },
+      );
     }
 
     void cancelTimer() {

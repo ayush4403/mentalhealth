@@ -1,5 +1,3 @@
-//import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
 
@@ -15,7 +13,7 @@ class MusicData {
   });
 }
 
-class NightMusicViewScreen extends StatelessWidget {
+class NightMusicViewScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String audioUrl;
@@ -26,55 +24,54 @@ class NightMusicViewScreen extends StatelessWidget {
     required this.audioUrl,
   });
 
+  @override
+  _NightMusicViewScreenState createState() => _NightMusicViewScreenState();
+}
+
+class _NightMusicViewScreenState extends State<NightMusicViewScreen> {
+  late String selectedAudioUrl;
+
   late final List<MusicData> musicList = [
     MusicData(
-      title: 'Chanting 1',
+      title: 'Night Music 1',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'Winter-Spa-chosic.mp3',
+      audioUrl: 'F-MEDITATION SLEEP-INNER AWARENESS.mp3',
     ),
     MusicData(
-      title: 'Chanting 2',
+      title: 'Night Music 2',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
+      audioUrl: 'I-ACCELERATED LEARNING.mp3',
     ),
     MusicData(
-      title: 'Stress 1',
+      title: 'Night Music 3',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'Winter-Spa-chosic.mp3',
+      audioUrl: 'I-FRONTAL LOBE.mp3',
     ),
     MusicData(
-      title: 'Stress 2',
+      title: 'Night Music 4',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
+      audioUrl: 'I-PROBLEM SOLVING SKILL.mp3',
     ),
     MusicData(
-      title: 'Calm 1',
+      title: 'Night Music 5',
       imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'Winter-Spa-chosic.mp3',
-    ),
-    MusicData(
-      title: 'Calm 2',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
-    ),
-    MusicData(
-      title: 'Calm 4',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
-    ),
-    MusicData(
-      title: 'Calm 3',
-      imageUrl: 'assets/Images/logos.jpg',
-      audioUrl: 'autumn-sky-meditation-7618.mp3',
+      audioUrl: 'M-INCREASE MEMORY RETENTION.mp3',
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedAudioUrl =
+        widget.audioUrl; // Set initial selected URL to default audio URL
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text('Music Card Data'),
+        title: Text(widget.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -83,13 +80,14 @@ class NightMusicViewScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(
                   0,
-                  MediaQuery.of(context).size.height * 0.1,
+                  MediaQuery.of(context).size.height * 0.3,
                   0,
                   MediaQuery.of(context).size.height * 0.05),
               child: AudioCard(
-                imageUrl: imageUrl,
-                title: title,
-                audioFileName: audioUrl,
+                imageUrl: widget.imageUrl,
+                title: widget.title,
+                audioFileName: selectedAudioUrl,
+                imageshow: false,
               ),
             ),
             Padding(
@@ -132,7 +130,11 @@ class NightMusicViewScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        selectedAudioUrl = musicData.audioUrl;
+                      });
+                    },
                     child: Container(
                       width: 150,
                       decoration: BoxDecoration(
