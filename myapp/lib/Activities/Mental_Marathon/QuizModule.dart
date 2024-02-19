@@ -145,6 +145,7 @@ class _QuizModuleState extends State<QuizModule> {
                             as List<String>)
                         .map((option) {
                       bool isSelected = selectedAnswer == option;
+                      // ignore: unused_local_variable
                       bool isCorrect = isSelected &&
                           selectedAnswer ==
                               quizQuestions[currentQuestionIndex]

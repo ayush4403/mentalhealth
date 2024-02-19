@@ -26,8 +26,10 @@ class VisualizeScreen extends StatefulWidget {
 class _VisualizeScreenState extends State<VisualizeScreen> {
   late VideoPlayerController _videoController;
   final _audioPlayer = AudioPlayer();
+  // ignore: unused_field
   bool _audioPlaying = false;
-  bool _cardVisible = true;
+  // ignore: unused_field
+  final bool _cardVisible = true;
 
   @override
   void initState() {

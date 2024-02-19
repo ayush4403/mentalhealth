@@ -54,7 +54,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/3_brain_training_games.json',
     'assets/GIF/Card_view/4_mental_marathon.json',
     'assets/GIF/Card_view/5_img_rdd.json',
-    'assets/GIF/Card_view/thoughts.json',
+    'assets/GIF/Card_view/6_thoughts.json',
     'assets/GIF/Card_view/7_study_music.json',
     'assets/GIF/Card_view/kindness.json',
     'assets/GIF/Card_view/9_upcoming_events.json',

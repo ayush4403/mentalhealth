@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:icons_plus/icons_plus.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SinglePlayer extends StatefulWidget {
@@ -10,8 +9,11 @@ class SinglePlayer extends StatefulWidget {
 }
 
 class _SinglePlayerState extends State<SinglePlayer> {
+  // ignore: unused_field
   double _value = 10;
+  // ignore: unused_field
   double _lowerValue = 0.0;
+  // ignore: unused_field
   double _upperValue = 100.0;
 
   @override

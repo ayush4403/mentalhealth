@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Music/stressSecond.dart';
 
@@ -64,13 +63,13 @@ class _MusicListScreenState extends State<MusicListScreen>
 
   late final List<MusicData> musicDataListCalm = [
     MusicData(
-      title: 'Law of attraction',
-      imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
+      title: 'Anti addication music',
+      imageUrl: 'assets/Images/Music/ms_3.jpg',
       audioUrl: 'Gratitude thought/Music/Anti_Addication_Music.mp3',
     ),
     MusicData(
-      title: 'Anti stress and body healing',
-      imageUrl: 'assets/Images/types_quotes/gym_1.jpg',
+      title: 'Law of attraction',
+      imageUrl: 'assets/Images/Music/ms_4.jpg',
       audioUrl: 'Gratitude thought/Music/Law_of_Attraction.mp3',
     ),
   ];
@@ -78,7 +77,7 @@ class _MusicListScreenState extends State<MusicListScreen>
   late final List<MusicData> musicDataListStressBuster = [
     MusicData(
       title: 'Anti stress and body healing',
-      imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
+      imageUrl: 'assets/Images/Music/ms_1.jpg',
       audioUrl: 'Gratitude thought/Music/Anti_Stress_and_Body_Healing.mp3',
     ),
   ];
@@ -86,14 +85,16 @@ class _MusicListScreenState extends State<MusicListScreen>
   late final List<MusicData> musicDataListChanting = [
     MusicData(
       title: 'Om mantra chanting',
-      imageUrl: 'assets/Images/Music/om_mantra.jpg',
+      imageUrl: 'assets/Images/Music/ms_2.jpg',
       audioUrl: 'Gratitude thought/Music/OM_Mantra_Chanting.mp3',
     ),
   ];
+
   final List<String> images = [
-    'assets/Images/Music/Law_of_attraction_1.jpg',
-    'assets/Images/Music/om_mantra.jpg',
-    'assets/Images/types_quotes/gym_1.jpg',
+    "assets/Images/Music/ms_1.jpg",
+    "assets/Images/Music/ms_2.jpg",
+    "assets/Images/Music/ms_3.jpg",
+    "assets/Images/Music/ms_4.jpg",
   ];
 
   late List<List<MusicData>> allMusicData = [
@@ -134,6 +135,7 @@ class _MusicListScreenState extends State<MusicListScreen>
     );
   }
 
+  // ignore: prefer_final_fields
   int _currentCategoryIndex = 0;
   Widget _buildCategory(String categoryTitle, List<MusicData> musicList) {
     if (selectedCategory != categoryTitle) {
@@ -247,32 +249,8 @@ class _MusicListScreenState extends State<MusicListScreen>
             const SizedBox(height: 20),
             _buildCarousel(allMusicData[_currentCategoryIndex]),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (int i = 0; i < allMusicData.length; i++)
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _currentCategoryIndex = i;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentCategoryIndex == i
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 20),
             _buildButtonsRow(),
+            const SizedBox(height: 20),
             _buildCategory('Chanting', musicDataListChanting),
             _buildCategory(
               'Stress Buster',
@@ -333,7 +311,7 @@ class _MusicListScreenState extends State<MusicListScreen>
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                  images[index],
+                  musicList[index].imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),

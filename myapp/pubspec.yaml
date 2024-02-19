@@ -120,8 +120,8 @@ flutter:
     - assets/GIF/Card_view/8_memory_technique.json
     - assets/GIF/Card_view/9_upcoming_events.json
     - assets/GIF/Card_view/10_stress_buster_music.json
+    - assets/GIF/Card_view/11_thoughts.json
     - assets/GIF/Card_view/kindness.json
-    - assets/GIF/Card_view/thoughts.json
 
     #Quotes iamges
     - assets/Images/quotes/Swami_Vivekananda.jpg
@@ -136,7 +136,7 @@ flutter:
     - assets/Images/quotes/al_en.jpg
 
     #persons separate images
-    #albert kaka
+      #albert kaka
     - assets/Images/persons/AlbertEinstein/1.jpg
     - assets/Images/persons/AlbertEinstein/2.jpg
     - assets/Images/persons/AlbertEinstein/3.jpg
@@ -269,14 +269,25 @@ flutter:
     - assets/Images/types_quotes/Motivation.jpg
 
     #music images
-    - assets/Images/Music/Law_of_attraction_1.jpg
-    - assets/Images/Music/om_mantra.jpg
+    - assets/Images/Music/ms_1.jpg
+    - assets/Images/Music/ms_2.jpg
+    - assets/Images/Music/ms_3.jpg
+    - assets/Images/Music/ms_4.jpg
 
     #Morning Meditation images/svg/json.
     - assets/Images/Morning_meditation/vs_1.jpg
     - assets/Images/Morning_meditation/vs_2.jpg
     - assets/Images/Morning_meditation/vs_3.jpg
     - assets/Images/Morning_meditation/vs_4.jpg
+
+    #Night music
+    - assets/Images/night_music/nm_1.jpg
+    - assets/Images/night_music/nm_2.jpg
+    - assets/Images/night_music/nm_3.jpg
+    - assets/Images/night_music/nm_4.jpg
+    - assets/Images/night_music/nm_5.jpg
+    - assets/Images/night_music/nm_6.jpg
+    - assets/Images/night_music/nm_7.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
