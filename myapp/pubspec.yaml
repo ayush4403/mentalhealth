@@ -53,6 +53,7 @@ dependencies:
   flutter_xlider: ^3.1.1
   cloud_firestore: ^4.15.4
   image_picker: ^1.0.7
+  circular_countdown_timer: ^0.2.3
 
 dev_dependencies:
   flutter_test:
@@ -122,6 +123,18 @@ flutter:
     - assets/GIF/Card_view/10_stress_buster_music.json
     - assets/GIF/Card_view/kindness.json
     - assets/GIF/Card_view/thoughts.json
+
+    #sherlockHolmes
+    - assets/SherlockHolmes/1.jpg
+    - assets/SherlockHolmes/2.jpg
+    - assets/SherlockHolmes/3.jpg
+    - assets/SherlockHolmes/4.jpg
+    - assets/SherlockHolmes/5.jpg
+    - assets/SherlockHolmes/6.jpg
+    - assets/SherlockHolmes/7.jpg
+    - assets/SherlockHolmes/8.jpg
+    - assets/SherlockHolmes/9.jpg
+    - assets/SherlockHolmes/10.jpg
 
     #Quotes iamges
     - assets/Images/quotes/Swami_Vivekananda.jpg

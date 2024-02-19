@@ -5,6 +5,7 @@ import 'package:myapp/Activities/Mental_Marathon/QuizModule.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/Night_Music/nightmusic.dart';
+import 'package:myapp/Activities/Sherlock%20Holmes/Picturepage.dart';
 import 'package:myapp/Activities/Study_Music/nightmusic.dart';
 import 'package:myapp/Activities/kindness/KindnessPage.dart';
 
@@ -40,7 +41,7 @@ class ActivityList extends StatelessWidget {
     'Night Music',
     'Gratitude',
     'Mental Marathon',
-    'Image Based Riddles',
+    'Sherlock Holmes',
     'Daily Thoughts',
     'Study Music',
     'Kindness Challenge',
@@ -144,6 +145,12 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => KindnessPageClass()),
+      );
+    }
+    if (activity == 'Sherlock Holmes') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PicturePage()),
       );
     }
   }
