@@ -1,118 +1,143 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/audiotemplate.dart';
+import 'package:myapp/Activities/Morning_Meditation/showBrain.dart';
 
-class BrainBeats extends StatefulWidget {
-  const BrainBeats({super.key});
+import 'package:myapp/Activities/Morning_Meditation/showguided.dart';
+
+class BrainList extends StatefulWidget {
+  const BrainList({Key? key}) : super(key: key);
 
   @override
-  State<BrainBeats> createState() => BrainBeatsState();
+  State<BrainList> createState() => _BrainListState();
 }
 
-class BrainBeatsState extends State<BrainBeats> {
-  bool isPlaying = false;
+class _BrainListState extends State<BrainList> {
+  late final List<MusicData> musicDataListChanting = [
+    MusicData(
+      title: 'BrainList 1 ',
+      imageUrl: 'assets/Images/Morning_meditation/vs_1.jpg',
+      audioUrl: 'MORNING MEDITATION/BrainBeats/B-BALANCE BRAIN AND BODY.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ1.json',
+    ),
+    MusicData(
+      title: 'BrainList 2 ',
+      imageUrl: 'assets/Images/Morning_meditation/vs_2.jpg',
+      audioUrl: 'MORNING MEDITATION/BrainBeats/._F-FOCUS.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ2.json',
+    ),
+    MusicData(
+      title: 'BrainList 3 ',
+      imageUrl: 'assets/Images/Morning_meditation/vs_3.jpg',
+      audioUrl: 'MORNING MEDITATION/BrainBeats/F-SELF CONCIOUSNEES-.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ3.json',
+    ),
+    MusicData(
+      title: 'BrainList4 ',
+      imageUrl: 'assets/Images/Morning_meditation/vs_4.jpg',
+      audioUrl: 'MORNING MEDITATION/BrainBeats/F-alertness-relaxed.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ4.json',
+    ),
+    MusicData(
+      title: 'BrainList 5 ',
+      imageUrl: 'assets/Images/Morning_meditation/vs_5.jpg',
+      audioUrl: 'MORNING MEDITATION/BrainBeats/I-CREATIVITY.mp3',
+      gifurl: 'assets/GIF/Visualise/VZ5.json',
+    ),
+  ];
 
-  // Define a map to store music URLs for different durations
-  Map<String, String> musicUrls = {
-    '5 min': 'MORNING MEDITATION/BrainBeats/B-BALANCE BRAIN AND BODY.mp3.mp3',
-    '7 min': 'MORNING MEDITATION/BrainBeats/F-FOCUS.mp3.mp3',
-    '9 min': 'MORNING MEDITATION/BrainBeats/F-SELF CONCIOUSNEES-.mp3',
-    '13 min': 'MORNING MEDITATION/BrainBeats/F-alertness-relaxed.mp3',
-    '15 min': 'MORNING MEDITATION/BrainBeats/I-CREATIVITY.mp3',
-  };
+  // Color options
+  final List<Color> colors = [
+    Colors.blue[100]!,
+    Colors.red[100]!,
+    Colors.green[100]!,
+    Colors.yellow[100]!,
+    Colors.orange[100]!,
+    Colors.purple[100]!,
+    Colors.teal[100]!,
+    Colors.indigo[100]!,
+    Colors.amber[100]!,
+    Colors.deepOrange[100]!,
+  ];
 
-  String selectedAudioUrl = '';
+  // Randomly shuffle the colors
+  late final List<Color> shuffledColors = []
+    ..addAll(colors)
+    ..shuffle(Random());
+
+  // Generate a random unique index for each card
+  late List<int> cardColorIndices =
+      List.generate(musicDataListChanting.length, (index) => index);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Container(
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        bottom: 240,
-                        left: 10,
-                        top: 10,
-                        child: _buildDurationButton('5 min'),
-                      ),
-                      Positioned(
-                        bottom: 50,
-                        left: 50,
-                        top: 0,
-                        child: _buildDurationButton('7 min'),
-                      ),
-                      Positioned(
-                        bottom: 20,
-                        left: 140,
-                        top: 1,
-                        child: _buildDurationButton('9 min'),
-                      ),
-                      Positioned(
-                        bottom: 50,
-                        right: 50,
-                        top: 0,
-                        child: _buildDurationButton('13 min'),
-                      ),
-                      Positioned(
-                        bottom: 240,
-                        right: 10,
-                        top: 10,
-                        child: _buildDurationButton('15 min'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-
-              AudioCard(
-                imageUrl: 'assets/Images/persons/AlbertEinstein/1.jpg',
-                title: '5 min Music',
-                audioFileName: selectedAudioUrl,
-                showTimerSelector: true,
-                imageshow: false,
-              ),
-              // Duration Cards
-            ],
-          ),
-        ],
+    return Container(
+      color: const Color.fromARGB(255, 0, 111, 186),
+      child: ListView.builder(
+        itemCount: musicDataListChanting.length,
+        itemBuilder: (context, index) {
+          int colorIndex = cardColorIndices.removeAt(0);
+          return _buildCategory(
+              musicDataListChanting[index], shuffledColors[colorIndex]);
+        },
       ),
     );
   }
 
-  Widget _buildDurationButton(String duration) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      child: Material(
-        shape: const CircleBorder(),
-        color: Colors.blue,
-        child: InkWell(
-          onTap: () {
-            // Update selected audio URL
-            setState(() {
-              selectedAudioUrl = musicUrls[duration] ?? '';
-            });
-            // ignore: avoid_print
-            print('Selected audio URL: $selectedAudioUrl');
-          },
-          child: Container(
-            width: 80,
-            height: 40,
-            alignment: Alignment.center,
-            child: Text(
-              duration,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
+  // ignore: non_constant_identifier_names
+  Widget _buildCategory(MusicData musicData, Color cardColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ShowBrainScreen(
+                title: musicData.title,
+                imageUrl: musicData.imageUrl,
+                audioUrl: musicData.audioUrl,
               ),
+            ),
+          );
+        },
+        child: Card(
+          elevation: 3,
+          margin: const EdgeInsets.all(3),
+          color: cardColor,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.16,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      musicData.imageUrl,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          musicData.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -121,11 +146,15 @@ class BrainBeatsState extends State<BrainBeats> {
   }
 }
 
-void main() {
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BrainBeats(),
-    ),
-  );
+class MusicData {
+  final String title;
+  final String imageUrl;
+  final String audioUrl;
+  final String gifurl;
+
+  MusicData(
+      {required this.title,
+      required this.imageUrl,
+      required this.audioUrl,
+      required this.gifurl});
 }

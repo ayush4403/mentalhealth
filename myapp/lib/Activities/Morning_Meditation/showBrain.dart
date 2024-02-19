@@ -13,22 +13,22 @@ class MusicData {
   });
 }
 
-class ShowVisualisedScreen extends StatefulWidget {
+class ShowBrainScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String audioUrl;
 
-  ShowVisualisedScreen({
+  ShowBrainScreen({
     required this.title,
     required this.imageUrl,
     required this.audioUrl,
   });
 
   @override
-  _ShowVisualisedScreenState createState() => _ShowVisualisedScreenState();
+  _ShowBrainScreenState createState() => _ShowBrainScreenState();
 }
 
-class _ShowVisualisedScreenState extends State<ShowVisualisedScreen> {
+class _ShowBrainScreenState extends State<ShowBrainScreen> {
   late String selectedAudioUrl;
 
   late final List<MusicData> musicList = [
@@ -88,7 +88,7 @@ class _ShowVisualisedScreenState extends State<ShowVisualisedScreen> {
                 showPlaybackControlButton: false,
                 showProgressBar: false,
                 showTimerSelector: false,
-                timerSelectorfordisplay: false,
+                timerSelectorfordisplay: true,
               ),
             ),
           ],

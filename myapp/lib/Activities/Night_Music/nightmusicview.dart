@@ -79,28 +79,18 @@ class _NightMusicViewScreenState extends State<NightMusicViewScreen> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(
-                  0,
-                  MediaQuery.of(context).size.height * 0.3,
-                  0,
-                  MediaQuery.of(context).size.height * 0.05),
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.05),
               child: AudioCard(
                 imageUrl: widget.imageUrl,
                 title: widget.title,
                 audioFileName: selectedAudioUrl,
                 imageshow: false,
+                showPlaybackControlButton: false,
+                showProgressBar: false,
+                showTimerSelector: false,
+                timerSelectorfordisplay: true,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Recommendations',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
           ],
         ),
       ),
