@@ -11,6 +11,7 @@ class AudioCard extends StatefulWidget {
   final bool showPlaybackControlButton;
   final bool showTimerSelector;
   final bool imageshow;
+  final bool timerSelectorfordisplay;
 
   const AudioCard({
     required this.imageUrl,
@@ -20,6 +21,7 @@ class AudioCard extends StatefulWidget {
     this.showPlaybackControlButton = true,
     this.showTimerSelector = true,
     this.imageshow = true,
+    this.timerSelectorfordisplay = true,
     Key? key,
   }) : super(key: key);
 
@@ -85,7 +87,7 @@ class _AudioCardState extends State<AudioCard> {
     return SingleChildScrollView(
       child: SafeArea(
         child: Container(
-          height: size.height * 0.75,
+          height: size.height * 0.8,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -100,7 +102,7 @@ class _AudioCardState extends State<AudioCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(top: 10.0),
                       child: Text(
                         "PLAYING NOW",
@@ -110,76 +112,79 @@ class _AudioCardState extends State<AudioCard> {
                             color: Color.fromARGB(255, 12, 12, 12)),
                       ),
                     ),
-                    Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        DropdownButton<double>(
-                          value: selectedDuration,
-                          icon: const Icon(
-                            Icons.menu,
-                            size: 18.0,
-                            color: Color.fromARGB(255, 12, 12, 12),
-                          ),
-                          items: const [
-                            DropdownMenuItem(
-                              value: 0.0,
-                              child: Text(
-                                "Select Timer",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 12, 12, 12),
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold),
+                    Container(
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          if (widget.timerSelectorfordisplay)
+                            DropdownButton<double>(
+                              value: selectedDuration,
+                              icon: Icon(
+                                Icons.menu,
+                                size: 18.0,
+                                color: Color.fromARGB(255, 12, 12, 12),
                               ),
-                            ),
-                            DropdownMenuItem(
-                              value: 180.0,
-                              child: Text(
-                                "3 Minute",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 240.0,
-                              child: Text(
-                                "4 Minutes",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            DropdownMenuItem(
-                              value: 300.0,
-                              child: Text(
-                                "5 Minutes",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0)),
-                              ),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              selectedDuration = value!;
-                            });
+                              items: const [
+                                DropdownMenuItem(
+                                  value: 0.0,
+                                  child: Text(
+                                    "Select Timer",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 12, 12, 12),
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 180.0,
+                                  child: Text(
+                                    "3 Minute",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 240.0,
+                                  child: Text(
+                                    "4 Minutes",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 300.0,
+                                  child: Text(
+                                    "5 Minutes",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDuration = value!;
+                                });
 
-                            // Stop the audio when a duration is selected
-                            if (value != null && value > 0.0) {
-                              _player.positionStream
-                                  .takeWhile(
-                                      (position) => position.inSeconds < value)
-                                  .last
-                                  .then((_) {
-                                // Make sure the widget is still mounted before updating the state
-                                if (mounted) {
-                                  setState(() {
-                                    selectedDuration =
-                                        0.0; // Reset selectedDuration after audio stops
+                                // Stop the audio when a duration is selected
+                                if (value != null && value > 0.0) {
+                                  _player.positionStream
+                                      .takeWhile((position) =>
+                                          position.inSeconds < value)
+                                      .last
+                                      .then((_) {
+                                    // Make sure the widget is still mounted before updating the state
+                                    if (mounted) {
+                                      setState(() {
+                                        selectedDuration =
+                                            0.0; // Reset selectedDuration after audio stops
+                                      });
+                                    }
+                                    _player
+                                        .stop(); // Stop the music when the desired duration is reached
                                   });
                                 }
-                                _player
-                                    .stop(); // Stop the music when the desired duration is reached
-                              });
-                            }
-                          },
-                        ),
-                      ],
+                              },
+                            ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -390,10 +395,6 @@ class _AudioCardState extends State<AudioCard> {
                   children: [
                     // Placeholder for the image
                     _example(),
-                    if (widget.showProgressBar) _progessBar(),
-                    if (widget.showPlaybackControlButton)
-                      _playbackControlButton(),
-                    if (widget.showTimerSelector) _timerSelector(),
                   ],
                 ),
               ),

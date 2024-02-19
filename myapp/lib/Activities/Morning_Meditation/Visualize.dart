@@ -84,11 +84,10 @@ class _VisualizeState extends State<Visualize> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => VisualizeScreen(
+              builder: (context) => ShowVisualisedScreen(
                 title: musicData.title,
                 imageUrl: musicData.imageUrl,
                 audioUrl: musicData.audioUrl,
-                gifurl: musicData.gifurl,
               ),
             ),
           );

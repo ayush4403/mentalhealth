@@ -82,31 +82,15 @@ class MusicCardDataScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(
-                  0,
-                  MediaQuery.of(context).size.height * 0.1,
-                  0,
-                  MediaQuery.of(context).size.height * 0.05),
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.05),
               child: AudioCard(
                 imageUrl: imageUrl,
                 title: title,
                 audioFileName: audioUrl,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Recommendations',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [_buildCategory(context, musicList)],
+                showProgressBar: false,
+                showPlaybackControlButton: false,
+                showTimerSelector: false,
+                imageshow: false,
               ),
             ),
           ],

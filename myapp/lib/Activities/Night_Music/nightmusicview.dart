@@ -101,6 +101,7 @@ class _NightMusicViewScreenState extends State<NightMusicViewScreen> {
                 showPlaybackControlButton: false,
                 showProgressBar: false,
                 showTimerSelector: false,
+                timerSelectorfordisplay: true,
               ),
             ),
           ],

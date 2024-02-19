@@ -13,22 +13,22 @@ class MusicData {
   });
 }
 
-class ShowVisualisedScreen extends StatefulWidget {
+class ShowGuidedScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String audioUrl;
 
-  ShowVisualisedScreen({
+  ShowGuidedScreen({
     required this.title,
     required this.imageUrl,
     required this.audioUrl,
   });
 
   @override
-  _ShowVisualisedScreenState createState() => _ShowVisualisedScreenState();
+  _ShowGuidedScreenState createState() => _ShowGuidedScreenState();
 }
 
-class _ShowVisualisedScreenState extends State<ShowVisualisedScreen> {
+class _ShowGuidedScreenState extends State<ShowGuidedScreen> {
   late String selectedAudioUrl;
 
   late final List<MusicData> musicList = [
