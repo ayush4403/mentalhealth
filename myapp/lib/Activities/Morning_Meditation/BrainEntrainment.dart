@@ -2,8 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/showBrain.dart';
 
-import 'package:myapp/Activities/Morning_Meditation/showguided.dart';
-
 class BrainList extends StatefulWidget {
   const BrainList({Key? key}) : super(key: key);
 

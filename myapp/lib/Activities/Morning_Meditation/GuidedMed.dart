@@ -15,31 +15,31 @@ class _GuidedListState extends State<GuidedList> {
     MusicData(
       title: 'GuidedList 1 (5 min)',
       imageUrl: 'assets/Images/Morning_meditation/vs_1.jpg',
-      audioUrl: 'MORNING MEDITATION/Guided/GuidedList 1.mp3',
+      audioUrl: 'MORNING MEDITATION/Guided/Guided 1.mp3',
       gifurl: 'assets/GIF/Visualise/VZ1.json',
     ),
     MusicData(
       title: 'GuidedList 2 (7 min)',
       imageUrl: 'assets/Images/Morning_meditation/vs_2.jpg',
-      audioUrl: 'MORNING MEDITATION/Guided/GuidedList 3.mp3',
+      audioUrl: 'MORNING MEDITATION/Guided/Guided 3.mp3',
       gifurl: 'assets/GIF/Visualise/VZ2.json',
     ),
     MusicData(
       title: 'GuidedList 3 (9 min)',
       imageUrl: 'assets/Images/Morning_meditation/vs_3.jpg',
-      audioUrl: 'MORNING MEDITATION/Guided/GuidedList 5.mp3',
+      audioUrl: 'MORNING MEDITATION/Guided/Guided 5.mp3',
       gifurl: 'assets/GIF/Visualise/VZ3.json',
     ),
     MusicData(
       title: 'GuidedList 4 (13 min)',
       imageUrl: 'assets/Images/Morning_meditation/vs_4.jpg',
-      audioUrl: 'MORNING MEDITATION/Guided/GuidedList 7.mp3',
+      audioUrl: 'MORNING MEDITATION/Guided/Guided 7.mp3',
       gifurl: 'assets/GIF/Visualise/VZ4.json',
     ),
     MusicData(
       title: 'GuidedList 5 (15 min)',
-      imageUrl: 'assets/Images/Morning_meditation/vs_5.jpg',
-      audioUrl: 'MORNING MEDITATION/Guided/GuidedList 9.mp3',
+      imageUrl: 'assets/Images/Morning_meditation/vs_4.jpg',
+      audioUrl: 'MORNING MEDITATION/Guided/Guided 8.mp3',
       gifurl: 'assets/GIF/Visualise/VZ5.json',
     ),
   ];

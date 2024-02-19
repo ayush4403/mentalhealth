@@ -52,14 +52,14 @@ class ActivityList extends StatelessWidget {
   final List<String> activityImages = [
     'assets/GIF/Card_view/1_morning_meditation.json',
     'assets/GIF/Card_view/2_night_music.json',
-    'assets/GIF/Card_view/3_brain_training_games.json',
+    'assets/GIF/Card_view/3_gratitude.json',
     'assets/GIF/Card_view/4_mental_marathon.json',
     'assets/GIF/Card_view/5_img_rdd.json',
-    'assets/GIF/Card_view/thoughts.json',
+    'assets/GIF/Card_view/6_thoughts.json',
     'assets/GIF/Card_view/7_study_music.json',
-    'assets/GIF/Card_view/kindness.json',
+    'assets/GIF/Card_view/8_kindness.json',
     'assets/GIF/Card_view/9_upcoming_events.json',
-    'assets/GIF/Card_view/10_stress_buster_music.json',
+    'assets/GIF/Card_view/10_music.json',
   ];
 
   final List<String> description = [
