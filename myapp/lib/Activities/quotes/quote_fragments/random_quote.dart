@@ -4,7 +4,10 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 
 class RandomQuote extends StatefulWidget {
+  const RandomQuote({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _RandomQuoteState createState() => _RandomQuoteState();
 }
 
@@ -29,6 +32,7 @@ class _RandomQuoteState extends State<RandomQuote> {
       await fetchImage();
     } catch (e) {
       // Handle error
+      // ignore: avoid_print
       print('Error fetching data: $e');
     } finally {
       setState(() {
@@ -90,16 +94,29 @@ class _RandomQuoteState extends State<RandomQuote> {
                           ),
                         )
                       : Container(),
-                  SizedBox(height: 20),
-                  Text(
-                    _quote.isEmpty ? 'Loading quote...' : _quote,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
+                  const SizedBox(
+                    height: 20,
                   ),
-                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: Text(
+                      _quote.isEmpty ? 'Loading quote...' : _quote,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   ElevatedButton(
                     onPressed: fetchQuoteAndImage,
-                    child: Text('Get New Quote and Image'),
+                    child: const Text('Get New Quote and Image'),
                   ),
                 ],
               ),

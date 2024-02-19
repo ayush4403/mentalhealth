@@ -7,15 +7,24 @@ class AudioCard extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String audioFileName;
+  final bool showProgressBar;
+  final bool showPlaybackControlButton;
+  final bool showTimerSelector;
+  final bool imageshow;
 
   const AudioCard({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
+    this.showProgressBar = true,
+    this.showPlaybackControlButton = true,
+    this.showTimerSelector = true,
+    this.imageshow = true,
     Key? key,
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioCardState createState() => _AudioCardState();
 }
 
@@ -31,6 +40,23 @@ class _AudioCardState extends State<AudioCard> {
   }
 
   @override
+  void didUpdateWidget(AudioCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.audioFileName != widget.audioFileName) {
+      _updateAudioSource(widget.audioFileName);
+    }
+  }
+
+  Future<void> _updateAudioSource(String audioFileName) async {
+    try {
+      final audioUrl = await getAudioUrl(audioFileName);
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
+    } catch (e) {
+      print("Error loading audio source: $e");
+    }
+  }
+
+  @override
   void dispose() {
     _player.dispose();
     super.dispose();
@@ -41,18 +67,14 @@ class _AudioCardState extends State<AudioCard> {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
+      // ignore: avoid_print
       print("Error getting audio URL: $e");
       return '';
     }
   }
 
   Future<void> _setupAudioPlayer() async {
-    String audioUrl = await getAudioUrl(widget.audioFileName);
-    try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
-    } catch (e) {
-      print("Error loading audio source: $e");
-    }
+    await _updateAudioSource(widget.audioFileName);
   }
 
   Widget _progessBar() {
@@ -112,7 +134,7 @@ class _AudioCardState extends State<AudioCard> {
     return Row(
       children: [
         const Icon(Icons.timer),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         DropdownButton<double>(
           value: selectedDuration,
           items: const [
@@ -175,36 +197,40 @@ class _AudioCardState extends State<AudioCard> {
 
   @override
   Widget build(BuildContext context) {
+    print('Audio file name: ${widget.audioFileName}');
     return Container(
       width: MediaQuery.of(context).size.width,
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Card(
           elevation: 9,
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
           child: Stack(
             children: [
-              // Image
-              Transform.translate(
-                offset: Offset(130, -50), // Adjust as needed
-                child: ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                  child: Image.asset(
-                    widget.imageUrl,
-                    width: 120, // Adjust image width as needed
-                    height: 120, // Adjust image height as needed
-                    fit: BoxFit.cover,
+              if (widget.imageshow)
+                Transform.translate(
+                  offset: Offset(130, -50),
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(10)),
+                    child: Image.asset(
+                      widget.imageUrl,
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 100), // Placeholder for the image
-                    _progessBar(),
-                    _playbackControlButton(),
-                    _timerSelector(),
+                    if (widget.showProgressBar) _progessBar(),
+                    if (widget.showPlaybackControlButton)
+                      _playbackControlButton(),
+                    if (widget.showTimerSelector) _timerSelector(),
                   ],
                 ),
               ),

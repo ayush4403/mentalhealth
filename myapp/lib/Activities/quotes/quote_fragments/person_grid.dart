@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/person_view.dart';
 
 class PersonScreen extends StatefulWidget {
   const PersonScreen({super.key});
@@ -37,6 +38,18 @@ class _PersonScreenState extends State<PersonScreen>
     'Bill Gates',
     'Elon Musk',
     'Andrew Tate',
+  ];
+  final List<String> queryname = [
+    'GuruGopalDas',
+    'SwamiVivekananda',
+    'Sadhguru',
+    'APJ',
+    'ViratKohli',
+    'MSD',
+    'SadhGuru',
+    'BillGates',
+    'ElonMusk',
+    'AndrewTate',
   ];
 
   @override
@@ -85,10 +98,12 @@ class _PersonScreenState extends State<PersonScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetailScreen(imagePath: images[index]),
+                        builder: (context) => PersonImageWithText(
+                          queryname: queryname[index],
+                        ),
                       ),
                     );
+                    print(queryname[index]);
                   },
                   child: Card(
                     key: ValueKey<String>(images[index]),
@@ -151,24 +166,6 @@ class _PersonScreenState extends State<PersonScreen>
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DetailScreen({super.key, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quote Details'),
-      ),
-      body: Center(
-        child: Image.asset(imagePath),
       ),
     );
   }

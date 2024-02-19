@@ -8,6 +8,7 @@ class DailyQuotesScreen extends StatefulWidget {
   const DailyQuotesScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _DailyQuotesScreenState createState() => _DailyQuotesScreenState();
 }
 
@@ -16,8 +17,8 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
 
   static final List<Widget> _fragments = <Widget>[
     const PersonScreen(),
-    Quotetopic(),
-    RandomQuote()
+    const Quotetopic(),
+    const RandomQuote()
   ];
 
   void _onItemTapped(int index) {
@@ -32,13 +33,28 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daily Thoughts'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: const Text(
+          'Daily Thoughts',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            color: Colors.white,
+            color: const Color.fromARGB(255, 0, 111, 186),
             padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -52,27 +68,28 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
                     children: [
                       Icon(
                         index == 0
-                            ? Icons.format_quote
+                            ? Icons.person_2_rounded
                             : index == 1
-                                ? Icons.chat
+                                ? Icons.topic_rounded
                                 : index == 2
-                                    ? Icons.insert_chart
+                                    ? Icons.format_quote
                                     : Icons.call,
-                        color:
-                            _selectedIndex == index ? Colors.blue : Colors.grey,
+                        color: _selectedIndex == index
+                            ? Colors.white
+                            : Colors.grey,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         index == 0
-                            ? 'Quotes'
+                            ? 'Personalities'
                             : index == 1
-                                ? 'Chats'
+                                ? 'Topics'
                                 : index == 2
-                                    ? 'Status'
+                                    ? 'Quotes'
                                     : 'Calls',
                         style: TextStyle(
                           color: _selectedIndex == index
-                              ? Colors.blue
+                              ? Colors.white
                               : Colors.grey,
                         ),
                       ),

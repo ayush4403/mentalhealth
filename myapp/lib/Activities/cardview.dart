@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
-//import 'package:myapp/Activities/quotes/daily_quote.dart';
+import 'package:myapp/Activities/Night_Music/nightmusic.dart';
+import 'package:myapp/Activities/Study_Music/nightmusic.dart';
+
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
-//import 'package:myapp/video.dart';
-//import 'package:myapp/Activities/Stress_Buster/stress_buster.dart';
 
 class CardView extends StatelessWidget {
   @override
@@ -14,13 +14,6 @@ class CardView extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
           title: const Text(
             'Activities',
             style: TextStyle(
@@ -118,6 +111,18 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MusicList()),
+      );
+    }
+    if (activity == 'Study Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudyMusicScreen()),
+      );
+    }
+    if (activity == 'Night Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NightMusicScreen()),
       );
     }
   }

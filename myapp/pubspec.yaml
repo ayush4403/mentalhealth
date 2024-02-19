@@ -48,6 +48,8 @@ dependencies:
   path_provider: ^2.1.0
   video_player: ^2.8.2
   http: ^1.2.0
+  icons_plus: ^5.0.0
+  video_player_control_panel: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,7 @@ flutter:
 
     #video
     - assets/Video/newvideo.mp4
+    - assets/Video/video1.mp4
 
     #Features's page images
     - assets/GIF/Features/gif1.json
@@ -92,6 +95,13 @@ flutter:
     - assets/GIF/Registration/signin.json
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
+
+    #Visualize Gif images
+    - assets/GIF/Visualise/VZ1.json
+    - assets/GIF/Visualise/VZ2.json
+    - assets/GIF/Visualise/VZ3.json
+    - assets/GIF/Visualise/VZ4.json
+    - assets/GIF/Visualise/VZ1.json
 
     #Audio file
     - assets/audio/
@@ -121,7 +131,7 @@ flutter:
     - assets/Images/quotes/al_en.jpg
 
     #persons separate images
-      #albert kaka
+    #albert kaka
     - assets/Images/persons/AlbertEinstein/1.jpg
     - assets/Images/persons/AlbertEinstein/2.jpg
     - assets/Images/persons/AlbertEinstein/3.jpg
@@ -252,6 +262,16 @@ flutter:
     - assets/Images/types_quotes/Self-Improvement.jpg
     - assets/Images/types_quotes/sociallife.jpg
     - assets/Images/types_quotes/Motivation.jpg
+
+    #music images
+    - assets/Images/Music/Law_of_attraction_1.jpg
+    - assets/Images/Music/om_mantra.jpg
+
+    #Morning Meditation images/svg/json.
+    - assets/Images/Morning_meditation/vs_1.jpg
+    - assets/Images/Morning_meditation/vs_2.jpg
+    - assets/Images/Morning_meditation/vs_3.jpg
+    - assets/Images/Morning_meditation/vs_4.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
