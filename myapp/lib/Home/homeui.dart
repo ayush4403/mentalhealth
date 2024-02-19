@@ -4,23 +4,6 @@ class HomePageUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Handle notification icon press
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.calendar_today),
-            onPressed: () {
-              // Handle calendar icon press
-            },
-          ),
-        ],
-      ),
       body: Container(
         decoration: BoxDecoration(color: Colors.blue),
         child: Padding(

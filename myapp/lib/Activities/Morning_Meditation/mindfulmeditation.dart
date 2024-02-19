@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
+//import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
 import 'package:myapp/Activities/Morning_Meditation/GuidedMed.dart';
 import 'package:myapp/Activities/Morning_Meditation/Visualize.dart';
 
@@ -14,9 +15,9 @@ class MorningMeditationState extends State<MorningMeditation> {
   int _selectedIndex = 0;
 
   static final List<Widget> _fragments = <Widget>[
-    const Guided(),
+    const GuidedList(),
     const Visualize(),
-    const BrainBeats(),
+    const BrainList(),
   ];
 
   void _onItemTapped(int index) {

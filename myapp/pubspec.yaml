@@ -50,6 +50,10 @@ dependencies:
   http: ^1.2.0
   icons_plus: ^5.0.0
   video_player_control_panel: ^1.1.1
+  flutter_xlider: ^3.1.1
+  cloud_firestore: ^4.15.4
+  image_picker: ^1.0.7
+  circular_countdown_timer: ^0.2.3
 
 dev_dependencies:
   flutter_test:
@@ -109,14 +113,26 @@ flutter:
     #CardView stuff
     - assets/GIF/Card_view/1_morning_meditation.json
     - assets/GIF/Card_view/2_night_music.json
-    - assets/GIF/Card_view/3_brain_training_games.json
+    - assets/GIF/Card_view/3_gratitude.json
     - assets/GIF/Card_view/4_mental_marathon.json
     - assets/GIF/Card_view/5_img_rdd.json
-    - assets/GIF/Card_view/6_motivation quotes.json
+    - assets/GIF/Card_view/6_thoughts.json
     - assets/GIF/Card_view/7_study_music.json
-    - assets/GIF/Card_view/8_memory_technique.json
+    - assets/GIF/Card_view/8_kindness.json
     - assets/GIF/Card_view/9_upcoming_events.json
-    - assets/GIF/Card_view/10_stress_buster_music.json
+    - assets/GIF/Card_view/10_music.json
+
+    #sherlockHolmes
+    - assets/SherlockHolmes/1.jpg
+    - assets/SherlockHolmes/2.jpg
+    - assets/SherlockHolmes/3.jpg
+    - assets/SherlockHolmes/4.jpg
+    - assets/SherlockHolmes/5.jpg
+    - assets/SherlockHolmes/6.jpg
+    - assets/SherlockHolmes/7.jpg
+    - assets/SherlockHolmes/8.jpg
+    - assets/SherlockHolmes/9.jpg
+    - assets/SherlockHolmes/10.jpg
 
     #Quotes iamges
     - assets/Images/quotes/Swami_Vivekananda.jpg
@@ -264,14 +280,25 @@ flutter:
     - assets/Images/types_quotes/Motivation.jpg
 
     #music images
-    - assets/Images/Music/Law_of_attraction_1.jpg
-    - assets/Images/Music/om_mantra.jpg
+    - assets/Images/Music/ms_1.jpg
+    - assets/Images/Music/ms_2.jpg
+    - assets/Images/Music/ms_3.jpg
+    - assets/Images/Music/ms_4.jpg
 
     #Morning Meditation images/svg/json.
     - assets/Images/Morning_meditation/vs_1.jpg
     - assets/Images/Morning_meditation/vs_2.jpg
     - assets/Images/Morning_meditation/vs_3.jpg
     - assets/Images/Morning_meditation/vs_4.jpg
+
+    #Night music
+    - assets/Images/night_music/nm_1.jpg
+    - assets/Images/night_music/nm_2.jpg
+    - assets/Images/night_music/nm_3.jpg
+    - assets/Images/night_music/nm_4.jpg
+    - assets/Images/night_music/nm_5.jpg
+    - assets/Images/night_music/nm_6.jpg
+    - assets/Images/night_music/nm_7.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

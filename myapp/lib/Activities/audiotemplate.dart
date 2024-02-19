@@ -11,6 +11,7 @@ class AudioCard extends StatefulWidget {
   final bool showPlaybackControlButton;
   final bool showTimerSelector;
   final bool imageshow;
+  final bool timerSelectorfordisplay;
 
   const AudioCard({
     required this.imageUrl,
@@ -20,6 +21,7 @@ class AudioCard extends StatefulWidget {
     this.showPlaybackControlButton = true,
     this.showTimerSelector = true,
     this.imageshow = true,
+    this.timerSelectorfordisplay = true,
     Key? key,
   }) : super(key: key);
 
@@ -31,6 +33,7 @@ class AudioCard extends StatefulWidget {
 class _AudioCardState extends State<AudioCard> {
   final _player = AudioPlayer();
   double selectedDuration = 0.0;
+  bool timerSelectorforexample = false;
 
   @override
   void initState() {
@@ -75,6 +78,166 @@ class _AudioCardState extends State<AudioCard> {
 
   Future<void> _setupAudioPlayer() async {
     await _updateAudioSource(widget.audioFileName);
+  }
+
+  Widget _example() {
+    Size size = MediaQuery.of(context).size;
+    // Add a variable to control visibility
+
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Container(
+          height: size.height * 0.8,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xffDFEAFE), Color(0xffECF5FC)]),
+          ),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: Text(
+                        "PLAYING NOW",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 12, 12, 12)),
+                      ),
+                    ),
+                    Container(
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          if (widget.timerSelectorfordisplay)
+                            DropdownButton<double>(
+                              value: selectedDuration,
+                              icon: Icon(
+                                Icons.menu,
+                                size: 18.0,
+                                color: Color.fromARGB(255, 12, 12, 12),
+                              ),
+                              items: const [
+                                DropdownMenuItem(
+                                  value: 0.0,
+                                  child: Text(
+                                    "Select Timer",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 12, 12, 12),
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 180.0,
+                                  child: Text(
+                                    "3 Minute",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 240.0,
+                                  child: Text(
+                                    "4 Minutes",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 300.0,
+                                  child: Text(
+                                    "5 Minutes",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDuration = value!;
+                                });
+
+                                // Stop the audio when a duration is selected
+                                if (value != null && value > 0.0) {
+                                  _player.positionStream
+                                      .takeWhile((position) =>
+                                          position.inSeconds < value)
+                                      .last
+                                      .then((_) {
+                                    // Make sure the widget is still mounted before updating the state
+                                    if (mounted) {
+                                      setState(() {
+                                        selectedDuration =
+                                            0.0; // Reset selectedDuration after audio stops
+                                      });
+                                    }
+                                    _player
+                                        .stop(); // Stop the music when the desired duration is reached
+                                  });
+                                }
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  padding: EdgeInsets.all(7),
+                  width: 280,
+                  height: 280,
+                  decoration: BoxDecoration(
+                      color: Color(0xffE5F1FD),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xff97A4B7),
+                            offset: new Offset(8.0, 10.0),
+                            blurRadius: 25.0)
+                      ]),
+                  child: Container(
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                              fit: BoxFit.cover,
+                              image: new AssetImage(widget.imageUrl))))),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 8.0),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 12, 12, 12)),
+                ),
+              ),
+              Text(
+                widget.title,
+                style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    color: Color.fromARGB(255, 12, 12, 12)),
+              ),
+              if (timerSelectorforexample)
+                _timerSelector(), // Show the timer selector based on the variable
+              Padding(padding: EdgeInsets.zero, child: _progessBar()),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: _playbackControlButton(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _progessBar() {
@@ -133,7 +296,11 @@ class _AudioCardState extends State<AudioCard> {
   Widget _timerSelector() {
     return Row(
       children: [
-        const Icon(Icons.timer),
+        Icon(
+          Icons.menu,
+          size: 18.0,
+          color: Color(0xff97A4B7),
+        ),
         const SizedBox(width: 10),
         DropdownButton<double>(
           value: selectedDuration,
@@ -146,23 +313,23 @@ class _AudioCardState extends State<AudioCard> {
               ),
             ),
             DropdownMenuItem(
-              value: 60.0,
-              child: Text(
-                "1 Minute",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            DropdownMenuItem(
-              value: 120.0,
-              child: Text(
-                "2 Minutes",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            DropdownMenuItem(
               value: 180.0,
               child: Text(
-                "3 Minutes",
+                "3 Minute",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 240.0,
+              child: Text(
+                "4 Minutes",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 300.0,
+              child: Text(
+                "5 Minutes",
                 style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
               ),
             ),
@@ -217,7 +384,7 @@ class _AudioCardState extends State<AudioCard> {
                       widget.imageUrl,
                       width: 120,
                       height: 120,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
@@ -226,11 +393,8 @@ class _AudioCardState extends State<AudioCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 100), // Placeholder for the image
-                    if (widget.showProgressBar) _progessBar(),
-                    if (widget.showPlaybackControlButton)
-                      _playbackControlButton(),
-                    if (widget.showTimerSelector) _timerSelector(),
+                    // Placeholder for the image
+                    _example(),
                   ],
                 ),
               ),

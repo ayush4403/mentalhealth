@@ -223,7 +223,7 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
         child: Card(
           elevation: 9,
           margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          color: Colors.white.withOpacity(0.5), // Adjust opacity here
+          color: Colors.white.withOpacity(0.9), // Adjust opacity here
           child: Stack(
             children: [
               if (widget.imageshow)

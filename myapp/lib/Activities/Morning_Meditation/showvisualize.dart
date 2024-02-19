@@ -1,106 +1,165 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:lottie/lottie.dart';
-import 'package:myapp/Activities/quotes/audiocard.dart';
-import 'package:video_player/video_player.dart';
+import 'package:myapp/Activities/audiotemplate.dart';
 
-class VisualizeScreen extends StatefulWidget {
+class MusicData {
   final String title;
   final String imageUrl;
   final String audioUrl;
-  final String gifurl;
-  final VoidCallback? onAudioPlay;
 
-  VisualizeScreen(
-      {required this.title,
-      required this.imageUrl,
-      required this.audioUrl,
-      required this.gifurl,
-      this.onAudioPlay});
-
-  @override
-  _VisualizeScreenState createState() => _VisualizeScreenState();
+  MusicData({
+    required this.title,
+    required this.imageUrl,
+    required this.audioUrl,
+  });
 }
 
-class _VisualizeScreenState extends State<VisualizeScreen> {
-  late VideoPlayerController _videoController;
-  final _audioPlayer = AudioPlayer();
-  // ignore: unused_field
-  bool _audioPlaying = false;
-  // ignore: unused_field
-  bool _cardVisible = true;
+class ShowVisualisedScreen extends StatefulWidget {
+  final String title;
+  final String imageUrl;
+  final String audioUrl;
+
+  ShowVisualisedScreen({
+    required this.title,
+    required this.imageUrl,
+    required this.audioUrl,
+  });
+
+  @override
+  _ShowVisualisedScreenState createState() => _ShowVisualisedScreenState();
+}
+
+class _ShowVisualisedScreenState extends State<ShowVisualisedScreen> {
+  late String selectedAudioUrl;
+
+  late final List<MusicData> musicList = [
+    MusicData(
+      title: 'Night Music 1',
+      imageUrl: 'assets/Images/logos.jpg',
+      audioUrl: 'Night Music/F-MEDITATION SLEEP-INNER AWARENESS.mp3',
+    ),
+    MusicData(
+      title: 'Night Music 2',
+      imageUrl: 'assets/Images/logos.jpg',
+      audioUrl: 'Night Music/I-ACCELERATED LEARNING.mp3',
+    ),
+    MusicData(
+      title: 'Night Music 3',
+      imageUrl: 'assets/Images/logos.jpg',
+      audioUrl: 'Night Music/I-FRONTAL LOBE.mp3',
+    ),
+    MusicData(
+      title: 'Night Music 4',
+      imageUrl: 'assets/Images/logos.jpg',
+      audioUrl: 'Night Music/I-PROBLEM SOLVING SKILL.mp3',
+    ),
+    MusicData(
+      title: 'Night Music 5',
+      imageUrl: 'assets/Images/logos.jpg',
+      audioUrl: 'Night Music/M-INCREASE MEMORY RETENTION.mp3',
+    ),
+  ];
 
   @override
   void initState() {
     super.initState();
-
-    _initializeAudio();
-    print("heeloo" + widget.gifurl);
-  }
-
-  void _initializeAudio() async {
-    try {
-      final audioUrl = await getAudioUrl(widget.audioUrl);
-      await _audioPlayer.setUrl(audioUrl);
-      _audioPlayer.playerStateStream.listen((state) {
-        if (state.playing) {
-          setState(() {
-            _audioPlaying = true;
-          });
-          widget.onAudioPlay?.call(); // Call the callback here
-        } else {
-          setState(() {
-            _audioPlaying = false;
-          });
-        }
-      });
-    } catch (e) {
-      print("Error initializing audio: $e");
-    }
-  }
-
-  Future<String> getAudioUrl(String audioFileName) async {
-    // Fetch audio URL from Firebase Storage or any other source
-    return 'your_audio_url_here';
-  }
-
-  void _handleAudioPlay() {
-    // Trigger animation here
+    selectedAudioUrl =
+        widget.audioUrl; // Set initial selected URL to default audio URL
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        // Background GIF
-
-        Lottie.asset(widget.gifurl,
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.1),
-
-        // ignore: avoid_print
-        SizedBox(
-          height: 30,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.05),
+              child: AudioCard(
+                imageUrl: widget.imageUrl,
+                title: widget.title,
+                audioFileName: selectedAudioUrl,
+                imageshow: false,
+                showPlaybackControlButton: false,
+                showProgressBar: false,
+                showTimerSelector: false,
+                timerSelectorfordisplay: false,
+              ),
+            ),
+          ],
         ),
-        AudioCardVisualize(
-          imageUrl: widget.imageUrl,
-          title: widget.title,
-          audioFileName: widget.audioUrl,
-          imageshow: false,
-          showTimerSelector: false,
-          onAudioPlay: _handleAudioPlay,
-        ),
-      ]),
+      ),
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _videoController.dispose();
-    _audioPlayer.dispose();
+  Widget _buildCategory(BuildContext context, List<MusicData> musicList) {
+    // Shuffle the musicList to display random cards
+    musicList.shuffle();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: musicList.map((musicData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedAudioUrl = musicData.audioUrl;
+                      });
+                    },
+                    child: Container(
+                      width: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                            ),
+                            child: Image.asset(
+                              musicData.imageUrl,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              musicData.title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

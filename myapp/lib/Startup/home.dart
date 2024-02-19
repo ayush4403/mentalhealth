@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Activities/cardview.dart';
 import 'package:myapp/Games/games.dart';
 import 'package:myapp/Home/homeui.dart';
+import 'package:myapp/Profile/profile.dart';
 import 'package:myapp/Report/report.dart';
+//import 'package:myapp/test/single_player.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -68,9 +70,7 @@ class _HomePageState extends State<HomePage> {
               description: 'Reports of gamification',
               onTap: randomFunction),
           GamesPage(),
-          Container(
-              color: Colors.purple,
-              child: const Center(child: Text('Profile'))),
+          ProfilePage()
         ],
       ),
       bottomNavigationBar: Visibility(

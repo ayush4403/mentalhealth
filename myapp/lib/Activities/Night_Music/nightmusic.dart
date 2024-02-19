@@ -41,18 +41,6 @@ class _NightMusicScreenState extends State<NightMusicScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
-      ..addListener(() {
-        setState(() {
-          _animationCompleted = true;
-        });
-      });
-    _controller.forward();
-    selectedCategory = 'Chanting';
   }
 
   @override
@@ -61,91 +49,54 @@ class _NightMusicScreenState extends State<NightMusicScreen>
     super.dispose();
   }
 
-  late final List<MusicData> musicDataListCalm = [
-    MusicData(
-      title: 'Law of attraction',
-      imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
-      audioUrl: 'Gratitude thought/Music/Anti_Addication_Music.mp3',
-    ),
-    MusicData(
-      title: 'Anti stress and body healing',
-      imageUrl: 'assets/Images/types_quotes/gym_1.jpg',
-      audioUrl: 'Gratitude thought/Music/Law_of_Attraction.mp3',
-    ),
-  ];
-
-  late final List<MusicData> musicDataListStressBuster = [
-    MusicData(
-      title: 'Anti stress and body healing',
-      imageUrl: 'assets/Images/Music/Law_of_attraction_1.jpg',
-      audioUrl: 'Gratitude thought/Music/Anti_Stress_and_Body_Healing.mp3',
-    ),
-  ];
-
-  late final List<MusicData> musicDataListChanting = [
-    MusicData(
-      title: 'Om mantra chanting',
-      imageUrl: 'assets/Images/Music/om_mantra.jpg',
-      audioUrl: 'Gratitude thought/Music/OM_Mantra_Chanting.mp3',
-    ),
-  ];
   final List<String> images = [
     'assets/Images/Music/Law_of_attraction_1.jpg',
     'assets/Images/Music/om_mantra.jpg',
     'assets/Images/types_quotes/gym_1.jpg',
   ];
 
-  late List<List<MusicData>> allMusicData = [
+  final List<MusicData> allMusicData = [
     // Add all music data lists
-    musicDataListCalm,
-    musicDataListStressBuster,
-    musicDataListChanting,
+    MusicData(
+      title: 'Serenity Sounds',
+      imageUrl: 'assets/Images/night_music/nm_1.jpg',
+      audioUrl: 'Night Music/F-MEDITATION SLEEP-INNER AWARENESS.mp3',
+      description:
+          "Drift into a peaceful slumber with calming melodies curated to ease your mind and soothe your soul. Let the gentle rhythms of nature and ambient tunes guide you to a night of restful sleep.",
+    ),
+    MusicData(
+      title: 'Tranquil Harmonies',
+      imageUrl: 'assets/Images/night_music/nm_2.jpg',
+      audioUrl: 'Night Music/I-ACCELERATED LEARNING.mp3',
+      description:
+          "Immerse yourself in a world of tranquility as harmonious melodies gently lull you into a state of deep relaxation. Unwind from the day's stresses and embrace the serenity of the night with this collection of soothing music.",
+    ),
+    MusicData(
+      title: 'Dreamscape Melodies',
+      imageUrl: 'assets/Images/night_music/nm_7.jpg',
+      audioUrl: 'Night Music/I-FRONTAL LOBE.mp3',
+      description:
+          "Embark on a journey through the realms of dreams with enchanting melodies that evoke a sense of wonder and imagination. Let the ethereal soundscape of this music module transport you to a realm where anything is possible.",
+    ),
+    MusicData(
+      title: 'Midnight Serenade',
+      imageUrl: 'assets/Images/night_music/nm_4.jpg',
+      audioUrl: 'Night Music/I-PROBLEM SOLVING SKILL.mp3',
+      description:
+          "Allow the night to serenade you with melodies that speak to the depths of your soul. From soft piano notes to celestial symphonies, let the music of the midnight hour envelop you in a cocoon of tranquility and comfort.",
+    ),
   ];
-  Widget _buildButtonsRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              selectedCategory = 'Chanting';
-            });
-          },
-          child: const Text('Chanting'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              selectedCategory = 'Stress Buster';
-            });
-          },
-          child: const Text('Stress Buster'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              selectedCategory = 'Calm';
-            });
-          },
-          child: const Text('Calm'),
-        ),
-      ],
-    );
-  }
 
-  int _currentCategoryIndex = 0;
-  Widget _buildCategory(String categoryTitle, List<MusicData> NightMusic) {
-    if (selectedCategory != categoryTitle) {
-      return const SizedBox.shrink();
-    }
+  // ignore: non_constant_identifier_names
+  Widget _buildCategory(List<MusicData> NightMusic) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            categoryTitle,
-            style: const TextStyle(
+          const Text(
+            '',
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -173,12 +124,11 @@ class _NightMusicScreenState extends State<NightMusicScreen>
                     );
                   },
                   child: Card(
-                    elevation: 3, // Apply elevation here
+                    elevation: 3,
+                    color: getNextColor(),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width *
-                          0.9, // Adjust card width
-                      height: MediaQuery.of(context).size.height *
-                          0.16, // Adjust card height
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -207,6 +157,19 @@ class _NightMusicScreenState extends State<NightMusicScreen>
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                    musicData.description,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.025,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -218,6 +181,119 @@ class _NightMusicScreenState extends State<NightMusicScreen>
                 ),
               );
             }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+// List of colors
+  final List<Color> cardColors = [
+    Colors.blue[100]!,
+    Colors.red[100]!,
+    Colors.green[100]!,
+    Colors.yellow[100]!,
+    Colors.orange[100]!,
+    Colors.purple[100]!,
+    Colors.teal[100]!,
+    Colors.indigo[100]!,
+    Colors.amber[100]!,
+    Colors.deepOrange[100]!,
+  ];
+
+// Track the index of the last used color
+  int lastColorIndex = -1;
+
+// Function to get the next color ensuring no repetition
+  Color getNextColor() {
+    lastColorIndex = (lastColorIndex + 1) % cardColors.length;
+    return cardColors[lastColorIndex];
+  }
+
+  Widget _buildCategorySlider(BuildContext context, List<MusicData> musicList) {
+    // Shuffle the musicList to display random cards
+
+    final PageController controller = PageController();
+
+    // Start automatic sliding using a timer
+    Timer? timer;
+
+    void startTimer() {
+      timer = Timer.periodic(
+        const Duration(seconds: 2),
+        (Timer timer) {
+          if (controller.page == null ||
+              controller.page! >= musicList.length - 1) {
+            controller.jumpToPage(0);
+          } else {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          }
+        },
+      );
+    }
+
+    // ignore: unused_element
+    void cancelTimer() {
+      timer?.cancel();
+    }
+
+    startTimer();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 12,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the slider
+              children: [
+                Center(
+                  // Wrap with Center widget
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width *
+                        0.95, // Adjusted width here
+                    child: PageView.builder(
+                      controller: controller,
+                      itemCount: musicList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: ClipRRect(
+                                // ClipRRect to apply rounded corners
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.asset(
+                                  musicList[index].imageUrl,
+                                  width: MediaQuery.of(context).size.width *
+                                      0.95, // Adjusted width here
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.25,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -236,7 +312,7 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           },
         ),
         title: const Text(
-          'Music',
+          'Night Music',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -251,46 +327,15 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 20),
-            _buildCarousel(allMusicData[_currentCategoryIndex]),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (int i = 0; i < allMusicData.length; i++)
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _currentCategoryIndex = i;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentCategoryIndex == i
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            _buildButtonsRow(),
-            _buildCategory('Chanting', musicDataListChanting),
-            _buildCategory(
-              'Stress Buster',
-              musicDataListStressBuster,
-            ),
-            _buildCategory('Calm', musicDataListCalm),
+            _buildCategorySlider(context, allMusicData),
+            _buildCategory(allMusicData),
           ],
         ),
       ),
     );
   }
 
+  // ignore: unused_element, non_constant_identifier_names
   Widget _buildCarousel(List<MusicData> NightMusic) {
     final PageController controller = PageController();
 
@@ -298,14 +343,19 @@ class _NightMusicScreenState extends State<NightMusicScreen>
     Timer? timer;
 
     void startTimer() {
-      timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
-        if (controller.page == null || controller.page! >= images.length - 1) {
-          controller.jumpToPage(0);
-        } else {
-          controller.nextPage(
-              duration: const Duration(milliseconds: 500), curve: Curves.ease);
-        }
-      });
+      timer = Timer.periodic(
+        const Duration(seconds: 2),
+        (Timer timer) {
+          if (controller.page == null ||
+              controller.page! >= images.length - 1) {
+            controller.jumpToPage(0);
+          } else {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          }
+        },
+      );
     }
 
     void cancelTimer() {
@@ -350,11 +400,13 @@ class MusicData {
   final String title;
   final String imageUrl;
   final String audioUrl;
+  final String description; // Add this line
 
   MusicData({
     required this.title,
     required this.imageUrl,
     required this.audioUrl,
+    required this.description, // Add this line
   });
 }
 
