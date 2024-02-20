@@ -236,7 +236,8 @@ class _MusicListScreenState extends State<MusicListScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(CardView());
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CardView()));
           },
         ),
         title: const Text(
