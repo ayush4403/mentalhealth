@@ -60,7 +60,7 @@ class _StudyMusicScreenState extends State<StudyMusicScreen>
     // Add all music data lists
     MusicData(
       title: 'Serenity Sounds',
-      imageUrl: 'assets/Images/night_music/nm_1.jpg',
+      imageUrl: 'assets/Images/Study_image/study_music.jpg',
       audioUrl:
           'Study Music/Y2meta.app - Can\'t Focus On Study_Work _ Listen To Boost Efficiency In Work_Study _ Binaural Beats (320 kbps).mp3',
       description:

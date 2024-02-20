@@ -76,6 +76,9 @@ flutter:
     - assets/SVGS/Splash/newlogo.svg
     - assets/Images/logos.jpg
 
+    #study Music
+    - assets/Images/Study_image/study_music.jpg
+
     #video
     - assets/Video/newvideo.mp4
     - assets/Video/video1.mp4

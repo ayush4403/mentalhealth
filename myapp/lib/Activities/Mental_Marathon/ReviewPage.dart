@@ -29,7 +29,7 @@ class ReviewPage extends StatelessWidget {
         body: Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.75,
+            height: MediaQuery.of(context).size.height * 0.8,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.65),
               borderRadius: const BorderRadius.only(
@@ -68,6 +68,37 @@ class ReviewPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CardView()));
+                      },
+                      child: Container(
+                        width: 250,
+                        height: 60,
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Activity Done',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
