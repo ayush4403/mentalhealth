@@ -64,6 +64,24 @@ class _VideoAppState extends State<VideoApp> {
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: const Text(
+          'Gratitude thoughts',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
