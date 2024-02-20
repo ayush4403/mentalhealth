@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import for SystemChrome
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/Startup/Splash_screen/splash.dart';
 import 'package:myapp/Startup/home.dart';
 
 final theme = ThemeData(
