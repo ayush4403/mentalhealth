@@ -10,7 +10,7 @@ class VideoApp extends StatefulWidget {
 
 class _VideoAppState extends State<VideoApp> {
   late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
+  late Future<void> initializeVideoPlayerFuture;
   late int currentDay;
   bool isVideoPlaying = false;
   TextEditingController gratitudeController = TextEditingController();
@@ -19,7 +19,14 @@ class _VideoAppState extends State<VideoApp> {
   void initState() {
     super.initState();
     currentDay = DateTime.now().day;
+    _controller = VideoPlayerController.network('');
+    _initializeVideoPlayer();
     fetchVideoUrl(currentDay);
+  }
+
+  Future<void> _initializeVideoPlayer() async {
+    await _controller.initialize();
+    setState(() {}); // Update the UI after initialization
   }
 
   @override
@@ -30,13 +37,12 @@ class _VideoAppState extends State<VideoApp> {
 
   Future<void> fetchVideoUrl(int day) async {
     try {
-      // Replace 'video.mp4' with the name of your video file in Firebase Storage
       String videoUrl = await firebase_storage.FirebaseStorage.instance
           .ref('Gratitude thought/GRATITUTE_THOUGHT/$day.mp4')
           .getDownloadURL();
 
       _controller = VideoPlayerController.network(videoUrl);
-      _initializeVideoPlayerFuture = _controller.initialize();
+      initializeVideoPlayerFuture = _controller.initialize();
 
       _controller.addListener(() {
         if (_controller.value.isPlaying) {
@@ -50,7 +56,6 @@ class _VideoAppState extends State<VideoApp> {
         }
       });
 
-      // Start playing the video automatically when the screen loads
       _controller.play();
     } catch (error) {
       print('Error fetching video URL: $error');
@@ -61,7 +66,7 @@ class _VideoAppState extends State<VideoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Video Player Demo',
-      debugShowCheckedModeBanner: false, // Remove debug banner
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -85,7 +90,6 @@ class _VideoAppState extends State<VideoApp> {
         resizeToAvoidBottomInset: true,
         body: WillPopScope(
           onWillPop: () async {
-            // Return false to disable the system back button
             return false;
           },
           child: SingleChildScrollView(
@@ -108,7 +112,7 @@ class _VideoAppState extends State<VideoApp> {
                       child: Stack(
                         children: [
                           FutureBuilder(
-                            future: _initializeVideoPlayerFuture,
+                            future: initializeVideoPlayerFuture,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
@@ -180,22 +184,15 @@ class _VideoAppState extends State<VideoApp> {
                         child: TextField(
                           cursorColor: Colors.black,
                           controller: gratitudeController,
-                          style: const TextStyle(
-                              color: Colors.black), // Set text color to white
+                          style: const TextStyle(color: Colors.black),
                           decoration: const InputDecoration(
                             labelText: 'What are you grateful for today?',
-                            labelStyle: TextStyle(
-                                color:
-                                    Colors.black), // Set label color to white
+                            labelStyle: TextStyle(color: Colors.black),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .greenAccent), // Set border color to yellow
+                              borderSide: BorderSide(color: Colors.greenAccent),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .yellow), // Set focused border color to yellow
+                              borderSide: BorderSide(color: Colors.yellow),
                             ),
                           ),
                           maxLines: 3,
