@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
+    // ignore: library_prefixes
     as QuestionPage;
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
+    // ignore: library_prefixes
     as QuizData;
 import 'package:myapp/Activities/cardview.dart';
 
 class PicturePage extends StatefulWidget {
+  const PicturePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _PicturePageState createState() => _PicturePageState();
 }
 
@@ -126,7 +131,9 @@ class _PicturePageState extends State<PicturePage> {
                 // ignore: avoid_print
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(
+              height: 30,
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
@@ -139,7 +146,7 @@ class _PicturePageState extends State<PicturePage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-            )
+            ),
           ],
         ),
       ),
