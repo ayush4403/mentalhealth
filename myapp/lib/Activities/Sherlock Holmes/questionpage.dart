@@ -24,7 +24,22 @@ class _QuestionPageState extends State<QuestionPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text('Question'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(CardView());
+          },
+        ),
+        title: const Text(
+          'Questions',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: Center(
         child: Container(

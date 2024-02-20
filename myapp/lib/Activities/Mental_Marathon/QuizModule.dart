@@ -106,7 +106,22 @@ class _QuizModuleState extends State<QuizModule> {
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         appBar: AppBar(
-          title: Text('Quiz Module'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop(CardView());
+            },
+          ),
+          title: const Text(
+            'Mental Marathon',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         ),
         body: WillPopScope(
           onWillPop: () async {
