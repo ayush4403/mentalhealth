@@ -70,13 +70,19 @@ class _BrainListState extends State<BrainList> {
   Widget build(BuildContext context) {
     return Container(
       color: const Color.fromARGB(255, 0, 111, 186),
-      child: ListView.builder(
-        itemCount: musicDataListChanting.length,
-        itemBuilder: (context, index) {
-          int colorIndex = cardColorIndices.removeAt(0);
-          return _buildCategory(
-              musicDataListChanting[index], shuffledColors[colorIndex]);
+      child: WillPopScope(
+        onWillPop: () async {
+          // Return false to disable the system back button
+          return false;
         },
+        child: ListView.builder(
+          itemCount: musicDataListChanting.length,
+          itemBuilder: (context, index) {
+            int colorIndex = cardColorIndices.removeAt(0);
+            return _buildCategory(
+                musicDataListChanting[index], shuffledColors[colorIndex]);
+          },
+        ),
       ),
     );
   }

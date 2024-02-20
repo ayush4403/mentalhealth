@@ -107,71 +107,77 @@ class _QuizModuleState extends State<QuizModule> {
         appBar: AppBar(
           title: Text('Quiz Module'),
         ),
-        body: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.55,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.65),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-                bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0),
+        body: WillPopScope(
+          onWillPop: () async {
+            // Return false to disable the system back button
+            return false;
+          },
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.95,
+              height: MediaQuery.of(context).size.height * 0.55,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.65),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                  bottomLeft: Radius.circular(30.0),
+                  bottomRight: Radius.circular(30.0),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Question ${currentQuestionIndex + 1}:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Question ${currentQuestionIndex + 1}:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                     ),
-                  ),
-                  Text(
-                    quizQuestions[currentQuestionIndex]['text'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                    Text(
+                      quizQuestions[currentQuestionIndex]['text'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Column(
-                    children: (quizQuestions[currentQuestionIndex]['options']
-                            as List<String>)
-                        .map((option) {
-                      bool isSelected = selectedAnswer == option;
-                      // ignore: unused_local_variable
-                      bool isCorrect = isSelected &&
-                          selectedAnswer ==
-                              quizQuestions[currentQuestionIndex]
-                                  ['correctAnswer'];
+                    SizedBox(height: 20),
+                    Column(
+                      children: (quizQuestions[currentQuestionIndex]['options']
+                              as List<String>)
+                          .map((option) {
+                        bool isSelected = selectedAnswer == option;
+                        // ignore: unused_local_variable
+                        bool isCorrect = isSelected &&
+                            selectedAnswer ==
+                                quizQuestions[currentQuestionIndex]
+                                    ['correctAnswer'];
 
-                      return Container(
-                        margin: EdgeInsets.symmetric(vertical: 8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: RadioListTile<String>(
-                          title: Text(option),
-                          value: option,
-                          groupValue: selectedAnswer,
-                          onChanged: (String? value) {
-                            setState(() {
-                              selectedAnswer = value;
-                              answerQuestion(value!);
-                            });
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: RadioListTile<String>(
+                            title: Text(option),
+                            value: option,
+                            groupValue: selectedAnswer,
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedAnswer = value;
+                                answerQuestion(value!);
+                              });
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
