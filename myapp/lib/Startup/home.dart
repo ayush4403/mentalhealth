@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
           HomePageUI(),
           CardView(),
           ReportCard(
-              key: Key(''),
+              key: const Key(''),
               title: 'Report',
               description: 'Reports of gamification',
               onTap: randomFunction),
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               .fixed, // Set type to fixed for more than 3 items
           elevation: 0, // Remove shadow
 
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_sharp),
               label: 'Home',

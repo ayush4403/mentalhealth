@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/Night_Music/nightmusic.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
 
 class MusicData {
@@ -69,12 +70,14 @@ class _NightMusicViewScreenState extends State<NightMusicViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop(const NightMusic());
+          },
         ),
         title: const Text(
           'Serenity Sounds',

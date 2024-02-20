@@ -7,7 +7,6 @@ import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/Night_Music/nightmusic.dart';
 import 'package:myapp/Activities/Study_Music/nightmusic.dart';
 import 'package:myapp/Activities/kindness/KindnessPage.dart';
-
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
 
 class CardView extends StatelessWidget {

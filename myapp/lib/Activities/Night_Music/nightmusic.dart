@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Night_Music/nightmusicview.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 void main() {
   runApp(const NightMusic());
@@ -306,7 +307,7 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(CardView());
           },
         ),
         title: const Text(

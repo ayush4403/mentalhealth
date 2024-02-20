@@ -3,6 +3,7 @@ import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
 //import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
 import 'package:myapp/Activities/Morning_Meditation/GuidedMed.dart';
 import 'package:myapp/Activities/Morning_Meditation/Visualize.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 class MorningMeditation extends StatefulWidget {
   const MorningMeditation({super.key});
@@ -36,7 +37,7 @@ class MorningMeditationState extends State<MorningMeditation> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(CardView());
           },
         ),
         title: const Text(

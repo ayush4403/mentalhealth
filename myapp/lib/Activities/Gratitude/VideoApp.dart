@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/cardview.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -60,7 +61,26 @@ class _VideoAppState extends State<VideoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Video Player Demo',
+      debugShowCheckedModeBanner: false, // Remove debug banner
       home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop(CardView());
+            },
+          ),
+          title: const Text(
+            'Gratitude',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
@@ -177,24 +197,37 @@ class _VideoAppState extends State<VideoApp> {
                     ),
                   ),
                   const SizedBox(height: 15.0),
-                  Container(
-                    width: 150,
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.greenAccent,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: const Column(
-                      children: [
-                        Text(
-                          'Done',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CardView(),
                           ),
+                        );
+                      },
+                      child: Container(
+                        width: 250,
+                        height: 60,
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                      ],
+                        child: const Column(
+                          children: [
+                            Text(
+                              'Activity Done',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   )
                 ],
