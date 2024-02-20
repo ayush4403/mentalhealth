@@ -76,6 +76,9 @@ flutter:
     - assets/SVGS/Splash/newlogo.svg
     - assets/Images/logos.jpg
 
+    #study Music
+    - assets/Images/Study_image/study_music.jpg
+
     #video
     - assets/Video/newvideo.mp4
     - assets/Video/video1.mp4
@@ -115,7 +118,7 @@ flutter:
     - assets/GIF/Card_view/2_night_music.json
     - assets/GIF/Card_view/3_gratitude.json
     - assets/GIF/Card_view/4_mental_marathon.json
-    - assets/GIF/Card_view/5_img_rdd.json
+    - assets/GIF/Card_view/5_sherlock.json
     - assets/GIF/Card_view/6_thoughts.json
     - assets/GIF/Card_view/7_study_music.json
     - assets/GIF/Card_view/8_kindness.json

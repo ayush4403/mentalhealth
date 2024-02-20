@@ -6,7 +6,8 @@ class ReviewPage extends StatelessWidget {
   final List<String> correctAnswers;
   final int totalScore;
 
-  ReviewPage({
+  const ReviewPage({
+    super.key,
     required this.selectedAnswers,
     required this.correctAnswers,
     required this.totalScore,
@@ -14,6 +15,7 @@ class ReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         // Navigate to a particular screen when the back button is pressed
@@ -58,7 +60,9 @@ class ReviewPage extends StatelessWidget {
                       selectedAnswer: selectedAnswers[i],
                       correctAnswer: correctAnswers[i],
                     ),
-                  const SizedBox(height: 20),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Center(
                     child: Text(
                       'Total Score: $totalScore/5',
@@ -68,6 +72,40 @@ class ReviewPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CardView()));
+                      },
+                      child: Container(
+                        //width: 250,
+                        //height: 60,
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: const Column(
+                          children: [
+                            Text(
+                              'Activity Done',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -83,7 +121,8 @@ class ReviewItem extends StatelessWidget {
   final String selectedAnswer;
   final String correctAnswer;
 
-  ReviewItem({
+  const ReviewItem({
+    super.key,
     required this.questionNumber,
     required this.selectedAnswer,
     required this.correctAnswer,
@@ -125,14 +164,16 @@ class ReviewItem extends StatelessWidget {
 }
 
 class YourParticularScreen extends StatelessWidget {
+  const YourParticularScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Replace this with your particular screen UI
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Particular Screen'),
+        title: const Text('Your Particular Screen'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Your particular screen content goes here'),
       ),
     );

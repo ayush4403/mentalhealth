@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Mental_Marathon/QuizData.dart';
 import 'package:myapp/Activities/Mental_Marathon/ReviewPage.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 class QuizModule extends StatefulWidget {
   @override
@@ -105,73 +106,96 @@ class _QuizModuleState extends State<QuizModule> {
       return Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         appBar: AppBar(
-          title: Text('Quiz Module'),
-        ),
-        body: Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.55,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.65),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-                bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0),
-              ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop(CardView());
+            },
+          ),
+          title: const Text(
+            'Mental Marathon',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Question ${currentQuestionIndex + 1}:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
+          ),
+          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        ),
+        body: WillPopScope(
+          onWillPop: () async {
+            // Return false to disable the system back button
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CardView()));
+            return true;
+          },
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.95,
+              height: MediaQuery.of(context).size.height * 0.55,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.65),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                  bottomLeft: Radius.circular(30.0),
+                  bottomRight: Radius.circular(30.0),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Question ${currentQuestionIndex + 1}:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                     ),
-                  ),
-                  Text(
-                    quizQuestions[currentQuestionIndex]['text'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                    Text(
+                      quizQuestions[currentQuestionIndex]['text'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Column(
-                    children: (quizQuestions[currentQuestionIndex]['options']
-                            as List<String>)
-                        .map((option) {
-                      bool isSelected = selectedAnswer == option;
-                      // ignore: unused_local_variable
-                      bool isCorrect = isSelected &&
-                          selectedAnswer ==
-                              quizQuestions[currentQuestionIndex]
-                                  ['correctAnswer'];
+                    SizedBox(height: 20),
+                    Column(
+                      children: (quizQuestions[currentQuestionIndex]['options']
+                              as List<String>)
+                          .map((option) {
+                        bool isSelected = selectedAnswer == option;
+                        // ignore: unused_local_variable
+                        bool isCorrect = isSelected &&
+                            selectedAnswer ==
+                                quizQuestions[currentQuestionIndex]
+                                    ['correctAnswer'];
 
-                      return Container(
-                        margin: EdgeInsets.symmetric(vertical: 8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: RadioListTile<String>(
-                          title: Text(option),
-                          value: option,
-                          groupValue: selectedAnswer,
-                          onChanged: (String? value) {
-                            setState(() {
-                              selectedAnswer = value;
-                              answerQuestion(value!);
-                            });
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: RadioListTile<String>(
+                            title: Text(option),
+                            value: option,
+                            groupValue: selectedAnswer,
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedAnswer = value;
+                                answerQuestion(value!);
+                              });
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/cardview.dart';
 import 'package:myapp/Activities/quotes/quote_fragments/person_grid.dart';
 import 'package:myapp/Activities/quotes/quote_fragments/random_quote.dart';
 import 'package:myapp/Activities/quotes/quote_fragments/type_grid.dart';
@@ -37,7 +38,7 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(CardView());
           },
         ),
         title: const Text(

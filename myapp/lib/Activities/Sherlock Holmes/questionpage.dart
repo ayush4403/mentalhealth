@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
     as QuizData;
+import 'package:myapp/Activities/cardview.dart';
 
 // Added 'as QuizData'
 
@@ -23,7 +24,22 @@ class _QuestionPageState extends State<QuestionPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text('Question'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(CardView());
+          },
+        ),
+        title: const Text(
+          'Questions',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: Center(
         child: Container(
@@ -62,8 +78,8 @@ class _QuestionPageState extends State<QuestionPage> {
                         showCorrectAnswer = false;
                       });
                     } else {
-                      // Navigate to a new screen or perform any other action
-                      // when all questions are answered
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CardView()));
                     }
                   });
                 },

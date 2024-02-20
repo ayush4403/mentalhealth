@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
     as QuestionPage;
-
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
     as QuizData;
-
-import 'quizsherdata.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 class PicturePage extends StatefulWidget {
   @override
@@ -51,7 +49,22 @@ class _PicturePageState extends State<PicturePage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text('Sherlock Holmes Module'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(CardView());
+          },
+        ),
+        title: const Text(
+          'Sherlock Holmes',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: Center(
         child: Column(
@@ -110,13 +123,14 @@ class _PicturePageState extends State<PicturePage> {
                   selectedQuizData.imagePath,
                   fit: BoxFit.cover,
                 ),
+                // ignore: avoid_print
               ),
             ),
             SizedBox(height: 30),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                'Analyze this picture for 30 seconds and then we will give you 3 fun'
+                'Analyze this picture for 30 seconds and then we will give you 5 fun'
                 ' questions related to the picture.',
                 style: TextStyle(
                   fontSize: 18,

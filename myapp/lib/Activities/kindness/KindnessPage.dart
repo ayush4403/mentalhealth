@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:image_picker/image_picker.dart';
+import 'package:myapp/Activities/cardview.dart';
 import 'dart:io';
 import 'kindness_challenges.dart';
 
@@ -42,6 +43,25 @@ class _KindnessPageState extends State<KindnessPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CardView()));
+          },
+        ),
+        title: const Text(
+          'Daily Kindness Challenge',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      ),
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.95,
@@ -169,25 +189,33 @@ class _KindnessPageState extends State<KindnessPage> {
                         ),
                         const SizedBox(height: 25.0),
                         Center(
-                          child: Container(
-                            width: 250,
-                            height: 60,
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: Colors.greenAccent,
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: const Column(
-                              children: [
-                                Text(
-                                  'Activity Done',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CardView()));
+                            },
+                            child: Container(
+                              width: 250,
+                              height: 60,
+                              padding: const EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.greenAccent,
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Activity Done',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         )

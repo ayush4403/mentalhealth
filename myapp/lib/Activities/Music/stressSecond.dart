@@ -1,6 +1,7 @@
 //import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
 
 class MusicData {
@@ -74,7 +75,22 @@ class MusicCardDataScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text('Music Card Data'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(const MusicList());
+          },
+        ),
+        title: const Text(
+          'Music Card Data',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: SingleChildScrollView(
         child: Column(
