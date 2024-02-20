@@ -104,6 +104,96 @@ class _MusicListScreenState extends State<MusicListScreen>
     musicDataListStressBuster,
     musicDataListChanting,
   ];
+  Widget _buildCategorySlider(BuildContext context, List<MusicData> musicList) {
+    // Shuffle the musicList to display random cards
+
+    final PageController controller = PageController();
+
+    // Start automatic sliding using a timer
+    Timer? timer;
+
+    void startTimer() {
+      timer = Timer.periodic(
+        const Duration(seconds: 2),
+        (Timer timer) {
+          if (controller.page == null ||
+              controller.page! >= musicList.length - 1) {
+            controller.jumpToPage(0);
+          } else {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease);
+          }
+        },
+      );
+    }
+
+    // ignore: unused_element
+    void cancelTimer() {
+      timer?.cancel();
+    }
+
+    startTimer();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 12,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the slider
+              children: [
+                Center(
+                  // Wrap with Center widget
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width *
+                        0.95, // Adjusted width here
+                    child: PageView.builder(
+                      controller: controller,
+                      itemCount: musicList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: ClipRRect(
+                                // ClipRRect to apply rounded corners
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.asset(
+                                  musicList[index].imageUrl,
+                                  width: MediaQuery.of(context).size.width *
+                                      0.95, // Adjusted width here
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.25,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildButtonsRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

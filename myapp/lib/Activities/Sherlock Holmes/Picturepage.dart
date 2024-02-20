@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
     as QuestionPage;
+
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
     as QuizData;
+
+import 'quizsherdata.dart';
 
 class PicturePage extends StatefulWidget {
   @override
@@ -107,6 +110,7 @@ class _PicturePageState extends State<PicturePage> {
                   selectedQuizData.imagePath,
                   fit: BoxFit.cover,
                 ),
+                // ignore: avoid_print
               ),
             ),
             SizedBox(height: 30),
