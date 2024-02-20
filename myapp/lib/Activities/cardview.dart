@@ -5,7 +5,8 @@ import 'package:myapp/Activities/Mental_Marathon/QuizModule.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/Night_Music/nightmusic.dart';
-import 'package:myapp/Activities/Study_Music/nightmusic.dart';
+import 'package:myapp/Activities/Sherlock%20Holmes/Picturepage.dart';
+import 'package:myapp/Activities/Study_Music/studymusic.dart';
 import 'package:myapp/Activities/kindness/KindnessPage.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
 
@@ -39,7 +40,7 @@ class ActivityList extends StatelessWidget {
     'Night Music',
     'Gratitude',
     'Mental Marathon',
-    'Image Based Riddles',
+    'Sherlock Holmes',
     'Daily Thoughts',
     'Study Music',
     'Kindness Challenge',
@@ -52,7 +53,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/2_night_music.json',
     'assets/GIF/Card_view/3_gratitude.json',
     'assets/GIF/Card_view/4_mental_marathon.json',
-    'assets/GIF/Card_view/5_img_rdd.json',
+    'assets/GIF/Card_view/5_sherlock.json',
     'assets/GIF/Card_view/6_thoughts.json',
     'assets/GIF/Card_view/7_study_music.json',
     'assets/GIF/Card_view/8_kindness.json',
@@ -143,6 +144,12 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => KindnessPageClass()),
+      );
+    }
+    if (activity == 'Sherlock Holmes') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PicturePage()),
       );
     }
   }

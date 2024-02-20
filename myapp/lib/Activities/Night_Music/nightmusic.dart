@@ -163,9 +163,11 @@ class _NightMusicScreenState extends State<NightMusicScreen>
                                   ),
                                   Text(
                                     musicData.description,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 10,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.025,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),

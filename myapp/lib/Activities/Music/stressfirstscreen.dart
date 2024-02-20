@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Music/stressSecond.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 void main() {
   runApp(const MusicList());
@@ -231,6 +232,13 @@ class _MusicListScreenState extends State<MusicListScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(CardView());
+          },
+        ),
         title: const Text(
           'Music',
           style: TextStyle(

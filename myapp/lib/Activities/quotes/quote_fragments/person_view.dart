@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:myapp/Activities/quotes/quote_fragments/person_data.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/person_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonImageWithText extends StatefulWidget {
@@ -122,7 +123,7 @@ class _PersonImageWithTextState extends State<PersonImageWithText> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(const PersonScreen());
           },
         ),
         title: Text(
