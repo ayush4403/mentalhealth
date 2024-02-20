@@ -4,8 +4,6 @@ import 'package:flutter/services.dart'; // Import for SystemChrome
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/Startup/Splash_screen/splash.dart';
-import 'package:myapp/Startup/home.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -37,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
