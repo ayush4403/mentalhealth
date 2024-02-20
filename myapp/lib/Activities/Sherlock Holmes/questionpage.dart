@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
     as QuizData;
+import 'package:myapp/Activities/cardview.dart';
 
 // Added 'as QuizData'
 
@@ -62,8 +63,8 @@ class _QuestionPageState extends State<QuestionPage> {
                         showCorrectAnswer = false;
                       });
                     } else {
-                      // Navigate to a new screen or perform any other action
-                      // when all questions are answered
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CardView()));
                     }
                   });
                 },
