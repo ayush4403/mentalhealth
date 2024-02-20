@@ -346,7 +346,7 @@ class _MusicListScreenState extends State<MusicListScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 20),
-            _buildCarousel(allMusicData[_currentCategoryIndex]),
+            _buildCategorySlider(context, allMusicData[_currentCategoryIndex]),
             const SizedBox(height: 20),
             _buildButtonsRow(),
             const SizedBox(height: 20),
