@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Profile/PersonelInfo.dart';
-//import 'package:quotes/PersonalInformationPage.dart';
+
+import 'package:myapp/Startup/Registration/signin.dart'; // Import the SignInPage
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -45,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: 16),
             _buildSectionTitle(context, 'Log Out', Colors.white),
             SizedBox(height: 8),
-            _buildSectionButton(context, 'Log Out', Colors.teal[100]!),
+            _buildLogoutButton(context), // Changed to call the logout method
             SizedBox(height: 16),
           ],
         ),
@@ -108,6 +109,72 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLogoutButton(BuildContext context) {
+    return FadeTransition(
+      opacity: ModalRoute.of(context)!.animation!,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        child: ElevatedButton(
+          onPressed: () {
+            _showLogoutDialog(context); // Show logout confirmation dialog
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Colors.teal[100],
+            padding: EdgeInsets.all(16.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Log Out',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+              Icon(Icons.arrow_forward_ios, color: Colors.black),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Function to show the logout confirmation dialog
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Log Out"),
+          content: Text("Do you want to Log Out?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Close the dialog
+              },
+              child: Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Close the dialog
+                // Navigate to the sign-in page
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                );
+              },
+              child: Text("Yes"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

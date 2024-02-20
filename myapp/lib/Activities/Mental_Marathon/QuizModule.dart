@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Mental_Marathon/QuizData.dart';
 import 'package:myapp/Activities/Mental_Marathon/ReviewPage.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 class QuizModule extends StatefulWidget {
   @override
@@ -110,7 +111,9 @@ class _QuizModuleState extends State<QuizModule> {
         body: WillPopScope(
           onWillPop: () async {
             // Return false to disable the system back button
-            return false;
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CardView()));
+            return true;
           },
           child: Center(
             child: Container(

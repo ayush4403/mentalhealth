@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
 
 class MusicData {
@@ -69,9 +70,24 @@ class _ShowBrainScreenState extends State<ShowBrainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
-        title: Text(widget.title),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(const BrainList());
+          },
+        ),
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: SingleChildScrollView(
         child: Column(

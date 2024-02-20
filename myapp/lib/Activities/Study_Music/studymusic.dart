@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 //import 'package:myapp/Activities/Night_Music/StudyMusicview.dart';
 import 'package:myapp/Activities/Study_Music/studymusicview.dart';
+import 'package:myapp/Activities/cardview.dart';
 
 void main() {
   runApp(const StudyMusic());
@@ -64,7 +65,7 @@ class _StudyMusicScreenState extends State<StudyMusicScreen>
       audioUrl:
           'Study Music/Y2meta.app - Can\'t Focus On Study_Work _ Listen To Boost Efficiency In Work_Study _ Binaural Beats (320 kbps).mp3',
       description:
-          "Drift into a peaceful slumber with calming melodies curated to ease your mind and soothe your soul. Let the gentle rhythms of nature and ambient tunes guide you to a night of restful sleep.",
+          "Study music enhances learning and memory, reduces stress, boosts cognitive function, and induces relaxation, making it a favorite for students and professionals.",
     ),
   ];
 
@@ -289,7 +290,7 @@ class _StudyMusicScreenState extends State<StudyMusicScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(CardView());
           },
         ),
         title: const Text(

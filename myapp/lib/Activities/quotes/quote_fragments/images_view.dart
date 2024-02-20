@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'package:myapp/Activities/quotes/quote_fragments/type_data.dart';
+import 'package:myapp/Activities/quotes/quote_fragments/type_grid.dart';
 
 class ImageWithText extends StatefulWidget {
   final String queryname;
@@ -55,7 +56,7 @@ class _ImageWithTextState extends State<ImageWithText> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(const Quotetopic());
           },
         ),
         title: Text(

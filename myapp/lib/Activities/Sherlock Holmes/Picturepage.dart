@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
     as QuestionPage;
-
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
     as QuizData;
-
-import 'quizsherdata.dart';
 
 class PicturePage extends StatefulWidget {
   @override
