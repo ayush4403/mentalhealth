@@ -19,20 +19,16 @@ class _VideoAppState extends State<VideoApp> {
   void initState() {
     super.initState();
     currentDay = DateTime.now().day;
-    _controller = VideoPlayerController.network('');
+    _controller =
+        VideoPlayerController.network(""); // Initialize with an empty URL
     _initializeVideoPlayer();
     fetchVideoUrl(currentDay);
   }
 
   Future<void> _initializeVideoPlayer() async {
-    await _controller.initialize();
+    initializeVideoPlayerFuture = _controller.initialize();
+    await initializeVideoPlayerFuture;
     setState(() {}); // Update the UI after initialization
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   Future<void> fetchVideoUrl(int day) async {
