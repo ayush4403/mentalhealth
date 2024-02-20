@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,10 +54,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       User? user = userCredential.user;
       if (user != null) {
+        // Update user's display name
         await user.updateDisplayName(userName);
 
         // Send email verification
         await user.sendEmailVerification();
+
+        // Create a document in Firestore Users collection
+        final userDocRef =
+            FirebaseFirestore.instance.collection('Users').doc(user.uid);
+        await userDocRef.set({'email': userEmail, 'flag': false});
 
         _showSnackBar(
             "A verification email has been sent to your inbox. Please verify your email.");
