@@ -1,9 +1,10 @@
+// ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/showguided.dart';
 
 class GuidedList extends StatefulWidget {
-  const GuidedList({Key? key}) : super(key: key);
+  const GuidedList({super.key});
 
   @override
   State<GuidedList> createState() => _GuidedListState();
@@ -59,6 +60,7 @@ class _GuidedListState extends State<GuidedList> {
 
   // Randomly shuffle the colors
   late final List<Color> shuffledColors = []
+    // ignore: prefer_spread_collections
     ..addAll(colors)
     ..shuffle(Random());
 

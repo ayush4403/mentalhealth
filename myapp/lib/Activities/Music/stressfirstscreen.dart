@@ -8,6 +8,7 @@ void main() {
 }
 
 class MusicList extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const MusicList({Key? key});
 
   @override
@@ -24,9 +25,11 @@ class MusicList extends StatelessWidget {
 }
 
 class MusicListScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const MusicListScreen({Key? key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MusicListScreenState createState() => _MusicListScreenState();
 }
 
@@ -326,8 +329,8 @@ class _MusicListScreenState extends State<MusicListScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CardView()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CardView()));
           },
         ),
         title: const Text(
@@ -362,6 +365,7 @@ class _MusicListScreenState extends State<MusicListScreen>
     );
   }
 
+  // ignore: unused_element
   Widget _buildCarousel(List<MusicData> musicList) {
     final PageController controller = PageController();
 

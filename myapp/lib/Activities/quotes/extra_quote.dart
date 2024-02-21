@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DailyQuotePage extends StatefulWidget {
+  const DailyQuotePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _DailyQuotePageState createState() => _DailyQuotePageState();
 }
 

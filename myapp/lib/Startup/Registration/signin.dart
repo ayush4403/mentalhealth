@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignInScreenState createState() => _SignInScreenState();
 }
 
@@ -56,17 +56,19 @@ class _SignInScreenState extends State<SignInScreen> {
         if (snapshot.exists) {
           final bool flag = snapshot.data()?['flag'] ?? false;
           if (flag) {
+            // ignore: use_build_context_synchronously
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => const HomePage(),
               ),
             );
           } else {
+            // ignore: use_build_context_synchronously
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => QuizScreen(),
+                builder: (context) => const QuizScreen(),
               ),
             );
           }

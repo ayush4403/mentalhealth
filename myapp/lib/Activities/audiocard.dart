@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -22,8 +24,8 @@ class AudioCardVisualize extends StatefulWidget {
     this.showTimerSelector = true,
     this.imageshow = true,
     required this.onAudioPlay, // Receive callback function
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -96,7 +98,7 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
           baseBarColor: Colors.grey,
           bufferedBarColor: Colors.white,
           thumbColor: Colors.red,
-          timeLabelTextStyle: TextStyle(color: Colors.white),
+          timeLabelTextStyle: const TextStyle(color: Colors.white),
           onSeek: (duration) {
             _player.seek(duration);
           },
@@ -217,8 +219,10 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return Container(
       width: MediaQuery.of(context).size.width,
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Card(
           elevation: 9,
@@ -228,10 +232,10 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
             children: [
               if (widget.imageshow)
                 Transform.translate(
-                  offset: Offset(130, -50),
+                  offset: const Offset(130, -50),
                   child: ClipRRect(
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(10)),
+                        const BorderRadius.vertical(top: Radius.circular(10)),
                     child: Image.asset(
                       widget.imageUrl,
                       width: 120,
@@ -245,7 +249,9 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10), // Placeholder for the image
+                    const SizedBox(
+                      height: 10,
+                    ), // Placeholder for the image
                     if (widget.showProgressBar) _progessBar(),
                     if (widget.showPlaybackControlButton)
                       _playbackControlButton(),

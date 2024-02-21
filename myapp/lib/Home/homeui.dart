@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class HomePageUI extends StatelessWidget {
+  const HomePageUI({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.blue),
+        decoration: const BoxDecoration(color: Colors.blue),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -16,15 +18,17 @@ class HomePageUI extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.calendar_today),
-                      SizedBox(width: 8),
+                      const Icon(Icons.calendar_today),
+                      const SizedBox(
+                        width: 8,
+                      ),
                       Text(
                         '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
                       CircleAvatar(
                         radius: 30,
@@ -40,7 +44,9 @@ class HomePageUI extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(
+                height: 16,
+              ),
               Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
@@ -48,18 +54,22 @@ class HomePageUI extends StatelessWidget {
                 ),
                 color: Colors.white,
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Activity',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       // Add activity content here
-                      SizedBox(height: 16),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: ElevatedButton(
@@ -67,16 +77,18 @@ class HomePageUI extends StatelessWidget {
                             // Handle start button press
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blue,
+                            backgroundColor: Colors.blue,
                           ),
-                          child: Text('Start'),
+                          child: const Text('Start'),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(
+                height: 16,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -95,15 +107,22 @@ class HomePageUI extends StatelessWidget {
   Widget _buildButton({required String title}) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-      margin: EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: 24,
+      ),
+      margin: const EdgeInsets.only(
+        bottom: 16,
+      ),
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(15),
       ),
       child: Text(
         title,
-        style: TextStyle(fontSize: 20),
+        style: const TextStyle(
+          fontSize: 20,
+        ),
       ),
     );
   }

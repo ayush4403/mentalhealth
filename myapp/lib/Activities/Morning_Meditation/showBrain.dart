@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
@@ -19,13 +20,15 @@ class ShowBrainScreen extends StatefulWidget {
   final String imageUrl;
   final String audioUrl;
 
-  ShowBrainScreen({
+  const ShowBrainScreen({
+    super.key,
     required this.title,
     required this.imageUrl,
     required this.audioUrl,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _ShowBrainScreenState createState() => _ShowBrainScreenState();
 }
 
@@ -113,6 +116,7 @@ class _ShowBrainScreenState extends State<ShowBrainScreen> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildCategory(BuildContext context, List<MusicData> musicList) {
     // Shuffle the musicList to display random cards
     musicList.shuffle();
@@ -122,56 +126,60 @@ class _ShowBrainScreenState extends State<ShowBrainScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 12),
+          const SizedBox(
+            height: 12,
+          ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: musicList.map((musicData) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedAudioUrl = musicData.audioUrl;
-                      });
-                    },
-                    child: Container(
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
-                            ),
-                            child: Image.asset(
-                              musicData.imageUrl,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              musicData.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+              children: musicList.map(
+                (musicData) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedAudioUrl = musicData.audioUrl;
+                        });
+                      },
+                      child: Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: Image.asset(
+                                musicData.imageUrl,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.fitWidth,
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                musicData.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                },
+              ).toList(),
             ),
           ),
         ],

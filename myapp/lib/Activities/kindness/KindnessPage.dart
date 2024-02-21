@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +9,8 @@ import 'kindness_challenges.dart';
 TextEditingController kindnessController = TextEditingController();
 
 class KindnessPageClass extends StatelessWidget {
+  const KindnessPageClass({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,14 +18,17 @@ class KindnessPageClass extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: KindnessPage(),
+      home: const KindnessPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class KindnessPage extends StatefulWidget {
+  const KindnessPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _KindnessPageState createState() => _KindnessPageState();
 }
 
@@ -48,8 +54,8 @@ class _KindnessPageState extends State<KindnessPage> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CardView()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CardView()));
           },
         ),
         title: const Text(
@@ -80,26 +86,26 @@ class _KindnessPageState extends State<KindnessPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Daily Kindness Challenge',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 KindnessChallengeCard(
                   challenge: todayChallenge,
                 ),
-                SizedBox(height: 35),
-                Text(
+                const SizedBox(height: 35),
+                const Text(
                   'Tell us about your kind act:',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
@@ -145,7 +151,7 @@ class _KindnessPageState extends State<KindnessPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
                             await _pickImage();
@@ -156,7 +162,7 @@ class _KindnessPageState extends State<KindnessPage> {
                             foregroundColor:
                                 Colors.black, // Text and icon color
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add_a_photo_rounded,
@@ -168,7 +174,7 @@ class _KindnessPageState extends State<KindnessPage> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Center(
                           child: _selectedImage != null
                               ? Container(
@@ -185,7 +191,7 @@ class _KindnessPageState extends State<KindnessPage> {
                                     height: 130,
                                   ),
                                 )
-                              : SizedBox.shrink(),
+                              : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 25.0),
                         Center(
@@ -194,7 +200,7 @@ class _KindnessPageState extends State<KindnessPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => CardView()));
+                                      builder: (context) => const CardView()));
                             },
                             child: Container(
                               width: 250,
@@ -205,7 +211,7 @@ class _KindnessPageState extends State<KindnessPage> {
                                 border: Border.all(color: Colors.black),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Column(
+                              child: const Column(
                                 children: [
                                   Text(
                                     'Activity Done',
@@ -247,8 +253,7 @@ class _KindnessPageState extends State<KindnessPage> {
 class KindnessChallengeCard extends StatelessWidget {
   final String challenge;
 
-  const KindnessChallengeCard({Key? key, required this.challenge})
-      : super(key: key);
+  const KindnessChallengeCard({super.key, required this.challenge});
 
   @override
   Widget build(BuildContext context) {
@@ -262,17 +267,17 @@ class KindnessChallengeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Today\'s Challenge:',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               challenge,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ],
         ),

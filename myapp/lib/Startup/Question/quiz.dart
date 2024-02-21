@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Startup/home.dart';
@@ -11,6 +9,7 @@ class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QuizScreenState createState() => _QuizScreenState();
 }
 
@@ -229,9 +228,10 @@ class _QuizScreenState extends State<QuizScreen> {
       }
       await setHasCompletedQuiz();
 
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
 
       // Reset the quiz for the next attempt

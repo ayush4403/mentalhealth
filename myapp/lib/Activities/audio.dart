@@ -8,12 +8,13 @@ class AudioPlayerWidget extends StatefulWidget {
   final String title;
 
   const AudioPlayerWidget({
-    Key? key,
+    super.key,
     required this.audioFileName,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
 }
 
@@ -39,6 +40,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
+      // ignore: avoid_print
       print("Error getting audio URL: $e");
       return '';
     }
@@ -49,6 +51,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     try {
       await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
+      // ignore: avoid_print
       print("Error loading audio source: $e");
     }
   }
@@ -64,17 +67,17 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
           children: [
             Text(
               widget.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             _progessBar(),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             _playbackControlButton(),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             _timerSelector(),
           ],
         ),
@@ -139,7 +142,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     return Row(
       children: [
         const Icon(Icons.timer),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         DropdownButton<double>(
           value: selectedDuration,
           items: const [
@@ -186,10 +189,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                 // Make sure the widget is still mounted before updating the state
                 if (mounted) {
                   setState(() {
-                    selectedDuration = 0.0; // Reset selectedDuration after audio stops
+                    selectedDuration =
+                        0.0; // Reset selectedDuration after audio stops
                   });
                 }
-                _player.stop(); // Stop the music when the desired duration is reached
+                _player
+                    .stop(); // Stop the music when the desired duration is reached
               });
             }
           },

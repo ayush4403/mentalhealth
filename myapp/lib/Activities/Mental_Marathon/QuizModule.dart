@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Mental_Marathon/QuizData.dart';
@@ -5,7 +6,10 @@ import 'package:myapp/Activities/Mental_Marathon/ReviewPage.dart';
 import 'package:myapp/Activities/cardview.dart';
 
 class QuizModule extends StatefulWidget {
+  const QuizModule({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _QuizModuleState createState() => _QuizModuleState();
 }
 
@@ -110,7 +114,7 @@ class _QuizModuleState extends State<QuizModule> {
             icon: const Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
-              Navigator.of(context).pop(CardView());
+              Navigator.of(context).pop(const CardView());
             },
           ),
           title: const Text(
@@ -123,11 +127,12 @@ class _QuizModuleState extends State<QuizModule> {
           ),
           backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         ),
+        // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
             // Return false to disable the system back button
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CardView()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CardView()));
             return true;
           },
           child: Center(
@@ -144,25 +149,25 @@ class _QuizModuleState extends State<QuizModule> {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Question ${currentQuestionIndex + 1}:',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                       ),
                     ),
                     Text(
                       quizQuestions[currentQuestionIndex]['text'],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Column(
                       children: (quizQuestions[currentQuestionIndex]['options']
                               as List<String>)
@@ -175,7 +180,7 @@ class _QuizModuleState extends State<QuizModule> {
                                     ['correctAnswer'];
 
                         return Container(
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8.0),
@@ -203,13 +208,13 @@ class _QuizModuleState extends State<QuizModule> {
       );
     } else {
       // No need to display anything here
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: QuizModule(),
   ));
 }
