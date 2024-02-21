@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/Startup/Question/quiz.dart';
+import 'package:myapp/Startup/home.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';
@@ -42,20 +44,33 @@ class _SignInScreenState extends State<SignInScreen> {
         password: _passwordTextController.text,
       );
 
-      // ignore: unused_local_variable
       final User? user = userCredential.user;
       if (user != null) {
-        // Set a flag in SharedPreferences to indicate successful sign-in
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isUserLoggedIn', true);
+        // Check flag from Firestore
+        final DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await FirebaseFirestore.instance
+                .collection('Users')
+                .doc(user.uid)
+                .get();
 
-        // Navigate to the next screen (QuizScreen in this case)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => QuizScreen(),
-          ),
-        );
+        if (snapshot.exists) {
+          final bool flag = snapshot.data()?['flag'] ?? false;
+          if (flag) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QuizScreen(),
+              ),
+            );
+          }
+        }
       }
     } catch (e) {
       String errorMessage = 'An error occurred during sign-in.';

@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -188,24 +191,52 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         currentQuestionIndex++;
       });
-      userSelectedOptions = []; // Clear selected options for the next question
+
+      // Add selected option only once per question
+      Map<String, dynamic> selectedOption;
+
+      if (questions[currentQuestionIndex]['isSlider'] == true) {
+        // For questions with a slider
+        selectedOption = {
+          'index': null, // No specific option index for the slider
+          'value': sliderValue,
+        };
+      } else {
+        // For questions with options
+        selectedOption = {
+          'index': selectedOptionIndexes[currentQuestionIndex],
+          'value': questions[currentQuestionIndex]['options']
+              [selectedOptionIndexes[currentQuestionIndex]],
+        };
+      }
+
+      userSelectedOptions.add(selectedOption);
+
+      setState(() {
+        // Trigger a rebuild to update the state of the "Next" button
+      });
     } else {
-      // Set hasCompletedQuiz to true
+      // Set flag to true in Firestore
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .update({'flag': true});
+        await FirebaseFirestore.instance.collection('Users').doc(user.uid).set(
+            {'answer1': sliderValue, 'answers': userSelectedOptions},
+            SetOptions(merge: true));
+      }
       await setHasCompletedQuiz();
 
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );
-      if (kDebugMode) {
-        print('User Selected Options: $userSelectedOptions');
-      }
 
       // Reset the quiz for the next attempt
       setState(() {
         currentQuestionIndex = 0;
-        userSelectedOptions = [];
-        selectedOptionIndexes = List.filled(5, -1); // Clear selected indexes
       });
     }
   }
