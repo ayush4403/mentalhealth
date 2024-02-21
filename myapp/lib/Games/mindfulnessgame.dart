@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MindfulnessGame extends StatefulWidget {
+  const MindfulnessGame({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MindfulnessGameState createState() => _MindfulnessGameState();
 }
 
@@ -47,7 +50,7 @@ class _MindfulnessGameState extends State<MindfulnessGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mindfulness Breathing Exercise'),
+        title: const Text('Mindfulness Breathing Exercise'),
       ),
       body: Center(
         child: Column(
@@ -55,14 +58,16 @@ class _MindfulnessGameState extends State<MindfulnessGame> {
           children: <Widget>[
             Text(
               'Rounds Completed: $_roundsCompleted',
-              style: TextStyle(fontSize: 24.0),
+              style: const TextStyle(fontSize: 24.0),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(
+              height: 20.0,
+            ),
             _isBreathing
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: _startBreathing,
-                    child: Text('Start Breathing'),
+                    child: const Text('Start Breathing'),
                   ),
           ],
         ),

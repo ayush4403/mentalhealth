@@ -8,6 +8,7 @@ class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QuizScreenState createState() => _QuizScreenState();
 }
 
@@ -193,9 +194,10 @@ class _QuizScreenState extends State<QuizScreen> {
       // Set hasCompletedQuiz to true
       await setHasCompletedQuiz();
 
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
       if (kDebugMode) {
         print('User Selected Options: $userSelectedOptions');

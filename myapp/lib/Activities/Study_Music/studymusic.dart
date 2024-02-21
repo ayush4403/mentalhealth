@@ -9,6 +9,7 @@ void main() {
 }
 
 class StudyMusic extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const StudyMusic({Key? key});
 
   @override
@@ -25,9 +26,11 @@ class StudyMusic extends StatelessWidget {
 }
 
 class StudyMusicScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const StudyMusicScreen({Key? key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _StudyMusicScreenState createState() => _StudyMusicScreenState();
 }
 
@@ -37,7 +40,7 @@ class _StudyMusicScreenState extends State<StudyMusicScreen>
   // ignore: unused_field
   late Animation<double> _animation;
   // ignore: unused_field
-  bool _animationCompleted = false;
+  final bool _animationCompleted = false;
   late String selectedCategory;
 
   @override
@@ -290,7 +293,7 @@ class _StudyMusicScreenState extends State<StudyMusicScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(CardView());
+            Navigator.of(context).pop(const CardView());
           },
         ),
         title: const Text(

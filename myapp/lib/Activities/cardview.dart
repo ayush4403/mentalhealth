@@ -11,6 +11,8 @@ import 'package:myapp/Activities/kindness/KindnessPage.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
 
 class CardView extends StatelessWidget {
+  const CardView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -87,6 +89,8 @@ class ActivityList extends StatelessWidget {
     Colors.deepOrange[100]!,
   ];
 
+  ActivityList({super.key});
+
   void handleActivityTap(String activity) {
     // Handle the onPressed action for each activity here
     // ignore: avoid_print
@@ -101,55 +105,55 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Daily Thoughts') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => DailyQuotesScreen()),
+        MaterialPageRoute(builder: (context) => const DailyQuotesScreen()),
       );
     }
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MorningMeditation()),
+        MaterialPageRoute(builder: (context) => const MorningMeditation()),
       );
     }
     if (activity == 'Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MusicList()),
+        MaterialPageRoute(builder: (context) => const MusicList()),
       );
     }
     if (activity == 'Study Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudyMusicScreen()),
+        MaterialPageRoute(builder: (context) => const StudyMusicScreen()),
       );
     }
     if (activity == 'Night Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => NightMusicScreen()),
+        MaterialPageRoute(builder: (context) => const NightMusicScreen()),
       );
     }
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuizModule()),
+        MaterialPageRoute(builder: (context) => const QuizModule()),
       );
     }
     if (activity == 'Gratitude') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => VideoApp()),
+        MaterialPageRoute(builder: (context) => const VideoApp()),
       );
     }
     if (activity == 'Kindness Challenge') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => KindnessPageClass()),
+        MaterialPageRoute(builder: (context) => const KindnessPageClass()),
       );
     }
     if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => PicturePage()),
+        MaterialPageRoute(builder: (context) => const PicturePage()),
       );
     }
   }

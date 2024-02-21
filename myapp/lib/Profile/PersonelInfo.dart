@@ -1,18 +1,22 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 
 class PersonalInformationPage extends StatefulWidget {
+  const PersonalInformationPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _PersonalInformationPageState createState() =>
       _PersonalInformationPageState();
 }
 
 class _PersonalInformationPageState extends State<PersonalInformationPage> {
   bool _isPasswordVisible = false;
-  String _password = ''; // Initial hidden password
+  final String _password = ''; // Initial hidden password
 
-  TextEditingController _nameController =
+  final TextEditingController _nameController =
       TextEditingController(text: 'John Doe');
-  TextEditingController _birthDateController =
+  final TextEditingController _birthDateController =
       TextEditingController(text: 'January 1, 1990');
 
   void _togglePasswordVisibility() {
@@ -31,6 +35,7 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
     String name = _nameController.text;
     String birthDate = _birthDateController.text;
     // You can add logic to save changes here
+    // ignore: avoid_print
     print('Name: $name, Birth Date: $birthDate');
     Navigator.of(context)
         .pop(); // Navigate back to the previous screen (Account Settings)
@@ -55,26 +60,30 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Information'),
+        title: const Text(
+          'Personal Information',
+        ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Center(
+            const Center(
               child: CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/batman.jpg'),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildInfoField('Name', _nameController, editable: true),
             // _buildInfoField('Email', 'john.doe@example.com'),
             Row(
@@ -84,23 +93,23 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                       editable: false),
                 ),
                 IconButton(
-                  icon: Icon(Icons.calendar_today),
+                  icon: const Icon(Icons.calendar_today),
                   onPressed: () => _selectDate(context),
                 ),
               ],
             ),
             _buildPasswordField(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   onPressed: _undoChanges,
-                  child: Text('Undo Changes'),
+                  child: const Text('Undo Changes'),
                 ),
                 ElevatedButton(
                   onPressed: _saveChanges,
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
               ],
             ),
@@ -113,21 +122,21 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
   Widget _buildInfoField(String label, TextEditingController controller,
       {bool editable = false}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           editable
               ? TextFormField(
                   controller: controller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
                 )
@@ -144,17 +153,17 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
 
   Widget _buildPasswordField() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Password',
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             children: [
               Expanded(

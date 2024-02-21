@@ -22,8 +22,8 @@ class AudioCard extends StatefulWidget {
     this.showTimerSelector = true,
     this.imageshow = true,
     this.timerSelectorfordisplay = true,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -55,6 +55,7 @@ class _AudioCardState extends State<AudioCard> {
       final audioUrl = await getAudioUrl(audioFileName);
       await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
+      // ignore: avoid_print
       print("Error loading audio source: $e");
     }
   }
@@ -102,7 +103,7 @@ class _AudioCardState extends State<AudioCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(top: 10.0),
                       child: Text(
                         "PLAYING NOW",
@@ -112,6 +113,7 @@ class _AudioCardState extends State<AudioCard> {
                             color: Color.fromARGB(255, 12, 12, 12)),
                       ),
                     ),
+                    // ignore: avoid_unnecessary_containers
                     Container(
                       child: Row(
                         children: [
@@ -119,7 +121,7 @@ class _AudioCardState extends State<AudioCard> {
                           if (widget.timerSelectorfordisplay)
                             DropdownButton<double>(
                               value: selectedDuration,
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.menu,
                                 size: 18.0,
                                 color: Color.fromARGB(255, 12, 12, 12),
@@ -190,30 +192,33 @@ class _AudioCardState extends State<AudioCard> {
                 ),
               ),
               Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  padding: EdgeInsets.all(7),
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: const EdgeInsets.all(7),
                   width: 280,
                   height: 280,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Color(0xffE5F1FD),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                             color: Color(0xff97A4B7),
-                            offset: new Offset(8.0, 10.0),
+                            offset: Offset(8.0, 10.0),
                             blurRadius: 25.0)
                       ]),
                   child: Container(
+                      // ignore: unnecessary_new
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
+                          // ignore: unnecessary_new
                           image: new DecorationImage(
                               fit: BoxFit.cover,
+                              // ignore: unnecessary_new
                               image: new AssetImage(widget.imageUrl))))),
               Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 8.0),
                 child: Text(
                   widget.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 12, 12, 12)),
@@ -221,7 +226,7 @@ class _AudioCardState extends State<AudioCard> {
               ),
               Text(
                 widget.title,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.normal,
                     color: Color.fromARGB(255, 12, 12, 12)),
@@ -296,7 +301,7 @@ class _AudioCardState extends State<AudioCard> {
   Widget _timerSelector() {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.menu,
           size: 18.0,
           color: Color(0xff97A4B7),
@@ -364,7 +369,9 @@ class _AudioCardState extends State<AudioCard> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: avoid_print
     print('Audio file name: ${widget.audioFileName}');
+    // ignore: sized_box_for_whitespace
     return Container(
       width: MediaQuery.of(context).size.width,
       // ignore: avoid_unnecessary_containers
@@ -376,10 +383,10 @@ class _AudioCardState extends State<AudioCard> {
             children: [
               if (widget.imageshow)
                 Transform.translate(
-                  offset: Offset(130, -50),
+                  offset: const Offset(130, -50),
                   child: ClipRRect(
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(10)),
+                        const BorderRadius.vertical(top: Radius.circular(10)),
                     child: Image.asset(
                       widget.imageUrl,
                       width: 120,

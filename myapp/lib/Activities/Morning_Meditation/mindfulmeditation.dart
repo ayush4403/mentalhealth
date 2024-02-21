@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
-//import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
 import 'package:myapp/Activities/Morning_Meditation/GuidedMed.dart';
 import 'package:myapp/Activities/Morning_Meditation/Visualize.dart';
 import 'package:myapp/Activities/cardview.dart';
@@ -37,7 +36,7 @@ class MorningMeditationState extends State<MorningMeditation> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(CardView());
+            Navigator.of(context).pop(const CardView());
           },
         ),
         title: const Text(
@@ -50,6 +49,7 @@ class MorningMeditationState extends State<MorningMeditation> {
         ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
+      // ignore: deprecated_member_use
       body: WillPopScope(
         onWillPop: () async {
           // Return false to disable the system back button

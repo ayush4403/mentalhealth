@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/Startup/Registration/signin.dart';
@@ -8,6 +10,7 @@ class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ResetPasswordState createState() => _ResetPasswordState();
 }
 

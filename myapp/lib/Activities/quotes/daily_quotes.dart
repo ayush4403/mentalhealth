@@ -38,7 +38,7 @@ class _DailyQuotesScreenState extends State<DailyQuotesScreen> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(CardView());
+            Navigator.of(context).pop(const CardView());
           },
         ),
         title: const Text(

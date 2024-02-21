@@ -1,9 +1,10 @@
+// ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/showBrain.dart';
 
 class BrainList extends StatefulWidget {
-  const BrainList({Key? key}) : super(key: key);
+  const BrainList({super.key});
 
   @override
   State<BrainList> createState() => _BrainListState();
@@ -59,6 +60,7 @@ class _BrainListState extends State<BrainList> {
 
   // Randomly shuffle the colors
   late final List<Color> shuffledColors = []
+    // ignore: prefer_spread_collections
     ..addAll(colors)
     ..shuffle(Random());
 
@@ -70,6 +72,7 @@ class _BrainListState extends State<BrainList> {
   Widget build(BuildContext context) {
     return Container(
       color: const Color.fromARGB(255, 0, 111, 186),
+      // ignore: deprecated_member_use
       child: WillPopScope(
         onWillPop: () async {
           // Return false to disable the system back button

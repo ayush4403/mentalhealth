@@ -46,6 +46,7 @@ final List<String> billgates = [
   'assets/Images/persons/BillGates/9.jpg',
   'assets/Images/persons/BillGates/10.jpg',
 ];
+// ignore: non_constant_identifier_names
 final List<String> elon_musk = [
   'assets/Images/persons/ElonMusk/1.jpg',
   'assets/Images/persons/ElonMusk/2.jpg',
