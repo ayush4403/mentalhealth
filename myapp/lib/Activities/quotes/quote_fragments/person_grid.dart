@@ -103,6 +103,7 @@ class _PersonScreenState extends State<PersonScreen>
                         ),
                       ),
                     );
+                    // ignore: avoid_print
                     print(queryname[index]);
                   },
                   child: Card(

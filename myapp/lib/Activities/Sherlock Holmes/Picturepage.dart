@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
@@ -28,7 +29,7 @@ class _PicturePageState extends State<PicturePage> {
     selectedQuizData = QuizData.quizDataList.first;
 
     // Add a delay to navigate after 30 seconds
-    Future.delayed(Duration(seconds: 30), () {
+    Future.delayed(const Duration(seconds: 30), () {
       List<QuizData.Question> selectedQuestions = selectQuestionsForDay();
       Navigator.pushReplacement(
         context,
@@ -58,7 +59,7 @@ class _PicturePageState extends State<PicturePage> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(CardView());
+            Navigator.of(context).pop(const CardView());
           },
         ),
         title: const Text(
@@ -112,7 +113,9 @@ class _PicturePageState extends State<PicturePage> {
                 );
               },
             ),
-            SizedBox(height: 50),
+            const SizedBox(
+              height: 50,
+            ),
             Container(
               width: 350.0,
               height: 350.0,

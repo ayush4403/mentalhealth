@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 
 class ReportPage extends StatelessWidget {
+  const ReportPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report'),
+        title: const Text('Report'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ReportCard(
-              key: Key('report_card'),
+              key: const Key('report_card'),
               title: 'Weekly Mood Tracker',
               description: 'Track your mood changes throughout the week.',
               onTap: () {
                 // Navigate to the Weekly Mood Tracker screen
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ReportCard(
-              key: Key('report_card'),
+              key: const Key('report_card'),
               title: 'Activity Summary',
               description: 'View your activity and progress summary.',
               onTap: () {
                 // Navigate to the Activity Summary screen
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             // Add more report options as needed
           ],
         ),
@@ -57,21 +59,21 @@ class ReportCard extends StatelessWidget {
       child: Card(
         elevation: 3.0,
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Text(
                 description,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   color: Colors.grey,
                 ),

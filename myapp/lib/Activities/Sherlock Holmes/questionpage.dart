@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
+    // ignore: library_prefixes
     as QuizData;
 import 'package:myapp/Activities/cardview.dart';
 
@@ -8,9 +9,10 @@ import 'package:myapp/Activities/cardview.dart';
 class QuestionPage extends StatefulWidget {
   final List<QuizData.Question> questions;
 
-  QuestionPage({required this.questions});
+  const QuestionPage({super.key, required this.questions});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QuestionPageState createState() => _QuestionPageState();
 }
 
@@ -28,7 +30,7 @@ class _QuestionPageState extends State<QuestionPage> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(CardView());
+            Navigator.of(context).pop(const CardView());
           },
         ),
         title: const Text(
@@ -62,15 +64,19 @@ class _QuestionPageState extends State<QuestionPage> {
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 16),
+              const SizedBox(
+                height: 16,
+              ),
               buildOptionTile(widget.questions[currentQuestionIndex]),
-              SizedBox(height: 16),
+              const SizedBox(
+                height: 16,
+              ),
               ElevatedButton(
                 onPressed: () {
                   setState(() {
                     showCorrectAnswer = true;
                   });
-                  Future.delayed(Duration(seconds: 3), () {
+                  Future.delayed(const Duration(seconds: 3), () {
                     if (currentQuestionIndex < widget.questions.length - 1) {
                       setState(() {
                         currentQuestionIndex++;
@@ -78,12 +84,14 @@ class _QuestionPageState extends State<QuestionPage> {
                         showCorrectAnswer = false;
                       });
                     } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => CardView()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CardView()));
                     }
                   });
                 },
-                child: Text('Submit Answer'),
+                child: const Text('Submit Answer'),
               ),
             ],
           ),
@@ -98,10 +106,10 @@ class _QuestionPageState extends State<QuestionPage> {
         const SizedBox(height: 16),
         Text(
           question.question,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         for (int i = 0; i < question.options.length; i++)
           buildOption(question, i),
       ],
@@ -121,8 +129,8 @@ class _QuestionPageState extends State<QuestionPage> {
         opacity: isSelected ? 0.5 : 1.0,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
-          margin: EdgeInsets.symmetric(vertical: 8.0),
-          padding: EdgeInsets.all(8.0),
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             border: Border.all(
               color: isCorrect
@@ -144,7 +152,7 @@ class _QuestionPageState extends State<QuestionPage> {
             child: RadioListTile<int>(
               title: Text(
                 question.options[optionIndex],
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -11,6 +11,7 @@ class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignInScreenState createState() => _SignInScreenState();
 }
 
@@ -50,10 +51,11 @@ class _SignInScreenState extends State<SignInScreen> {
         prefs.setBool('isUserLoggedIn', true);
 
         // Navigate to the next screen (QuizScreen in this case)
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => QuizScreen(),
+            builder: (context) => const QuizScreen(),
           ),
         );
       }

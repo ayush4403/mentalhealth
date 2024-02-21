@@ -2,29 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Games/mindfulnessgame.dart';
 
 class GamesPage extends StatelessWidget {
+  const GamesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Games'),
+        title: const Text('Games'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             GameOptionCard(
-              key: Key('mindfulness_coloring_card'), // Provide a key here
+              key: const Key('mindfulness_coloring_card'), // Provide a key here
               title: 'Mindfulness Coloring',
               description: 'Relax and unwind with coloring activities.',
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MindfulnessGame()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MindfulnessGame()));
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(
+              height: 16.0,
+            ),
             GameOptionCard(
-              key: Key('breathing_exercises_card'), // Provide a key here
+              key: const Key('breathing_exercises_card'), // Provide a key here
               title: 'Breathing Exercises',
               description:
                   'Practice different breathing techniques for relaxation.',
@@ -32,7 +38,9 @@ class GamesPage extends StatelessWidget {
                 // Navigate to the Breathing Exercises game screen
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(
+              height: 16.0,
+            ),
             // Add more game options as needed
           ],
         ),
@@ -60,21 +68,25 @@ class GameOptionCard extends StatelessWidget {
       child: Card(
         elevation: 3.0,
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(
+            16.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(
+                height: 8.0,
+              ),
               Text(
                 description,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   color: Colors.grey,
                 ),

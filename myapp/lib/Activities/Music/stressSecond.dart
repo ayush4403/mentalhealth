@@ -1,5 +1,4 @@
-//import 'dart:js';
-
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/audiotemplate.dart';
@@ -22,6 +21,7 @@ class MusicCardDataScreen extends StatelessWidget {
   final String audioUrl;
 
   MusicCardDataScreen({
+    super.key,
     required this.title,
     required this.imageUrl,
     required this.audioUrl,
@@ -73,7 +73,7 @@ class MusicCardDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -115,6 +115,7 @@ class MusicCardDataScreen extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildCategory(BuildContext context, List<MusicData> musicList) {
     // Shuffle the musicList to display random cards
     musicList.shuffle();
@@ -124,7 +125,7 @@ class MusicCardDataScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -143,7 +144,7 @@ class MusicCardDataScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(8),
                               topRight: Radius.circular(8),
                             ),
@@ -158,7 +159,7 @@ class MusicCardDataScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               musicData.title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),

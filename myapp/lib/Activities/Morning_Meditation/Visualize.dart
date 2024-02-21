@@ -1,9 +1,10 @@
+// ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/Morning_Meditation/showvisualize.dart';
 
 class Visualize extends StatefulWidget {
-  const Visualize({Key? key}) : super(key: key);
+  const Visualize({super.key});
 
   @override
   State<Visualize> createState() => _VisualizeState();
@@ -53,6 +54,7 @@ class _VisualizeState extends State<Visualize> {
 
   // Randomly shuffle the colors
   late final List<Color> shuffledColors = []
+    // ignore: prefer_spread_collections
     ..addAll(colors)
     ..shuffle(Random());
 

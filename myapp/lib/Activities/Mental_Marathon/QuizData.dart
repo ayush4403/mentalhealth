@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class QuizData {
   static final List<String> topics = [
     'Numerical Aptitude',

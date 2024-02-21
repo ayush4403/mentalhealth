@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import for SystemChrome
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/Startup/Splash_screen/splash.dart';
@@ -11,7 +11,7 @@ final theme = ThemeData(
     brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 0, 111, 186),
   ),
-  textTheme: GoogleFonts.montserratTextTheme(), // add 500
+  textTheme: GoogleFonts.montserratTextTheme(),
 );
 
 void main() async {

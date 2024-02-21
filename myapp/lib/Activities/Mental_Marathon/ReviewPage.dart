@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/cardview.dart';
 
@@ -21,7 +22,7 @@ class ReviewPage extends StatelessWidget {
         // Navigate to a particular screen when the back button is pressed
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => CardView()),
+          MaterialPageRoute(builder: (context) => const CardView()),
         );
         // Return false to prevent the default back button behavior
         return false;
@@ -31,7 +32,7 @@ class ReviewPage extends StatelessWidget {
         body: Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.75,
+            height: MediaQuery.of(context).size.height * 0.80,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.65),
               borderRadius: const BorderRadius.only(
@@ -81,7 +82,7 @@ class ReviewPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CardView()));
+                                builder: (context) => const CardView()));
                       },
                       child: Container(
                         //width: 250,

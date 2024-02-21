@@ -1,16 +1,20 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:myapp/Activities/cardview.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class VideoApp extends StatefulWidget {
+  const VideoApp({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _VideoAppState createState() => _VideoAppState();
 }
 
 class _VideoAppState extends State<VideoApp> {
   late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
+  late Future<void> initializeVideoPlayerFuture;
   late int currentDay;
   bool isVideoPlaying = false;
   TextEditingController gratitudeController = TextEditingController();
@@ -19,24 +23,28 @@ class _VideoAppState extends State<VideoApp> {
   void initState() {
     super.initState();
     currentDay = DateTime.now().day;
+    _controller =
+        // ignore: deprecated_member_use
+        VideoPlayerController.network(""); // Initialize with an empty URL
+    _initializeVideoPlayer();
     fetchVideoUrl(currentDay);
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  Future<void> _initializeVideoPlayer() async {
+    initializeVideoPlayerFuture = _controller.initialize();
+    await initializeVideoPlayerFuture;
+    setState(() {}); // Update the UI after initialization
   }
 
   Future<void> fetchVideoUrl(int day) async {
     try {
-      // Replace 'video.mp4' with the name of your video file in Firebase Storage
       String videoUrl = await firebase_storage.FirebaseStorage.instance
           .ref('Gratitude thought/GRATITUTE_THOUGHT/$day.mp4')
           .getDownloadURL();
 
+      // ignore: deprecated_member_use
       _controller = VideoPlayerController.network(videoUrl);
-      _initializeVideoPlayerFuture = _controller.initialize();
+      initializeVideoPlayerFuture = _controller.initialize();
 
       _controller.addListener(() {
         if (_controller.value.isPlaying) {
@@ -50,9 +58,9 @@ class _VideoAppState extends State<VideoApp> {
         }
       });
 
-      // Start playing the video automatically when the screen loads
       _controller.play();
     } catch (error) {
+      // ignore: avoid_print
       print('Error fetching video URL: $error');
     }
   }
@@ -61,14 +69,14 @@ class _VideoAppState extends State<VideoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Video Player Demo',
-      debugShowCheckedModeBanner: false, // Remove debug banner
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
-              Navigator.of(context).pop(CardView());
+              Navigator.of(context).pop(const CardView());
             },
           ),
           title: const Text(
@@ -83,9 +91,9 @@ class _VideoAppState extends State<VideoApp> {
         ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         resizeToAvoidBottomInset: true,
+        // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
-            // Return false to disable the system back button
             return false;
           },
           child: SingleChildScrollView(
@@ -95,7 +103,7 @@ class _VideoAppState extends State<VideoApp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 50.0),
+                    const SizedBox(height: 50.0),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.width * 0.8,
@@ -108,7 +116,7 @@ class _VideoAppState extends State<VideoApp> {
                       child: Stack(
                         children: [
                           FutureBuilder(
-                            future: _initializeVideoPlayerFuture,
+                            future: initializeVideoPlayerFuture,
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.done) {
@@ -144,7 +152,7 @@ class _VideoAppState extends State<VideoApp> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 50.0),
+                    const SizedBox(height: 50.0),
                     FloatingActionButton(
                       onPressed: () {
                         setState(() {
@@ -162,7 +170,7 @@ class _VideoAppState extends State<VideoApp> {
                             : Icons.play_arrow,
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.89,
                       height: MediaQuery.of(context).size.height * 0.16,
@@ -180,22 +188,15 @@ class _VideoAppState extends State<VideoApp> {
                         child: TextField(
                           cursorColor: Colors.black,
                           controller: gratitudeController,
-                          style: const TextStyle(
-                              color: Colors.black), // Set text color to white
+                          style: const TextStyle(color: Colors.black),
                           decoration: const InputDecoration(
                             labelText: 'What are you grateful for today?',
-                            labelStyle: TextStyle(
-                                color:
-                                    Colors.black), // Set label color to white
+                            labelStyle: TextStyle(color: Colors.black),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .greenAccent), // Set border color to yellow
+                              borderSide: BorderSide(color: Colors.greenAccent),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors
-                                      .yellow), // Set focused border color to yellow
+                              borderSide: BorderSide(color: Colors.yellow),
                             ),
                           ),
                           maxLines: 3,
@@ -209,7 +210,7 @@ class _VideoAppState extends State<VideoApp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CardView()));
+                                  builder: (context) => const CardView()));
                         },
                         child: Container(
                           width: 250,

@@ -7,9 +7,10 @@ import 'package:myapp/Report/report.dart';
 //import 'package:myapp/test/single_player.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -62,15 +63,15 @@ class _HomePageState extends State<HomePage> {
           });
         },
         children: [
-          HomePageUI(),
-          CardView(),
+          const HomePageUI(),
+          const CardView(),
           ReportCard(
               key: const Key(''),
               title: 'Report',
               description: 'Reports of gamification',
               onTap: randomFunction),
-          GamesPage(),
-          ProfilePage()
+          const GamesPage(),
+          const ProfilePage()
         ],
       ),
       bottomNavigationBar: Visibility(
