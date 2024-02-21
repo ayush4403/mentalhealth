@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/Startup/Question/quiz.dart';
+import 'package:myapp/Startup/home.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../reusable_widgets/reusable_widgets.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -43,21 +44,35 @@ class _SignInScreenState extends State<SignInScreen> {
         password: _passwordTextController.text,
       );
 
-      // ignore: unused_local_variable
       final User? user = userCredential.user;
       if (user != null) {
-        // Set a flag in SharedPreferences to indicate successful sign-in
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isUserLoggedIn', true);
+        // Check flag from Firestore
+        final DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await FirebaseFirestore.instance
+                .collection('Users')
+                .doc(user.uid)
+                .get();
 
-        // Navigate to the next screen (QuizScreen in this case)
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const QuizScreen(),
-          ),
-        );
+        if (snapshot.exists) {
+          final bool flag = snapshot.data()?['flag'] ?? false;
+          if (flag) {
+            // ignore: use_build_context_synchronously
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          } else {
+            // ignore: use_build_context_synchronously
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const QuizScreen(),
+              ),
+            );
+          }
+        }
       }
     } catch (e) {
       String errorMessage = 'An error occurred during sign-in.';
