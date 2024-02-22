@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
-import 'package:myapp/Activities/quotes/quote_fragments/type_data.dart';
-import 'package:myapp/Activities/quotes/quote_fragments/type_grid.dart';
+import 'package:MindFulMe/Activities/quotes/quote_fragments/type_data.dart';
+import 'package:MindFulMe/Activities/quotes/quote_fragments/type_grid.dart';
 
 class ImageWithText extends StatefulWidget {
   final String queryname;

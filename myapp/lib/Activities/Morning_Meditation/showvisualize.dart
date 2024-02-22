@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Morning_Meditation/Visualize.dart';
-import 'package:myapp/Activities/audiotemplate.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/Visualize.dart';
+import 'package:MindFulMe/Activities/audiotemplate.dart';
 
 class MusicData {
   final String title;

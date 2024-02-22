@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/cardview.dart';
-import 'package:myapp/Games/games.dart';
-import 'package:myapp/Home/homeui.dart';
-import 'package:myapp/Profile/profile.dart';
-import 'package:myapp/Report/report.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/Games/games.dart';
+import 'package:MindFulMe/Home/homeui.dart';
+import 'package:MindFulMe/Profile/profile.dart';
+import 'package:MindFulMe/Report/report.dart';
 //import 'package:myapp/test/single_player.dart';
 
 class HomePage extends StatefulWidget {

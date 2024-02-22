@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Morning_Meditation/showvisualize.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/showvisualize.dart';
 
 class Visualize extends StatefulWidget {
   const Visualize({super.key});

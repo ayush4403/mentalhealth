@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Mental_Marathon/QuizModule.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/QuizModule.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});

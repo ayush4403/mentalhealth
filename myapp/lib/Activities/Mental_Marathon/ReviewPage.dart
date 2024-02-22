@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class ReviewPage extends StatelessWidget {
   final List<String> selectedAnswers;

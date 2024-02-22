@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/Picturepage.dart';
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/Picturepage.dart';
 
 class LetsPlay extends StatelessWidget {
   const LetsPlay({super.key});

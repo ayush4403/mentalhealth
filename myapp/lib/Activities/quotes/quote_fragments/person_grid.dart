@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/quotes/quote_fragments/person_view.dart';
+import 'package:MindFulMe/Activities/quotes/quote_fragments/person_view.dart';
 
 class PersonScreen extends StatefulWidget {
   const PersonScreen({super.key});

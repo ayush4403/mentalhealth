@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/quizsherdata.dart'
     // ignore: library_prefixes
     as QuizData;
-import 'package:myapp/Activities/cardview.dart';
-
-// Added 'as QuizData'
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class QuestionPage extends StatefulWidget {
   final List<QuizData.Question> questions;
@@ -97,8 +95,8 @@ class _QuestionPageState extends State<QuestionPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text('Submit Answer',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18)),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ),
               ),
             ],

@@ -1,13 +1,13 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/questionpage.dart'
     // ignore: library_prefixes
     as QuestionPage;
-import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/quizsherdata.dart'
     // ignore: library_prefixes
     as QuizData;
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class PicturePage extends StatefulWidget {
   const PicturePage({super.key});

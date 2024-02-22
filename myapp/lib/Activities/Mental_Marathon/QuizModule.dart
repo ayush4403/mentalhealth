@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Mental_Marathon/QuizData.dart';
-import 'package:myapp/Activities/Mental_Marathon/ReviewPage.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/QuizData.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/ReviewPage.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class QuizModule extends StatefulWidget {
   const QuizModule({super.key});
@@ -191,7 +191,11 @@ class _QuizModuleState extends State<QuizModule> {
                             color: Colors.white,
                           ),
                           child: RadioListTile<String>(
-                            title: Text(option, style: const TextStyle(fontWeight: FontWeight.bold),),
+                            title: Text(
+                              option,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
                             value: option,
                             groupValue: selectedAnswer,
                             onChanged: (String? value) {

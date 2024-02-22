@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Games/mindfulnessgame.dart';
+import 'package:MindFulMe/Games/mindfulnessgame.dart';
 
 class GamesPage extends StatelessWidget {
   const GamesPage({super.key});

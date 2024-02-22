@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/Activities/Gratitude/VideoApp.dart';
-import 'package:myapp/Activities/Mental_Marathon/GetStarted.dart';
-import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
-import 'package:myapp/Activities/Music/stressfirstscreen.dart';
-import 'package:myapp/Activities/Night_Music/nightmusic.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/LetsPlay.dart';
-import 'package:myapp/Activities/Study_Music/studymusic.dart';
-import 'package:myapp/Activities/kindness/KindnessPage.dart';
-import 'package:myapp/Activities/quotes/daily_quotes.dart';
+import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/GetStarted.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
+import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
+import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
+import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
+import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
+import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
 
 class CardView extends StatelessWidget {
   const CardView({super.key});
@@ -85,7 +85,7 @@ class ActivityList extends StatelessWidget {
     "The Daily Thoughts module offers users a dedicated space to record their thoughts, feelings, and experiences on a daily basis. Through this feature, users can note down their reflections, emotions, and significant events, providing a valuable outlet for self-expression and introspection. The interface may include customizable prompts or questions to guide users in their journaling practice, encouraging deeper self-awareness and insight.",
     "The Study Music module provides users with a curated selection of instrumental music tracks specifically designed to enhance concentration, focus, and productivity during study or work sessions. These tracks are carefully chosen to feature calming melodies, rhythmic patterns, and ambient sounds that can help drown out distractions and create an optimal environment for cognitive engagement. Users can easily play, pause, skip tracks, and adjust volume levels within the app interface to customize their study music experience according to their preferences.",
     "The Kindness Challenge module encourages users to engage in acts of kindness towards themselves and others as a way to promote positivity, compassion, and well-being. Users are presented with a series of daily or weekly challenges designed to inspire acts of kindness, generosity, and empathy. Users can track their progress, share their experiences with the community, and receive encouragement and support from fellow participants within the app.",
-    'Stay organized and informed about mental health-related events and activities.',
+    "Stay organized and informed about mental health-related events and activities.",
     "The Music module offers users a selection of three types of music specifically curated to promote relaxation, focus, and stress reduction.",
   ];
 
