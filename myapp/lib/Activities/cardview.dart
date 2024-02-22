@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/Activities/Gratitude/VideoApp.dart';
-import 'package:myapp/Activities/Mental_Marathon/QuizModule.dart';
+import 'package:myapp/Activities/Mental_Marathon/GetStarted.dart';
 import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:myapp/Activities/Music/stressfirstscreen.dart';
 import 'package:myapp/Activities/Night_Music/nightmusic.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/Picturepage.dart';
+import 'package:myapp/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:myapp/Activities/Study_Music/studymusic.dart';
 import 'package:myapp/Activities/kindness/KindnessPage.dart';
 import 'package:myapp/Activities/quotes/daily_quotes.dart';
@@ -170,7 +170,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const QuizModule()),
+        MaterialPageRoute(builder: (context) => GetStartedPage()),
       );
     }
     if (activity == 'Gratitude') {
@@ -188,7 +188,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const PicturePage()),
+        MaterialPageRoute(builder: (context) => LetsPlay()),
       );
     }
   }

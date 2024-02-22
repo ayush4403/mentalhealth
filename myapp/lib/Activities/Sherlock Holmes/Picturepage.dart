@@ -25,8 +25,8 @@ class _PicturePageState extends State<PicturePage> {
   void initState() {
     super.initState();
 
-    // Initialize selectedQuizData with a default QuizData
-    selectedQuizData = QuizData.quizDataList.first;
+    // Initialize selectedQuizData based on the current day
+    selectedQuizData = selectQuizDataForDay();
 
     // Add a delay to navigate after 30 seconds
     Future.delayed(const Duration(seconds: 30), () {
@@ -39,6 +39,13 @@ class _PicturePageState extends State<PicturePage> {
         ),
       );
     });
+  }
+
+  // Define the selectQuizDataForDay method here
+  QuizData.QuizData selectQuizDataForDay() {
+    int currentDay = DateTime.now().day;
+    int index = currentDay % QuizData.quizDataList.length;
+    return QuizData.quizDataList[index];
   }
 
   // Define the selectQuestionsForDay method here

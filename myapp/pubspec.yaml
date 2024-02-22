@@ -305,6 +305,9 @@ flutter:
     - assets/Images/night_music/nm_6.jpg
     - assets/Images/night_music/nm_7.jpg
 
+    #Mental Marathon
+    - assets/Images/Mental Mararthon/Baloon.png
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
