@@ -111,10 +111,22 @@ class ActivityList extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: cardColors[colorIndex],
-          title: const Text('Description'),
-          content: Text(cardDescription[index]),
+          title: Text(
+            'Description',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          content: Text(
+            cardDescription[index],
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontWeight: FontWeight.normal,
+                ),
+          ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -170,7 +182,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => GetStartedPage()),
+        MaterialPageRoute(builder: (context) => const GetStartedPage()),
       );
     }
     if (activity == 'Gratitude') {
@@ -188,7 +200,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LetsPlay()),
+        MaterialPageRoute(builder: (context) => const LetsPlay()),
       );
     }
   }
