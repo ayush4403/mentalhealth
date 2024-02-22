@@ -223,7 +223,7 @@ class _QuizScreenState extends State<QuizScreen> {
             .doc(user.uid)
             .update({'flag': true});
         await FirebaseFirestore.instance.collection('Users').doc(user.uid).set(
-            {'answer1': sliderValue, 'answers': userSelectedOptions},
+            {'Well being': sliderValue, 'answers': userSelectedOptions},
             SetOptions(merge: true));
       }
       await setHasCompletedQuiz();
