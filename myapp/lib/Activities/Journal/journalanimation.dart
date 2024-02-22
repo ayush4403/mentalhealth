@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
 
 class BookAnimationScreen extends StatefulWidget {
+  const BookAnimationScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _BookAnimationScreenState createState() => _BookAnimationScreenState();
 }
 
@@ -16,7 +19,7 @@ class _BookAnimationScreenState extends State<BookAnimationScreen>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 5), // Adjust duration as needed
+      duration: const Duration(seconds: 5), // Adjust duration as needed
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
@@ -25,7 +28,7 @@ class _BookAnimationScreenState extends State<BookAnimationScreen>
       // Navigate to another screen when animation is completed
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => NextScreen()),
+        MaterialPageRoute(builder: (context) => const NextScreen()),
       );
     });
   }
@@ -40,7 +43,7 @@ class _BookAnimationScreenState extends State<BookAnimationScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Animation'),
+        title: const Text('Book Animation'),
       ),
       body: Center(
         child: AnimatedBuilder(
@@ -59,8 +62,10 @@ class _BookAnimationScreenState extends State<BookAnimationScreen>
 }
 
 class NextScreen extends StatelessWidget {
+  const NextScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: JournalScreen());
+    return const Scaffold(body: JournalScreen());
   }
 }

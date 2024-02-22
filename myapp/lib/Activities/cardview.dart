@@ -63,7 +63,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/8_kindness.json',
     'assets/GIF/Card_view/9_upcoming_events.json',
     'assets/GIF/Card_view/10_music.json',
-    'assets/GIF/Card_view/10_music.json',
+    'assets/GIF/Card_view/11_affirmation.json',
   ];
 
   final List<String> description = [
@@ -104,7 +104,7 @@ class ActivityList extends StatelessWidget {
     Colors.indigo[100]!,
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
-    Color.fromARGB(255, 205, 244, 10)!,
+    Colors.lightBlue[100]!,
   ];
 
   ActivityList({super.key});
@@ -211,7 +211,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Journal') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BookAnimationScreen()),
+        MaterialPageRoute(builder: (context) => const BookAnimationScreen()),
       );
     }
   }

@@ -5,7 +5,10 @@ import 'package:intl/intl.dart'; // Import this for date formatting
 import 'package:MindFulMe/Activities/Journal/journalview.dart';
 
 class JournalScreen extends StatefulWidget {
+  const JournalScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _JournalScreenState createState() => _JournalScreenState();
 }
 
@@ -35,13 +38,13 @@ class _JournalScreenState extends State<JournalScreen> {
 
         // Iterate over the documents and extract the note text and timestamp
         List<Map<String, dynamic>> fetchedNotes = [];
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           fetchedNotes.add({
             'title': doc['title'],
             'timestamp': doc[
                 'timestamp'], // assuming there's a 'timestamp' field in your document
           });
-        });
+        }
 
         // Update the UI with the fetched notes
         setState(() {
@@ -49,6 +52,7 @@ class _JournalScreenState extends State<JournalScreen> {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error fetching notes: $e');
     }
   }
@@ -66,7 +70,7 @@ class _JournalScreenState extends State<JournalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Journal'),
+        title: const Text('Journal'),
       ),
       body: GridView.builder(
         itemCount: notes.length,
@@ -105,7 +109,7 @@ class _JournalScreenState extends State<JournalScreen> {
         onPressed: () {
           _showNoteDialog();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -123,12 +127,12 @@ class _JournalScreenState extends State<JournalScreen> {
       builder: (context) {
         String newNote = '';
         return AlertDialog(
-          title: Text('Add Title for your Note'),
+          title: const Text('Add Title for your Note'),
           content: TextField(
             onChanged: (value) {
               newNote = value;
             },
-            decoration: InputDecoration(hintText: 'Enter your title'),
+            decoration: const InputDecoration(hintText: 'Enter your title'),
           ),
           actions: [
             TextButton(
@@ -153,17 +157,18 @@ class _JournalScreenState extends State<JournalScreen> {
                       notes.add(
                           {'title': newNote, 'timestamp': Timestamp.now()});
                     });
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   }
                 }
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ],
         );
