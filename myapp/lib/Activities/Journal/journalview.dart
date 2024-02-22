@@ -6,9 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 class NoteDetailScreen extends StatefulWidget {
   final String noteText;
 
-  NoteDetailScreen({required this.noteText});
+  const NoteDetailScreen({super.key, required this.noteText});
 
   @override
+  // ignore: library_private_types_in_public_api
   _NoteDetailScreenState createState() => _NoteDetailScreenState();
 }
 
@@ -46,37 +47,39 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         }
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error loading text from Firestore: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Note Details'),
+          title: const Text('Note Details'),
           actions: [
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Delete Note?'),
-                    content: Text('Do you want to delete the note?'),
+                    title: const Text('Delete Note?'),
+                    content: const Text('Do you want to delete the note?'),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
-                        child: Text('No'),
+                        child: const Text('No'),
                       ),
                       TextButton(
                         onPressed: () async {
                           Navigator.of(context).pop(false);
                           await _deleteNote();
                         },
-                        child: Text('Yes'),
+                        child: const Text('Yes'),
                       ),
                     ],
                   ),
@@ -84,7 +87,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.save),
+              icon: const Icon(Icons.save),
               onPressed: () async {
                 await _saveNote();
               },
@@ -99,11 +102,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           child: ListView(
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 alignment: Alignment.topLeft,
                 child: Text(
                   widget.noteText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -112,16 +115,16 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               Container(
                 color: _backgroundColor,
                 height: MediaQuery.of(context).size.height * 0.9,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Stack(
                   children: [
                     TextField(
                       controller: _textEditingController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration.collapsed(
+                      decoration: const InputDecoration.collapsed(
                           hintText: 'Enter your note'),
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ],
                 ),
@@ -133,7 +136,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           onPressed: () {
             _showColorPicker();
           },
-          child: Icon(Icons.color_lens),
+          child: const Icon(Icons.color_lens),
         ),
       ),
     );
@@ -146,19 +149,20 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     return await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Save Changes?'),
-            content: Text('Do you want to save the changes to this note?'),
+            title: const Text('Save Changes?'),
+            content:
+                const Text('Do you want to save the changes to this note?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text('No'),
+                child: const Text('No'),
               ),
               TextButton(
                 onPressed: () async {
                   Navigator.of(context).pop(true);
                   await _saveNote();
                 },
-                child: Text('Yes'),
+                child: const Text('Yes'),
               ),
             ],
           ),
@@ -181,10 +185,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             .doc(widget.noteText)
             .set({'text': newText}, SetOptions(merge: true));
       } else {
+        // ignore: avoid_print
         print(newText);
       }
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Note saved successfully!'),
           duration: Duration(seconds: 2),
         ),
@@ -193,9 +199,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         _istextsaved = true;
       });
     } catch (e) {
+      // ignore: avoid_print
       print('Error saving note: $e');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Failed to save note. Please try again.'),
           duration: Duration(seconds: 2),
         ),
@@ -208,7 +216,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Select Background Color'),
+          title: const Text('Select Background Color'),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: _backgroundColor,
@@ -224,7 +232,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -244,18 +252,22 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             .collection('Title')
             .doc(widget.noteText)
             .delete();
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Note deleted successfully!'),
             duration: Duration(seconds: 2),
           ),
         );
+        // ignore: use_build_context_synchronously
         Navigator.pop(context, true); // Signal that note is deleted
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error deleting note: $e');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Failed to delete note. Please try again.'),
           duration: Duration(seconds: 2),
         ),
