@@ -1,3 +1,4 @@
+import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journalanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -10,6 +11,7 @@ import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
 import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
+
 
 class CardView extends StatelessWidget {
   const CardView({super.key});
@@ -47,7 +49,7 @@ class ActivityList extends StatelessWidget {
     'Daily Thoughts',
     'Study Music',
     'Kindness Challenge',
-    'Upcoming Events',
+    'Affirmation',
     'Music',
     'Journal',
   ];
@@ -104,7 +106,7 @@ class ActivityList extends StatelessWidget {
     Colors.indigo[100]!,
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
-    Color.fromARGB(255, 205, 244, 10)!,
+    const Color.fromARGB(255, 205, 244, 10),
   ];
 
   ActivityList({super.key});
@@ -212,6 +214,12 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => BookAnimationScreen()),
+      );
+    }
+     if (activity == 'Affirmation') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const AffirmationApp()),
       );
     }
   }
