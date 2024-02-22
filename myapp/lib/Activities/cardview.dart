@@ -244,7 +244,7 @@ class ActivityList extends StatelessWidget {
                           const Spacer(), // Added
                           IconButton(
                             color: Colors.black38,
-                            iconSize: 20,
+                            iconSize: 17,
                             icon: const Icon(Icons.info_outline),
                             onPressed: () => handleInfoButtonTap(
                               context,
