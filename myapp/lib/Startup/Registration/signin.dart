@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:myapp/Startup/Question/quiz.dart';
-import 'package:myapp/Startup/home.dart';
+import 'package:MindFulMe/Startup/Question/quiz.dart';
+import 'package:MindFulMe/Startup/home.dart';
 import 'resetpassword.dart';
 import 'signup.dart';
 import 'package:flutter/material.dart';

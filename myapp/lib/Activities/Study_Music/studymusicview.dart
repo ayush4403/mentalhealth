@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Study_Music/studymusic.dart';
-import 'package:myapp/Activities/audiotemplate.dart';
+import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
+import 'package:MindFulMe/Activities/audiotemplate.dart';
 
 class MusicData {
   final String title;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Journal/journal.dart';
+import 'package:MindFulMe/Activities/Journal/journal.dart';
 
 class BookAnimationScreen extends StatefulWidget {
   @override

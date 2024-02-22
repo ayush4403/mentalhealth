@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Music/stressSecond.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/Music/stressSecond.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 void main() {
   runApp(const MusicList());

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
-import 'package:myapp/Activities/audiotemplate.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/BrainEntrainment.dart';
+import 'package:MindFulMe/Activities/audiotemplate.dart';
 
 class MusicData {
   final String title;

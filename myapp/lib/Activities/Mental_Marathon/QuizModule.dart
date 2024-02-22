@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Mental_Marathon/QuizData.dart';
-import 'package:myapp/Activities/Mental_Marathon/ReviewPage.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/QuizData.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/ReviewPage.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class QuizModule extends StatefulWidget {
   const QuizModule({super.key});
@@ -138,7 +138,7 @@ class _QuizModuleState extends State<QuizModule> {
           child: Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.95,
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: MediaQuery.of(context).size.height * 0.70,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.65),
                 borderRadius: const BorderRadius.only(
@@ -160,6 +160,7 @@ class _QuizModuleState extends State<QuizModule> {
                         fontSize: 24,
                       ),
                     ),
+                    const SizedBox(height: 30),
                     Text(
                       quizQuestions[currentQuestionIndex]['text'],
                       style: const TextStyle(
@@ -167,7 +168,7 @@ class _QuizModuleState extends State<QuizModule> {
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     Column(
                       children: (quizQuestions[currentQuestionIndex]['options']
                               as List<String>)
@@ -180,13 +181,21 @@ class _QuizModuleState extends State<QuizModule> {
                                     ['correctAnswer'];
 
                         return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.only(bottom: 20),
+                          alignment: Alignment.center,
+                          width: 400,
+                          height: 80,
+                          padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: RadioListTile<String>(
-                            title: Text(option),
+                            title: Text(
+                              option,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
                             value: option,
                             groupValue: selectedAnswer,
                             onChanged: (String? value) {

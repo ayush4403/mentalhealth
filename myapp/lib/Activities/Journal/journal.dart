@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Import this for date formatting
-import 'package:myapp/Activities/Journal/journalview.dart';
+import 'package:MindFulMe/Activities/Journal/journalview.dart';
 
 class JournalScreen extends StatefulWidget {
   @override

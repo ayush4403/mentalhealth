@@ -1,13 +1,13 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/questionpage.dart'
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/questionpage.dart'
     // ignore: library_prefixes
     as QuestionPage;
-import 'package:myapp/Activities/Sherlock%20Holmes/quizsherdata.dart'
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/quizsherdata.dart'
     // ignore: library_prefixes
     as QuizData;
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class PicturePage extends StatefulWidget {
   const PicturePage({super.key});
@@ -25,8 +25,8 @@ class _PicturePageState extends State<PicturePage> {
   void initState() {
     super.initState();
 
-    // Initialize selectedQuizData with a default QuizData
-    selectedQuizData = QuizData.quizDataList.first;
+    // Initialize selectedQuizData based on the current day
+    selectedQuizData = selectQuizDataForDay();
 
     // Add a delay to navigate after 30 seconds
     Future.delayed(const Duration(seconds: 30), () {
@@ -39,6 +39,13 @@ class _PicturePageState extends State<PicturePage> {
         ),
       );
     });
+  }
+
+  // Define the selectQuizDataForDay method here
+  QuizData.QuizData selectQuizDataForDay() {
+    int currentDay = DateTime.now().day;
+    int index = currentDay % QuizData.quizDataList.length;
+    return QuizData.quizDataList[index];
   }
 
   // Define the selectQuestionsForDay method here

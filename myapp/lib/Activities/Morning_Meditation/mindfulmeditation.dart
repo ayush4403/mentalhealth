@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Morning_Meditation/BrainEntrainment.dart';
-import 'package:myapp/Activities/Morning_Meditation/GuidedMed.dart';
-import 'package:myapp/Activities/Morning_Meditation/Visualize.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/BrainEntrainment.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/GuidedMed.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/Visualize.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class MorningMeditation extends StatefulWidget {
   const MorningMeditation({super.key});

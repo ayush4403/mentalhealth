@@ -1,4 +1,4 @@
-name: myapp
+name: MindFulMe
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -56,8 +56,9 @@ dependencies:
   circular_countdown_timer: ^0.2.3
   flutter_bloc: ^8.1.4
   equatable: ^2.0.5
-  flutter_colorpicker: ^1.0.3
+  flutter_rating_bar: ^4.0.1
   intl: ^0.19.0
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -306,6 +307,9 @@ flutter:
     - assets/Images/night_music/nm_5.jpg
     - assets/Images/night_music/nm_6.jpg
     - assets/Images/night_music/nm_7.jpg
+
+    #Mental Marathon
+    - assets/Images/Mental Mararthon/Baloon.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

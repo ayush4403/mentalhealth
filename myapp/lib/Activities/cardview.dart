@@ -1,17 +1,15 @@
+import 'package:MindFulMe/Activities/Journal/journalanimation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/Activities/Gratitude/VideoApp.dart';
-import 'package:myapp/Activities/Journal/journal.dart';
-import 'package:myapp/Activities/Journal/journalanimation.dart';
-import 'package:myapp/Activities/Journal/journalnew.dart';
-import 'package:myapp/Activities/Mental_Marathon/QuizModule.dart';
-import 'package:myapp/Activities/Morning_Meditation/mindfulmeditation.dart';
-import 'package:myapp/Activities/Music/stressfirstscreen.dart';
-import 'package:myapp/Activities/Night_Music/nightmusic.dart';
-import 'package:myapp/Activities/Sherlock%20Holmes/Picturepage.dart';
-import 'package:myapp/Activities/Study_Music/studymusic.dart';
-import 'package:myapp/Activities/kindness/KindnessPage.dart';
-import 'package:myapp/Activities/quotes/daily_quotes.dart';
+import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
+import 'package:MindFulMe/Activities/Mental_Marathon/GetStarted.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
+import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
+import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
+import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
+import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
+import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
+import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
 
 class CardView extends StatelessWidget {
   const CardView({super.key});
@@ -82,6 +80,19 @@ class ActivityList extends StatelessWidget {
     'Relieve tension and stress with calming melodies and rhythms.',
   ];
 
+  final List<String> cardDescription = [
+    "The Morning Meditation module aims to support users in cultivating a positive mindset and setting a harmonious tone for their day ahead. By incorporating guided meditation, visualization, and brainwave beats, users can engage in a holistic meditation experience that contributes to their overall mental well-being.",
+    "The Night Music module is thoughtfully curated to provide users with a serene and calming auditory experience, specifically designed to aid in relaxation and promote a peaceful transition into sleep.By offering a harmonious blend of calming tunes, the Night Music module seeks to support users in achieving a restful night's sleep and waking up feeling refreshed and revitalized. Users can explore the diverse soundscape provided by Night Music to find the perfect accompaniment for their nightly rest.",
+    "The Gratitude module is a daily companion designed to foster a positive and thankful mindset. Centered around the practice of gratitude, this module provides users with a daily dose of inspiration through carefully curated gratitude quotes. Additionally, users are encouraged to actively participate in the practice by expressing their own feelings of gratitude.",
+    "The Mental Marathon module is an exciting and educational journey that empowers users to challenge themselves, learn from diverse subjects, and celebrate their cognitive achievements. It serves as a valuable tool for continuous mental exercise and personal growth.",
+    "The Sherlock Holmes module introduces a captivating and interactive image-based question experience, where users can channel their inner detective. Inspired by the renowned detective Sherlock Holmes, this module challenges users to observe, analyze, and deduce based on a given image.",
+    "The Daily Thoughts module offers users a dedicated space to record their thoughts, feelings, and experiences on a daily basis. Through this feature, users can note down their reflections, emotions, and significant events, providing a valuable outlet for self-expression and introspection. The interface may include customizable prompts or questions to guide users in their journaling practice, encouraging deeper self-awareness and insight.",
+    "The Study Music module provides users with a curated selection of instrumental music tracks specifically designed to enhance concentration, focus, and productivity during study or work sessions. These tracks are carefully chosen to feature calming melodies, rhythmic patterns, and ambient sounds that can help drown out distractions and create an optimal environment for cognitive engagement. Users can easily play, pause, skip tracks, and adjust volume levels within the app interface to customize their study music experience according to their preferences.",
+    "The Kindness Challenge module encourages users to engage in acts of kindness towards themselves and others as a way to promote positivity, compassion, and well-being. Users are presented with a series of daily or weekly challenges designed to inspire acts of kindness, generosity, and empathy. Users can track their progress, share their experiences with the community, and receive encouragement and support from fellow participants within the app.",
+    "Stay organized and informed about mental health-related events and activities.",
+    "The Music module offers users a selection of three types of music specifically curated to promote relaxation, focus, and stress reduction.",
+  ];
+
   final List<Color> cardColors = [
     Colors.blue[100]!,
     Colors.red[100]!,
@@ -97,6 +108,40 @@ class ActivityList extends StatelessWidget {
   ];
 
   ActivityList({super.key});
+
+  void handleInfoButtonTap(BuildContext context, String cardDescripation,
+      int colorIndex, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: cardColors[colorIndex],
+          title: Text(
+            'Description',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          content: Text(
+            cardDescription[index],
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontWeight: FontWeight.normal,
+                ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void handleActivityTap(String activity) {
     // Handle the onPressed action for each activity here
@@ -142,7 +187,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const QuizModule()),
+        MaterialPageRoute(builder: (context) => const GetStartedPage()),
       );
     }
     if (activity == 'Gratitude') {
@@ -160,7 +205,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const PicturePage()),
+        MaterialPageRoute(builder: (context) => const LetsPlay()),
       );
     }
     if (activity == 'Journal') {
@@ -186,7 +231,8 @@ class ActivityList extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Added
               children: [
                 Lottie.asset(
                   activityImages[index],
@@ -201,12 +247,36 @@ class ActivityList extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        activities[index],
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          const Spacer(),
+                          Text(
+                            activities[index],
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const Spacer(), // Added
+                          IconButton(
+                            color: Colors.black38,
+                            iconSize: 17,
+                            icon: const Icon(Icons.info_outline),
+                            onPressed: () => handleInfoButtonTap(
+                              context,
+                              cardDescription[index],
+                              index % cardColors.length,
+                              index,
                             ),
+                          ),
+                        ],
                       ),
                       Text(
                         description[index],

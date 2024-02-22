@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-//import 'package:myapp/Activities/Night_Music/StudyMusicview.dart';
-import 'package:myapp/Activities/Study_Music/studymusicview.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/Study_Music/studymusicview.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 
 void main() {
   runApp(const StudyMusic());

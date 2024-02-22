@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:myapp/Profile/PersonelInfo.dart';
-import 'package:myapp/Startup/Registration/signin.dart';
+import 'package:MindFulMe/Profile/PersonelInfo.dart';
+import 'package:MindFulMe/Startup/Registration/signin.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

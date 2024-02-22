@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/cardview.dart';
-import 'package:myapp/Games/games.dart';
-import 'package:myapp/Home/homeui.dart';
-import 'package:myapp/Profile/profile.dart';
-import 'package:myapp/Report/report.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/Games/games.dart';
+import 'package:MindFulMe/Home/homeui.dart';
+import 'package:MindFulMe/Profile/profile.dart';
+import 'package:MindFulMe/Report/report.dart';
 //import 'package:myapp/test/single_player.dart';
 
 class HomePage extends StatefulWidget {
@@ -94,11 +94,11 @@ class _HomePageState extends State<HomePage> {
 
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_sharp),
+              icon: Icon(Icons.home_rounded),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_activity_sharp),
+              icon: Icon(Icons.local_activity_rounded),
               label: 'Activities',
             ),
             BottomNavigationBarItem(
@@ -106,11 +106,11 @@ class _HomePageState extends State<HomePage> {
               label: 'Report',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.videogame_asset),
+              icon: Icon(Icons.videogame_asset_rounded),
               label: 'Games',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_4),
+              icon: Icon(Icons.person_4_rounded),
               label: 'Profile',
             ),
           ],

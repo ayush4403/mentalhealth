@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/quotes/quote_fragments/images_view.dart';
+import 'package:MindFulMe/Activities/quotes/quote_fragments/images_view.dart';
 
 class Quotetopic extends StatefulWidget {
   const Quotetopic({super.key});

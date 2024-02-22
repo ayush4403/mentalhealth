@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:image_picker/image_picker.dart';
-import 'package:myapp/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
 import 'dart:io';
 import 'kindness_challenges.dart';
 

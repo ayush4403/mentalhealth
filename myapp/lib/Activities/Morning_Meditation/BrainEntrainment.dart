@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:myapp/Activities/Morning_Meditation/showBrain.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/showBrain.dart';
 
 class BrainList extends StatefulWidget {
   const BrainList({super.key});
