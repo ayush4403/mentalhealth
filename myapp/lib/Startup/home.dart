@@ -94,11 +94,11 @@ class _HomePageState extends State<HomePage> {
 
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_sharp),
+              icon: Icon(Icons.home_rounded),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_activity_sharp),
+              icon: Icon(Icons.local_activity_rounded),
               label: 'Activities',
             ),
             BottomNavigationBarItem(
@@ -106,11 +106,11 @@ class _HomePageState extends State<HomePage> {
               label: 'Report',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.videogame_asset),
+              icon: Icon(Icons.videogame_asset_rounded),
               label: 'Games',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_4),
+              icon: Icon(Icons.person_4_rounded),
               label: 'Profile',
             ),
           ],
