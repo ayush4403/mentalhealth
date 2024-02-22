@@ -61,7 +61,7 @@ class _QuestionPageState extends State<QuestionPage> {
             children: [
               const Text(
                 'Choose the correct option:',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -76,6 +76,7 @@ class _QuestionPageState extends State<QuestionPage> {
                   setState(() {
                     showCorrectAnswer = true;
                   });
+
                   Future.delayed(const Duration(seconds: 3), () {
                     if (currentQuestionIndex < widget.questions.length - 1) {
                       setState(() {
@@ -91,7 +92,14 @@ class _QuestionPageState extends State<QuestionPage> {
                     }
                   });
                 },
-                child: const Text('Submit Answer'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text('Submit Answer',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18)),
+                ),
               ),
             ],
           ),
@@ -129,8 +137,9 @@ class _QuestionPageState extends State<QuestionPage> {
         opacity: isSelected ? 0.5 : 1.0,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          margin: const EdgeInsets.symmetric(vertical: 6.0),
           padding: const EdgeInsets.all(8.0),
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(
               color: isCorrect
@@ -143,30 +152,25 @@ class _QuestionPageState extends State<QuestionPage> {
                 ? Colors.red.withOpacity(0.8)
                 : (isUserSelectedCorrect
                     ? Colors.green.withOpacity(0.8)
-                    : null),
+                    : Colors.white),
           ),
-          child: Theme(
-            data: ThemeData(
-              unselectedWidgetColor: Colors.transparent,
-            ),
-            child: RadioListTile<int>(
-              title: Text(
-                question.options[optionIndex],
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+          child: RadioListTile<int>(
+            title: Text(
+              question.options[optionIndex],
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
               ),
-              value: optionIndex,
-              groupValue: selectedOption,
-              onChanged: isSelected
-                  ? null
-                  : (value) {
-                      setState(() {
-                        selectedOption = value!;
-                      });
-                    },
-              activeColor: Colors.transparent,
             ),
+            value: optionIndex,
+            groupValue: selectedOption,
+            onChanged: isSelected
+                ? null
+                : (value) {
+                    setState(() {
+                      selectedOption = value!;
+                    });
+                  },
+            activeColor: Colors.white,
           ),
         ),
       ),
