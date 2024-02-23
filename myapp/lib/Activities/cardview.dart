@@ -1,5 +1,5 @@
-import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
-import 'package:MindFulMe/Activities/Journal/journalanimation.dart';
+import 'package:MindFulMe/Activities/Journal/journal.dart';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -212,13 +212,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Journal') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const BookAnimationScreen()),
-      );
-    }
-    if (activity == 'Affirmation') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AffirmationApp()),
+        MaterialPageRoute(builder: (context) => const JournalScreen()),
       );
     }
   }

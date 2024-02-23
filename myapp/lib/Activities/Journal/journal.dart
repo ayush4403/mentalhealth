@@ -39,17 +39,20 @@ class _JournalScreenState extends State<JournalScreen> {
         // Iterate over the documents and extract the note text and timestamp
         List<Map<String, dynamic>> fetchedNotes = [];
         for (var doc in querySnapshot.docs) {
-          fetchedNotes.add({
-            'title': doc['title'],
-            'timestamp': doc[
-                'timestamp'], // assuming there's a 'timestamp' field in your document
-          });
+          fetchedNotes.add(
+            {
+              'title': doc['title'],
+              'timestamp': doc[
+                  'timestamp'], // assuming there's a 'timestamp' field in your document
+            },
+          );
         }
-
         // Update the UI with the fetched notes
-        setState(() {
-          notes = fetchedNotes;
-        });
+        setState(
+          () {
+            notes = fetchedNotes;
+          },
+        );
       }
     } catch (e) {
       // ignore: avoid_print
@@ -64,6 +67,52 @@ class _JournalScreenState extends State<JournalScreen> {
         builder: (context) => NoteDetailScreen(noteText: note),
       ),
     );
+  }
+
+  void _showOptions(BuildContext context, String noteText) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _pinNoteAndCloseBottomSheet(context, noteText);
+                },
+                child: const Text('Pin'),
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  // Add your action for deleting the note
+                  _deleteNoteAndCloseBottomSheet(context, noteText);
+                },
+                child: const Text('Delete'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _pinNoteAndCloseBottomSheet(BuildContext context, String noteText) {
+    Navigator.pop(context);
+  }
+
+  void _deleteNoteAndCloseBottomSheet(BuildContext context, String noteText) {
+    Navigator.pop(context);
+  }
+
+  // ignore: unused_element
+  void _deleteNoteAndCloseDialog(BuildContext context, String noteText) {
+    // Add your code here to delete the note
+    // Once deleted, you can update the UI and close the dialog if needed
+    Navigator.pop(context); // Close the dialog
   }
 
   @override
@@ -85,6 +134,9 @@ class _JournalScreenState extends State<JournalScreen> {
           return GestureDetector(
             onTap: () {
               _navigateToNoteDetailScreen(context, noteText);
+            },
+            onLongPress: () {
+              _showOptions(context, noteText);
             },
             child: Card(
               elevation: 4,
@@ -148,17 +200,23 @@ class _JournalScreenState extends State<JournalScreen> {
                         .doc('Notes')
                         .collection('Title')
                         .doc(newNote)
-                        .set({
-                      'title': newNote,
-                      'timestamp': Timestamp.now(), // Add current timestamp
-                    });
+                        .set(
+                      {
+                        'title': newNote,
+                        'timestamp': Timestamp.now(), // Add current timestamp
+                      },
+                    );
                     // Update the UI to reflect the added note
-                    setState(() {
-                      notes.add(
-                          {'title': newNote, 'timestamp': Timestamp.now()});
-                    });
+                    setState(
+                      () {
+                        notes.add(
+                            {'title': newNote, 'timestamp': Timestamp.now()});
+                      },
+                    );
                     // ignore: use_build_context_synchronously
                     Navigator.pop(context);
+                    // ignore: use_build_context_synchronously
+                    _navigateToNoteDetailScreen(context, newNote);
                   }
                 }
               },
