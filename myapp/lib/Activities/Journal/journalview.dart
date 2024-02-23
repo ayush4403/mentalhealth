@@ -1,3 +1,4 @@
+import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -143,7 +144,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    if (_istextsaved) {
+    if (_istextsaved || _textEditingController.text.isEmpty) {
       return true;
     }
     return await showDialog(

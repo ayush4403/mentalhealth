@@ -1,51 +1,83 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Import this for date formatting
-import 'package:MindFulMe/Activities/Journal/journalview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'journalview.dart';
 
 class JournalScreen extends StatefulWidget {
   @override
   _JournalScreenState createState() => _JournalScreenState();
 }
 
-class _JournalScreenState extends State<JournalScreen> {
+class _JournalScreenState extends State<JournalScreen>
+    with SingleTickerProviderStateMixin {
   List<Map<String, dynamic>> notes = [];
+  List<Map<String, dynamic>> filteredNotes = []; // Added for filtered notes
+  bool _showSearchText = true;
+  bool isGridView = true;
+  String name = 'List view';
+  String name1 = 'Grid view';
+
+  bool sortLatest = true;
+  String timecreated = 'Sort by time created(oldest)';
+  String timecreated1 = 'Sort by time created(latest)';
+
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-
     _fetchNotes();
+    _animationController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+    _animationController.forward();
+    _animationController.addListener(() {
+      setState(() {});
+    });
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _showSearchText = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   void _fetchNotes() async {
     try {
-      // Get the current user
       final User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        // Fetch the notes collection for the current user
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('Users')
             .doc(user.uid)
             .collection('Journal')
             .doc('Notes')
             .collection('Title')
+            .orderBy('timestamp',
+                descending: sortLatest) // sort based on the timestamp
             .get();
 
-        // Iterate over the documents and extract the note text and timestamp
         List<Map<String, dynamic>> fetchedNotes = [];
         querySnapshot.docs.forEach((doc) {
           fetchedNotes.add({
             'title': doc['title'],
-            'timestamp': doc[
-                'timestamp'], // assuming there's a 'timestamp' field in your document
+            'timestamp': doc['timestamp'],
           });
         });
 
-        // Update the UI with the fetched notes
         setState(() {
           notes = fetchedNotes;
+          filteredNotes =
+              fetchedNotes; // Initialize filtered notes with all notes
         });
       }
     } catch (e) {
@@ -62,76 +94,102 @@ class _JournalScreenState extends State<JournalScreen> {
     );
   }
 
-  void _showOptions(BuildContext context, String noteText) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  _pinNoteAndCloseBottomSheet(context, noteText);
-                },
-                child: Text('Pin'),
-              ),
-              SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  // Add your action for deleting the note
-                  _deleteNoteAndCloseBottomSheet(context, noteText);
-                },
-                child: Text('Delete'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _pinNoteAndCloseBottomSheet(BuildContext context, String noteText) {
-    Navigator.pop(context);
-  }
-
-  void _deleteNoteAndCloseBottomSheet(BuildContext context, String noteText) {
-    Navigator.pop(context);
-  }
-
-  void _deleteNoteAndCloseDialog(BuildContext context, String noteText) {
-    // Add your code here to delete the note
-    // Once deleted, you can update the UI and close the dialog if needed
-    Navigator.pop(context); // Close the dialog
+  void _toggleSortOrder() {
+    setState(() {
+      sortLatest = !sortLatest;
+    });
+    _fetchNotes(); // fetch notes again based on the new sorting option
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Journal'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: AnimatedSwitcher(
+          duration: Duration(milliseconds: 500),
+          child: _showSearchText
+              ? Text('Journal')
+              : AnimatedOpacity(
+                  opacity: _showSearchText ? 0.0 : 1.0,
+                  duration: Duration(milliseconds: 500),
+                  child: Text(
+                    'Search Your Notes',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+        ),
+        actions: [
+          if (!_showSearchText) // Only show search icon if search is enabled
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: NotesSearch(notes));
+              },
+            ),
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text(name),
+                onTap: () {
+                  setState(() {
+                    isGridView = !isGridView;
+                    name = name1;
+                  });
+                },
+              ),
+              PopupMenuItem(
+                child: Text(sortLatest ? timecreated : timecreated1),
+                onTap: () {
+                  _toggleSortOrder();
+                },
+              ),
+            ],
+          ),
+        ],
       ),
-      body: GridView.builder(
-        itemCount: notes.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      body: isGridView ? _buildGridView() : _buildListView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showNoteDialog();
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildGridView() {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: Offset(1.0, 0.0),
+        end: Offset(0.0, 0.0),
+      ).animate(_animation),
+      child: GridView.builder(
+        itemCount: filteredNotes.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
         ),
         itemBuilder: (context, index) {
-          String noteText = notes[index]['title'];
-          String timestamp = _formatTimestamp(notes[index]['timestamp']);
+          String noteText = filteredNotes[index]['title'];
+          String timestamp =
+              _formatTimestamp(filteredNotes[index]['timestamp']);
           return GestureDetector(
             onTap: () {
               _navigateToNoteDetailScreen(context, noteText);
             },
-            onLongPress: () {
-              _showOptions(context, noteText);
-            },
             child: Card(
               elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0 * _animation.value),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -149,19 +207,41 @@ class _JournalScreenState extends State<JournalScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showNoteDialog();
+    );
+  }
+
+  Widget _buildListView() {
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: Offset(1.0, 0.0),
+        end: Offset(0.0, 0.0),
+      ).animate(_animation),
+      child: ListView.builder(
+        itemCount: filteredNotes.length,
+        itemBuilder: (context, index) {
+          String noteText = filteredNotes[index]['title'];
+          String timestamp =
+              _formatTimestamp(filteredNotes[index]['timestamp']);
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0 * _animation.value),
+            ),
+            child: ListTile(
+              title: Text(noteText),
+              subtitle: Text(timestamp),
+              onTap: () {
+                _navigateToNoteDetailScreen(context, noteText);
+              },
+            ),
+          );
         },
-        child: Icon(Icons.add),
       ),
     );
   }
 
   String _formatTimestamp(Timestamp timestamp) {
-    //
     DateTime dateTime = timestamp.toDate();
-
     return DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime);
   }
 
@@ -184,7 +264,6 @@ class _JournalScreenState extends State<JournalScreen> {
                 if (newNote.isNotEmpty) {
                   final User? user = FirebaseAuth.instance.currentUser;
                   if (user != null) {
-                    // Add the new note to Firestore
                     await FirebaseFirestore.instance
                         .collection('Users')
                         .doc(user.uid)
@@ -194,15 +273,15 @@ class _JournalScreenState extends State<JournalScreen> {
                         .doc(newNote)
                         .set({
                       'title': newNote,
-                      'timestamp': Timestamp.now(), // Add current timestamp
+                      'timestamp': Timestamp.now(),
                     });
-                    // Update the UI to reflect the added note
                     setState(() {
                       notes.add(
                           {'title': newNote, 'timestamp': Timestamp.now()});
+                      filteredNotes.add(
+                          {'title': newNote, 'timestamp': Timestamp.now()});
                     });
                     Navigator.pop(context);
-                    _navigateToNoteDetailScreen(context, newNote);
                   }
                 }
               },
@@ -215,6 +294,83 @@ class _JournalScreenState extends State<JournalScreen> {
               child: Text('Cancel'),
             ),
           ],
+        );
+      },
+    );
+  }
+}
+
+// Add a class for the search functionality
+
+class NotesSearch extends SearchDelegate<String> {
+  final List<Map<String, dynamic>> notes;
+
+  NotesSearch(this.notes);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // Actions for AppBar (e.g., clear query button)
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // Leading icon on the left of the AppBar (e.g., back arrow)
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // Show results based on the search query
+    final List<Map<String, dynamic>> filteredNotes = notes
+        .where(
+            (note) => note['title'].toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return _buildSearchResults(filteredNotes);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Show suggestions while the user types in the search field
+    final List<Map<String, dynamic>> filteredNotes = notes
+        .where(
+            (note) => note['title'].toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return _buildSearchResults(filteredNotes);
+  }
+
+  Widget _buildSearchResults(List<Map<String, dynamic>> filteredNotes) {
+    return ListView.builder(
+      itemCount: filteredNotes.length,
+      itemBuilder: (context, index) {
+        final String noteText = filteredNotes[index]['title'];
+        final String timestamp = DateFormat('dd-MM-yyyy HH:mm:ss')
+            .format(filteredNotes[index]['timestamp'].toDate());
+
+        return ListTile(
+          title: Text(noteText),
+          subtitle: Text(timestamp),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        NoteDetailScreen(noteText: noteText)));
+          },
         );
       },
     );
