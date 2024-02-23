@@ -12,7 +12,6 @@ import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
 import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
 
-
 class CardView extends StatelessWidget {
   const CardView({super.key});
 
@@ -69,8 +68,8 @@ class ActivityList extends StatelessWidget {
   ];
 
   final List<String> description = [
-    'Start your day with calmness and focus through guided meditation.',
-    'Wind down and relax with soothing melodies before bedtime.',
+    'Start your day with calmness and focus through guided meditation.', //1
+    'Wind down and relax with soothing melodies before bedtime.', //2
     'Sharpen your cognitive skills and keep your mind active with engaging challenges.',
     'Dive into a variety of mental exercises to boost your mental stamina and agility.',
     'Exercise your problem-solving abilities with visually stimulating puzzles.',
@@ -106,7 +105,7 @@ class ActivityList extends StatelessWidget {
     Colors.indigo[100]!,
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
-    Colors.lightBlue[100]!,
+    Colors.lightBlueAccent[100]!,
   ];
 
   ActivityList({super.key});
@@ -216,7 +215,7 @@ class ActivityList extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const BookAnimationScreen()),
       );
     }
-     if (activity == 'Affirmation') {
+    if (activity == 'Affirmation') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const AffirmationApp()),
