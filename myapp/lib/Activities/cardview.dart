@@ -1,4 +1,5 @@
 import 'package:MindFulMe/Activities/Journal/journal.dart';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -47,7 +48,7 @@ class ActivityList extends StatelessWidget {
     'Daily Thoughts',
     'Study Music',
     'Kindness Challenge',
-    'Upcoming Events',
+    'Affirmation',
     'Music',
     'Journal',
   ];
@@ -63,7 +64,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/8_kindness.json',
     'assets/GIF/Card_view/9_upcoming_events.json',
     'assets/GIF/Card_view/10_music.json',
-    'assets/GIF/Card_view/10_music.json',
+    'assets/GIF/Card_view/11_affirmation.json',
   ];
 
   final List<String> description = [
@@ -104,7 +105,7 @@ class ActivityList extends StatelessWidget {
     Colors.indigo[100]!,
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
-    Colors.blue[100]!,
+    Color.fromARGB(255, 205, 244, 10)!,
   ];
 
   ActivityList({super.key});

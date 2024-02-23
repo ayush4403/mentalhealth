@@ -201,6 +201,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       notes.add(
                           {'title': newNote, 'timestamp': Timestamp.now()});
                     });
+                    Navigator.pop(context);
                     _navigateToNoteDetailScreen(context, newNote);
                   }
                 }
