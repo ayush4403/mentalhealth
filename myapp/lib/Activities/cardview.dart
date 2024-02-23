@@ -1,4 +1,4 @@
-import 'package:MindFulMe/Activities/Journal/journalanimation.dart';
+import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -104,7 +104,7 @@ class ActivityList extends StatelessWidget {
     Colors.indigo[100]!,
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
-    Color.fromARGB(255, 205, 244, 10)!,
+    Colors.blue[100]!,
   ];
 
   ActivityList({super.key});
@@ -211,7 +211,7 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Journal') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BookAnimationScreen()),
+        MaterialPageRoute(builder: (context) => JournalScreen()),
       );
     }
   }

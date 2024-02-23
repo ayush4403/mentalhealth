@@ -62,6 +62,51 @@ class _JournalScreenState extends State<JournalScreen> {
     );
   }
 
+  void _showOptions(BuildContext context, String noteText) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _pinNoteAndCloseBottomSheet(context, noteText);
+                },
+                child: Text('Pin'),
+              ),
+              SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  // Add your action for deleting the note
+                  _deleteNoteAndCloseBottomSheet(context, noteText);
+                },
+                child: Text('Delete'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _pinNoteAndCloseBottomSheet(BuildContext context, String noteText) {
+    Navigator.pop(context);
+  }
+
+  void _deleteNoteAndCloseBottomSheet(BuildContext context, String noteText) {
+    Navigator.pop(context);
+  }
+
+  void _deleteNoteAndCloseDialog(BuildContext context, String noteText) {
+    // Add your code here to delete the note
+    // Once deleted, you can update the UI and close the dialog if needed
+    Navigator.pop(context); // Close the dialog
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +126,9 @@ class _JournalScreenState extends State<JournalScreen> {
           return GestureDetector(
             onTap: () {
               _navigateToNoteDetailScreen(context, noteText);
+            },
+            onLongPress: () {
+              _showOptions(context, noteText);
             },
             child: Card(
               elevation: 4,
@@ -153,7 +201,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       notes.add(
                           {'title': newNote, 'timestamp': Timestamp.now()});
                     });
-                    Navigator.pop(context);
+                    _navigateToNoteDetailScreen(context, newNote);
                   }
                 }
               },
