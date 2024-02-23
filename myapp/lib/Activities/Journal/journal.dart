@@ -235,6 +235,8 @@ class _JournalScreenState extends State<JournalScreen>
           String noteText = filteredNotes[index]['title'];
           String timestamp =
               _formatTimestamp(filteredNotes[index]['timestamp']);
+          Color backgroundColor =
+              Color(filteredNotes[index]['backgroundColor']);
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: GestureDetector(
@@ -246,6 +248,7 @@ class _JournalScreenState extends State<JournalScreen>
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
+                color: backgroundColor,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
