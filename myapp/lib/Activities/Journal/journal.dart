@@ -11,6 +11,7 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreenState extends State<JournalScreen>
     with SingleTickerProviderStateMixin {
+  Color _backgroundColor = Colors.white;
   List<Map<String, dynamic>> notes = [];
   List<Map<String, dynamic>> filteredNotes = []; // Added for filtered notes
   bool _showSearchText = true;
@@ -68,9 +69,11 @@ class _JournalScreenState extends State<JournalScreen>
 
         List<Map<String, dynamic>> fetchedNotes = [];
         querySnapshot.docs.forEach((doc) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           fetchedNotes.add({
-            'title': doc['title'],
-            'timestamp': doc['timestamp'],
+            'title': data['title'],
+            'timestamp': data['timestamp'],
+            'backgroundColor': data['backgroundColor'] ?? Colors.white.value,
           });
         });
 
@@ -85,13 +88,19 @@ class _JournalScreenState extends State<JournalScreen>
     }
   }
 
-  void _navigateToNoteDetailScreen(BuildContext context, String note) {
-    Navigator.push(
+  void _navigateToNoteDetailScreen(BuildContext context, String note) async {
+    final isNoteDeleted = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => NoteDetailScreen(noteText: note),
       ),
     );
+
+    // Update the UI based on the result of the note deletion
+    if (isNoteDeleted == true) {
+      // Reload notes if the note was deleted
+      _fetchNotes();
+    }
   }
 
   void _toggleSortOrder() {
@@ -184,6 +193,8 @@ class _JournalScreenState extends State<JournalScreen>
           String noteText = filteredNotes[index]['title'];
           String timestamp =
               _formatTimestamp(filteredNotes[index]['timestamp']);
+          Color backgroundColor =
+              Color(filteredNotes[index]['backgroundColor']);
           return GestureDetector(
             onTap: () {
               _navigateToNoteDetailScreen(context, noteText);
@@ -193,6 +204,7 @@ class _JournalScreenState extends State<JournalScreen>
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
+              color: backgroundColor, // Set background color here
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -222,11 +234,14 @@ class _JournalScreenState extends State<JournalScreen>
           String noteText = filteredNotes[index]['title'];
           String timestamp =
               _formatTimestamp(filteredNotes[index]['timestamp']);
+          Color backgroundColor =
+              Color(filteredNotes[index]['backgroundColor']);
           return Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
+            color: backgroundColor, // Set background color here
             child: ListTile(
               title: Text(noteText),
               subtitle: Text(timestamp),
