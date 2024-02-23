@@ -1,5 +1,4 @@
 import 'package:MindFulMe/Activities/Journal/journal.dart';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
