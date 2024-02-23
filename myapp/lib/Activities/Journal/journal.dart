@@ -15,6 +15,8 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreenState extends State<JournalScreen>
     with SingleTickerProviderStateMixin {
+  // ignore: unused_field, prefer_final_fields
+  Color _backgroundColor = Colors.white;
   List<Map<String, dynamic>> notes = [];
   List<Map<String, dynamic>> filteredNotes = []; // Added for filtered notes
   bool _showSearchText = true;
@@ -23,8 +25,8 @@ class _JournalScreenState extends State<JournalScreen>
   String name1 = 'Grid view';
 
   bool sortLatest = true;
-  String timecreated = 'Sort by time created(oldest)';
-  String timecreated1 = 'Sort by time created(latest)';
+  String timecreated = 'Sort by oldest';
+  String timecreated1 = 'Sort by latest';
 
   late AnimationController _animationController;
   late Animation<Offset> _animation;
@@ -72,10 +74,14 @@ class _JournalScreenState extends State<JournalScreen>
 
         List<Map<String, dynamic>> fetchedNotes = [];
         for (var doc in querySnapshot.docs) {
-          fetchedNotes.add({
-            'title': doc['title'],
-            'timestamp': doc['timestamp'],
-          });
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          fetchedNotes.add(
+            {
+              'title': data['title'],
+              'timestamp': data['timestamp'],
+              'backgroundColor': data['backgroundColor'] ?? Colors.white.value,
+            },
+          );
         }
 
         setState(() {
@@ -90,13 +96,19 @@ class _JournalScreenState extends State<JournalScreen>
     }
   }
 
-  void _navigateToNoteDetailScreen(BuildContext context, String note) {
-    Navigator.push(
+  void _navigateToNoteDetailScreen(BuildContext context, String note) async {
+    final isNoteDeleted = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => NoteDetailScreen(noteText: note),
       ),
     );
+
+    // Update the UI based on the result of the note deletion
+    if (isNoteDeleted == true) {
+      // Reload notes if the note was deleted
+      _fetchNotes();
+    }
   }
 
   void _toggleSortOrder() {
@@ -168,7 +180,7 @@ class _JournalScreenState extends State<JournalScreen>
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: Text(
-                  name,
+                  isGridView ? name : name1,
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.normal,
@@ -178,7 +190,6 @@ class _JournalScreenState extends State<JournalScreen>
                   setState(
                     () {
                       isGridView = !isGridView;
-                      name = name1;
                     },
                   );
                 },
@@ -265,11 +276,14 @@ class _JournalScreenState extends State<JournalScreen>
           String noteText = filteredNotes[index]['title'];
           String timestamp =
               _formatTimestamp(filteredNotes[index]['timestamp']);
+          Color backgroundColor =
+              Color(filteredNotes[index]['backgroundColor']);
           return Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
+            color: backgroundColor, // Set background color here
             child: ListTile(
               title: Text(noteText),
               subtitle: Text(timestamp),
