@@ -23,7 +23,7 @@ class _JournalScreenState extends State<JournalScreen>
   String timecreated1 = 'Sort by time created(latest)';
 
   late AnimationController _animationController;
-  late Animation<double> _animation;
+  late Animation<Offset> _animation;
 
   @override
   void initState() {
@@ -31,14 +31,14 @@ class _JournalScreenState extends State<JournalScreen>
     _fetchNotes();
     _animationController =
         AnimationController(duration: Duration(milliseconds: 500), vsync: this);
-    _animation = CurvedAnimation(
+    _animation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
-    );
+    ));
     _animationController.forward();
-    _animationController.addListener(() {
-      setState(() {});
-    });
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         _showSearchText = false;
@@ -99,6 +99,12 @@ class _JournalScreenState extends State<JournalScreen>
       sortLatest = !sortLatest;
     });
     _fetchNotes(); // fetch notes again based on the new sorting option
+    _animateNotes();
+  }
+
+  void _animateNotes() {
+    _animationController.reset();
+    _animationController.forward();
   }
 
   @override
@@ -166,10 +172,7 @@ class _JournalScreenState extends State<JournalScreen>
 
   Widget _buildGridView() {
     return SlideTransition(
-      position: Tween<Offset>(
-        begin: Offset(1.0, 0.0),
-        end: Offset(0.0, 0.0),
-      ).animate(_animation),
+      position: _animation,
       child: GridView.builder(
         itemCount: filteredNotes.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -188,7 +191,7 @@ class _JournalScreenState extends State<JournalScreen>
             child: Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0 * _animation.value),
+                borderRadius: BorderRadius.circular(12.0),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,10 +215,7 @@ class _JournalScreenState extends State<JournalScreen>
 
   Widget _buildListView() {
     return SlideTransition(
-      position: Tween<Offset>(
-        begin: Offset(1.0, 0.0),
-        end: Offset(0.0, 0.0),
-      ).animate(_animation),
+      position: _animation,
       child: ListView.builder(
         itemCount: filteredNotes.length,
         itemBuilder: (context, index) {
@@ -225,7 +225,7 @@ class _JournalScreenState extends State<JournalScreen>
           return Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0 * _animation.value),
+              borderRadius: BorderRadius.circular(12.0),
             ),
             child: ListTile(
               title: Text(noteText),

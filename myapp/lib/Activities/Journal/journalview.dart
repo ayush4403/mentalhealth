@@ -18,6 +18,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   late TextEditingController _textEditingController;
   Color _backgroundColor = Colors.white;
   bool _istextsaved = false;
+  String currentText = '';
 
   @override
   void initState() {
@@ -144,6 +145,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   }
 
   Future<bool> _onWillPop() async {
+    final bool textModified = _textEditingController.text != currentText;
     if (_istextsaved || _textEditingController.text.isEmpty) {
       return true;
     }
