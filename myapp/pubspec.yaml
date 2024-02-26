@@ -120,7 +120,8 @@ flutter:
     - assets/GIF/Card_view/9_upcoming_events.json
     - assets/GIF/Card_view/10_music.json
     - assets/GIF/Card_view/11_affirmation.json
-
+    - assets/GIF/Card_view/12_power_nap.json
+ 
     #sherlockHolmes
     - assets/SherlockHolmes/1.jpg
     - assets/SherlockHolmes/2.jpg
@@ -301,6 +302,14 @@ flutter:
 
     #Mental Marathon
     - assets/Images/Mental Mararthon/Baloon.png
+
+    #power nap
+    - assets/Images/power_nap/pn_1.jpg
+    - assets/Images/power_nap/pn_2.jpg
+    - assets/Images/power_nap/pn_3.jpg
+    - assets/Images/power_nap/pn_4.jpg
+    - assets/Images/power_nap/pn_5.jpg
+    - assets/Images/power_nap/pn_6.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

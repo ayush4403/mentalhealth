@@ -1,4 +1,5 @@
 import 'package:MindFulMe/Activities/Journal/journal.dart';
+import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -50,6 +51,7 @@ class ActivityList extends StatelessWidget {
     'Affirmation',
     'Music',
     'Journal',
+    'Power nap',
   ];
 
   final List<String> activityImages = [
@@ -64,6 +66,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/9_upcoming_events.json',
     'assets/GIF/Card_view/10_music.json',
     'assets/GIF/Card_view/11_affirmation.json',
+    'assets/GIF/Card_view/12_power_nap.json',
   ];
 
   final List<String> description = [
@@ -76,6 +79,7 @@ class ActivityList extends StatelessWidget {
     'Enhance your concentration and productivity with background music optimized for studying.',
     'Learn effective techniques to improve your memory and retention.',
     'Stay organized and informed about mental health-related events and activities.',
+    'Relieve tension and stress with calming melodies and rhythms.',
     'Relieve tension and stress with calming melodies and rhythms.',
     'Relieve tension and stress with calming melodies and rhythms.',
   ];
@@ -91,6 +95,7 @@ class ActivityList extends StatelessWidget {
     "The Kindness Challenge module encourages users to engage in acts of kindness towards themselves and others as a way to promote positivity, compassion, and well-being. Users are presented with a series of daily or weekly challenges designed to inspire acts of kindness, generosity, and empathy. Users can track their progress, share their experiences with the community, and receive encouragement and support from fellow participants within the app.",
     "Stay organized and informed about mental health-related events and activities.",
     "The Music module offers users a selection of three types of music specifically curated to promote relaxation, focus, and stress reduction.",
+    "Stay organized and informed about mental health-related events and activities.",
   ];
 
   final List<Color> cardColors = [
@@ -105,6 +110,7 @@ class ActivityList extends StatelessWidget {
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
     Colors.lightBlueAccent[100]!,
+    Colors.lime[100]!
   ];
 
   ActivityList({super.key});
@@ -212,6 +218,12 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const JournalScreen()),
+      );
+    }
+    if (activity == 'Power nap') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PowerNapList()),
       );
     }
   }
