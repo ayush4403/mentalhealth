@@ -6,9 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart'; // Import Firestore
 
 class NoteDetailScreen extends StatefulWidget {
-  final String noteText;
+  String noteText;
 
-  const NoteDetailScreen({super.key, required this.noteText});
+  NoteDetailScreen({super.key, required this.noteText});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -17,6 +17,7 @@ class NoteDetailScreen extends StatefulWidget {
 
 class _NoteDetailScreenState extends State<NoteDetailScreen> {
   late TextEditingController _textEditingController;
+  late TextEditingController _textEditingController2;
   Color _backgroundColor = Colors.white;
   // ignore: unused_field
   bool _istextsaved = false;
@@ -27,6 +28,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   void initState() {
     super.initState();
     _textEditingController = TextEditingController();
+    _textEditingController2 = TextEditingController(text: widget.noteText);
+
     _loadTextFromFirestore();
   }
 
@@ -57,6 +60,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       // ignore: avoid_print
       print('Error loading text from Firestore: $e');
     }
+  }
+
+  void updateNoteTitle(String newTitle) {
+    setState(() {
+      widget.noteText = newTitle;
+    });
   }
 
   Future<void> _pickImage() async {
@@ -144,8 +153,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       appBar: AppBar(
         // ignore: avoid_unnecessary_containers
         title: Container(
-          child: const Text(
-            'Note Details',
+          child: Text(
+            'Your Note',
           ),
         ),
         actions: [
@@ -199,8 +208,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               padding: const EdgeInsets.all(16),
               alignment: Alignment.topLeft,
               color: _backgroundColor,
-              child: Text(
-                widget.noteText,
+              child: TextField(
+                controller: _textEditingController2,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -232,6 +241,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   Future<void> _saveNote() async {
     try {
       final String newText = _textEditingController.text;
+      final String newTitle = _textEditingController2.text;
+      final String originalTitle = widget.noteText; // Original title
 
       final User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -241,29 +252,48 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             .collection('Journal')
             .doc('Notes')
             .collection('Title')
-            .doc(widget.noteText)
-            .set({
-          'text': newText,
-          'backgroundColor': _backgroundColor.value, // Save color value
-        }, SetOptions(merge: true));
+            .doc(originalTitle) // Use the original title here
+            .set(
+                {
+              'text': newText,
+              'backgroundColor': _backgroundColor.value, // Save color value
+            },
+                SetOptions(
+                    merge:
+                        true)); // Merge options to update fields instead of replacing the entire document
+        if (originalTitle != newTitle) {
+          await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(user.uid)
+              .collection('Journal')
+              .doc('Notes')
+              .collection('Title')
+              .doc(originalTitle)
+              .delete();
+        }
       } else {
         // ignore: avoid_print
         print(newText);
       }
-      // ignore: use_build_context_synchronously
+
+      // Update the noteText with the new title
+      setState(() {
+        widget.noteText = newTitle;
+      });
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Note saved successfully!'),
           duration: Duration(seconds: 2),
         ),
       );
+
       setState(() {
         _istextsaved = true;
       });
     } catch (e) {
       // ignore: avoid_print
       print('Error saving note: $e');
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Failed to save note. Please try again.'),

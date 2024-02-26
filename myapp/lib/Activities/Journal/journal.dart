@@ -100,7 +100,9 @@ class _JournalScreenState extends State<JournalScreen>
     final isNoteDeleted = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NoteDetailScreen(noteText: note),
+        builder: (context) => NoteDetailScreen(
+          noteText: note,
+        ),
       ),
     );
 
