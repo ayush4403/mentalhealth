@@ -212,7 +212,7 @@ class _JournalScreenState extends State<JournalScreen>
           ),
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: Color.fromARGB(255, 240, 242, 244),
       body: isGridView ? _buildGridView() : _buildListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -238,15 +238,17 @@ class _JournalScreenState extends State<JournalScreen>
           String timestamp =
               _formatTimestamp(filteredNotes[index]['timestamp']);
           Color backgroundColor =
-              Color(filteredNotes[index]['backgroundColor']);
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: GestureDetector(
-              onTap: () {
-                _navigateToNoteDetailScreen(context, noteText);
-              },
+              filteredNotes[index]['backgroundColor'] != null
+                  ? Color(filteredNotes[index]['backgroundColor'])
+                  : Colors.white;
+          return GestureDetector(
+            onLongPress: () {
+              _showDeleteDialog(context, noteText);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
               child: Card(
-                elevation: 4,
+                elevation: 15,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -272,6 +274,54 @@ class _JournalScreenState extends State<JournalScreen>
     );
   }
 
+  void _showDeleteDialog(BuildContext context, String noteText) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Note?'),
+          content: const Text('Are you sure you want to delete this note?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await _deleteNoteFromFirestore(noteText);
+                Navigator.pop(context);
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+// Add this method to delete the note from Firestore
+  Future<void> _deleteNoteFromFirestore(String noteText) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('Journal')
+          .doc('Notes')
+          .collection('Title')
+          .doc(noteText)
+          .delete();
+
+      // Remove the deleted note from the UI
+      setState(() {
+        notes.removeWhere((note) => note['title'] == noteText);
+        filteredNotes.removeWhere((note) => note['title'] == noteText);
+      });
+    }
+  }
+
   Widget _buildListView() {
     return SlideTransition(
       position: _animation,
@@ -282,19 +332,27 @@ class _JournalScreenState extends State<JournalScreen>
           String timestamp =
               _formatTimestamp(filteredNotes[index]['timestamp']);
           Color backgroundColor =
-              Color(filteredNotes[index]['backgroundColor']);
-          return Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            color: backgroundColor, // Set background color here
-            child: ListTile(
-              title: Text(noteText),
-              subtitle: Text(timestamp),
-              onTap: () {
-                _navigateToNoteDetailScreen(context, noteText);
-              },
+              filteredNotes[index]['backgroundColor'] != null
+                  ? Color(filteredNotes[index]['backgroundColor'])
+                  : Colors.white;
+
+          return GestureDetector(
+            onLongPress: () {
+              _showDeleteDialog(context, noteText);
+            },
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              color: backgroundColor, // Set background color here
+              child: ListTile(
+                title: Text(noteText),
+                subtitle: Text(timestamp),
+                onTap: () {
+                  _navigateToNoteDetailScreen(context, noteText);
+                },
+              ),
             ),
           );
         },
@@ -303,8 +361,12 @@ class _JournalScreenState extends State<JournalScreen>
   }
 
   String _formatTimestamp(Timestamp timestamp) {
-    DateTime dateTime = timestamp.toDate();
-    return DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime);
+    if (timestamp != null) {
+      DateTime dateTime = timestamp.toDate();
+      return DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime);
+    } else {
+      return 'No timestamp available'; // Return a default value or handle the null case accordingly
+    }
   }
 
   void _showNoteDialog() {
@@ -342,8 +404,6 @@ class _JournalScreenState extends State<JournalScreen>
                     setState(
                       () {
                         notes.add(
-                            {'title': newNote, 'timestamp': Timestamp.now()});
-                        filteredNotes.add(
                             {'title': newNote, 'timestamp': Timestamp.now()});
                       },
                     );
