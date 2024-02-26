@@ -5,6 +5,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart'; // Import Firestore
 
+// ignore: must_be_immutable
 class NoteDetailScreen extends StatefulWidget {
   String noteText;
 
@@ -153,7 +154,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       appBar: AppBar(
         // ignore: avoid_unnecessary_containers
         title: Container(
-          child: Text(
+          child: const Text(
             'Your Note',
           ),
         ),
@@ -281,6 +282,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         widget.noteText = newTitle;
       });
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Note saved successfully!'),
@@ -294,6 +296,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     } catch (e) {
       // ignore: avoid_print
       print('Error saving note: $e');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Failed to save note. Please try again.'),

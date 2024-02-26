@@ -212,7 +212,7 @@ class _JournalScreenState extends State<JournalScreen>
           ),
         ],
       ),
-      backgroundColor: Color.fromARGB(255, 240, 242, 244),
+      backgroundColor: const Color.fromARGB(255, 240, 242, 244),
       body: isGridView ? _buildGridView() : _buildListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -291,6 +291,7 @@ class _JournalScreenState extends State<JournalScreen>
             TextButton(
               onPressed: () async {
                 await _deleteNoteFromFirestore(noteText);
+                // ignore: use_build_context_synchronously
                 Navigator.pop(context);
               },
               child: const Text('Delete'),
@@ -361,6 +362,7 @@ class _JournalScreenState extends State<JournalScreen>
   }
 
   String _formatTimestamp(Timestamp timestamp) {
+    // ignore: unnecessary_null_comparison
     if (timestamp != null) {
       DateTime dateTime = timestamp.toDate();
       return DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime);
