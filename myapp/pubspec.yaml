@@ -59,6 +59,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   intl: ^0.19.0
   flutter_colorpicker: ^1.0.3
+  scratcher: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -130,6 +131,7 @@ flutter:
     - assets/GIF/Card_view/9_upcoming_events.json
     - assets/GIF/Card_view/10_music.json
     - assets/GIF/Card_view/11_affirmation.json
+    - assets/GIF/Card_view/12_Tratak.json
 
     #sherlockHolmes
     - assets/SherlockHolmes/1.jpg
@@ -311,6 +313,9 @@ flutter:
 
     #Mental Marathon
     - assets/Images/Mental Mararthon/Baloon.png
+
+    #Tratak
+    - assets/GIF/Tratak/Tratak.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

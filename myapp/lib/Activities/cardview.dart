@@ -1,5 +1,8 @@
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journalanimation.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/AudioCard.dart';
+import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
+import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -11,7 +14,6 @@ import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
 import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
-
 
 class CardView extends StatelessWidget {
   const CardView({super.key});
@@ -52,7 +54,62 @@ class ActivityList extends StatelessWidget {
     'Affirmation',
     'Music',
     'Journal',
+    'Tratak'
   ];
+
+  // List of audio files
+  final List<String> VALUEURL = [
+    'MORNING MEDITATION/Guided/Guided 1.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 1.mp3',
+    'MORNING MEDITATION/BrainBeats/B-BALANCE BRAIN AND BODY.mp3',
+    'MORNING MEDITATION/Guided/Guided 3.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 3.mp3',
+    'MORNING MEDITATION/BrainBeats/._F-FOCUS.mp3',
+    'MORNING MEDITATION/Guided/Guided 5.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 5.mp3',
+    'MORNING MEDITATION/BrainBeats/F-SELF CONCIOUSNEES-.mp3',
+    'MORNING MEDITATION/Guided/Guided 7.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 7.mp3',
+    'MORNING MEDITATION/BrainBeats/F-alertness-relaxed.mp3',
+    'MORNING MEDITATION/BrainBeats/I-CREATIVITY.mp3',
+    'MORNING MEDITATION/Guided/Guided 9.mp3',
+  ];
+
+  String Value() {
+// Get the total number of audio files
+    int totalAudioFiles = VALUEURL.length;
+
+    // Calculate the current cycle index
+    int cycleIndex = DateTime.now().millisecondsSinceEpoch % totalAudioFiles;
+    return VALUEURL[cycleIndex];
+  }
+
+    // List of audio files
+  final List<String> TitleName = [
+    'MORNING MEDITATION/Guided/Guided 1.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 1.mp3',
+    'MORNING MEDITATION/BrainBeats/B-BALANCE BRAIN AND BODY.mp3',
+    'MORNING MEDITATION/Guided/Guided 3.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 3.mp3',
+    'MORNING MEDITATION/BrainBeats/._F-FOCUS.mp3',
+    'MORNING MEDITATION/Guided/Guided 5.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 5.mp3',
+    'MORNING MEDITATION/BrainBeats/F-SELF CONCIOUSNEES-.mp3',
+    'MORNING MEDITATION/Guided/Guided 7.mp3',
+    'MORNING MEDITATION/Visualize/Visualize 7.mp3',
+    'MORNING MEDITATION/BrainBeats/F-alertness-relaxed.mp3',
+    'MORNING MEDITATION/BrainBeats/I-CREATIVITY.mp3',
+    'MORNING MEDITATION/Guided/Guided 9.mp3',
+  ];
+
+  String Title() {
+// Get the total number of audio files
+    int totalAudioFiles = VALUEURL.length;
+
+    // Calculate the current cycle index
+    int cycleIndex = DateTime.now().millisecondsSinceEpoch % totalAudioFiles;
+    return VALUEURL[cycleIndex];
+  }
 
   final List<String> activityImages = [
     'assets/GIF/Card_view/1_morning_meditation.json',
@@ -66,6 +123,7 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/9_upcoming_events.json',
     'assets/GIF/Card_view/10_music.json',
     'assets/GIF/Card_view/11_affirmation.json',
+    'assets/GIF/Card_view/12_Tratak.json',
   ];
 
   final List<String> description = [
@@ -78,6 +136,7 @@ class ActivityList extends StatelessWidget {
     'Enhance your concentration and productivity with background music optimized for studying.',
     'Learn effective techniques to improve your memory and retention.',
     'Stay organized and informed about mental health-related events and activities.',
+    'Relieve tension and stress with calming melodies and rhythms.',
     'Relieve tension and stress with calming melodies and rhythms.',
     'Relieve tension and stress with calming melodies and rhythms.',
   ];
@@ -93,6 +152,7 @@ class ActivityList extends StatelessWidget {
     "The Kindness Challenge module encourages users to engage in acts of kindness towards themselves and others as a way to promote positivity, compassion, and well-being. Users are presented with a series of daily or weekly challenges designed to inspire acts of kindness, generosity, and empathy. Users can track their progress, share their experiences with the community, and receive encouragement and support from fellow participants within the app.",
     "Stay organized and informed about mental health-related events and activities.",
     "The Music module offers users a selection of three types of music specifically curated to promote relaxation, focus, and stress reduction.",
+    "Stay organized and informed about mental health-related events and activities.",
   ];
 
   final List<Color> cardColors = [
@@ -107,6 +167,7 @@ class ActivityList extends StatelessWidget {
     Colors.amber[100]!,
     Colors.deepOrange[100]!,
     Colors.lightBlue[100]!,
+    Colors.green[100]!,
   ];
 
   ActivityList({super.key});
@@ -165,7 +226,15 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MorningMeditation()),
+        MaterialPageRoute(
+            builder: (context) => AudioCard1(
+                  imageUrl: 'assets/Images/night_music/nm_1.jpg',
+                  title: '',
+                  audioFileName: Value(),
+                  imageshow: true,
+
+                  // Other optional parameters can be provided here
+                )),
       );
     }
     if (activity == 'Music') {
@@ -216,10 +285,16 @@ class ActivityList extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const BookAnimationScreen()),
       );
     }
-     if (activity == 'Affirmation') {
+    if (activity == 'Affirmation') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const AffirmationApp()),
+      );
+    }
+    if (activity == 'Tratak') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TratakaIntroScreen()),
       );
     }
   }

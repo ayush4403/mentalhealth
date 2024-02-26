@@ -1,14 +1,13 @@
-// ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:scratcher/scratcher.dart';
+import 'package:MindFulMe/Activities/cardview.dart'; // Import your CardView widget
 
 class VideoApp extends StatefulWidget {
   const VideoApp({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _VideoAppState createState() => _VideoAppState();
 }
 
@@ -24,7 +23,6 @@ class _VideoAppState extends State<VideoApp> {
     super.initState();
     currentDay = DateTime.now().day;
     _controller =
-        // ignore: deprecated_member_use
         VideoPlayerController.network(""); // Initialize with an empty URL
     _initializeVideoPlayer();
     fetchVideoUrl(currentDay);
@@ -42,7 +40,6 @@ class _VideoAppState extends State<VideoApp> {
           .ref('Gratitude thought/GRATITUTE_THOUGHT/$day.mp4')
           .getDownloadURL();
 
-      // ignore: deprecated_member_use
       _controller = VideoPlayerController.network(videoUrl);
       initializeVideoPlayerFuture = _controller.initialize();
 
@@ -60,7 +57,6 @@ class _VideoAppState extends State<VideoApp> {
 
       _controller.play();
     } catch (error) {
-      // ignore: avoid_print
       print('Error fetching video URL: $error');
     }
   }
@@ -91,7 +87,6 @@ class _VideoAppState extends State<VideoApp> {
         ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         resizeToAvoidBottomInset: true,
-        // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
             return false;
@@ -104,52 +99,62 @@ class _VideoAppState extends State<VideoApp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 50.0),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.width * 0.8,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          FutureBuilder(
-                            future: initializeVideoPlayerFuture,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return AspectRatio(
-                                  aspectRatio: _controller.value.aspectRatio,
-                                  child: VideoPlayer(_controller),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
+                    Scratcher(
+                      brushSize: 50,
+                      threshold: 50,
+                      color: Colors.blue, // Adjust color as needed
+                      onChange: (value) => print("Scratch progress: $value%"),
+                      onThreshold: () {
+                        print("Threshold reached!");
+                        // Add your logic when the threshold is reached, e.g., show the content
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery.of(context).size.width * 0.8,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2.0,
                           ),
-                          if (isVideoPlaying)
-                            Positioned(
-                              bottom: 20,
-                              left: 0,
-                              right: 0,
-                              child: VideoProgressIndicator(
-                                _controller,
-                                allowScrubbing: true,
-                                padding: const EdgeInsets.all(8.0),
-                                colors: const VideoProgressColors(
-                                  playedColor: Colors.redAccent,
-                                  bufferedColor: Colors.white,
-                                  backgroundColor: Colors.grey,
+                        ),
+                        child: Stack(
+                          children: [
+                            FutureBuilder(
+                              future: initializeVideoPlayerFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return AspectRatio(
+                                    aspectRatio: _controller.value.aspectRatio,
+                                    child: VideoPlayer(_controller),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                            if (isVideoPlaying)
+                              Positioned(
+                                bottom: 20,
+                                left: 0,
+                                right: 0,
+                                child: VideoProgressIndicator(
+                                  _controller,
+                                  allowScrubbing: true,
+                                  padding: const EdgeInsets.all(8.0),
+                                  colors: const VideoProgressColors(
+                                    playedColor: Colors.redAccent,
+                                    bufferedColor: Colors.white,
+                                    backgroundColor: Colors.grey,
+                                  ),
                                 ),
                               ),
-                            ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 50.0),
@@ -234,7 +239,7 @@ class _VideoAppState extends State<VideoApp> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
