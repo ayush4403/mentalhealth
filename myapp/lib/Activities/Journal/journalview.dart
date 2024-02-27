@@ -1,12 +1,15 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart'; // Import Firestore
 
+// ignore: must_be_immutable
 class NoteDetailScreen extends StatefulWidget {
-  final String noteText;
+  String noteText;
 
-  const NoteDetailScreen({super.key, required this.noteText});
+  NoteDetailScreen({super.key, required this.noteText});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -15,13 +18,19 @@ class NoteDetailScreen extends StatefulWidget {
 
 class _NoteDetailScreenState extends State<NoteDetailScreen> {
   late TextEditingController _textEditingController;
+  late TextEditingController _textEditingController2;
   Color _backgroundColor = Colors.white;
+  // ignore: unused_field
   bool _istextsaved = false;
+  String currentText = '';
+  File? _selectedImage;
 
   @override
   void initState() {
     super.initState();
     _textEditingController = TextEditingController();
+    _textEditingController2 = TextEditingController(text: widget.noteText);
+
     _loadTextFromFirestore();
   }
 
@@ -43,6 +52,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               docSnapshot.data() as Map<String, dynamic>;
           setState(() {
             _textEditingController.text = data['text'] ?? '';
+            _backgroundColor =
+                Color(data['backgroundColor'] ?? Colors.white.value);
           });
         }
       }
@@ -52,166 +63,63 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Note Details'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Delete Note?'),
-                    content: const Text('Do you want to delete the note?'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: const Text('No'),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          Navigator.of(context).pop(false);
-                          await _deleteNote();
-                        },
-                        child: const Text('Yes'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.save),
-              onPressed: () async {
-                await _saveNote();
+  void updateNoteTitle(String newTitle) {
+    setState(() {
+      widget.noteText = newTitle;
+    });
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // If the user picked an image, update the state
+      setState(() {
+        _selectedImage = File(pickedFile.path);
+      });
+    }
+  }
+
+  Widget _buildTextField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (_selectedImage != null)
+          Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            child: Image.file(_selectedImage!),
+          ),
+        Stack(
+          children: [
+            TextField(
+              controller: _textEditingController,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: const InputDecoration(
+                hintText: 'Enter your note',
+              ),
+              onTap: () {
+                // Place the image where the cursor is
+                if (_selectedImage != null) {
+                  final TextEditingValue value = _textEditingController.value;
+                  final TextSelection selection = value.selection.copyWith(
+                    baseOffset: 0, // Place cursor at the start
+                    extentOffset: 0, // Place cursor at the start
+                  );
+                  _textEditingController.value = value.copyWith(
+                    selection: selection,
+                  );
+                }
               },
             ),
           ],
         ),
-        body: GestureDetector(
-          onTap: () {
-            // Close keyboard when tapping outside text field
-            FocusScope.of(context).unfocus();
-          },
-          child: ListView(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  widget.noteText,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                color: _backgroundColor,
-                height: MediaQuery.of(context).size.height * 0.9,
-                padding: const EdgeInsets.all(16),
-                child: Stack(
-                  children: [
-                    TextField(
-                      controller: _textEditingController,
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration.collapsed(
-                          hintText: 'Enter your note'),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _showColorPicker();
-          },
-          child: const Icon(Icons.color_lens),
-        ),
-      ),
+      ],
     );
   }
 
-  Future<bool> _onWillPop() async {
-    if (_istextsaved) {
-      return true;
-    }
-    return await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Save Changes?'),
-            content:
-                const Text('Do you want to save the changes to this note?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('No'),
-              ),
-              TextButton(
-                onPressed: () async {
-                  Navigator.of(context).pop(true);
-                  await _saveNote();
-                },
-                child: const Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
-
-  Future<void> _saveNote() async {
-    try {
-      final String newText = _textEditingController.text;
-
-      final User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await FirebaseFirestore.instance
-            .collection('Users')
-            .doc(user.uid)
-            .collection('Journal')
-            .doc('Notes')
-            .collection('Title')
-            .doc(widget.noteText)
-            .set({'text': newText}, SetOptions(merge: true));
-      } else {
-        // ignore: avoid_print
-        print(newText);
-      }
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Note saved successfully!'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      setState(() {
-        _istextsaved = true;
-      });
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error saving note: $e');
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to save note. Please try again.'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
-  void _showColorPicker() {
+  void _showColorPickerNew() {
     showDialog(
       context: context,
       builder: (context) {
@@ -222,7 +130,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               pickerColor: _backgroundColor,
               onColorChanged: (color) {
                 setState(() {
-                  _backgroundColor = color;
+                  _backgroundColor = color.withOpacity(0.5); // lighter color
                 });
               },
             ),
@@ -240,7 +148,165 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     );
   }
 
-  Future<void> _deleteNote() async {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // ignore: avoid_unnecessary_containers
+        title: Container(
+          child: const Text(
+            'Your Note',
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Delete Note?'),
+                  content: const Text('Do you want to delete the note?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('No'),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop(false);
+                        await _deleteNote();
+                      },
+                      child: const Text('Yes'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.attach_file), // Add icon for uploading image
+            onPressed: () {
+              _pickImage();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: () async {
+              await _saveNote();
+            },
+          ),
+        ],
+      ),
+      body: GestureDetector(
+        onTap: () {
+          // Close keyboard when tapping outside text field
+          FocusScope.of(context).unfocus();
+        },
+        child: ListView(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              alignment: Alignment.topLeft,
+              color: _backgroundColor,
+              child: TextField(
+                controller: _textEditingController2,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              color: _backgroundColor,
+              height: MediaQuery.of(context).size.height * 0.9,
+              padding: const EdgeInsets.all(16),
+              child: Stack(
+                children: [
+                  _buildTextField(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showColorPickerNew();
+        },
+        child: const Icon(Icons.color_lens),
+      ),
+    );
+  }
+
+  Future<void> _saveNote() async {
+    try {
+      final String newText = _textEditingController.text;
+      final String newTitle = _textEditingController2.text;
+      final String originalTitle = widget.noteText; // Original title
+
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .collection('Journal')
+            .doc('Notes')
+            .collection('Title')
+            .doc(originalTitle) // Use the original title here
+            .set(
+                {
+              'text': newText,
+              'backgroundColor': _backgroundColor.value, // Save color value
+            },
+                SetOptions(
+                    merge:
+                        true)); // Merge options to update fields instead of replacing the entire document
+        if (originalTitle != newTitle) {
+          await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(user.uid)
+              .collection('Journal')
+              .doc('Notes')
+              .collection('Title')
+              .doc(originalTitle)
+              .delete();
+        }
+      } else {
+        // ignore: avoid_print
+        print(newText);
+      }
+
+      // Update the noteText with the new title
+      setState(() {
+        widget.noteText = newTitle;
+      });
+
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Note saved successfully!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      setState(() {
+        _istextsaved = true;
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error saving note: $e');
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to save note. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  Future<bool> _deleteNote() async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -259,19 +325,19 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             duration: Duration(seconds: 2),
           ),
         );
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context, true); // Signal that note is deleted
+        return true; // Signal success
       }
+      return false; // Signal failure
     } catch (e) {
       // ignore: avoid_print
       print('Error deleting note: $e');
-      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Failed to delete note. Please try again.'),
           duration: Duration(seconds: 2),
         ),
       );
+      return false; // Signal failure
     }
   }
 

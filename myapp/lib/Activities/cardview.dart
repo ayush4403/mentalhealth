@@ -1,8 +1,9 @@
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
-import 'package:MindFulMe/Activities/Journal/journalanimation.dart';
 import 'package:MindFulMe/Activities/Morning_Meditation/AudioCard.dart';
 import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
+import 'package:MindFulMe/Activities/Journal/journal.dart';
+import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -55,6 +56,7 @@ class ActivityList extends StatelessWidget {
     'Music',
     'Journal',
     'Tratak'
+    'Power nap',
   ];
 
   // List of audio files
@@ -84,7 +86,7 @@ class ActivityList extends StatelessWidget {
     return VALUEURL[cycleIndex];
   }
 
-    // List of audio files
+  // List of audio files
   final List<String> TitleName = [
     'MORNING MEDITATION/Guided/Guided 1.mp3',
     'MORNING MEDITATION/Visualize/Visualize 1.mp3',
@@ -124,11 +126,12 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/10_music.json',
     'assets/GIF/Card_view/11_affirmation.json',
     'assets/GIF/Card_view/12_Tratak.json',
+    'assets/GIF/Card_view/13_power_nap.json',
   ];
 
   final List<String> description = [
-    'Start your day with calmness and focus through guided meditation.',
-    'Wind down and relax with soothing melodies before bedtime.',
+    'Start your day with calmness and focus through guided meditation.', //1
+    'Wind down and relax with soothing melodies before bedtime.', //2
     'Sharpen your cognitive skills and keep your mind active with engaging challenges.',
     'Dive into a variety of mental exercises to boost your mental stamina and agility.',
     'Exercise your problem-solving abilities with visually stimulating puzzles.',
@@ -168,6 +171,8 @@ class ActivityList extends StatelessWidget {
     Colors.deepOrange[100]!,
     Colors.lightBlue[100]!,
     Colors.green[100]!,
+    Colors.lightBlueAccent[100]!,
+    Colors.lime[100]!
   ];
 
   ActivityList({super.key});
@@ -282,19 +287,25 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Journal') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const BookAnimationScreen()),
+        MaterialPageRoute(builder: (context) => const JournalScreen()),
       );
     }
-    if (activity == 'Affirmation') {
+    if (activity == 'Power nap') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const AffirmationApp()),
+        MaterialPageRoute(builder: (context) => const PowerNapList()),
       );
     }
     if (activity == 'Tratak') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const TratakaIntroScreen()),
+      );
+    }
+    if (activity == 'Affirmation') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const AffirmationApp()),
       );
     }
   }
