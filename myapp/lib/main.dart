@@ -1,3 +1,4 @@
+import 'package:MindFulMe/Games/mindfulnessgame.dart';
 import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-      home: const SplashScreen(),
+      home: RoadMap(),
     );
   }
 }
