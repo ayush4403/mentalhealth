@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:MindFulMe/Activities/Tratak/TratakPage.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class TratakaIntroScreen extends StatelessWidget {
               CrossAxisAlignment.center, // Align text in the center
           children: [
             Lottie.asset(
-              'assets/GIF/Card_view/12_Tratak.json',
+              'assets/GIF/Card_view/11_tratak.json',
               width: 300,
               height: 300,
               fit: BoxFit.contain,
@@ -64,6 +65,7 @@ class TratakaIntroScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             // Wrap each instruction in a Container for better control
+            // ignore: sized_box_for_whitespace
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: const Text(
@@ -74,6 +76,7 @@ class TratakaIntroScreen extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: sized_box_for_whitespace
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: const Text(
@@ -84,6 +87,7 @@ class TratakaIntroScreen extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: sized_box_for_whitespace
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: const Text(
@@ -94,6 +98,7 @@ class TratakaIntroScreen extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: sized_box_for_whitespace
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: const Text(

@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'dart:async';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _TratakaActivityState extends State<TratakaActivity> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Lottie.asset(
-                'assets/GIF/Tratak/Tratak.json',
+                'assets/Images/Tratak/Tratak.json',
                 width: 400,
                 height: 400,
               ),
