@@ -1,4 +1,8 @@
+import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
+import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
+import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -49,6 +53,8 @@ class ActivityList extends StatelessWidget {
     'Kindness Challenge',
     'Affirmation',
     'Music',
+    'Tratak',
+    'Power nap',
     'Journal',
   ];
 
@@ -61,50 +67,59 @@ class ActivityList extends StatelessWidget {
     'assets/GIF/Card_view/6_thoughts.json',
     'assets/GIF/Card_view/7_study_music.json',
     'assets/GIF/Card_view/8_kindness.json',
-    'assets/GIF/Card_view/9_upcoming_events.json',
+    'assets/GIF/Card_view/9_affirmation.json',
     'assets/GIF/Card_view/10_music.json',
-    'assets/GIF/Card_view/11_affirmation.json',
+    'assets/GIF/Card_view/11_tratak.json',
+    'assets/GIF/Card_view/12_power_nap.json',
+    'assets/GIF/Card_view/13_journal.json',
   ];
 
   final List<String> description = [
     'Start your day with calmness and focus through guided meditation.', //1
     'Wind down and relax with soothing melodies before bedtime.', //2
-    'Sharpen your cognitive skills and keep your mind active with engaging challenges.',
-    'Dive into a variety of mental exercises to boost your mental stamina and agility.',
-    'Exercise your problem-solving abilities with visually stimulating puzzles.',
-    'Find inspiration and encouragement to keep pushing forward through uplifting quotes.',
-    'Enhance your concentration and productivity with background music optimized for studying.',
-    'Learn effective techniques to improve your memory and retention.',
-    'Stay organized and informed about mental health-related events and activities.',
-    'Relieve tension and stress with calming melodies and rhythms.',
-    'Relieve tension and stress with calming melodies and rhythms.',
+    'Sharpen your cognitive skills and keep your mind active with engaging challenges.', //3
+    'Dive into a variety of mental exercises to boost your mental stamina and agility.', //4
+    'Exercise your problem-solving abilities with visually stimulating puzzles.', //5
+    'Find inspiration and encouragement to keep pushing forward through uplifting quotes.', //6
+    'Enhance your concentration and productivity with background music optimized for studying.', //7
+    'Learn effective techniques to improve your memory and retention.', //8
+    'Elevate your mood and confidence with daily affirmations.', //9
+    'Relieve tension and stress with calming melodies and rhythms.', //10
+    'Enhance concentration and mental clarity through tratak meditation.', //11
+    'Recharge your energy levels and boost productivity with a quick power nap.', //12
+    'Capture your thoughts and feelings easily, promoting self-reflection and emotional awareness.', //13
   ];
 
   final List<String> cardDescription = [
-    "The Morning Meditation module aims to support users in cultivating a positive mindset and setting a harmonious tone for their day ahead. By incorporating guided meditation, visualization, and brainwave beats, users can engage in a holistic meditation experience that contributes to their overall mental well-being.",
-    "The Night Music module is thoughtfully curated to provide users with a serene and calming auditory experience, specifically designed to aid in relaxation and promote a peaceful transition into sleep.By offering a harmonious blend of calming tunes, the Night Music module seeks to support users in achieving a restful night's sleep and waking up feeling refreshed and revitalized. Users can explore the diverse soundscape provided by Night Music to find the perfect accompaniment for their nightly rest.",
-    "The Gratitude module is a daily companion designed to foster a positive and thankful mindset. Centered around the practice of gratitude, this module provides users with a daily dose of inspiration through carefully curated gratitude quotes. Additionally, users are encouraged to actively participate in the practice by expressing their own feelings of gratitude.",
-    "The Mental Marathon module is an exciting and educational journey that empowers users to challenge themselves, learn from diverse subjects, and celebrate their cognitive achievements. It serves as a valuable tool for continuous mental exercise and personal growth.",
-    "The Sherlock Holmes module introduces a captivating and interactive image-based question experience, where users can channel their inner detective. Inspired by the renowned detective Sherlock Holmes, this module challenges users to observe, analyze, and deduce based on a given image.",
-    "The Daily Thoughts module offers users a dedicated space to record their thoughts, feelings, and experiences on a daily basis. Through this feature, users can note down their reflections, emotions, and significant events, providing a valuable outlet for self-expression and introspection. The interface may include customizable prompts or questions to guide users in their journaling practice, encouraging deeper self-awareness and insight.",
-    "The Study Music module provides users with a curated selection of instrumental music tracks specifically designed to enhance concentration, focus, and productivity during study or work sessions. These tracks are carefully chosen to feature calming melodies, rhythmic patterns, and ambient sounds that can help drown out distractions and create an optimal environment for cognitive engagement. Users can easily play, pause, skip tracks, and adjust volume levels within the app interface to customize their study music experience according to their preferences.",
-    "The Kindness Challenge module encourages users to engage in acts of kindness towards themselves and others as a way to promote positivity, compassion, and well-being. Users are presented with a series of daily or weekly challenges designed to inspire acts of kindness, generosity, and empathy. Users can track their progress, share their experiences with the community, and receive encouragement and support from fellow participants within the app.",
-    "Stay organized and informed about mental health-related events and activities.",
-    "The Music module offers users a selection of three types of music specifically curated to promote relaxation, focus, and stress reduction.",
+    "The Morning Meditation module aims to support users in cultivating a positive mindset and setting a harmonious tone for their day ahead. By incorporating guided meditation, visualization, and brainwave beats, users can engage in a holistic meditation experience that contributes to their overall mental well-being.", //1
+    "The Night Music module is thoughtfully curated to provide users with a serene and calming auditory experience, specifically designed to aid in relaxation and promote a peaceful transition into sleep.By offering a harmonious blend of calming tunes, the Night Music module seeks to support users in achieving a restful night's sleep and waking up feeling refreshed and revitalized. Users can explore the diverse soundscape provided by Night Music to find the perfect accompaniment for their nightly rest.", //2
+    "The Gratitude module is a daily companion designed to foster a positive and thankful mindset. Centered around the practice of gratitude, this module provides users with a daily dose of inspiration through carefully curated gratitude quotes. Additionally, users are encouraged to actively participate in the practice by expressing their own feelings of gratitude.", //3
+    "The Mental Marathon module is an exciting and educational journey that empowers users to challenge themselves, learn from diverse subjects, and celebrate their cognitive achievements. It serves as a valuable tool for continuous mental exercise and personal growth.", //4
+    "The Sherlock Holmes module introduces a captivating and interactive image-based question experience, where users can channel their inner detective. Inspired by the renowned detective Sherlock Holmes, this module challenges users to observe, analyze, and deduce based on a given image.", //5
+    "The Daily Thoughts module offers users a dedicated space to record their thoughts, feelings, and experiences on a daily basis. Through this feature, users can note down their reflections, emotions, and significant events, providing a valuable outlet for self-expression and introspection. The interface may include customizable prompts or questions to guide users in their journaling practice, encouraging deeper self-awareness and insight.", //6
+    "The Study Music module provides users with a curated selection of instrumental music tracks specifically designed to enhance concentration, focus, and productivity during study or work sessions. These tracks are carefully chosen to feature calming melodies, rhythmic patterns, and ambient sounds that can help drown out distractions and create an optimal environment for cognitive engagement. Users can easily play, pause, skip tracks, and adjust volume levels within the app interface to customize their study music experience according to their preferences.", //7
+    "The Kindness Challenge module encourages users to engage in acts of kindness towards themselves and others as a way to promote positivity, compassion, and well-being. Users are presented with a series of daily or weekly challenges designed to inspire acts of kindness, generosity, and empathy. Users can track their progress, share their experiences with the community, and receive encouragement and support from fellow participants within the app.", //8
+    "Affirmations are positive statements that can uplift your mood and boost self-esteem. In our app, access a variety of pre-written affirmations or create your own tailored to your goals. By integrating affirmations into your daily routine, you can cultivate a positive mindset, reduce stress, and enhance resilience, ultimately fostering a greater sense of well-being.", //9
+    "The Music module offers users a selection of three types of music specifically curated to promote relaxation, focus, and stress reduction.", //10
+    "Tratak, a form of meditation, involves focusing your gaze on a single point, such as a candle flame or a symbol, to enhance concentration and clarity of mind. Our app offers guided Tratak sessions to help users improve their focus, reduce distractions, and promote relaxation.", //11
+    "Take a quick power nap with our app to rejuvenate your energy levels and enhance productivity. Set your desired nap duration, relax with soothing sounds or music, and wake up feeling refreshed and revitalized. Incorporating power naps into your routine can boost cognitive function, improve mood, and help you stay alert throughout the day.", //12
+    "Record your thoughts, feelings, and experiences effortlessly with our journal feature. Whether it's jotting down daily reflections, setting goals, or expressing gratitude, our app provides a safe space for self-expression and self-discovery.", //13
   ];
 
   final List<Color> cardColors = [
-    Colors.blue[100]!,
-    Colors.red[100]!,
-    Colors.green[100]!,
-    Colors.yellow[100]!,
-    Colors.orange[100]!,
-    Colors.purple[100]!,
-    Colors.teal[100]!,
-    Colors.indigo[100]!,
-    Colors.amber[100]!,
-    Colors.deepOrange[100]!,
-    Colors.lightBlueAccent[100]!,
+    Colors.blue[100]!, //1
+    Colors.red[100]!, //2
+    Colors.green[100]!, //3
+    Colors.yellow[100]!, //4
+    Colors.orange[100]!, //5
+    Colors.purple[100]!, //6
+    Colors.teal[100]!, //7
+    Colors.indigo[100]!, //8
+    Colors.amber[100]!, //9
+    Colors.deepOrange[100]!, //10
+    Colors.lightBlueAccent[100]!, //11
+    Colors.lime[100]!, //12
+    Colors.cyan[100]!, //13
   ];
 
   ActivityList({super.key});
@@ -154,28 +169,10 @@ class ActivityList extends StatelessWidget {
     // ignore: avoid_print
     print('Started: $activity');
 
-    if (activity == 'Daily Thoughts') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const DailyQuotesScreen()),
-      );
-    }
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MorningMeditation()),
-      );
-    }
-    if (activity == 'Music') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MusicList()),
-      );
-    }
-    if (activity == 'Study Music') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const StudyMusicScreen()),
+        MaterialPageRoute(builder: (context) => const MorningMeds()),
       );
     }
     if (activity == 'Night Music') {
@@ -184,16 +181,34 @@ class ActivityList extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const NightMusicScreen()),
       );
     }
+    if (activity == 'Gratitude') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const VideoApp()),
+      );
+    }
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const GetStartedPage()),
       );
     }
-    if (activity == 'Gratitude') {
+    if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const VideoApp()),
+        MaterialPageRoute(builder: (context) => const LetsPlay()),
+      );
+    }
+    if (activity == 'Daily Thoughts') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DailyQuotesScreen()),
+      );
+    }
+    if (activity == 'Study Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const StudyMusicScreen()),
       );
     }
     if (activity == 'Kindness Challenge') {
@@ -202,10 +217,28 @@ class ActivityList extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const KindnessPageClass()),
       );
     }
-    if (activity == 'Sherlock Holmes') {
+    if (activity == 'Affirmation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const LetsPlay()),
+        MaterialPageRoute(builder: (context) => const AffirmationApp()),
+      );
+    }
+    if (activity == 'Music') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MusicList()),
+      );
+    }
+    if (activity == 'Tratak') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TratakaIntroScreen()),
+      );
+    }
+    if (activity == 'Power nap') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PowerNapList()),
       );
     }
     if (activity == 'Journal') {
@@ -285,6 +318,9 @@ class ActivityList extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                             ),
                         textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5),

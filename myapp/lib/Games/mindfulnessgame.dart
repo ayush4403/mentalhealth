@@ -97,9 +97,9 @@ class RoadPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.grey[500]!
+      ..color = Colors.blueAccent!
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 8;
+      ..strokeWidth = 10;
 
     final path = Path();
 
@@ -111,7 +111,7 @@ class RoadPainter extends CustomPainter {
 
     // Draw the road with less curvy segments
     for (var i = 0; i < 10; i++) {
-      final double startX = unitWidth * (i.isEven ? 9 : 1);
+      final double startX = unitWidth * (i.isEven ? 1 : 1);
       final double startY = size.height - unitHeight * (i + 1);
       final double endX = unitWidth * (i.isEven ? 9 : 1);
       final double endY = size.height - unitHeight * i;
