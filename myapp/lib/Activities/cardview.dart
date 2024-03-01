@@ -14,12 +14,50 @@ import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
 import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CardView extends StatelessWidget {
-  const CardView({super.key});
+class CardView extends StatefulWidget {
+  const CardView({Key? key});
+
+  @override
+  _CardViewState createState() => _CardViewState();
+}
+
+class _CardViewState extends State<CardView> {
+  late bool activityCompleted;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeActivityCompletionStatus();
+  }
+
+  Future<void> initializeActivityCompletionStatus() async {
+    activityCompleted = await checkActivityCompletionStatus();
+    setState(() {});
+  }
+
+  Future<bool> checkActivityCompletionStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? activityStatus = prefs.getBool('activityCompleted');
+    String? completionTimeString = prefs.getString('completionTime');
+    DateTime? completionTime;
+
+    if (activityStatus != null && completionTimeString != null) {
+      completionTime = DateTime.parse(completionTimeString);
+      // Calculate the difference in time
+      Duration difference = DateTime.now().difference(completionTime);
+      return difference.inHours < 24;
+    }
+    return false; // Return false if activity status not found or completion time not found
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (activityCompleted == null) {
+      return CircularProgressIndicator(); // Show loading indicator while initializing
+    }
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
@@ -34,7 +72,10 @@ class CardView extends StatelessWidget {
           ),
           backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         ),
-        body: ActivityList(),
+        body: ActivityList(
+          checkActivityCompletionStatus: checkActivityCompletionStatus,
+          activityCompleted: activityCompleted,
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -42,6 +83,14 @@ class CardView extends StatelessWidget {
 }
 
 class ActivityList extends StatelessWidget {
+  final Function checkActivityCompletionStatus;
+  final bool activityCompleted;
+
+  ActivityList({
+    required this.checkActivityCompletionStatus,
+    required this.activityCompleted,
+  });
+
   final List<String> activities = [
     'Morning Meditation',
     'Night Music',
@@ -122,8 +171,6 @@ class ActivityList extends StatelessWidget {
     Colors.cyan[100]!, //13
   ];
 
-  ActivityList({super.key});
-
   void handleInfoButtonTap(BuildContext context, String cardDescripation,
       int colorIndex, int index) {
     showDialog(
@@ -164,9 +211,10 @@ class ActivityList extends StatelessWidget {
     print('Tapped on: $activity');
   }
 
-  void handleStartButtonTap(BuildContext context, String activity) {
+  void handleStartButtonTap(BuildContext context, String activity) async {
     // Handle the onPressed action for the "Start" button here
     // ignore: avoid_print
+
     print('Started: $activity');
 
     if (activity == 'Morning Meditation') {
@@ -182,10 +230,35 @@ class ActivityList extends StatelessWidget {
       );
     }
     if (activity == 'Gratitude') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const VideoApp()),
-      );
+      // Check activity completion status before navigating to VideoApp
+      bool activityCompleted = await checkActivityCompletionStatus();
+
+      if (!activityCompleted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VideoApp()),
+        );
+      } else {
+        // Activity has been completed within the last 24 hours
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Activity Already Completed'),
+              content: Text(
+                  'You have already completed the activity within the last 24 hours.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
     if (activity == 'Mental Marathon') {
       Navigator.push(
