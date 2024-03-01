@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:scratcher/scratcher.dart';
-import 'package:MindFulMe/Activities/cardview.dart'; // Import your CardView widget
+import 'package:MindFulMe/Activities/cardview.dart';
 
 class VideoApp extends StatefulWidget {
   const VideoApp({super.key});
@@ -16,6 +16,7 @@ class _VideoAppState extends State<VideoApp> {
   late Future<void> initializeVideoPlayerFuture;
   late int currentDay;
   bool isVideoPlaying = false;
+  bool isVideoScratched = false;
   TextEditingController gratitudeController = TextEditingController();
 
   @override
@@ -55,7 +56,8 @@ class _VideoAppState extends State<VideoApp> {
         }
       });
 
-      _controller.play();
+      // Do not auto-play the video initially
+      // _controller.play();
     } catch (error) {
       print('Error fetching video URL: $error');
     }
@@ -106,7 +108,10 @@ class _VideoAppState extends State<VideoApp> {
                       onChange: (value) => print("Scratch progress: $value%"),
                       onThreshold: () {
                         print("Threshold reached!");
-                        // Add your logic when the threshold is reached, e.g., show the content
+                        setState(() {
+                          isVideoScratched = true;
+                        });
+                        _controller.play(); // Start playing the video
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
