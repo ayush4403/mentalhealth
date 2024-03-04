@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,10 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:async';
 
 class VideoApp extends StatefulWidget {
-  const VideoApp({Key? key});
+  const VideoApp({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _VideoAppState createState() => _VideoAppState();
 }
 
@@ -28,6 +30,7 @@ class _VideoAppState extends State<VideoApp> {
   late DateTime activityCompletionTime;
 
   // Timer to check if 24 hours have passed
+  // ignore: unused_field
   late Timer _timer;
 
   @override
@@ -293,11 +296,13 @@ class _VideoAppState extends State<VideoApp> {
                             saveUserActivity(user!.uid, 'gratitude',
                                 gratitudeController.text);
                             await saveActivityCompletionStatus();
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CardView()));
+                                    builder: (context) => const CardView()));
                           } else {
+                            // ignore: avoid_print
                             print('Your text is empty');
                           }
                         },

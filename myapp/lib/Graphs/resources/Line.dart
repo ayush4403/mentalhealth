@@ -1,14 +1,17 @@
+// ignore_for_file: file_names
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class LineChartD extends StatefulWidget {
+  // ignore: use_super_parameters
   const LineChartD({Key? key, required this.isShowingMainData})
       : super(key: key);
 
   final bool isShowingMainData;
 
   @override
+  // ignore: library_private_types_in_public_api
   _LineChartDState createState() => _LineChartDState();
 }
 
@@ -294,6 +297,7 @@ class _LineChartDState extends State<LineChartD> {
 }
 
 class LineChartSample1 extends StatefulWidget {
+  // ignore: use_super_parameters
   const LineChartSample1({Key? key}) : super(key: key);
 
   @override

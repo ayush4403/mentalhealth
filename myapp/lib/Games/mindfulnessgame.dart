@@ -1,15 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class RoadMap extends StatelessWidget {
-  final int unlockedLevels = 3; // Number of levels initially unlocked
+  final int unlockedLevels = 3;
+
+  const RoadMap({super.key}); // Number of levels initially unlocked
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Road Map Levels'),
+        title: const Text('Road Map Levels'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,6 +26,7 @@ class RoadMap extends StatelessWidget {
                     Positioned.fill(
                       child: Align(
                         alignment: Alignment.center,
+                        // ignore: sized_box_for_whitespace
                         child: Container(
                           width: 60,
                           height: constraints.maxHeight,
@@ -68,7 +69,7 @@ class RoadMap extends StatelessWidget {
                                     child: Center(
                                       child: Text(
                                         (index + 1).toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -97,7 +98,7 @@ class RoadPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.blueAccent!
+      ..color = Colors.blueAccent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
 
@@ -111,6 +112,7 @@ class RoadPainter extends CustomPainter {
 
     // Draw the road with less curvy segments
     for (var i = 0; i < 10; i++) {
+      // ignore: unused_local_variable
       final double startX = unitWidth * (i.isEven ? 1 : 1);
       final double startY = size.height - unitHeight * (i + 1);
       final double endX = unitWidth * (i.isEven ? 9 : 1);
@@ -133,7 +135,7 @@ class RoadPainter extends CustomPainter {
 class LevelScreen extends StatelessWidget {
   final int levelNumber;
 
-  LevelScreen(this.levelNumber);
+  const LevelScreen(this.levelNumber, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +146,7 @@ class LevelScreen extends StatelessWidget {
       body: Center(
         child: Text(
           'Welcome to Level $levelNumber!',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
@@ -155,5 +157,5 @@ class LevelScreen extends StatelessWidget {
 }
 
 void main() {
-  runApp(MaterialApp(home: RoadMap()));
+  runApp(const MaterialApp(home: RoadMap()));
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
@@ -7,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/GetStarted.dart';
-import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
 import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
@@ -17,9 +18,10 @@ import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CardView extends StatefulWidget {
-  const CardView({Key? key});
+  const CardView({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CardViewState createState() => _CardViewState();
 }
 
@@ -65,8 +67,9 @@ class _CardViewState extends State<CardView> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unnecessary_null_comparison
     if (activityCompleted == null) {
-      return CircularProgressIndicator(); // Show loading indicator while initializing
+      return const CircularProgressIndicator(); // Show loading indicator while initializing
     }
 
     return MaterialApp(
@@ -98,6 +101,7 @@ class ActivityList extends StatelessWidget {
   final bool activityCompleted;
 
   ActivityList({
+    super.key,
     required this.checkActivityCompletionStatus,
     required this.activityCompleted,
   });
@@ -225,7 +229,6 @@ class ActivityList extends StatelessWidget {
   void handleStartButtonTap(BuildContext context, String activity) async {
     // Handle the onPressed action for the "Start" button here
     // ignore: avoid_print
-
     print('Started: $activity');
 
     if (activity == 'Morning Meditation') {
@@ -247,23 +250,22 @@ class ActivityList extends StatelessWidget {
       if (!activityCompleted) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VideoApp()),
+          MaterialPageRoute(builder: (context) => const VideoApp()),
         );
       } else {
-        // Activity has been completed within the last 24 hours
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Activity Already Completed'),
-              content: Text(
+              title: const Text('Activity Already Completed'),
+              content: const Text(
                   'You have already completed the activity within the last 24 hours.'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );

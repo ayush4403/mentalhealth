@@ -107,6 +107,23 @@ flutter:
     - assets/GIF/Visualise/VZ4.json
     - assets/GIF/Visualise/VZ1.json
 
+    #morning meditation
+    - assets/Images/Morning_meditation/mm_1.jpg
+    - assets/Images/Morning_meditation/mm_2.jpg
+    - assets/Images/Morning_meditation/mm_3.jpg
+    - assets/Images/Morning_meditation/mm_4.jpg
+    - assets/Images/Morning_meditation/mm_5.jpg
+    - assets/Images/Morning_meditation/mm_6.jpg
+    - assets/Images/Morning_meditation/mm_7.jpg
+    - assets/Images/Morning_meditation/mm_8.jpg
+    - assets/Images/Morning_meditation/mm_9.jpg
+    - assets/Images/Morning_meditation/mm_10.jpg
+    - assets/Images/Morning_meditation/mm_11.jpg
+    - assets/Images/Morning_meditation/mm_12.jpg
+    - assets/Images/Morning_meditation/mm_13.jpg
+    - assets/Images/Morning_meditation/mm_14.jpg
+    - assets/Images/Morning_meditation/mm_15.jpg
+
     #Audio file
     - assets/audio/
 

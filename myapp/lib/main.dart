@@ -1,7 +1,3 @@
-import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
-import 'package:MindFulMe/Games/mindfulnessgame.dart';
-import 'package:MindFulMe/Report/report.dart';
 import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,4 @@
-import 'package:MindFulMe/Graphs/PieChart.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
-import 'package:MindFulMe/Graphs/resources/Line.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +10,7 @@ class ChartReportTemplate extends StatelessWidget {
   final VoidCallback onTap;
 
   const ChartReportTemplate({
+    super.key,
     required this.title,
     required this.description,
     required this.onTap,
@@ -19,6 +18,7 @@ class ChartReportTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: non_constant_identifier_names
     List<dynamic> Activities = [
       'Morning Meditation',
       'Mental Marathon',
@@ -53,7 +53,7 @@ class ChartReportTemplate extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     formattedDate, // Displaying current date
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -69,7 +69,7 @@ class ChartReportTemplate extends StatelessWidget {
                       return Card(
                         elevation: 3.0,
                         color: Colors.white,
-                        margin: EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +81,7 @@ class ChartReportTemplate extends StatelessWidget {
                               color: Colors.grey, // Placeholder color
                               // You can use AssetImage or NetworkImage here
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8.0,
                             ),
                             // Heading and Percentage on right side
@@ -89,14 +89,14 @@ class ChartReportTemplate extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 25,
                                 ),
                                 SizedBox(
                                   width: 150,
                                   child: Text(
                                     Activities[index],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -104,12 +104,12 @@ class ChartReportTemplate extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 50,
                             ),
                             Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Container(
@@ -121,7 +121,7 @@ class ChartReportTemplate extends StatelessWidget {
                                     percent: 0.4,
                                     lineWidth: 2,
                                     backgroundColor: Colors.blueAccent,
-                                    center: Text(
+                                    center: const Text(
                                       '40%', // Replace with actual percentage
                                       style: TextStyle(
                                         fontSize: 13.0,
@@ -154,6 +154,8 @@ class ChartReportTemplate extends StatelessWidget {
 }
 
 class LineChartSample extends StatelessWidget {
+  const LineChartSample({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -166,14 +168,14 @@ class LineChartSample extends StatelessWidget {
           child: LineChart(
             LineChartData(
                 borderData: FlBorderData(show: true),
-                gridData: FlGridData(show: true),
+                gridData: const FlGridData(show: true),
                 lineBarsData: [
                   LineChartBarData(
                     spots: [
-                      FlSpot(2, 4),
-                      FlSpot(4, 5),
-                      FlSpot(5, 8),
-                      FlSpot(6, 9),
+                      const FlSpot(2, 4),
+                      const FlSpot(4, 5),
+                      const FlSpot(5, 8),
+                      const FlSpot(6, 9),
                     ],
                     isCurved: true,
                     color: const Color.fromARGB(255, 114, 243, 33),
