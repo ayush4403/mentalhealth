@@ -65,11 +65,13 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomePageUI(),
           const CardView(),
-          ReportCard(
-              key: const Key(''),
-              title: 'Report',
-              description: 'Reports of gamification',
-              onTap: randomFunction),
+          ChartReportTemplate(
+            description: '',
+            title: '',
+            onTap: () {
+              print('chart');
+            },
+          ),
           const GamesPage(),
           const ProfilePage()
         ],

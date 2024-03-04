@@ -16,24 +16,24 @@ class GamesPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             GameOptionCard(
-              key: const Key('mindfulness_coloring_card'), // Provide a key here
+              key: const Key('mindfulness_coloring_card'),
               title: 'Mindfulness Coloring',
               description: 'Relax and unwind with coloring activities.',
+              level: 1, // Add the level number here
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MindfulnessGame()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RoadMap()));
               },
             ),
             const SizedBox(
               height: 16.0,
             ),
             GameOptionCard(
-              key: const Key('breathing_exercises_card'), // Provide a key here
+              key: const Key('breathing_exercises_card'),
               title: 'Breathing Exercises',
               description:
                   'Practice different breathing techniques for relaxation.',
+              level: 2, // Add the level number here
               onTap: () {
                 // Navigate to the Breathing Exercises game screen
               },
@@ -52,12 +52,14 @@ class GamesPage extends StatelessWidget {
 class GameOptionCard extends StatelessWidget {
   final String title;
   final String description;
+  final int level; // Add level parameter
   final VoidCallback onTap;
 
   const GameOptionCard({
     required Key key,
     required this.title,
     required this.description,
+    required this.level, // Include level parameter
     required this.onTap,
   }) : super(key: key);
 
@@ -89,6 +91,17 @@ class GameOptionCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16.0,
                   color: Colors.grey,
+                ),
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Text(
+                'Level $level', // Display level number here
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],

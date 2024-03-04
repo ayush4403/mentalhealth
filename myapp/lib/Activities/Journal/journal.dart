@@ -245,6 +245,9 @@ class _JournalScreenState extends State<JournalScreen>
             onLongPress: () {
               _showDeleteDialog(context, noteText);
             },
+            onTap: () {
+              _navigateToNoteDetailScreen(context, noteText);
+            },
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Card(
@@ -340,6 +343,9 @@ class _JournalScreenState extends State<JournalScreen>
           return GestureDetector(
             onLongPress: () {
               _showDeleteDialog(context, noteText);
+            },
+            onTap: () {
+              _navigateToNoteDetailScreen(context, noteText);
             },
             child: Card(
               elevation: 4,

@@ -4,7 +4,6 @@ description: "A new Flutter project."
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-
 version: 1.0.0+1
 
 environment:
@@ -49,6 +48,8 @@ dependencies:
   intl: ^0.19.0
   flutter_colorpicker: ^1.0.3
   scratcher: ^2.5.0
+  flutter_charts: ^0.5.2
+  fl_chart: ^0.66.2
 
 dev_dependencies:
   flutter_test:
@@ -123,7 +124,7 @@ flutter:
     - assets/GIF/Card_view/11_tratak.json
     - assets/GIF/Card_view/12_power_nap.json
     - assets/GIF/Card_view/13_journal.json
- 
+
     #sherlockHolmes
     - assets/SherlockHolmes/1.jpg
     - assets/SherlockHolmes/2.jpg

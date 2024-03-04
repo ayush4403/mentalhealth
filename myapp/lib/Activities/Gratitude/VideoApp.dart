@@ -3,9 +3,17 @@ import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:scratcher/scratcher.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:async';
 
 class VideoApp extends StatefulWidget {
-  const VideoApp({super.key});
+  const VideoApp({Key? key});
 
   @override
   _VideoAppState createState() => _VideoAppState();
@@ -18,15 +26,83 @@ class _VideoAppState extends State<VideoApp> {
   bool isVideoPlaying = false;
   bool isVideoScratched = false;
   TextEditingController gratitudeController = TextEditingController();
+  final User? user = FirebaseAuth.instance.currentUser;
+  // Add a variable to track whether the user has completed the activity
+  bool activityCompleted = false;
+
+  // Add a variable to track the time when the activity is completed
+  late DateTime activityCompletionTime;
+
+  // Timer to check if 24 hours have passed
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     currentDay = DateTime.now().day;
     _controller =
-        VideoPlayerController.network(""); // Initialize with an empty URL
+        // ignore: deprecated_member_use
+        VideoPlayerController.network(""); //
     _initializeVideoPlayer();
     fetchVideoUrl(currentDay);
+    checkActivityCompletionStatus();
+  }
+
+  void checkActivityCompletionStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? activityStatus = prefs.getBool('activityCompleted');
+    String? completionTimeString = prefs.getString('completionTime');
+    DateTime? completionTime;
+
+    if (activityStatus != null && completionTimeString != null) {
+      completionTime = DateTime.parse(completionTimeString);
+      // Calculate the difference in time
+      Duration difference = DateTime.now().difference(completionTime);
+      if (difference.inSeconds < 20) {
+        // If less than 24 hours have passed, prevent the user from accessing the page
+        setState(() {
+          activityCompleted = true;
+          activityCompletionTime = completionTime!;
+        });
+        // Start a timer to re-enable access after
+        startTimer();
+      }
+    }
+  }
+
+// Start a timer to re-enable access after a specified number of hours
+  void startTimer() {
+    _timer = Timer(Duration(seconds: 30), () {
+      setState(() {
+        activityCompleted = false;
+      });
+    });
+  }
+
+  // Method to handle saving activity completion status
+  Future<void> saveActivityCompletionStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('activityCompleted', true);
+    prefs.setString('completionTime', DateTime.now().toString());
+  }
+
+  Future<void> saveUserActivity(
+      String userId, String activityType, String inputText) async {
+    final DateTime now = DateTime.now();
+    final String formattedDate = '${now.year}-${now.month}-${now.day}';
+
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user
+            ?.uid) // Use null-aware operator '?.' to access user's properties safely
+        .collection('User_activities')
+        .doc('Gratitude')
+        .set({
+      'userId': userId,
+      'activityType': activityType,
+      'activityDate': formattedDate,
+      'inputText': inputText,
+    });
   }
 
   Future<void> _initializeVideoPlayer() async {
@@ -216,11 +292,18 @@ class _VideoAppState extends State<VideoApp> {
                     const SizedBox(height: 15.0),
                     Center(
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const CardView()));
+                        onTap: () async {
+                          if (gratitudeController.text.isNotEmpty) {
+                            saveUserActivity(user!.uid, 'gratitude',
+                                gratitudeController.text);
+                            await saveActivityCompletionStatus();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CardView()));
+                          } else {
+                            print('Your text is empty');
+                          }
                         },
                         child: Container(
                           width: 250,
