@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
@@ -13,12 +15,63 @@ import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
 import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CardView extends StatelessWidget {
+class CardView extends StatefulWidget {
   const CardView({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
+  _CardViewState createState() => _CardViewState();
+}
+
+class _CardViewState extends State<CardView> {
+  late bool activityCompleted;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeActivityCompletionStatus();
+  }
+
+  Future<void> initializeActivityCompletionStatus() async {
+    activityCompleted = await checkActivityCompletionStatus();
+    setState(() {});
+  }
+
+  Future<bool> checkActivityCompletionStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? activityStatus = prefs.getBool('activityCompleted');
+    String? completionTimeString = prefs.getString('completionTime');
+    DateTime? completionTime;
+
+    if (activityStatus != null && completionTimeString != null) {
+      completionTime = DateTime.parse(completionTimeString);
+      DateTime todayAtMidnight = DateTime.now().subtract(Duration(
+          hours: DateTime.now().hour,
+          minutes: DateTime.now().minute,
+          seconds: DateTime.now().second,
+          milliseconds: DateTime.now().millisecond,
+          microseconds: DateTime.now().microsecond));
+      // Check if the completion time was before today at 12 AM
+      if (completionTime.isBefore(todayAtMidnight)) {
+        return false;
+      } else {
+        // Calculate the difference in time
+        Duration difference = DateTime.now().difference(completionTime);
+        return difference.inHours < 24;
+      }
+    }
+    return false; // Return false if activity status not found or completion time not found
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // ignore: unnecessary_null_comparison
+    if (activityCompleted == null) {
+      return const CircularProgressIndicator(); // Show loading indicator while initializing
+    }
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
@@ -33,7 +86,10 @@ class CardView extends StatelessWidget {
           ),
           backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         ),
-        body: ActivityList(),
+        body: ActivityList(
+          checkActivityCompletionStatus: checkActivityCompletionStatus,
+          activityCompleted: activityCompleted,
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -41,6 +97,15 @@ class CardView extends StatelessWidget {
 }
 
 class ActivityList extends StatelessWidget {
+  final Function checkActivityCompletionStatus;
+  final bool activityCompleted;
+
+  ActivityList({
+    super.key,
+    required this.checkActivityCompletionStatus,
+    required this.activityCompleted,
+  });
+
   final List<String> activities = [
     'Morning Meditation',
     'Night Music',
@@ -121,8 +186,6 @@ class ActivityList extends StatelessWidget {
     Colors.cyan[100]!, //13
   ];
 
-  ActivityList({super.key});
-
   void handleInfoButtonTap(BuildContext context, String cardDescripation,
       int colorIndex, int index) {
     showDialog(
@@ -163,7 +226,7 @@ class ActivityList extends StatelessWidget {
     print('Tapped on: $activity');
   }
 
-  void handleStartButtonTap(BuildContext context, String activity) {
+  void handleStartButtonTap(BuildContext context, String activity) async {
     // Handle the onPressed action for the "Start" button here
     // ignore: avoid_print
     print('Started: $activity');
@@ -181,10 +244,34 @@ class ActivityList extends StatelessWidget {
       );
     }
     if (activity == 'Gratitude') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const VideoApp()),
-      );
+      // Check activity completion status before navigating to VideoApp
+      bool activityCompleted = await checkActivityCompletionStatus();
+
+      if (!activityCompleted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const VideoApp()),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Activity Already Completed'),
+              content: const Text(
+                  'You have already completed the activity within the last 24 hours.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
     if (activity == 'Mental Marathon') {
       Navigator.push(
@@ -280,23 +367,25 @@ class ActivityList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(
-                            width: 40,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: Text(
+                              activities[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              textAlign: TextAlign.justify,
+                            ),
                           ),
-                          const Spacer(),
-                          Text(
-                            activities[index],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const Spacer(), // Added
+                          // Added
+
                           IconButton(
                             color: Colors.black38,
                             iconSize: 17,
@@ -316,7 +405,7 @@ class ActivityList extends StatelessWidget {
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.normal,
                             ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.justify,
                       ),
                       const SizedBox(
                         height: 10,

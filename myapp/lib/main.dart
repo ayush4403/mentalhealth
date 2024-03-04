@@ -1,4 +1,3 @@
-//import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +32,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: theme,
-      home: const SplashScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: theme,
+        home: const SplashScreen());
   }
 }
