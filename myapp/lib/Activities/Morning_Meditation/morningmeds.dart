@@ -5,20 +5,20 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MorningMeds extends StatefulWidget {
-  const MorningMeds({super.key});
+  const MorningMeds({Key? key}) : super(key: key);
 
   @override
   State<MorningMeds> createState() => _MorningMedsState();
 }
 
 class _MorningMedsState extends State<MorningMeds> {
-  late int index;
+  late int index = 0;
   late Timer timer;
 
   @override
   void initState() {
     super.initState();
-    loadIndexFromSharedPreferences();
+    loadIndexFromSharedPreferences(); // Load index before starting the timer
     startTimer();
   }
 
@@ -30,9 +30,21 @@ class _MorningMedsState extends State<MorningMeds> {
 
   void loadIndexFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
+    DateTime lastUpdated = DateTime.fromMillisecondsSinceEpoch(
+      prefs.getInt('last_updated') ?? 0,
+    );
+    DateTime now = DateTime.now();
+
+    if (lastUpdated.day != now.day) {
+      // If it's a new day, set index to last index + 1
+      int lastIndex = prefs.getInt('meditation_index') ?? 0;
+      index = (lastIndex + 1) % 14;
+      prefs.setInt('last_updated', now.millisecondsSinceEpoch);
+      prefs.setInt('meditation_index', index);
+    } else {
+      // If it's the same day, load index from SharedPreferences
       index = prefs.getInt('meditation_index') ?? 0;
-    });
+    }
   }
 
   void saveIndexToSharedPreferences() async {
@@ -41,17 +53,21 @@ class _MorningMedsState extends State<MorningMeds> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(const Duration(hours: 24), (Timer t) {
+    DateTime now = DateTime.now();
+    DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1, 0, 0);
+    Duration durationUntilMidnight = nextMidnight.difference(now);
+
+    timer = Timer(durationUntilMidnight, () {
       setState(() {
-        index = (index + 1) % 14;
+        index = (index + 1) % 14; // Increment index by 1 every day
         saveIndexToSharedPreferences();
+        startTimer();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     List<String> images = [
       'assets/Images/Morning_meditation/mm_1.jpg',
       'assets/Images/Morning_meditation/mm_2.jpg',
@@ -70,7 +86,6 @@ class _MorningMedsState extends State<MorningMeds> {
       'assets/Images/Morning_meditation/mm_15.jpg',
     ];
 
-    // ignore: unused_local_variable
     List<String> titles = [
       'Serene Sunrise',
       'Tranquil Harmony',
@@ -127,12 +142,14 @@ class _MorningMedsState extends State<MorningMeds> {
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      body: AudioCard(
-        imageUrl: images[index],
-        title: titles[index],
-        imageshow: false,
-        timerSelectorfordisplay: false,
-        audioFileName: audios[index],
+      body: SingleChildScrollView(
+        child: AudioCard(
+          imageUrl: images[index],
+          title: titles[index],
+          imageshow: false,
+          timerSelectorfordisplay: false,
+          audioFileName: audios[index],
+        ),
       ),
     );
   }

@@ -23,7 +23,6 @@ class ChartReportTemplate extends StatelessWidget {
       'Morning Meditation',
       'Mental Marathon',
       'Sherlock Holmes',
-      'Kindness Challenge',
       'Night Music',
     ];
     String formattedDate =
