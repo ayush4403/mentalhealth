@@ -45,9 +45,20 @@ class _CardViewState extends State<CardView> {
 
     if (activityStatus != null && completionTimeString != null) {
       completionTime = DateTime.parse(completionTimeString);
-      // Calculate the difference in time
-      Duration difference = DateTime.now().difference(completionTime);
-      return difference.inHours < 24;
+      DateTime todayAtMidnight = DateTime.now().subtract(Duration(
+          hours: DateTime.now().hour,
+          minutes: DateTime.now().minute,
+          seconds: DateTime.now().second,
+          milliseconds: DateTime.now().millisecond,
+          microseconds: DateTime.now().microsecond));
+      // Check if the completion time was before today at 12 AM
+      if (completionTime.isBefore(todayAtMidnight)) {
+        return false;
+      } else {
+        // Calculate the difference in time
+        Duration difference = DateTime.now().difference(completionTime);
+        return difference.inHours < 24;
+      }
     }
     return false; // Return false if activity status not found or completion time not found
   }
@@ -354,23 +365,25 @@ class ActivityList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(
-                            width: 40,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: Text(
+                              activities[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              textAlign: TextAlign.justify,
+                            ),
                           ),
-                          const Spacer(),
-                          Text(
-                            activities[index],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const Spacer(), // Added
+                          // Added
+
                           IconButton(
                             color: Colors.black38,
                             iconSize: 17,
@@ -390,7 +403,7 @@ class ActivityList extends StatelessWidget {
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.normal,
                             ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.justify,
                       ),
                       const SizedBox(
                         height: 10,

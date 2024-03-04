@@ -3,6 +3,8 @@ import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:MindFulMe/Graphs/resources/Line.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ChartReportTemplate extends StatelessWidget {
   final String title;
@@ -17,88 +19,134 @@ class ChartReportTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // First Section: Current Date
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                DateTime.now().toString(), // Displaying current date
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+    List<dynamic> Activities = [
+      'Morning Meditation',
+      'Mental Marathon',
+      'Sherlock Holmes',
+      'Kindness Challenge',
+      'Night Music',
+    ];
+    String formattedDate =
+        DateFormat('EEEE d\'th\', MMM yyyy hh:mm:ss a').format(DateTime.now());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'My performance report',
+            style: TextStyle(
+              color: Colors.white, // Change text color to white
+              fontSize: 20, // Change font size
+              fontWeight: FontWeight.bold, // Make the text bold
             ),
-            // Second Section: Cards with Images
-            SizedBox(
-              height: 400, // Adjust the height as per your requirement
-              child: ListView.builder(
-                itemCount: 4,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 3.0,
-                    color: Colors.white,
-                    margin: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        // Image on left side
-                        Container(
-                          width: 100,
-                          height: 100,
-                          color: Colors.grey, // Placeholder color
-                          // You can use AssetImage or NetworkImage here
-                        ),
-                        SizedBox(width: 8.0),
-                        // Heading and Percentage on right side
-                        Column(
+          ),
+          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    formattedDate, // Displaying current date
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                // Second Section: Cards with Images
+                SizedBox(
+                  height: 400, // Adjust the height as per your requirement
+                  child: ListView.builder(
+                    itemCount: Activities.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 3.0,
+                        color: Colors.white,
+                        margin: EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'Heading $index',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            // Image on left side
+                            Container(
+                              width: 100,
+                              height: 100,
+                              color: Colors.grey, // Placeholder color
+                              // You can use AssetImage or NetworkImage here
                             ),
-                            Text(
-                              '10%', // Replace with actual percentage
-                              style: TextStyle(
-                                fontSize: 6.0,
-                                color: Color.fromARGB(255, 239, 16, 16),
-                              ),
+                            SizedBox(
+                              width: 8.0,
+                            ),
+                            // Heading and Percentage on right side
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    Activities[index],
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      borderRadius: BorderRadius.circular(25)),
+                                  child: CircularPercentIndicator(
+                                    radius: 25,
+                                    percent: 0.4,
+                                    lineWidth: 2,
+                                    backgroundColor: Colors.blueAccent,
+                                    center: Text(
+                                      '40%', // Replace with actual percentage
+                                      style: TextStyle(
+                                        fontSize: 13.0,
+                                        color: Color.fromARGB(255, 239, 16, 16),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      );
+                    },
+                  ),
+                ),
+
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: BarChartSample2(),
+                ),
+              ],
             ),
-            const SizedBox(
-              width: double.infinity,
-              height: 300,
-              child: LineChartD(isShowingMainData: true),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 300,
-              child: BarChartSample2(),
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 300,
-              child: PieChartSample1(),
-            ),
-          ],
+          ),
         ),
       ),
     );

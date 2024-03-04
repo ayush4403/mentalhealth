@@ -50,23 +50,36 @@ class _VideoAppState extends State<VideoApp> {
 
     if (activityStatus != null && completionTimeString != null) {
       completionTime = DateTime.parse(completionTimeString);
-      // Calculate the difference in time
-      Duration difference = DateTime.now().difference(completionTime);
-      if (difference.inSeconds < 20) {
-        // If less than 24 hours have passed, prevent the user from accessing the page
+      DateTime todayAtMidnight = DateTime.now().subtract(Duration(
+          hours: DateTime.now().hour,
+          minutes: DateTime.now().minute,
+          seconds: DateTime.now().second,
+          milliseconds: DateTime.now().millisecond,
+          microseconds: DateTime.now().microsecond));
+      // Check if the completion time was before today at 12 AM
+      if (completionTime.isBefore(todayAtMidnight)) {
         setState(() {
-          activityCompleted = true;
-          activityCompletionTime = completionTime!;
+          activityCompleted = false;
         });
-        // Start a timer to re-enable access after
-        startTimer(20 - difference.inSeconds);
+      } else {
+        // If not, calculate the difference in time
+        Duration difference = DateTime.now().difference(completionTime);
+        if (difference.inHours < 24) {
+          // If less than 24 hours have passed since the last completion, prevent the user from accessing the page
+          setState(() {
+            activityCompleted = true;
+            activityCompletionTime = completionTime!;
+          });
+          // Start a timer to re-enable access after
+          startTimer(24 - difference.inHours);
+        }
       }
     }
   }
 
 // Start a timer to re-enable access after a specified number of hours
   void startTimer(int remainingHours) {
-    _timer = Timer(Duration(seconds: remainingHours), () {
+    _timer = Timer(Duration(hours: remainingHours), () {
       setState(() {
         activityCompleted = false;
       });

@@ -49,6 +49,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   flutter_charts: ^0.5.2
   fl_chart: ^0.66.2
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
