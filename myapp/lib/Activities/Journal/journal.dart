@@ -164,7 +164,6 @@ class _JournalScreenState extends State<JournalScreen>
         ),
         actions: [
           if (!_showSearchText) // Only show search icon if search is enabled
-
             IconButton(
               icon: const Icon(
                 Icons.search,
@@ -212,7 +211,7 @@ class _JournalScreenState extends State<JournalScreen>
           ),
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 240, 242, 244),
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: isGridView ? _buildGridView() : _buildListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
