@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
             description: '',
             title: '',
             onTap: () {
+              // ignore: avoid_print
               print('chart');
             },
           ),

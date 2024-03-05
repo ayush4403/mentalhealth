@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
 
@@ -25,13 +26,13 @@ class BarChartSample2State extends State<BarChartSample2> {
   @override
   void initState() {
     super.initState();
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-    final barGroup6 = makeGroupData(5, 19, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 1.5);
+    final barGroup1 = makeGroupData(0, 5, 2);
+    final barGroup2 = makeGroupData(1, 7, 3);
+    final barGroup3 = makeGroupData(2, 9, 4);
+    final barGroup4 = makeGroupData(3, 13, 5);
+    final barGroup5 = makeGroupData(4, 15, 6);
+    final barGroup6 = makeGroupData(5, 20, 7);
+    final barGroup7 = makeGroupData(6, 5, 2);
 
     final items = [
       barGroup1,
@@ -58,23 +59,12 @@ class BarChartSample2State extends State<BarChartSample2> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                makeTransactionsIcon(),
-                const SizedBox(
-                  width: 38,
-                ),
-                const Text(
-                  'Transactions',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                const Text(
-                  'state',
-                  style: TextStyle(color: Color(0xff77839a), fontSize: 16),
-                ),
+                _buildIndicator(widget.leftBarColor, 'Required Meditation'),
+                const SizedBox(width: 10),
+                _buildIndicator(widget.rightBarColor, 'Done Meditation'),
+                const SizedBox(width: 10),
               ],
             ),
             const SizedBox(
@@ -176,15 +166,17 @@ class BarChartSample2State extends State<BarChartSample2> {
     const style = TextStyle(
       color: Color(0xff7589a2),
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 12,
     );
     String text;
-    if (value == 0) {
-      text = '1K';
+    if (value == 5) {
+      text = '5';
     } else if (value == 10) {
-      text = '5K';
-    } else if (value == 19) {
-      text = '10K';
+      text = '10';
+    } else if (value == 15) {
+      text = '15';
+    } else if (value == 20) {
+      text = '30';
     } else {
       return Container();
     }
@@ -196,7 +188,15 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
+    final titles = <String>[
+      'Day1',
+      'Day2',
+      'Day3',
+      'Day4',
+      'Day5',
+      'Day6',
+      'Day7'
+    ];
 
     final Widget text = Text(
       titles[value.toInt()],
@@ -216,7 +216,7 @@ class BarChartSample2State extends State<BarChartSample2> {
 
   BarChartGroupData makeGroupData(int x, double y1, double y2) {
     return BarChartGroupData(
-      barsSpace: 4,
+      barsSpace: 8,
       x: x,
       barRods: [
         BarChartRodData(
@@ -242,7 +242,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 10,
-          color: Colors.white.withOpacity(0.4),
+          color: const Color.fromARGB(255, 235, 100, 100).withOpacity(0.4),
         ),
         const SizedBox(
           width: space,
@@ -250,7 +250,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 28,
-          color: Colors.white.withOpacity(0.8),
+          color: const Color.fromARGB(255, 213, 69, 69).withOpacity(0.8),
         ),
         const SizedBox(
           width: space,
@@ -258,7 +258,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 42,
-          color: Colors.white.withOpacity(1),
+          color: Color.fromARGB(255, 28, 6, 107).withOpacity(1),
         ),
         const SizedBox(
           width: space,
@@ -266,7 +266,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 28,
-          color: Colors.white.withOpacity(0.8),
+          color: Color.fromARGB(255, 39, 180, 18).withOpacity(0.8),
         ),
         const SizedBox(
           width: space,
@@ -274,8 +274,22 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 10,
-          color: Colors.white.withOpacity(0.4),
+          color: Color.fromARGB(255, 244, 17, 221).withOpacity(0.4),
         ),
+      ],
+    );
+  }
+
+  Widget _buildIndicator(Color color, String description) {
+    return Row(
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          color: color,
+        ),
+        const SizedBox(width: 5),
+        Text(description),
       ],
     );
   }

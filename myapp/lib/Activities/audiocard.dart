@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -13,6 +12,7 @@ class AudioCardVisualize extends StatefulWidget {
   final bool showPlaybackControlButton;
   final bool showTimerSelector;
   final bool imageshow;
+  final bool volumeController;
   final VoidCallback onAudioPlay; // Add callback function
 
   const AudioCardVisualize({
@@ -21,6 +21,7 @@ class AudioCardVisualize extends StatefulWidget {
     required this.audioFileName,
     this.showProgressBar = true,
     this.showPlaybackControlButton = true,
+    this.volumeController = true,
     this.showTimerSelector = true,
     this.imageshow = true,
     required this.onAudioPlay, // Receive callback function
@@ -104,6 +105,45 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
           },
         );
       },
+    );
+  }
+
+  // ignore: unused_element
+  Widget _volumeControlButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.volume_down),
+          onPressed: () {
+            setState(() {
+              _player.setVolume((_player.volume - 0.1)
+                  .clamp(0.0, 1.0)); // Decrease volume by 0.1
+            });
+          },
+        ),
+        Expanded(
+          child: Slider(
+            value: _player.volume, // Use player's volume as the initial value
+            min: 0.0,
+            max: 1.0,
+            onChanged: (value) {
+              setState(() {
+                _player.setVolume(value); // Set volume based on slider value
+              });
+            },
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.volume_up),
+          onPressed: () {
+            setState(() {
+              _player.setVolume((_player.volume + 0.1)
+                  .clamp(0.0, 1.0)); // Increase volume by 0.1
+            });
+          },
+        ),
+      ],
     );
   }
 
@@ -256,6 +296,7 @@ class _AudioCardVisualizeState extends State<AudioCardVisualize> {
                     if (widget.showPlaybackControlButton)
                       _playbackControlButton(),
                     if (widget.showTimerSelector) _timerSelector(),
+                    _volumeControlButton(),
                   ],
                 ),
               ),

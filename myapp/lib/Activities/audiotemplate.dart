@@ -396,7 +396,7 @@ class _AudioCardState extends State<AudioCard> {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

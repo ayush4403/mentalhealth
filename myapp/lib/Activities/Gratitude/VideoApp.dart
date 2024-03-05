@@ -1,21 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:scratcher/scratcher.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
+// ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:scratcher/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:async';
 
 class VideoApp extends StatefulWidget {
-  const VideoApp({Key? key});
+  const VideoApp({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _VideoAppState createState() => _VideoAppState();
 }
 
@@ -34,6 +32,7 @@ class _VideoAppState extends State<VideoApp> {
   late DateTime activityCompletionTime;
 
   // Timer to check if 24 hours have passed
+  // ignore: unused_field
   late Timer _timer;
 
   @override
@@ -56,23 +55,36 @@ class _VideoAppState extends State<VideoApp> {
 
     if (activityStatus != null && completionTimeString != null) {
       completionTime = DateTime.parse(completionTimeString);
-      // Calculate the difference in time
-      Duration difference = DateTime.now().difference(completionTime);
-      if (difference.inSeconds < 20) {
-        // If less than 24 hours have passed, prevent the user from accessing the page
+      DateTime todayAtMidnight = DateTime.now().subtract(Duration(
+          hours: DateTime.now().hour,
+          minutes: DateTime.now().minute,
+          seconds: DateTime.now().second,
+          milliseconds: DateTime.now().millisecond,
+          microseconds: DateTime.now().microsecond));
+      // Check if the completion time was before today at 12 AM
+      if (completionTime.isBefore(todayAtMidnight)) {
         setState(() {
-          activityCompleted = true;
-          activityCompletionTime = completionTime!;
+          activityCompleted = false;
         });
-        // Start a timer to re-enable access after
-        startTimer();
+      } else {
+        // If not, calculate the difference in time
+        Duration difference = DateTime.now().difference(completionTime);
+        if (difference.inHours < 24) {
+          // If less than 24 hours have passed since the last completion, prevent the user from accessing the page
+          setState(() {
+            activityCompleted = true;
+            activityCompletionTime = completionTime!;
+          });
+          // Start a timer to re-enable access after
+          startTimer(24 - difference.inHours);
+        }
       }
     }
   }
 
 // Start a timer to re-enable access after a specified number of hours
-  void startTimer() {
-    _timer = Timer(Duration(seconds: 30), () {
+  void startTimer(int remainingHours) {
+    _timer = Timer(Duration(hours: remainingHours), () {
       setState(() {
         activityCompleted = false;
       });
@@ -297,11 +309,13 @@ class _VideoAppState extends State<VideoApp> {
                             saveUserActivity(user!.uid, 'gratitude',
                                 gratitudeController.text);
                             await saveActivityCompletionStatus();
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CardView()));
+                                    builder: (context) => const CardView()));
                           } else {
+                            // ignore: avoid_print
                             print('Your text is empty');
                           }
                         },
