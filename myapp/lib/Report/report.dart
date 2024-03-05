@@ -2,6 +2,7 @@ import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
+
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ChartReportTemplate extends StatelessWidget {
@@ -18,15 +19,23 @@ class ChartReportTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: non_constant_identifier_names
     List<dynamic> Activities = [
       'Morning Meditation',
       'Mental Marathon',
       'Sherlock Holmes',
       'Night Music',
     ];
+
+    final List<String> activityImages = [
+      'assets/Images/Report/1_Meditation.jpg',
+      'assets/Images/Report/2_Marathon.jpg',
+      'assets/Images/Report/3_Sherlock.jpg',
+      'assets/Images/Report/4_Music.jpg',
+    ];
+
     String formattedDate =
         DateFormat('EEEE d\'th\', MMM yyyy hh:mm:ss a').format(DateTime.now());
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -34,9 +43,9 @@ class ChartReportTemplate extends StatelessWidget {
           title: const Text(
             'My performance report',
             style: TextStyle(
-              color: Colors.white, // Change text color to white
-              fontSize: 20, // Change font size
-              fontWeight: FontWeight.bold, // Make the text bold
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 0, 111, 186),
@@ -51,39 +60,36 @@ class ChartReportTemplate extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    formattedDate, // Displaying current date
+                    formattedDate,
                     style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                // Second Section: Cards with Images
                 SizedBox(
-                  height: 400, // Adjust the height as per your requirement
+                  height: 400,
                   child: ListView.builder(
                     itemCount: Activities.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
                       return Card(
-                        elevation: 3.0,
+                        elevation: 12.0,
                         color: Colors.white,
                         margin: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Image on left side
-                            Container(
+                            Image.asset(
+                              activityImages[index],
                               width: 100,
                               height: 100,
-                              color: Colors.grey, // Placeholder color
-                              // You can use AssetImage or NetworkImage here
+                              fit: BoxFit.contain,
                             ),
                             const SizedBox(
                               width: 8.0,
                             ),
-                            // Heading and Percentage on right side
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +98,7 @@ class ChartReportTemplate extends StatelessWidget {
                                   height: 25,
                                 ),
                                 SizedBox(
-                                  width: 150,
+                                  width: 220,
                                   child: Text(
                                     Activities[index],
                                     style: const TextStyle(
@@ -101,15 +107,37 @@ class ChartReportTemplate extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                const SizedBox(height: 25.0),
+                                Row(
+                                  children: List.generate(
+                                    7,
+                                    (dayIndex) {
+                                      // Replace the condition with your actual logic
+                                      bool isDayDone = dayIndex % 2 == 0;
+                                      return Container(
+                                        width: 20,
+                                        height: 20,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 2.0),
+                                        decoration: BoxDecoration(
+                                          color: isDayDone
+                                              ? Colors.green
+                                              : Colors.red,
+                                          shape: BoxShape.rectangle,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ],
-                            ),
-                            const SizedBox(
-                              width: 50,
                             ),
                             Column(
                               children: [
                                 const SizedBox(
                                   height: 20,
+                                  
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
@@ -118,10 +146,10 @@ class ChartReportTemplate extends StatelessWidget {
                                   child: CircularPercentIndicator(
                                     radius: 25,
                                     percent: 0.4,
-                                    lineWidth: 2,
+                                    lineWidth: 3,
                                     backgroundColor: Colors.blueAccent,
                                     center: const Text(
-                                      '40%', // Replace with actual percentage
+                                      '40%',
                                       style: TextStyle(
                                         fontSize: 13.0,
                                         color: Color.fromARGB(255, 239, 16, 16),
@@ -137,7 +165,6 @@ class ChartReportTemplate extends StatelessWidget {
                     },
                   ),
                 ),
-
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.4,

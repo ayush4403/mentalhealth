@@ -47,6 +47,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   intl: ^0.19.0
   flutter_colorpicker: ^1.0.3
+  scratcher: ^2.5.0
   flutter_charts: ^0.5.2
   fl_chart: ^0.66.2
   percent_indicator: ^4.2.3
@@ -326,13 +327,11 @@ flutter:
     #Mental Marathon
     - assets/Images/Mental Mararthon/Baloon.png
 
-    #power nap
-    - assets/Images/power_nap/pn_1.jpg
-    - assets/Images/power_nap/pn_2.jpg
-    - assets/Images/power_nap/pn_3.jpg
-    - assets/Images/power_nap/pn_4.jpg
-    - assets/Images/power_nap/pn_5.jpg
-    - assets/Images/power_nap/pn_6.jpg
+    #Reports
+    - assets/Images/Report/1_Meditation.jpg
+    - assets/Images/Report/2_Marathon.jpg
+    - assets/Images/Report/3_Sherlock.jpg
+    - assets/Images/Report/4_Music.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

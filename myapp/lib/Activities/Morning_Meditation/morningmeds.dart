@@ -1,11 +1,13 @@
+import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:MindFulMe/Activities/cardview.dart';
 
 class MorningMeds extends StatefulWidget {
-  const MorningMeds({Key? key}) : super(key: key);
+  const MorningMeds({super.key});
 
   @override
   State<MorningMeds> createState() => _MorningMedsState();
@@ -57,13 +59,18 @@ class _MorningMedsState extends State<MorningMeds> {
     DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1, 0, 0);
     Duration durationUntilMidnight = nextMidnight.difference(now);
 
-    timer = Timer(durationUntilMidnight, () {
-      setState(() {
-        index = (index + 1) % 14; // Increment index by 1 every day
-        saveIndexToSharedPreferences();
-        startTimer();
-      });
-    });
+    timer = Timer(
+      durationUntilMidnight,
+      () {
+        setState(
+          () {
+            index = (index + 1) % 14; // Increment index by 1 every day
+            saveIndexToSharedPreferences();
+            startTimer();
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -89,19 +96,19 @@ class _MorningMedsState extends State<MorningMeds> {
     List<String> titles = [
       'Serene Sunrise',
       'Tranquil Harmony',
-      'Dawns Delight',
+      'Dawn\'s Delight',
       'Peaceful Awakening',
       'Morning Bliss',
       'Zen Zephyr',
       'Gentle Dawn Chorus',
-      'Harmonys Embrace',
+      'Harmony\'s Embrace',
       'Sunrise Serenity',
-      'Tranquilitys Touch',
+      'Tranquility\'s Touch',
       'Radiant Morning Hues',
       'Blissful Daybreak',
       'Peaceful Dawn Melodies',
-      'Serenitys Symphony',
-      'Morning Mists Melody',
+      'Serenity\'s Symphony',
+      'Morning Mist\'s Melody',
     ];
 
     List<String> audios = [
@@ -143,12 +150,50 @@ class _MorningMedsState extends State<MorningMeds> {
       ),
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: SingleChildScrollView(
-        child: AudioCard(
-          imageUrl: images[index],
-          title: titles[index],
-          imageshow: false,
-          timerSelectorfordisplay: false,
-          audioFileName: audios[index],
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              child: AudioCard(
+                imageUrl: images[index],
+                title: titles[index],
+                imageshow: false,
+                timerSelectorfordisplay: false,
+                audioFileName: audios[index],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MorningMeditation()),
+                );
+              },
+              child: const Text(
+                "Want more?",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(
+                  const CardView(),
+                );
+              },
+              child: const Text('Activity done'),
+            ),
+          ],
         ),
       ),
     );
