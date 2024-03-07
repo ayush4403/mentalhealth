@@ -1,16 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
+import 'package:MindFulMe/Activities/Music/music_main.dart';
+import 'package:MindFulMe/Activities/Night_Music/night_main.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/GetStarted.dart';
-import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
-import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
@@ -234,13 +233,17 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MorningMeds()),
+        MaterialPageRoute(
+          builder: (context) => const MorningMeds(),
+        ),
       );
     }
     if (activity == 'Night Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const NightMusicScreen()),
+        MaterialPageRoute(
+          builder: (context) => const NightMain(),
+        ),
       );
     }
     if (activity == 'Gratitude') {
@@ -276,61 +279,81 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const GetStartedPage()),
+        MaterialPageRoute(
+          builder: (context) => const GetStartedPage(),
+        ),
       );
     }
     if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const LetsPlay()),
+        MaterialPageRoute(
+          builder: (context) => const LetsPlay(),
+        ),
       );
     }
     if (activity == 'Daily Thoughts') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const DailyQuotesScreen()),
+        MaterialPageRoute(
+          builder: (context) => const DailyQuotesScreen(),
+        ),
       );
     }
     if (activity == 'Study Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const StudyMusicScreen()),
+        MaterialPageRoute(
+          builder: (context) => const StudyMusicScreen(),
+        ),
       );
     }
     if (activity == 'Kindness Challenge') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const KindnessPageClass()),
+        MaterialPageRoute(
+          builder: (context) => const KindnessPageClass(),
+        ),
       );
     }
     if (activity == 'Affirmation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const AffirmationApp()),
+        MaterialPageRoute(
+          builder: (context) => const AffirmationApp(),
+        ),
       );
     }
     if (activity == 'Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MusicList()),
+        MaterialPageRoute(
+          builder: (context) => const MainMusic(),
+        ),
       );
     }
     if (activity == 'Tratak') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const TratakaIntroScreen()),
+        MaterialPageRoute(
+          builder: (context) => const TratakaIntroScreen(),
+        ),
       );
     }
     if (activity == 'Power nap') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const PowerNapList()),
+        MaterialPageRoute(
+          builder: (context) => const PowerNapList(),
+        ),
       );
     }
     if (activity == 'Journal') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const JournalScreen()),
+        MaterialPageRoute(
+          builder: (context) => const JournalScreen(),
+        ),
       );
     }
   }

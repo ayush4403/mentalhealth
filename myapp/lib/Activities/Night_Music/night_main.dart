@@ -1,4 +1,4 @@
-import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
+import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +6,14 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:MindFulMe/Activities/cardview.dart';
 
-class MorningMeds extends StatefulWidget {
-  const MorningMeds({super.key});
+class NightMain extends StatefulWidget {
+  const NightMain({super.key});
 
   @override
-  State<MorningMeds> createState() => _MorningMedsState();
+  State<NightMain> createState() => _NightMainState();
 }
 
-class _MorningMedsState extends State<MorningMeds> {
+class _NightMainState extends State<NightMain> {
   late int index = 0;
   late Timer timer;
 
@@ -76,57 +76,27 @@ class _MorningMedsState extends State<MorningMeds> {
   @override
   Widget build(BuildContext context) {
     List<String> images = [
-      'assets/Images/Morning_meditation/mm_1.jpg',
-      'assets/Images/Morning_meditation/mm_2.jpg',
-      'assets/Images/Morning_meditation/mm_3.jpg',
-      'assets/Images/Morning_meditation/mm_4.jpg',
-      'assets/Images/Morning_meditation/mm_5.jpg',
-      'assets/Images/Morning_meditation/mm_6.jpg',
-      'assets/Images/Morning_meditation/mm_7.jpg',
-      'assets/Images/Morning_meditation/mm_8.jpg',
-      'assets/Images/Morning_meditation/mm_9.jpg',
-      'assets/Images/Morning_meditation/mm_10.jpg',
-      'assets/Images/Morning_meditation/mm_11.jpg',
-      'assets/Images/Morning_meditation/mm_12.jpg',
-      'assets/Images/Morning_meditation/mm_13.jpg',
-      'assets/Images/Morning_meditation/mm_14.jpg',
-      'assets/Images/Morning_meditation/mm_15.jpg',
+      'assets/Images/night_music/new_nm_1.jpg',
+      'assets/Images/night_music/new_nm_2.jpg',
+      'assets/Images/night_music/new_nm_3.jpg',
+      'assets/Images/night_music/new_nm_4.jpg',
+      'assets/Images/night_music/new_nm_5.jpg',
     ];
 
     List<String> titles = [
-      'Serene Sunrise',
-      'Tranquil Harmony',
-      'Dawn\'s Delight',
-      'Peaceful Awakening',
-      'Morning Bliss',
-      'Zen Zephyr',
-      'Gentle Dawn Chorus',
-      'Harmony\'s Embrace',
-      'Sunrise Serenity',
-      'Tranquility\'s Touch',
-      'Radiant Morning Hues',
-      'Blissful Daybreak',
-      'Peaceful Dawn Melodies',
-      'Serenity\'s Symphony',
-      'Morning Mist\'s Melody',
+      'MoonTunes',
+      'Midnight Melodies',
+      'Nocturnal Notes',
+      'Starry Soundtrack',
+      'Twilight Tunes',
     ];
 
     List<String> audios = [
-      'MORNING MEDITATION/Guided/Guided 1.mp3',
-      'MORNING MEDITATION/Visualize/Visualize 1.mp3',
-      'MORNING MEDITATION/Brainbeats/B-BALANCE BRAIN AND BODY.mp3',
-      'MORNING MEDITATION/Guided/Guided 3.mp3',
-      'MORNING MEDITATION/Visualize/Visualize 3.mp3',
-      'MORNING MEDITATION/Brainbeats/._F-FOCUS.mp3',
-      'MORNING MEDITATION/Guided/Guided 5.mp3',
-      'MORNING MEDITATION/Visualize/Visualize 9.mp3',
-      'MORNING MEDITATION/Brainbeats/F-SELF CONCIOUSNEES-.mp3',
-      'MORNING MEDITATION/Guided/Guided 7.mp3',
-      'MORNING MEDITATION/Visualize/Visualize 5.mp3',
-      'MORNING MEDITATION/Brainbeats/F-alertness-relaxed.mp3',
-      'MORNING MEDITATION/Guided/Guided 9.mp3',
-      'MORNING MEDITATION/Visualize/Visualize 7.mp3',
-      'MORNING MEDITATION/Brainbeats/I-CREATIVITY.mp3',
+      'Night Music/F-MEDITATION SLEEP-INNER AWARENESS.mp3',
+      'Night Music/I-ACCELERATED LEARNING-.mp3',
+      'Night Music/I-FRONTAL LOBE.mp3',
+      'Night Music/I-PROBLEM SOLVING SKILL.mp3',
+      'Night Music/M-INCREASE MEMORY RETENTION.mp3',
     ];
 
     return Scaffold(
@@ -139,7 +109,7 @@ class _MorningMedsState extends State<MorningMeds> {
           },
         ),
         title: const Text(
-          'Morning Meditation',
+          'Night Music',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -169,7 +139,8 @@ class _MorningMedsState extends State<MorningMeds> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MorningMeditation()),
+                    builder: (context) => const NightMusic(),
+                  ),
                 );
               },
               child: const Text(

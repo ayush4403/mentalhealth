@@ -238,6 +238,9 @@ class _AudioCardState extends State<AudioCard> {
                 padding: const EdgeInsets.only(top: 10.0),
                 child: _playbackControlButton(),
               ),
+              const SizedBox(
+                height: 50,
+              ),
             ],
           ),
         ),
