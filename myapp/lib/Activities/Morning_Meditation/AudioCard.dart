@@ -1,12 +1,11 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: file_names
+import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class AudioCard extends StatefulWidget {
+class AudioCard1 extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String audioFileName;
@@ -16,7 +15,8 @@ class AudioCard extends StatefulWidget {
   final bool imageshow;
   final bool timerSelectorfordisplay;
 
-  const AudioCard({
+  // ignore: use_super_parameters
+  const AudioCard1({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
@@ -25,75 +25,28 @@ class AudioCard extends StatefulWidget {
     this.showTimerSelector = true,
     this.imageshow = true,
     this.timerSelectorfordisplay = true,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _AudioCardState createState() => _AudioCardState();
+  _AudioCard1State createState() => _AudioCard1State();
 }
 
-class _AudioCardState extends State<AudioCard> {
+class _AudioCard1State extends State<AudioCard1> {
   final _player = AudioPlayer();
   double selectedDuration = 0.0;
   bool timerSelectorforexample = false;
-  bool isSessionActive = false;
-  late Timer _sessionTimer;
-  int _sessionDurationInSeconds = 0;
-  int indexweek = 1;
-  int indexday = 1;
-  // ignore: unused_field
-  final List<int> _sessionData = List.filled(7, 0);
 
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
-
-    Timer.periodic(const Duration(days: 1), (timer) {
-      // Get the current time
-      DateTime now = DateTime.now();
-      // Check if it's midnight
-      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
-        setState(() {
-          indexday++;
-        });
-        if (indexday > 7) {
-          indexday = 1;
-          indexweek++;
-          _createNewWeekDocument(_sessionDurationInSeconds);
-        }
-      }
-    });
-  }
-
-  Future<void> _createNewWeekDocument(int timerdata) async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    final userDoc = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(user!.uid)
-        .collection('MeditationData')
-        .doc('week$indexweek');
-
-    final userData = await userDoc.get();
-    if (userData.exists) {
-      // If the document exists, update the corresponding day field
-      final Map<String, dynamic> updatedData = {
-        ...userData.data()!,
-        'day$indexday': timerdata
-      };
-      await userDoc.set(updatedData);
-    } else {
-      // If the document does not exist, create a new document
-      final Map<String, dynamic> initialData = {'day$indexday': timerdata};
-      await userDoc.set(initialData);
-    }
   }
 
   @override
-  void didUpdateWidget(AudioCard oldWidget) {
+  void didUpdateWidget(AudioCard1 oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.audioFileName != widget.audioFileName) {
       _updateAudioSource(widget.audioFileName);
@@ -116,12 +69,6 @@ class _AudioCardState extends State<AudioCard> {
     super.dispose();
   }
 
-  void _stopSessionTimer() {
-    _sessionTimer.cancel();
-
-    _sessionDurationInSeconds = 0;
-  }
-
   Future<String> getAudioUrl(String audioFileName) async {
     try {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
@@ -137,14 +84,6 @@ class _AudioCardState extends State<AudioCard> {
     await _updateAudioSource(widget.audioFileName);
   }
 
-  void _startSessionTimer() {
-    _sessionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _sessionDurationInSeconds++;
-      });
-    });
-  }
-
   Widget _example() {
     Size size = MediaQuery.of(context).size;
     // Add a variable to control visibility
@@ -152,7 +91,7 @@ class _AudioCardState extends State<AudioCard> {
     return SingleChildScrollView(
       child: SafeArea(
         child: Container(
-          height: size.height * 0.8,
+          height: size.height * 0.86,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -256,28 +195,32 @@ class _AudioCardState extends State<AudioCard> {
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10.0),
-                  padding: const EdgeInsets.all(7),
-                  width: 280,
-                  height: 280,
-                  decoration: const BoxDecoration(
-                      color: Color(0xffE5F1FD),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xff97A4B7),
-                            offset: Offset(8.0, 10.0),
-                            blurRadius: 25.0)
-                      ]),
-                  child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.all(7),
+                width: 280,
+                height: 280,
+                decoration: const BoxDecoration(
+                    color: Color(0xffE5F1FD),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xff97A4B7),
+                          offset: Offset(8.0, 10.0),
+                          blurRadius: 25.0)
+                    ]),
+                child: Container(
+                  // ignore: unnecessary_new
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    // ignore: unnecessary_new
+                    image: new DecorationImage(
+                      fit: BoxFit.cover,
                       // ignore: unnecessary_new
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          // ignore: unnecessary_new
-                          image: new DecorationImage(
-                              fit: BoxFit.cover,
-                              // ignore: unnecessary_new
-                              image: new AssetImage(widget.imageUrl))))),
+                      image: new AssetImage(widget.imageUrl),
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 8.0),
                 child: Text(
@@ -298,97 +241,53 @@ class _AudioCardState extends State<AudioCard> {
               if (timerSelectorforexample)
                 _timerSelector(), // Show the timer selector based on the variable
               Padding(padding: EdgeInsets.zero, child: _progessBar()),
-              if (widget.showPlaybackControlButton)
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: _playbackControlButton(),
-                ),
-              ElevatedButton(
-                onPressed: () async {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Confirmation"),
-                        content: const Text(
-                            "Are you sure you want to start the meditation session?"),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.of(context).pop(); // Close the dialog
-                              setState(() {
-                                isSessionActive = true;
-                                _player.play();
-                                _startSessionTimer();
-                                // Increment the day index
-                              });
-                              // Update the user's data in Firestore
-                            },
-                            child: const Text("Yes"),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: const Text("No"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: const Text('Start Meditation Session'),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: _playbackControlButton(),
               ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _customButton(
+                      "Brain Entrainment", _onBrainEntrainmentPressed),
+                  _customButton("Guided", _onGuidedPressed),
+                  _customButton("Visualize", _onVisualizePressed),
+                ],
+              ),
+              const SizedBox(height: 20),
+              _volumeControlButton(),
 
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Confirmation"),
-                        content: const Text(
-                            "Are you sure you want to stop the meditation session?"),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              // ignore: avoid_print
-                              print(
-                                  'Session Timer: $_sessionDurationInSeconds seconds');
-                              // ignore: unused_local_variable
-                              final User? user = FirebaseAuth
-                                  .instance.currentUser; // Close the dialog
-                              _createNewWeekDocument(_sessionDurationInSeconds);
-                              setState(() {
-                                isSessionActive = false;
-                                _player.pause();
-                                _player.seek(Duration.zero);
-
-                                _stopSessionTimer();
-                              });
-                            },
-                            child: const Text("Yes"),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: const Text("No"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: const Text('Stop Meditation Session'),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
+              _doneButton(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _customButton(String label, Function() onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text(label),
+    );
+  }
+
+  Widget _doneButton() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const CardView()), // Navigate to CardView.dart
+        );
+      },
+      child: ElevatedButton(
+        onPressed: () {
+          // Handle "Done" button tap
+        },
+        child: const Text("Done"),
       ),
     );
   }
@@ -515,46 +414,71 @@ class _AudioCardState extends State<AudioCard> {
     );
   }
 
+  Widget _volumeControlButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.volume_down),
+          onPressed: () {
+            setState(() {
+              _player.setVolume((_player.volume - 0.1)
+                  .clamp(0.0, 1.0)); // Decrease volume by 0.1
+            });
+          },
+        ),
+        Expanded(
+          child: Slider(
+            value: _player.volume, // Use player's volume as the initial value
+            min: 0.0,
+            max: 1.0,
+            onChanged: (value) {
+              setState(() {
+                _player.setVolume(value); // Set volume based on slider value
+              });
+            },
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.volume_up),
+          onPressed: () {
+            setState(() {
+              _player.setVolume((_player.volume + 0.1)
+                  .clamp(0.0, 1.0)); // Increase volume by 0.1
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  void _onBrainEntrainmentPressed() {
+    // Handle "Brain Entrainment" button tap
+  }
+
+  void _onGuidedPressed() {
+    // Handle "Guided" button tap
+  }
+
+  void _onVisualizePressed() {
+    // Handle "Visualize" button tap
+  }
+
   @override
   Widget build(BuildContext context) {
-    // ignore: avoid_print
-    print('Audio file name: ${widget.audioFileName}');
     // ignore: sized_box_for_whitespace
     return Container(
       width: MediaQuery.of(context).size.width,
       // ignore: avoid_unnecessary_containers
-      child: Container(
-        child: Card(
-          elevation: 9,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
-          child: Stack(
-            children: [
-              if (widget.imageshow)
-                Transform.translate(
-                  offset: const Offset(130, -50),
-                  child: ClipRRect(
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(10)),
-                    child: Image.asset(
-                      widget.imageUrl,
-                      width: 120,
-                      height: 120,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Placeholder for the image
-                    _example(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Placeholder for the image
+            _example(),
+          ],
         ),
       ),
     );

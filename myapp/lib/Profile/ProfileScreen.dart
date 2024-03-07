@@ -4,7 +4,7 @@ import 'package:MindFulMe/Profile/PersonelInfo.dart';
 import 'package:MindFulMe/Startup/Registration/signin.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key});
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

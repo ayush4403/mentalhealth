@@ -12,6 +12,6 @@ class ProSetting extends StatefulWidget {
 class _ProSettingState extends State<ProSetting> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

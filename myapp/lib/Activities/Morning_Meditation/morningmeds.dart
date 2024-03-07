@@ -1,6 +1,7 @@
 import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,8 @@ class MorningMeds extends StatefulWidget {
 class _MorningMedsState extends State<MorningMeds> {
   late int index = 0;
   late Timer timer;
+  late DateTime sessionStartTime;
+  bool isSessionActive = false;
 
   @override
   void initState() {
@@ -27,7 +30,41 @@ class _MorningMedsState extends State<MorningMeds> {
   @override
   void dispose() {
     timer.cancel();
+    if (isSessionActive) {
+      saveMeditationSessionToFirestore(
+          DateTime.now().difference(sessionStartTime).inSeconds);
+    }
     super.dispose();
+    super.dispose();
+  }
+
+  void saveMeditationSessionToFirestore(int meditationDuration) async {
+    String userId = ''; // Get the user ID from authentication
+    DateTime sessionDate = sessionStartTime; // Date of the session
+    // Firestore instance
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      await firestore
+          .collection('users')
+          .doc(userId)
+          .collection('meditation_sessions')
+          .add({
+        'date': sessionDate,
+        'duration_seconds': meditationDuration,
+      });
+    } catch (error) {
+      // ignore: avoid_print
+      print('Error saving meditation session: $error');
+    }
+  }
+
+  void startSession() {
+    setState(() {
+      isSessionActive = true;
+      sessionStartTime = DateTime.now();
+      startTimer();
+    });
   }
 
   void loadIndexFromSharedPreferences() async {
@@ -159,6 +196,7 @@ class _MorningMedsState extends State<MorningMeds> {
                 imageshow: false,
                 timerSelectorfordisplay: false,
                 audioFileName: audios[index],
+                showPlaybackControlButton: false,
               ),
             ),
             const SizedBox(

@@ -2,8 +2,8 @@
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
-import 'package:MindFulMe/Activities/Music/music_main.dart';
 import 'package:MindFulMe/Activities/Night_Music/night_main.dart';
+import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
 import 'package:flutter/material.dart';
@@ -328,7 +328,7 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MainMusic(),
+          builder: (context) => const MusicListScreen(),
         ),
       );
     }
