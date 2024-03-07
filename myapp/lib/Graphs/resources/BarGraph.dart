@@ -112,87 +112,98 @@ class BarChartSample2State extends State<BarChartSample2> {
               height: 38,
             ),
             Expanded(
-              child: BarChart(
-                BarChartData(
-                  maxY: 20,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      tooltipBgColor: Colors.grey,
-                      getTooltipItem: (a, b, c, d) => null,
-                    ),
-                    touchCallback: (FlTouchEvent event, response) {
-                      if (response == null || response.spot == null) {
-                        setState(() {
-                          touchedGroupIndex = -1;
-                          showingBarGroups = List.of(rawBarGroups);
-                        });
-                        return;
-                      }
+              child: _sessionData.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No meditation has been performed yet.',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
+                  : BarChart(
+                      BarChartData(
+                        maxY: 30,
+                        backgroundColor: Color.fromARGB(255, 170, 196, 241),
+                        barTouchData: BarTouchData(
+                          touchTooltipData: BarTouchTooltipData(
+                            tooltipBgColor: Colors.grey,
+                            getTooltipItem: (a, b, c, d) => null,
+                          ),
+                          touchCallback: (FlTouchEvent event, response) {
+                            if (response == null || response.spot == null) {
+                              setState(() {
+                                touchedGroupIndex = -1;
+                                showingBarGroups = List.of(rawBarGroups);
+                              });
+                              return;
+                            }
 
-                      touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+                            touchedGroupIndex =
+                                response.spot!.touchedBarGroupIndex;
 
-                      setState(() {
-                        if (!event.isInterestedForInteractions) {
-                          touchedGroupIndex = -1;
-                          showingBarGroups = List.of(rawBarGroups);
-                          return;
-                        }
-                        showingBarGroups = List.of(rawBarGroups);
-                        if (touchedGroupIndex != -1) {
-                          var sum = 0.0;
-                          for (final rod
-                              in showingBarGroups[touchedGroupIndex].barRods) {
-                            sum += rod.toY;
-                          }
-                          final avg = sum /
-                              showingBarGroups[touchedGroupIndex]
-                                  .barRods
-                                  .length;
+                            setState(() {
+                              if (!event.isInterestedForInteractions) {
+                                touchedGroupIndex = -1;
+                                showingBarGroups = List.of(rawBarGroups);
+                                return;
+                              }
+                              showingBarGroups = List.of(rawBarGroups);
+                              if (touchedGroupIndex != -1) {
+                                var sum = 0.0;
+                                for (final rod
+                                    in showingBarGroups[touchedGroupIndex]
+                                        .barRods) {
+                                  sum += rod.toY;
+                                }
+                                final avg = sum /
+                                    showingBarGroups[touchedGroupIndex]
+                                        .barRods
+                                        .length;
 
-                          showingBarGroups[touchedGroupIndex] =
-                              showingBarGroups[touchedGroupIndex].copyWith(
-                            barRods: showingBarGroups[touchedGroupIndex]
-                                .barRods
-                                .map((rod) {
-                              return rod.copyWith(
-                                  toY: avg, color: widget.avgColor);
-                            }).toList(),
-                          );
-                        }
-                      });
-                    },
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: bottomTitles,
-                        reservedSize: 42,
+                                showingBarGroups[touchedGroupIndex] =
+                                    showingBarGroups[touchedGroupIndex]
+                                        .copyWith(
+                                  barRods: showingBarGroups[touchedGroupIndex]
+                                      .barRods
+                                      .map((rod) {
+                                    return rod.copyWith(
+                                        toY: avg, color: widget.avgColor);
+                                  }).toList(),
+                                );
+                              }
+                            });
+                          },
+                        ),
+                        titlesData: FlTitlesData(
+                          show: true,
+                          rightTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          topTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: bottomTitles,
+                              reservedSize: 42,
+                            ),
+                          ),
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              reservedSize: 28,
+                              interval: 1,
+                              getTitlesWidget: leftTitles,
+                            ),
+                          ),
+                        ),
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        barGroups: showingBarGroups,
+                        gridData: const FlGridData(show: false),
                       ),
                     ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 28,
-                        interval: 1,
-                        getTitlesWidget: leftTitles,
-                      ),
-                    ),
-                  ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  barGroups: showingBarGroups,
-                  gridData: const FlGridData(show: false),
-                ),
-              ),
             ),
             const SizedBox(
               height: 12,
@@ -209,21 +220,15 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    String text;
-    if (value == 5) {
-      text = '5';
-    } else if (value == 10) {
-      text = '10';
-    } else if (value == 15) {
-      text = '15';
-    } else if (value == 20) {
-      text = '30';
-    } else {
-      return Container();
+    String text = '';
+    for (int i = 1; i <= 20; i++) {
+      if (value == i) {
+        text = '$i';
+      }
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 0,
+      space: 8,
       child: Text(text, style: style),
     );
   }
