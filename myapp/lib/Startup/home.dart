@@ -65,14 +65,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           const HomePageUI(),
           const CardView(),
-          ChartReportTemplate(
-            description: '',
-            title: '',
-            onTap: () {
-              // ignore: avoid_print
-              print('chart');
-            },
-          ),
+          ChartReportTemplate(),
           const GamesPage(),
           const ProfilePage()
         ],
