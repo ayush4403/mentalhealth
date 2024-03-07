@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'dart:math' as math;
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';

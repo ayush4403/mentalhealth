@@ -129,6 +129,7 @@ class _VideoAppState extends State<VideoApp> {
           .ref('Gratitude thought/GRATITUTE_THOUGHT/$day.mp4')
           .getDownloadURL();
 
+      // ignore: deprecated_member_use
       _controller = VideoPlayerController.network(videoUrl);
       initializeVideoPlayerFuture = _controller.initialize();
 
@@ -147,6 +148,7 @@ class _VideoAppState extends State<VideoApp> {
       // Do not auto-play the video initially
       // _controller.play();
     } catch (error) {
+      // ignore: avoid_print
       print('Error fetching video URL: $error');
     }
   }
@@ -177,6 +179,7 @@ class _VideoAppState extends State<VideoApp> {
         ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         resizeToAvoidBottomInset: true,
+        // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
             return false;
@@ -193,8 +196,10 @@ class _VideoAppState extends State<VideoApp> {
                       brushSize: 50,
                       threshold: 50,
                       color: Colors.blue, // Adjust color as needed
+                      // ignore: avoid_print
                       onChange: (value) => print("Scratch progress: $value%"),
                       onThreshold: () {
+                        // ignore: avoid_print
                         print("Threshold reached!");
                         setState(() {
                           isVideoScratched = true;

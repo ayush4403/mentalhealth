@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class AudioCard extends StatefulWidget {
   final bool imageshow;
   final bool timerSelectorfordisplay;
 
-  AudioCard({
+  const AudioCard({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
@@ -43,7 +42,8 @@ class _AudioCardState extends State<AudioCard> {
   int _sessionDurationInSeconds = 0;
   int indexweek = 1;
   int indexday = 1;
-  List<int> _sessionData = List.filled(7, 0);
+  // ignore: unused_field
+  final List<int> _sessionData = List.filled(7, 0);
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _AudioCardState extends State<AudioCard> {
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
 
-    Timer.periodic(Duration(days: 1), (timer) {
+    Timer.periodic(const Duration(days: 1), (timer) {
       // Get the current time
       DateTime now = DateTime.now();
       // Check if it's midnight
@@ -353,8 +353,10 @@ class _AudioCardState extends State<AudioCard> {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
+                              // ignore: avoid_print
                               print(
                                   'Session Timer: $_sessionDurationInSeconds seconds');
+                              // ignore: unused_local_variable
                               final User? user = FirebaseAuth
                                   .instance.currentUser; // Close the dialog
                               _createNewWeekDocument(_sessionDurationInSeconds);
@@ -380,6 +382,9 @@ class _AudioCardState extends State<AudioCard> {
                   );
                 },
                 child: const Text('Stop Meditation Session'),
+              ),
+              const SizedBox(
+                height: 50,
               ),
             ],
           ),

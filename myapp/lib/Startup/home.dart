@@ -1,8 +1,7 @@
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Games/games.dart';
 import 'package:MindFulMe/Home/homeui.dart';
-import 'package:MindFulMe/Profile/profile.dart';
-import 'package:MindFulMe/Report/report.dart';
+import 'package:MindFulMe/Profile/pro_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -10,8 +9,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -43,12 +41,12 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
-        children: [
+        children: const [
           HomePageUI(),
           CardView(),
-          ChartReportTemplate(),
+          Placeholder(), // Replace with your Report page
           GamesPage(),
-          ProfilePage(),
+          ProfileInfoPage(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -89,14 +87,16 @@ class _HomePageState extends State<HomePage> {
             ],
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-                _pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.ease,
-                );
-              });
+              setState(
+                () {
+                  _selectedIndex = index;
+                  _pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
+                },
+              );
             },
           ),
         ),

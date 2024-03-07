@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:MindFulMe/Activities/Night_Music/night_main.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Night_Music/nightmusicview.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
 
 void main() {
-  runApp(const NightMusic());
+  runApp(
+    const NightMusic(),
+  );
 }
 
 class NightMusic extends StatelessWidget {
@@ -312,7 +314,9 @@ class _NightMusicScreenState extends State<NightMusicScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(const CardView());
+            Navigator.of(context).pop(
+              const NightMain(),
+            );
           },
         ),
         title: const Text(

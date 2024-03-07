@@ -52,6 +52,10 @@ dependencies:
   fl_chart: ^0.66.2
   percent_indicator: ^4.2.3
   google_nav_bar: ^5.0.6
+  line_awesome_flutter: ^2.0.0
+  font_awesome_flutter: ^10.7.0
+  flutter_screenutil: ^5.9.0
+  animated_theme_switcher: ^2.0.10
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +81,9 @@ flutter:
 
     #study Music
     - assets/Images/Study_image/study_music.jpg
+
+    #profile
+    - assets/GIF/Profile/profile.json
 
     #video
     - assets/Video/newvideo.mp4
@@ -309,6 +316,10 @@ flutter:
     - assets/Images/Music/ms_2.jpg
     - assets/Images/Music/ms_3.jpg
     - assets/Images/Music/ms_4.jpg
+    - assets/Images/Music/mm_1.jpg
+    - assets/Images/Music/mm_2.jpg
+    - assets/Images/Music/mm_3.jpg
+    - assets/Images/Music/mm_4.jpg
 
     #Morning Meditation images/svg/json.
     - assets/Images/Morning_meditation/vs_1.jpg
@@ -324,6 +335,11 @@ flutter:
     - assets/Images/night_music/nm_5.jpg
     - assets/Images/night_music/nm_6.jpg
     - assets/Images/night_music/nm_7.jpg
+    - assets/Images/night_music/new_nm_1.jpg
+    - assets/Images/night_music/new_nm_2.jpg
+    - assets/Images/night_music/new_nm_3.jpg
+    - assets/Images/night_music/new_nm_4.jpg
+    - assets/Images/night_music/new_nm_5.jpg
 
     #Mental Marathon
     - assets/Images/Mental Mararthon/Baloon.png

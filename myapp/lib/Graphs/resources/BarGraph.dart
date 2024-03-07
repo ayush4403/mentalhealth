@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 import 'dart:async';
-
-import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +13,7 @@ class BarChartSample2 extends StatefulWidget {
   final Color rightBarColor = AppColors.contentColorRed;
   final Color avgColor =
       AppColors.contentColorOrange.avg(AppColors.contentColorRed);
+  // ignore: use_super_parameters
   BarChartSample2({Key? key}) : super(key: key);
 
   @override
@@ -37,7 +36,7 @@ class BarChartSample2State extends State<BarChartSample2> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(days: 1), (timer) {
+    Timer.periodic(const Duration(days: 1), (timer) {
       // Get the current time
       DateTime now = DateTime.now();
       // Check if it's midnight
@@ -86,6 +85,7 @@ class BarChartSample2State extends State<BarChartSample2> {
 
       // Convert seconds to minutes
       _sessionData =
+          // ignore: division_optimization
           _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
 
       setState(() {

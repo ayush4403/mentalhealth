@@ -1,3 +1,4 @@
+// ignore_for_file: constant_identifier_names
 import 'dart:async';
 import 'package:MindFulMe/Graphs/PieChartSample2.dart';
 import 'package:MindFulMe/Graphs/PieChartSample3.dart';
@@ -11,7 +12,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 enum Timeframe { Weekly, Monthly }
 
 class ChartReportTemplate extends StatefulWidget {
+  const ChartReportTemplate({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChartReportTemplateState createState() => _ChartReportTemplateState();
 }
 
@@ -22,6 +26,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   late Timer _timer;
   Timeframe selectedTimeframe = Timeframe.Weekly; // Default to Weekly
 
+  // ignore: non_constant_identifier_names
   List<dynamic> Activities = [
     'Morning Meditation',
     'Mental Marathon',

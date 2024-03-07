@@ -24,7 +24,11 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,9 +36,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: theme,
-        home: HomePage());
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: theme,
+      home: const HomePage(),
+    );
   }
 }

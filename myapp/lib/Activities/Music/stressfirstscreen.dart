@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:MindFulMe/Activities/Music/music_main.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Music/stressSecond.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
 
 void main() {
   runApp(const MusicList());
@@ -329,8 +329,10 @@ class _MusicListScreenState extends State<MusicListScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CardView()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MainMusic()),
+            );
           },
         ),
         title: const Text(

@@ -31,6 +31,7 @@ class FirestoreService {
           .map((doc) => SessionData.fromFirestore(doc))
           .toList();
     } catch (e) {
+      // ignore: avoid_print
       print('Error fetching session data: $e');
       return [];
     }

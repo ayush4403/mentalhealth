@@ -255,7 +255,7 @@ class MonthlyChartState extends State<MonthlyChart> {
         Container(
           width: width,
           height: 42,
-          color: Color.fromARGB(255, 28, 6, 107).withOpacity(1),
+          color: const Color.fromARGB(255, 28, 6, 107).withOpacity(1),
         ),
         const SizedBox(
           width: space,
@@ -263,7 +263,7 @@ class MonthlyChartState extends State<MonthlyChart> {
         Container(
           width: width,
           height: 28,
-          color: Color.fromARGB(255, 39, 180, 18).withOpacity(0.8),
+          color: const Color.fromARGB(255, 39, 180, 18).withOpacity(0.8),
         ),
         const SizedBox(
           width: space,
@@ -271,7 +271,7 @@ class MonthlyChartState extends State<MonthlyChart> {
         Container(
           width: width,
           height: 10,
-          color: Color.fromARGB(255, 244, 17, 221).withOpacity(0.4),
+          color: const Color.fromARGB(255, 244, 17, 221).withOpacity(0.4),
         ),
       ],
     );
