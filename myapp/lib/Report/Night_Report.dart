@@ -188,7 +188,7 @@ class _BarChart extends StatelessWidget {
           ],
           showingTooltipIndicators: [0],
         ),
-      ]; 
+      ];
 }
 
 class BarChartSample3 extends StatefulWidget {

@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -13,7 +17,7 @@ class AudioCard extends StatefulWidget {
   final bool imageshow;
   final bool timerSelectorfordisplay;
 
-  const AudioCard({
+  AudioCard({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
@@ -34,12 +38,58 @@ class _AudioCardState extends State<AudioCard> {
   final _player = AudioPlayer();
   double selectedDuration = 0.0;
   bool timerSelectorforexample = false;
+  bool isSessionActive = false;
+  late Timer _sessionTimer;
+  int _sessionDurationInSeconds = 0;
+  int indexweek = 1;
+  int indexday = 1;
+  List<int> _sessionData = List.filled(7, 0);
 
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
+
+    Timer.periodic(Duration(days: 1), (timer) {
+      // Get the current time
+      DateTime now = DateTime.now();
+      // Check if it's midnight
+      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
+        // Increment day
+        setState(() {
+          indexday++;
+        });
+        if (indexday > 7) {
+          indexday = 1;
+          indexweek++;
+          _createNewWeekDocument(_sessionDurationInSeconds);
+        }
+      }
+    });
+  }
+
+  Future<void> _createNewWeekDocument(int timerdata) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('MeditationData')
+        .doc('week$indexweek');
+
+    final userData = await userDoc.get();
+    if (userData.exists) {
+      // If the document exists, update the corresponding day field
+      final Map<String, dynamic> updatedData = {
+        ...userData.data()!,
+        'day$indexday': timerdata
+      };
+      await userDoc.set(updatedData);
+    } else {
+      // If the document does not exist, create a new document
+      final Map<String, dynamic> initialData = {'day$indexday': timerdata};
+      await userDoc.set(initialData);
+    }
   }
 
   @override
@@ -66,6 +116,12 @@ class _AudioCardState extends State<AudioCard> {
     super.dispose();
   }
 
+  void _stopSessionTimer() {
+    _sessionTimer.cancel();
+
+    _sessionDurationInSeconds = 0;
+  }
+
   Future<String> getAudioUrl(String audioFileName) async {
     try {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
@@ -79,6 +135,14 @@ class _AudioCardState extends State<AudioCard> {
 
   Future<void> _setupAudioPlayer() async {
     await _updateAudioSource(widget.audioFileName);
+  }
+
+  void _startSessionTimer() {
+    _sessionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _sessionDurationInSeconds++;
+      });
+    });
   }
 
   Widget _example() {
@@ -234,9 +298,88 @@ class _AudioCardState extends State<AudioCard> {
               if (timerSelectorforexample)
                 _timerSelector(), // Show the timer selector based on the variable
               Padding(padding: EdgeInsets.zero, child: _progessBar()),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: _playbackControlButton(),
+              if (widget.showPlaybackControlButton)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: _playbackControlButton(),
+                ),
+              ElevatedButton(
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirmation"),
+                        content: const Text(
+                            "Are you sure you want to start the meditation session?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(context).pop(); // Close the dialog
+                              setState(() {
+                                isSessionActive = true;
+                                _player.play();
+                                _startSessionTimer();
+                                // Increment the day index
+                              });
+                              // Update the user's data in Firestore
+                            },
+                            child: const Text("Yes"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: const Text("No"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Start Meditation Session'),
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirmation"),
+                        content: const Text(
+                            "Are you sure you want to stop the meditation session?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              print(
+                                  'Session Timer: $_sessionDurationInSeconds seconds');
+                              final User? user = FirebaseAuth
+                                  .instance.currentUser; // Close the dialog
+                              _createNewWeekDocument(_sessionDurationInSeconds);
+                              setState(() {
+                                isSessionActive = false;
+                                _player.pause();
+                                _player.seek(Duration.zero);
+
+                                _stopSessionTimer();
+                              });
+                            },
+                            child: const Text("Yes"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: const Text("No"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Stop Meditation Session'),
               ),
             ],
           ),

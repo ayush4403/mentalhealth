@@ -1,13 +1,12 @@
 import 'dart:async';
+import 'package:MindFulMe/Graphs/PieChartSample2.dart';
+import 'package:MindFulMe/Graphs/PieChartSample3.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
+import 'package:MindFulMe/Report/Linechart.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-
-import 'PieChartSample2.dart';
-import 'PieChartSample3.dart';
-import 'LineChartSample2.dart';
 
 enum Timeframe { Weekly, Monthly }
 
@@ -255,11 +254,11 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: PageView(
                   controller: _graphPageController,
-                  children: [
+                  children: const [
                     LineChartSample2(),
-                    const PieChartSample3(),
-                    const PieChartSample2(),
-                    const BarChartSample3(),
+                    PieChartSample3(),
+                    PieChartSample2(),
+                    BarChartSample3(),
                   ],
                 ),
               ),

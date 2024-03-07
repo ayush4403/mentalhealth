@@ -1,14 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
 import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
+import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
+import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/GetStarted.dart';
-import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
-import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/Sherlock%20Holmes/LetsPlay.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/kindness/KindnessPage.dart';
@@ -16,9 +17,10 @@ import 'package:MindFulMe/Activities/quotes/daily_quotes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CardView extends StatefulWidget {
-  const CardView({Key? key});
+  const CardView({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CardViewState createState() => _CardViewState();
 }
 
@@ -44,17 +46,29 @@ class _CardViewState extends State<CardView> {
 
     if (activityStatus != null && completionTimeString != null) {
       completionTime = DateTime.parse(completionTimeString);
-      // Calculate the difference in time
-      Duration difference = DateTime.now().difference(completionTime);
-      return difference.inHours < 24;
+      DateTime todayAtMidnight = DateTime.now().subtract(Duration(
+          hours: DateTime.now().hour,
+          minutes: DateTime.now().minute,
+          seconds: DateTime.now().second,
+          milliseconds: DateTime.now().millisecond,
+          microseconds: DateTime.now().microsecond));
+      // Check if the completion time was before today at 12 AM
+      if (completionTime.isBefore(todayAtMidnight)) {
+        return false;
+      } else {
+        // Calculate the difference in time
+        Duration difference = DateTime.now().difference(completionTime);
+        return difference.inHours < 24;
+      }
     }
     return false; // Return false if activity status not found or completion time not found
   }
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unnecessary_null_comparison
     if (activityCompleted == null) {
-      return CircularProgressIndicator(); // Show loading indicator while initializing
+      return const CircularProgressIndicator(); // Show loading indicator while initializing
     }
 
     return MaterialApp(
@@ -86,6 +100,7 @@ class ActivityList extends StatelessWidget {
   final bool activityCompleted;
 
   ActivityList({
+    super.key,
     required this.checkActivityCompletionStatus,
     required this.activityCompleted,
   });
@@ -213,19 +228,22 @@ class ActivityList extends StatelessWidget {
   void handleStartButtonTap(BuildContext context, String activity) async {
     // Handle the onPressed action for the "Start" button here
     // ignore: avoid_print
-
     print('Started: $activity');
 
     if (activity == 'Morning Meditation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MorningMeds()),
+        MaterialPageRoute(
+          builder: (context) => const MorningMeds(),
+        ),
       );
     }
     if (activity == 'Night Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const NightMusicScreen()),
+        MaterialPageRoute(
+          builder: (context) => const NightMusic(),
+        ),
       );
     }
     if (activity == 'Gratitude') {
@@ -235,23 +253,22 @@ class ActivityList extends StatelessWidget {
       if (!activityCompleted) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VideoApp()),
+          MaterialPageRoute(builder: (context) => const VideoApp()),
         );
       } else {
-        // Activity has been completed within the last 24 hours
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Activity Already Completed'),
-              content: Text(
+              title: const Text('Activity Already Completed'),
+              content: const Text(
                   'You have already completed the activity within the last 24 hours.'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -262,61 +279,81 @@ class ActivityList extends StatelessWidget {
     if (activity == 'Mental Marathon') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const GetStartedPage()),
+        MaterialPageRoute(
+          builder: (context) => const GetStartedPage(),
+        ),
       );
     }
     if (activity == 'Sherlock Holmes') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const LetsPlay()),
+        MaterialPageRoute(
+          builder: (context) => const LetsPlay(),
+        ),
       );
     }
     if (activity == 'Daily Thoughts') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const DailyQuotesScreen()),
+        MaterialPageRoute(
+          builder: (context) => const DailyQuotesScreen(),
+        ),
       );
     }
     if (activity == 'Study Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const StudyMusicScreen()),
+        MaterialPageRoute(
+          builder: (context) => const StudyMusicScreen(),
+        ),
       );
     }
     if (activity == 'Kindness Challenge') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const KindnessPageClass()),
+        MaterialPageRoute(
+          builder: (context) => const KindnessPageClass(),
+        ),
       );
     }
     if (activity == 'Affirmation') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const AffirmationApp()),
+        MaterialPageRoute(
+          builder: (context) => const AffirmationApp(),
+        ),
       );
     }
     if (activity == 'Music') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MusicList()),
+        MaterialPageRoute(
+          builder: (context) => MusicListScreen(),
+        ),
       );
     }
     if (activity == 'Tratak') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const TratakaIntroScreen()),
+        MaterialPageRoute(
+          builder: (context) => const TratakaIntroScreen(),
+        ),
       );
     }
     if (activity == 'Power nap') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const PowerNapList()),
+        MaterialPageRoute(
+          builder: (context) => const PowerNapList(),
+        ),
       );
     }
     if (activity == 'Journal') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const JournalScreen()),
+        MaterialPageRoute(
+          builder: (context) => const JournalScreen(),
+        ),
       );
     }
   }
@@ -353,23 +390,25 @@ class ActivityList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(
-                            width: 40,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: Text(
+                              activities[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              textAlign: TextAlign.justify,
+                            ),
                           ),
-                          const Spacer(),
-                          Text(
-                            activities[index],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const Spacer(), // Added
+                          // Added
+
                           IconButton(
                             color: Colors.black38,
                             iconSize: 17,
@@ -389,7 +428,7 @@ class ActivityList extends StatelessWidget {
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.normal,
                             ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.justify,
                       ),
                       const SizedBox(
                         height: 10,

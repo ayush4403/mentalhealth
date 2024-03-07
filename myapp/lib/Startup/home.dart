@@ -44,11 +44,11 @@ class _HomePageState extends State<HomePage> {
           );
         },
         children: [
-          const HomePageUI(),
-          const CardView(),
-          ChartReportTemplate(), // Replace with your Report page
-          const GamesPage(),
-          const ProfilePage(),
+          HomePageUI(),
+          CardView(),
+          ChartReportTemplate(),
+          GamesPage(),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: Container(
