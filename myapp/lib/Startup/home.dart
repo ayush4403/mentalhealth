@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Games/games.dart';
 import 'package:MindFulMe/Home/homeui.dart';
 import 'package:MindFulMe/Profile/profile.dart';
 import 'package:MindFulMe/Report/report.dart';
-//import 'package:myapp/test/single_player.dart';
+import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,14 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentIndex = 0;
   late PageController _pageController;
-  bool shownavbar = true;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: currentIndex);
+    _pageController = PageController();
   }
 
   @override
@@ -31,92 +30,75 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void add() {
-    currentIndex = 1;
-  }
-
-  bool shonavbar(bool visibility) {
-    return visibility;
-  }
-
-  void randomFunction() {
-    // Generate a random number between 0 and 1
-
-    // Navigate to a random page based on the generated number
-    _pageController.animateToPage(
-      1,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
-          setState(() {
-            currentIndex = index;
-          });
+          setState(
+            () {
+              _selectedIndex = index;
+            },
+          );
         },
         children: [
           const HomePageUI(),
           const CardView(),
-          ChartReportTemplate(
-            description: '',
-            title: '',
-            onTap: () {
-              // ignore: avoid_print
-              print('chart');
-            },
-          ),
+          ChartReportTemplate(), // Replace with your Report page
           const GamesPage(),
-          const ProfilePage()
+          const ProfilePage(),
         ],
       ),
-      bottomNavigationBar: Visibility(
-        visible: shownavbar,
-        child: BottomNavigationBar(
-          unselectedItemColor: Colors.white,
-          selectedItemColor: Colors.blue,
-          currentIndex: currentIndex,
-          onTap: (index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          },
-          backgroundColor: Colors.black, // Set background color
-          type: BottomNavigationBarType
-              .fixed, // Set type to fixed for more than 3 items
-          elevation: 0, // Remove shadow
-
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.local_activity_rounded),
-              label: 'Activities',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.insert_chart_outlined),
-              label: 'Report',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.videogame_asset_rounded),
-              label: 'Games',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_4_rounded),
-              label: 'Profile',
-            ),
-          ],
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 15,
+          ),
+          child: GNav(
+            backgroundColor: Colors.black,
+            color: Colors.white,
+            activeColor: Colors.white,
+            tabBackgroundColor: Colors.grey,
+            gap: 8,
+            padding: const EdgeInsets.all(16),
+            tabs: const [
+              GButton(
+                icon: Icons.home_rounded,
+                text: 'Home',
+              ),
+              GButton(
+                icon: Icons.local_activity_rounded,
+                text: 'Activity',
+              ),
+              GButton(
+                icon: Icons.insert_chart_outlined,
+                text: 'Report',
+              ),
+              GButton(
+                icon: Icons.videogame_asset_rounded,
+                text: 'Games',
+              ),
+              GButton(
+                icon: Icons.person_4_rounded,
+                text: 'Profile',
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              setState(() {
+                _selectedIndex = index;
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              });
+            },
+          ),
         ),
       ),
     );
