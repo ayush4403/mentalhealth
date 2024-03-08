@@ -4,6 +4,7 @@ import 'package:MindFulMe/Graphs/PieChartSample2.dart';
 import 'package:MindFulMe/Graphs/PieChartSample3.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:MindFulMe/Report/Linechart.dart';
+import 'package:MindFulMe/Report/Monthly.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -259,11 +260,11 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: PageView(
                   controller: _graphPageController,
-                  children: const [
-                    LineChartSample2(),
-                    PieChartSample3(),
-                    PieChartSample2(),
-                    BarChartSample3(),
+                  children: [
+                    MonthlyMeditation(),
+                    MonthlyMeditation(),
+                    MonthlyMeditation(),
+                    MonthlyMeditation(),
                   ],
                 ),
               ),

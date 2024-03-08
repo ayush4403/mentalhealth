@@ -2,6 +2,7 @@ import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Games/games.dart';
 import 'package:MindFulMe/Home/homeui.dart';
 import 'package:MindFulMe/Profile/pro_info.dart';
+import 'package:MindFulMe/Report/report.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         children: const [
           HomePageUI(),
           CardView(),
-          Placeholder(), // Replace with your Report page
+          ChartReportTemplate(),
           GamesPage(),
           ProfileInfoPage(),
         ],

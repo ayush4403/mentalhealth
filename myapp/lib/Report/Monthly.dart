@@ -1,52 +1,93 @@
 // ignore_for_file: file_names
+import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
-import 'package:MindFulMe/Graphs/resources/colors.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class MonthlyChart extends StatefulWidget {
-  MonthlyChart({super.key});
-  final Color leftBarColor = AppColors.contentColorYellow;
-  final Color rightBarColor = AppColors.contentColorRed;
-  final Color avgColor =
-      AppColors.contentColorOrange.avg(AppColors.contentColorRed);
+class MonthlyMeditation extends StatefulWidget {
+  MonthlyMeditation({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => MonthlyChartState();
+  State<StatefulWidget> createState() => MonthlyMeditationState();
 }
 
-class MonthlyChartState extends State<MonthlyChart> {
+class MonthlyMeditationState extends State<MonthlyMeditation> {
   final double width = 7;
 
   late List<BarChartGroupData> rawBarGroups;
   late List<BarChartGroupData> showingBarGroups;
+  List<int> defaulttime = [5, 7, 9, 13, 15, 20, 5];
 
   int touchedGroupIndex = -1;
+
+  int indexweek = 1;
+  int indexday = 1;
+  late List<int> _sessionData = [];
 
   @override
   void initState() {
     super.initState();
-    final barGroup1 = makeGroupData(0, 5, 2);
-    final barGroup2 = makeGroupData(1, 7, 3);
-    final barGroup3 = makeGroupData(2, 9, 4);
-    final barGroup4 = makeGroupData(3, 13, 5);
-    final barGroup5 = makeGroupData(4, 15, 6);
-    final barGroup6 = makeGroupData(5, 20, 7);
-    final barGroup7 = makeGroupData(6, 5, 2);
+    Timer.periodic(Duration(days: 1), (timer) {
+      // Get the current time
+      DateTime now = DateTime.now();
+      // Check if it's midnight
+      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
+        // Increment day
+        setState(() {
+          indexday++;
+          if (indexday > 7) {
+            indexday = 1;
+            indexweek++;
+          }
+        });
+      }
+    });
+    _getGraphData();
+  }
 
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
+  Future<void> _getGraphData() async {
+    final User? user = FirebaseAuth.instance.currentUser;
 
-    rawBarGroups = items;
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('MeditationData')
+        .doc('week$indexweek');
+    final weekSnapshot = await weekDoc.get();
+    if (weekSnapshot.exists) {
+      final weekData = weekSnapshot.data();
 
-    showingBarGroups = rawBarGroups;
+      final List<int> defaultData = List.filled(30, 0);
+      final List<int> dayDataList = [];
+
+      for (int i = 1; i <= 30; i++) {
+        final dynamic dayData = weekData?['day$i'];
+        if (dayData is int) {
+          dayDataList.add(dayData);
+        } else if (dayData is List) {
+          dayDataList.addAll(List<int>.from(dayData));
+        } else {
+          dayDataList.add(0); // Fill in zero if day data is missing
+        }
+      }
+
+      _sessionData = List<int>.from(defaultData);
+      _sessionData.setAll(0, dayDataList);
+
+      // Convert seconds to minutes
+      _sessionData =
+          _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
+
+      setState(() {
+        final items = List.generate(_sessionData.length, (index) {
+          return makeGroupData(index, _sessionData[index].toDouble());
+        });
+        rawBarGroups = items;
+        showingBarGroups = rawBarGroups;
+      });
+    }
   }
 
   @override
@@ -58,15 +99,6 @@ class MonthlyChartState extends State<MonthlyChart> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildIndicator(widget.leftBarColor, 'Required Meditation'),
-                const SizedBox(width: 10),
-                _buildIndicator(widget.rightBarColor, 'Done Meditation'),
-                const SizedBox(width: 10),
-              ],
-            ),
             const SizedBox(
               height: 38,
             ),
@@ -97,27 +129,6 @@ class MonthlyChartState extends State<MonthlyChart> {
                           return;
                         }
                         showingBarGroups = List.of(rawBarGroups);
-                        if (touchedGroupIndex != -1) {
-                          var sum = 0.0;
-                          for (final rod
-                              in showingBarGroups[touchedGroupIndex].barRods) {
-                            sum += rod.toY;
-                          }
-                          final avg = sum /
-                              showingBarGroups[touchedGroupIndex]
-                                  .barRods
-                                  .length;
-
-                          showingBarGroups[touchedGroupIndex] =
-                              showingBarGroups[touchedGroupIndex].copyWith(
-                            barRods: showingBarGroups[touchedGroupIndex]
-                                .barRods
-                                .map((rod) {
-                              return rod.copyWith(
-                                  toY: avg, color: widget.avgColor);
-                            }).toList(),
-                          );
-                        }
                       });
                     },
                   ),
@@ -166,17 +177,17 @@ class MonthlyChartState extends State<MonthlyChart> {
     const style = TextStyle(
       color: Color(0xff7589a2),
       fontWeight: FontWeight.bold,
-      fontSize: 12,
+      fontSize: 14,
     );
     String text;
     if (value == 5) {
-      text = '25';
+      text = '5';
     } else if (value == 10) {
-      text = '50';
+      text = '10';
     } else if (value == 15) {
-      text = '75';
+      text = '15';
     } else if (value == 20) {
-      text = '100';
+      text = '30';
     } else {
       return Container();
     }
@@ -188,12 +199,8 @@ class MonthlyChartState extends State<MonthlyChart> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>[
-      'Week1',
-      'Week2',
-      'Week3',
-      'Week4',
-    ];
+    final List<String> titles =
+        List.generate(30, (index) => (index + 1).toString());
 
     final Widget text = Text(
       titles[value.toInt()],
@@ -211,82 +218,16 @@ class MonthlyChartState extends State<MonthlyChart> {
     );
   }
 
-  BarChartGroupData makeGroupData(int x, double y1, double y2) {
+  BarChartGroupData makeGroupData(int x, double y) {
     return BarChartGroupData(
-      barsSpace: 8,
+      barsSpace: 4,
       x: x,
       barRods: [
         BarChartRodData(
-          toY: y1,
-          color: widget.leftBarColor,
+          toY: y,
+          color: AppColors.contentColorRed,
           width: width,
         ),
-        BarChartRodData(
-          toY: y2,
-          color: widget.rightBarColor,
-          width: width,
-        ),
-      ],
-    );
-  }
-
-  Widget makeTransactionsIcon() {
-    const width = 4.5;
-    const space = 3.5;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          width: width,
-          height: 10,
-          color: const Color.fromARGB(255, 235, 100, 100).withOpacity(0.4),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: const Color.fromARGB(255, 213, 69, 69).withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 42,
-          color: const Color.fromARGB(255, 28, 6, 107).withOpacity(1),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: const Color.fromARGB(255, 39, 180, 18).withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 10,
-          color: const Color.fromARGB(255, 244, 17, 221).withOpacity(0.4),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildIndicator(Color color, String description) {
-    return Row(
-      children: [
-        Container(
-          width: 20,
-          height: 20,
-          color: color,
-        ),
-        const SizedBox(width: 5),
-        Text(description),
       ],
     );
   }
