@@ -221,11 +221,20 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontSize: 14,
     );
     String text = '';
-    for (int i = 1; i <= 20; i++) {
-      if (value == i) {
-        text = '$i';
+    
+      if (value == 5) {
+        text = '5';
       }
-    }
+      else if (value == 10){
+        text ='10';
+      }
+      else if(value == 15){
+        text ='15';
+      }
+      else if(value ==20){
+        text ='30';
+      }
+    
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 8,

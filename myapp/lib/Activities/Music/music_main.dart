@@ -2,6 +2,7 @@
 import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/nighttemplate.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -122,14 +123,11 @@ class _MainMusicState extends State<MainMusic> {
         child: Column(
           children: [
             SingleChildScrollView(
-              child: AudioCard(
-                imageUrl: images[index],
-                title: titles[index],
-                imageshow: false,
-                timerSelectorfordisplay: false,
-                audioFileName: audios[index],
-              ),
-            ),
+                child: NightMusicCustomCard(
+              audioFileName: audios[index],
+              imageUrl: images[index],
+              title: titles[index],
+            )),
             const SizedBox(
               height: 20,
             ),

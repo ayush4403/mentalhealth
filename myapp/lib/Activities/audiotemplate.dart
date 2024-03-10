@@ -63,9 +63,10 @@ class _AudioCardState extends State<AudioCard> {
         if (indexday > 7) {
           indexday = 1;
           indexweek++;
-          _createNewWeekDocument(_sessionDurationInSeconds);
+          _createNewWeekDocument(0);
         }
       }
+      print(indexday);
     });
   }
 
@@ -78,18 +79,7 @@ class _AudioCardState extends State<AudioCard> {
         .doc('week$indexweek');
 
     final userData = await userDoc.get();
-    if (userData.exists) {
-      // If the document exists, update the corresponding day field
-      final Map<String, dynamic> updatedData = {
-        ...userData.data()!,
-        'day$indexday': timerdata
-      };
-      await userDoc.set(updatedData);
-    } else {
-      // If the document does not exist, create a new document
-      final Map<String, dynamic> initialData = {'day$indexday': timerdata};
-      await userDoc.set(initialData);
-    }
+    await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: true));
   }
 
   @override

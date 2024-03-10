@@ -112,7 +112,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 onPageChanged: (index) {
                   setState(() {
                     _currentPage = index;
-                    // Change the page of the graph view when activity card view changes
                     _graphPageController.jumpToPage(index);
                   });
                 },
@@ -124,7 +123,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                     margin: const EdgeInsets.all(8.0),
                     child: InkWell(
                       onTap: () {
-                        // Change the page when tapping on a card
                         _activityPageController.animateToPage(
                           index,
                           duration: const Duration(milliseconds: 1500),
@@ -219,8 +217,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 },
               ),
             ),
-
-            // Dropdown to select Weekly or Monthly
             DropdownButton<Timeframe>(
               value: selectedTimeframe,
               onChanged: (Timeframe? newValue) {

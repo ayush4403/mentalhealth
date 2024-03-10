@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
 import 'package:MindFulMe/Startup/home.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,8 +34,16 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
