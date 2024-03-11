@@ -2,6 +2,7 @@ import 'package:MindFulMe/Profile/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProfileInfoPage extends StatefulWidget {
   const ProfileInfoPage({super.key});
@@ -131,6 +132,11 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             const Divider(
                               color: Colors.white,
                             ),
+                            const Column(
+                              children: [
+                                ActivityCardRow(),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -150,6 +156,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                 color: Colors.black54,
               ),
               onPressed: () {
+                // Navigate to the profile screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -203,4 +210,142 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
           ),
         ),
       );
+}
+
+class ActivityCardRow extends StatelessWidget {
+  const ActivityCardRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ActivityCard(
+          image: 'assets/Images/Report/1_Meditation.jpg',
+          name: 'Morning Meditation',
+          progress: 40,
+        ),
+        ActivityCard(
+          image: 'assets/Images/Report/2_Marathon.jpg',
+          name: 'Mental Marathon',
+          progress: 70,
+        ),
+        ActivityCard(
+          image: 'assets/Images/Report/3_Sherlock.jpg',
+          name: 'Sherlock Holmes',
+          progress: 20,
+        ),
+        ActivityCard(
+          image: 'assets/Images/Report/4_Music.jpg',
+          name: 'Night Music',
+          progress: 90,
+        ),
+      ],
+    );
+  }
+}
+
+class ActivityCard extends StatelessWidget {
+  final String image;
+  final String name;
+  final int progress;
+
+  const ActivityCard({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.progress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.all(8),
+      child: Card(
+        elevation: 12.0,
+        color: Colors.purple[200],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              image,
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25.0),
+                Row(
+                  children: List.generate(
+                    7,
+                    (dayIndex) {
+                      // Replace the condition with your actual logic
+                      bool isDayDone = dayIndex % 2 == 0;
+                      return Container(
+                        width: 20,
+                        height: 20,
+                        margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          color: isDayDone ? Colors.green : Colors.red,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: CircularPercentIndicator(
+                    radius: 25,
+                    percent: 0.4,
+                    lineWidth: 3,
+                    backgroundColor: Colors.blueAccent,
+                    center: const Text(
+                      '40%',
+                      style: TextStyle(
+                        fontSize: 13.0,
+                        color: Color.fromARGB(255, 239, 16, 16),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
