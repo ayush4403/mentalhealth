@@ -7,7 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class MonthlyMeditation extends StatefulWidget {
-  MonthlyMeditation({Key? key}) : super(key: key);
+  const MonthlyMeditation({super.key});
 
   @override
   State<StatefulWidget> createState() => MonthlyMeditationState();
@@ -55,6 +55,7 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
 
     // Convert seconds to minutes
     _sessionData =
+        // ignore: division_optimization
         _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
 
     setState(() {
@@ -70,7 +71,7 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
   void initState() {
     super.initState();
     _getGraphData(indexweek); // Fetch data for initial week
-    Timer.periodic(Duration(days: 1), (timer) {
+    Timer.periodic(const Duration(days: 1), (timer) {
       // Get the current time
       DateTime now = DateTime.now();
       // Check if it's midnight

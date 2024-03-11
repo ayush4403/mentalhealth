@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Sherlock%20Holmes/quizsherdata.dart'
     // ignore: library_prefixes
@@ -22,13 +21,12 @@ class _QuestionPageState extends State<QuestionPage> {
   int currentQuestionIndex = 0;
   bool showCorrectAnswer = false;
   List<int> selectedAnswers = [];
-   final User? user = FirebaseAuth.instance.currentUser;
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     super.initState();
     selectedAnswers = List.filled(widget.questions.length, -1);
-    
   }
 
   @override
@@ -105,7 +103,6 @@ class _QuestionPageState extends State<QuestionPage> {
                           ),
                         ),
                       );
-
                     }
                   });
                 },
@@ -183,11 +180,14 @@ class _QuestionPageState extends State<QuestionPage> {
             onChanged: isSelected
                 ? null
                 : (value) {
-                    setState(() {
-                      selectedOption = value!;
-                      selectedAnswers[currentQuestionIndex] = selectedOption;
-                      print(selectedAnswers);
-                    });
+                    setState(
+                      () {
+                        selectedOption = value!;
+                        selectedAnswers[currentQuestionIndex] = selectedOption;
+                        // ignore: avoid_print
+                        print(selectedAnswers);
+                      },
+                    );
                   },
             activeColor: Colors.white,
           ),
@@ -203,11 +203,11 @@ class ResultPage extends StatelessWidget {
   final List<QuizData.Question> questions;
 
   const ResultPage({
-    Key? key,
+    super.key,
     required this.totalQuestions,
     required this.selectedAnswers,
     required this.questions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +222,8 @@ class ResultPage extends StatelessWidget {
         incorrectAnswers++;
       }
     }
-      final User? user = FirebaseAuth.instance.currentUser;
-  final userDoc = FirebaseFirestore.instance
+    final User? user = FirebaseAuth.instance.currentUser;
+    final userDoc = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
         .collection('SherlockHolmes')
@@ -233,7 +233,7 @@ class ResultPage extends StatelessWidget {
      userDoc.set({'correctAnswers':correctAnswers,'incorrectAnswer':incorrectAnswers }, SetOptions(merge: true));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz Result'),
+        title: const Text('Quiz Result'),
       ),
       body: Center(
         child: Column(
@@ -241,13 +241,12 @@ class ResultPage extends StatelessWidget {
           children: [
             Text(
               'Correct Answers: $correctAnswers',
-              style: TextStyle(fontSize: 24),
-              
+              style: const TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Incorrect Answers: $incorrectAnswers',
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
             ),
           ],
         ),

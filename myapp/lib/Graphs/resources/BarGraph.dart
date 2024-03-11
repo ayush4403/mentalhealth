@@ -113,7 +113,7 @@ class BarChartSample2State extends State<BarChartSample2> {
             ),
             Expanded(
               child: _sessionData.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Text(
                         'No meditation has been performed yet.',
                         style: TextStyle(fontSize: 16),
@@ -122,7 +122,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                   : BarChart(
                       BarChartData(
                         maxY: 30,
-                        backgroundColor: Color.fromARGB(255, 170, 196, 241),
+                        backgroundColor: const Color.fromARGB(255, 170, 196, 241),
                         barTouchData: BarTouchData(
                           touchTooltipData: BarTouchTooltipData(
                             tooltipBgColor: Colors.grey,

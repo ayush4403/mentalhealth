@@ -3,7 +3,6 @@ import 'dart:async';
 //import 'package:MindFulMe/Graphs/PieChartSample2.dart';
 //import 'package:MindFulMe/Graphs/PieChartSample3.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
-import 'package:MindFulMe/Report/Linechart.dart';
 import 'package:MindFulMe/Report/Monthly.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
 import 'package:MindFulMe/Report/PieChartSample2.dart';
@@ -58,17 +57,20 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   void initState() {
     super.initState();
     // Start automatic sliding using a timer
-    _timer = Timer.periodic(const Duration(seconds: 15), (Timer timer) {
-      if (_currentPage < Activities.length - 1) {
-        _activityPageController.animateToPage(
-          _currentPage + 1,
-          duration: const Duration(milliseconds: 1500),
-          curve: Curves.easeInOut,
-        );
-      } else {
-        _activityPageController.jumpToPage(0);
-      }
-    });
+    _timer = Timer.periodic(
+      const Duration(seconds: 15),
+      (Timer timer) {
+        if (_currentPage < Activities.length - 1) {
+          _activityPageController.animateToPage(
+            _currentPage + 1,
+            duration: const Duration(milliseconds: 1500),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          _activityPageController.jumpToPage(0);
+        }
+      },
+    );
   }
 
   @override
@@ -82,6 +84,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         appBar: AppBar(
           title: const Text(
             'My performance report',
@@ -218,22 +221,54 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 },
               ),
             ),
-            DropdownButton<Timeframe>(
-              value: selectedTimeframe,
-              onChanged: (Timeframe? newValue) {
-                setState(() {
-                  selectedTimeframe = newValue!;
-                });
-              },
-              items: Timeframe.values.map<DropdownMenuItem<Timeframe>>(
-                (Timeframe value) {
-                  return DropdownMenuItem<Timeframe>(
-                    value: value,
-                    child:
-                        Text(value == Timeframe.Weekly ? 'Weekly' : 'Monthly'),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.009,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.02),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    BorderRadius.circular(8.0), // Adjust the radius as needed
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(
+                        0.3), // Adjust shadow color and opacity as needed
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset:
+                        const Offset(0, 3), // Adjust shadow position as needed
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: DropdownButton<Timeframe>(
+                value: selectedTimeframe,
+                onChanged: (Timeframe? newValue) {
+                  setState(
+                    () {
+                      selectedTimeframe = newValue!;
+                    },
                   );
                 },
-              ).toList(),
+                items: Timeframe.values.map<DropdownMenuItem<Timeframe>>(
+                  (Timeframe value) {
+                    return DropdownMenuItem<Timeframe>(
+                      value: value,
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          value == Timeframe.Weekly ? 'Weekly' : 'Monthly',
+                          style: const TextStyle(
+                            color: Colors.black, // Adjust text color as needed
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ).toList(),
+              ),
             ),
 
             // Display either LineChartSample2 or BarChartSample2 based on the selected timeframe
@@ -257,7 +292,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: PageView(
                   controller: _graphPageController,
-                  children: [
+                  children: const [
                     MonthlyMeditation(),
                     MonthlyMeditation(),
                     MonthlyMeditation(),

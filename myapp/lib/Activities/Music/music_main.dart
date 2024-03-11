@@ -1,6 +1,5 @@
 //import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
-import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
 import 'package:flutter/material.dart';

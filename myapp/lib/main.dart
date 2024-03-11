@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
 import 'package:MindFulMe/Startup/home.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,15 +33,14 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

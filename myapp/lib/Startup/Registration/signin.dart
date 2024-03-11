@@ -22,28 +22,34 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
 
-int indexday=1;
-  int indexweek=1;
+  int indexday = 1;
+  int indexweek = 1;
   @override
   void initState() {
     super.initState();
-     Timer.periodic(Duration(days: 1), (timer) {
-      // Get the current time
-      DateTime now = DateTime.now();
-      // Check if it's midnight
-      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
-        setState(() {
-          indexday++;
-          if (indexday > 7) {
-            indexday = 1;
-            indexweek++;
-             // Fetch data for new week
-          } 
-        });
-      }
-    });
+    Timer.periodic(
+      const Duration(days: 1),
+      (timer) {
+        // Get the current time
+        DateTime now = DateTime.now();
+        // Check if it's midnight
+        if (now.hour == 0 && now.minute == 0 && now.second == 0) {
+          // Increment day
+          setState(
+            () {
+              indexday++;
+              if (indexday > 7) {
+                indexday = 1;
+                indexweek++;
+                // Fetch data for new week
+              }
+            },
+          );
+        }
+      },
+    );
   }
+
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

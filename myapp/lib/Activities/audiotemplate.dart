@@ -66,6 +66,7 @@ class _AudioCardState extends State<AudioCard> {
           _createNewWeekDocument(0);
         }
       }
+      // ignore: avoid_print
       print(indexday);
     });
   }
@@ -78,6 +79,7 @@ class _AudioCardState extends State<AudioCard> {
         .collection('MeditationData')
         .doc('week$indexweek');
 
+    // ignore: unused_local_variable
     final userData = await userDoc.get();
     await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: true));
   }
