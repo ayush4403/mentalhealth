@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class AudioCard extends StatefulWidget {
+class NightMusicCustomCard extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String audioFileName;
@@ -16,7 +17,7 @@ class AudioCard extends StatefulWidget {
   final bool imageshow;
   final bool timerSelectorfordisplay;
 
-  const AudioCard({
+  const NightMusicCustomCard({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
@@ -30,10 +31,10 @@ class AudioCard extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _AudioCardState createState() => _AudioCardState();
+  _NightMusicCustomCardState createState() => _NightMusicCustomCardState();
 }
 
-class _AudioCardState extends State<AudioCard> {
+class _NightMusicCustomCardState extends State<NightMusicCustomCard> {
   final _player = AudioPlayer();
   double selectedDuration = 0.0;
   bool timerSelectorforexample = false;
@@ -63,11 +64,9 @@ class _AudioCardState extends State<AudioCard> {
         if (indexday > 7) {
           indexday = 1;
           indexweek++;
-          _createNewWeekDocument(0);
+          _createNewWeekDocument(_sessionDurationInSeconds);
         }
       }
-      // ignore: avoid_print
-      print(indexday);
     });
   }
 
@@ -76,16 +75,26 @@ class _AudioCardState extends State<AudioCard> {
     final userDoc = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
-        .collection('MeditationData')
+        .collection('NightMusicData')
         .doc('week$indexweek');
 
-    // ignore: unused_local_variable
     final userData = await userDoc.get();
-    await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: true));
+    if (userData.exists) {
+      // If the document exists, update the corresponding day field
+      final Map<String, dynamic> updatedData = {
+        ...userData.data()!,
+        'day$indexday': timerdata
+      };
+      await userDoc.set(updatedData);
+    } else {
+      // If the document does not exist, create a new document
+      final Map<String, dynamic> initialData = {'day$indexday': timerdata};
+      await userDoc.set(initialData);
+    }
   }
 
   @override
-  void didUpdateWidget(AudioCard oldWidget) {
+  void didUpdateWidget(NightMusicCustomCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.audioFileName != widget.audioFileName) {
       _updateAudioSource(widget.audioFileName);
@@ -303,7 +312,7 @@ class _AudioCardState extends State<AudioCard> {
                       return AlertDialog(
                         title: const Text("Confirmation"),
                         content: const Text(
-                            "Are you sure you want to start the meditation session?"),
+                            "Are you sure you want to start the  session?"),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () async {
@@ -329,7 +338,7 @@ class _AudioCardState extends State<AudioCard> {
                     },
                   );
                 },
-                child: const Text('Start Meditation Session'),
+                child: const Text('Start Session'),
               ),
 
               ElevatedButton(
@@ -340,7 +349,7 @@ class _AudioCardState extends State<AudioCard> {
                       return AlertDialog(
                         title: const Text("Confirmation"),
                         content: const Text(
-                            "Are you sure you want to stop the meditation session?"),
+                            "Are you sure you want to stop the  session?"),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
@@ -373,10 +382,7 @@ class _AudioCardState extends State<AudioCard> {
                     },
                   );
                 },
-                child: const Text('Stop Meditation Session'),
-              ),
-              const SizedBox(
-                height: 50,
+                child: const Text('Stop Session'),
               ),
             ],
           ),
