@@ -1,29 +1,50 @@
-// ignore_for_file: file_names
-
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieChartSample2 extends StatefulWidget {
-  const PieChartSample2({super.key});
+  const PieChartSample2({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => PieChartSample2State();
 }
 
-class PieChartSample2State extends State {
+class PieChartSample2State extends State<PieChartSample2> {
   int touchedIndex = -1;
+  int correctAnswers = 0;
+  int incorrectAnswers = 0;
+
+  @override
+  void initState() {
+    getPieData();
+    super.initState();
+  }
+
+  Future<void> getPieData() async {
+    try {
+      final User? user = FirebaseAuth.instance.currentUser;
+      final weekDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('SherlockHolmes')
+          .doc('data1');
+      final weekSnapshot = await weekDoc.get();
+      if (weekSnapshot.exists) {
+        final weekData = weekSnapshot.data();
+        setState(() {
+          correctAnswers = weekData?['correctAnswers'] ?? 0;
+          incorrectAnswers = weekData?['incorrectAnswer'] ?? 0;
+        });
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<bool> answers = [
-      true,
-      false,
-      true,
-      false,
-      true
-    ];
-    
     return Container(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -55,7 +76,7 @@ class PieChartSample2State extends State {
                   ),
                   sectionsSpace: 0,
                   centerSpaceRadius: 40,
-                  sections: showingSections(answers),
+                  sections: showingSections(),
                 ),
               ),
             ),
@@ -88,32 +109,47 @@ class PieChartSample2State extends State {
     );
   }
 
-  List<PieChartSectionData> showingSections(List<bool> answers) {
+  List<PieChartSectionData> showingSections() {
     List<PieChartSectionData> sections = [];
 
-    for (int i = 0; i < answers.length; i++) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+    // Calculate total answers
+    int totalAnswers = correctAnswers + incorrectAnswers;
 
-      Color sectionColor = answers[i] ? Colors.green : Colors.red;
-
-      sections.add(
-        PieChartSectionData(
-          color: sectionColor,
-          value: 20,
-          title: '20%',
-          radius: radius,
-          titleStyle: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor1,
-            shadows: shadows,
-          ),
+    // Add correct answers section
+    // Add correct answers section
+    sections.add(
+      PieChartSectionData(
+        color: Colors.green,
+        value:
+            correctAnswers.toDouble(), // Use correctAnswers from fetched data
+        title: '${((correctAnswers / totalAnswers) * 100).toStringAsFixed(2)}%',
+        radius: touchedIndex == 0 ? 60.0 : 50.0,
+        titleStyle: TextStyle(
+          fontSize: touchedIndex == 0 ? 25.0 : 16.0,
+          fontWeight: FontWeight.bold,
+          color: AppColors.mainTextColor1,
+          shadows: [Shadow(color: Colors.black, blurRadius: 2)],
         ),
-      );
-    }
+      ),
+    );
+
+// Add incorrect answers section
+    sections.add(
+      PieChartSectionData(
+        color: Colors.red,
+        value: incorrectAnswers
+            .toDouble(), // Use incorrectAnswers from fetched data
+        title:
+            '${((incorrectAnswers / totalAnswers) * 100).toStringAsFixed(2)}%',
+        radius: touchedIndex == 1 ? 60.0 : 50.0,
+        titleStyle: TextStyle(
+          fontSize: touchedIndex == 1 ? 25.0 : 16.0,
+          fontWeight: FontWeight.bold,
+          color: AppColors.mainTextColor1,
+          shadows: [Shadow(color: Colors.black, blurRadius: 2)],
+        ),
+      ),
+    );
 
     return sections;
   }
@@ -123,7 +159,7 @@ class Indicator extends StatelessWidget {
   final Color color;
   final String text;
 
-  const Indicator({super.key, required this.color, required this.text});
+  const Indicator({Key? key, required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -140,4 +176,3 @@ class Indicator extends StatelessWidget {
     );
   }
 }
-

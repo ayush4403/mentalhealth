@@ -1,6 +1,7 @@
 import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/Activities/nighttemplate.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -123,7 +124,7 @@ class _NightMainState extends State<NightMain> {
         child: Column(
           children: [
             SingleChildScrollView(
-              child: AudioCard(
+              child: NightMusicCustomCard(
                 imageUrl: images[index],
                 title: titles[index],
                 imageshow: false,

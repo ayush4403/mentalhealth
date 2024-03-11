@@ -1,11 +1,13 @@
 // ignore_for_file: constant_identifier_names
 import 'dart:async';
-import 'package:MindFulMe/Graphs/PieChartSample2.dart';
-import 'package:MindFulMe/Graphs/PieChartSample3.dart';
+//import 'package:MindFulMe/Graphs/PieChartSample2.dart';
+//import 'package:MindFulMe/Graphs/PieChartSample3.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:MindFulMe/Report/Linechart.dart';
 import 'package:MindFulMe/Report/Monthly.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
+import 'package:MindFulMe/Report/PieChartSample2.dart';
+import 'package:MindFulMe/Report/PieChartSample3.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -71,7 +73,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
 
   @override
   void dispose() {
-    // Cancel the timer when the widget is disposed
     _timer.cancel();
     super.dispose();
   }
@@ -244,9 +245,9 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                   controller: _graphPageController,
                   children: [
                     BarChartSample2(),
-                    const PieChartSample3(),
-                    const PieChartSample2(),
-                    const BarChartSample3(),
+                    PieChartSample3(),
+                    PieChartSample2(),
+                    BarChartSample3(),
                   ],
                 ),
               ),

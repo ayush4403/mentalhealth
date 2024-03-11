@@ -1,4 +1,6 @@
 // ignore_for_file: file_names
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 
@@ -7,15 +9,22 @@ class ReviewPage extends StatelessWidget {
   final List<String> correctAnswers;
   final int totalScore;
 
-  const ReviewPage({
+  ReviewPage({
     super.key,
     required this.selectedAnswers,
     required this.correctAnswers,
     required this.totalScore,
   });
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('mentalmarathon')
+        .doc('data1');
+
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -79,6 +88,11 @@ class ReviewPage extends StatelessWidget {
                   Center(
                     child: GestureDetector(
                       onTap: () {
+                        final userData = weekDoc.get();
+                        weekDoc.set({
+                          'correctAnswers': totalScore,
+                          'incorrectAnswers': 5 - totalScore
+                        }, SetOptions(merge: true));
                         Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,18 +15,41 @@ class PieChartSample3 extends StatefulWidget {
 }
 
 class PieChartSample3State extends State {
-  int touchedIndex = 0;
+  int touchedIndex = -1;
+  int correctAnswers = 0;
+  int incorrectAnswers = 0;
+  @override
+  void initState() {
+    getPieData();
+    super.initState();
+  }
+  @override
+void dispose(){
+  super.dispose();
+}
+  Future<void> getPieData() async {
+    try {
+      final User? user = FirebaseAuth.instance.currentUser;
+      final weekDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('mentalmarathon')
+          .doc('data1');
+      final weekSnapshot = await weekDoc.get();
+      if (weekSnapshot.exists) {
+        final weekData = weekSnapshot.data();
+        setState(() {
+          correctAnswers = weekData?['correctAnswers'] ?? 0;
+          incorrectAnswers = weekData?['incorrectAnswers'] ?? 0;
+        });
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<bool> answers = [
-      true,
-      false,
-      true,
-      false,
-      true
-    ]; // Replace with actual answers
-
     return Column(
       children: [
         AspectRatio(
@@ -52,7 +77,7 @@ class PieChartSample3State extends State {
                 ),
                 sectionsSpace: 2,
                 centerSpaceRadius: 2,
-                sections: showingSections(answers),
+                sections: showingSections(),
               ),
             ),
           ),
@@ -75,39 +100,60 @@ class PieChartSample3State extends State {
     );
   }
 
-  List<PieChartSectionData> showingSections(List<bool> answers) {
+  List<PieChartSectionData> showingSections() {
     List<PieChartSectionData> sections = [];
 
-    for (int i = 0; i < answers.length; i++) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 : 100.0;
-      final widgetSize = isTouched ? 65.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 5)];
+    double totalAnswers =
+        correctAnswers.toDouble() + incorrectAnswers.toDouble();
+    print('Total Answers: $totalAnswers');
 
-      Color sectionColor = answers[i] ? Colors.green : Colors.red;
+    double correctPercentage = (correctAnswers.toDouble() / totalAnswers) * 100;
+    double incorrectPercentage =
+        (incorrectAnswers.toDouble() / totalAnswers) * 100;
+    print('Total Answers: $correctPercentage');
+    print('Total Answers: $incorrectPercentage');
 
-      sections.add(
-        PieChartSectionData(
-          color: sectionColor,
-          value: 20,
-          title: '20%',
-          radius: radius,
-          titleStyle: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xffffffff),
-            shadows: shadows,
-          ),
-          badgeWidget: _Badge(
-            'assets/Images/Report/Mental_Report/${answers[i] ? 'right' : 'wrong'}.svg',
-            size: widgetSize,
-            borderColor: AppColors.contentColorBlack,
-          ),
-          badgePositionPercentageOffset: .98,
+    sections.add(
+      PieChartSectionData(
+        color: Colors.green,
+        value: correctPercentage,
+        title: correctPercentage.toString(),
+        radius: touchedIndex == 0 ? 120.0 : 100.00,
+        titleStyle: TextStyle(
+          fontSize: touchedIndex == 0 ? 25.0 : 16.0,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffffffff),
+          shadows: [Shadow(color: Colors.black, blurRadius: 5)],
         ),
-      );
-    }
+        badgeWidget: _Badge(
+          'assets/Images/Report/Mental_Report/right.svg',
+          size: touchedIndex == 0 ? 45.0 : 55.0,
+          borderColor: AppColors.contentColorBlack,
+        ),
+        badgePositionPercentageOffset: .98,
+      ),
+    );
+
+    sections.add(
+      PieChartSectionData(
+        color: Colors.red,
+        value: incorrectPercentage,
+        title: incorrectPercentage.toString(),
+        radius: touchedIndex == 1 ? 120.0 : 100.00,
+        titleStyle: TextStyle(
+          fontSize: touchedIndex == 1 ? 25.0 : 16.0,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffffffff),
+          shadows: [Shadow(color: Colors.black, blurRadius: 5)],
+        ),
+        badgeWidget: _Badge(
+          'assets/Images/Report/Mental_Report/wrong.svg',
+          size: touchedIndex == 1 ? 45.0 : 55.0,
+          borderColor: AppColors.contentColorBlack,
+        ),
+        badgePositionPercentageOffset: .98,
+      ),
+    );
 
     return sections;
   }

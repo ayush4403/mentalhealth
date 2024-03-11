@@ -230,7 +230,7 @@ class ResultPage extends StatelessWidget {
         .doc('data1');
 
       final userData =  userDoc.get();
-     userDoc.set({'correctAnswers':'$correctAnswers','incorrectAnswer':'$incorrectAnswers' }, SetOptions(merge: true));
+     userDoc.set({'correctAnswers':correctAnswers,'incorrectAnswer':incorrectAnswers }, SetOptions(merge: true));
     return Scaffold(
       appBar: AppBar(
         title: Text('Quiz Result'),
