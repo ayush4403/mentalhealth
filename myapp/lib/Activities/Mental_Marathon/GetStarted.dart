@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/QuizModule.dart';
 
@@ -9,6 +10,24 @@ class GetStartedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(const CardView());
+          },
+        ),
+        title: const Text(
+          'Mental Marathon',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      ),
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Center(
         child: Column(

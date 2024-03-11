@@ -39,7 +39,7 @@ class _AffirmationAppState extends State<AffirmationApp> {
   Future<void> fetchVideoUrl(int day) async {
     try {
       String videoUrl = await firebase_storage.FirebaseStorage.instance
-          .ref('Gratitude thought/GRATITUTE_THOUGHT/${day+45}.mp4')
+          .ref('Gratitude thought/GRATITUTE_THOUGHT/${day + 45}.mp4')
           .getDownloadURL();
 
       // ignore: deprecated_member_use
@@ -80,7 +80,7 @@ class _AffirmationAppState extends State<AffirmationApp> {
             },
           ),
           title: const Text(
-            'Gratitude',
+            'Affirmation',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -152,16 +152,18 @@ class _AffirmationAppState extends State<AffirmationApp> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 50.0),
+                    const SizedBox(height: 20.0),
                     FloatingActionButton(
                       onPressed: () {
-                        setState(() {
-                          if (_controller.value.isPlaying) {
-                            _controller.pause();
-                          } else {
-                            _controller.play();
-                          }
-                        });
+                        setState(
+                          () {
+                            if (_controller.value.isPlaying) {
+                              _controller.pause();
+                            } else {
+                              _controller.play();
+                            }
+                          },
+                        );
                       },
                       backgroundColor: Colors.yellow,
                       child: Icon(
@@ -212,26 +214,34 @@ class _AffirmationAppState extends State<AffirmationApp> {
                               MaterialPageRoute(
                                   builder: (context) => const CardView()));
                         },
-                        child: Container(
-                          width: 250,
-                          height: 60,
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.greenAccent,
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CardView(),
+                                  ),
+                                );
+                              },
+                              style: ButtonStyle(
+                                minimumSize: MaterialStateProperty.all(
+                                  const Size(
+                                    200,
+                                    50,
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
                                 'Activity Done',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     )

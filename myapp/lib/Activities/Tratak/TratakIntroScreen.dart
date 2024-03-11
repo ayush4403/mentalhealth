@@ -50,10 +50,8 @@ class TratakaIntroScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
-
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
             const Text(
               'Instructions:',

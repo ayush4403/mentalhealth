@@ -71,7 +71,7 @@ class _KindnessPageState extends State<KindnessPage> {
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.95,
-          height: MediaQuery.of(context).size.height * 0.83,
+          height: MediaQuery.of(context).size.height * 0.79,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.65),
             borderRadius: const BorderRadius.only(
@@ -202,26 +202,34 @@ class _KindnessPageState extends State<KindnessPage> {
                                   MaterialPageRoute(
                                       builder: (context) => const CardView()));
                             },
-                            child: Container(
-                              width: 250,
-                              height: 60,
-                              padding: const EdgeInsets.all(16.0),
-                              decoration: BoxDecoration(
-                                color: Colors.greenAccent,
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: const Column(
-                                children: [
-                                  Text(
+                            child: Column(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const CardView(),
+                                      ),
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                    minimumSize: MaterialStateProperty.all(
+                                      const Size(
+                                        200,
+                                        50,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
                                     'Activity Done',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         )
