@@ -190,6 +190,7 @@ class _VideoAppState extends State<VideoApp> {
                   children: [
                     const SizedBox(height: 50.0),
                     Scratcher(
+                      image: Image.asset('assets/Images/Music/ms_3.jpg'),
                       brushSize: 50,
                       threshold: 50,
                       color: Colors.blue, // Adjust color as needed

@@ -1,25 +1,19 @@
 // ignore_for_file: file_names
 import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
-import 'package:MindFulMe/Graphs/resources/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample2 extends StatefulWidget {
-  final Color leftBarColor = AppColors.contentColorYellow;
-  final Color rightBarColor = AppColors.contentColorRed;
-  final Color avgColor =
-      AppColors.contentColorOrange.avg(AppColors.contentColorRed);
-  BarChartSample2({Key? key}) : super(key: key);
+class MonthlyMeditation extends StatefulWidget {
+  MonthlyMeditation({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample2State();
+  State<StatefulWidget> createState() => MonthlyMeditationState();
 }
 
-class BarChartSample2State extends State<BarChartSample2> {
+class MonthlyMeditationState extends State<MonthlyMeditation> {
   final double width = 7;
 
   late List<BarChartGroupData> rawBarGroups;
@@ -65,10 +59,10 @@ class BarChartSample2State extends State<BarChartSample2> {
     if (weekSnapshot.exists) {
       final weekData = weekSnapshot.data();
 
-      final List<int> defaultData = List.filled(7, 0);
+      final List<int> defaultData = List.filled(30, 0);
       final List<int> dayDataList = [];
 
-      for (int i = 1; i <= 7; i++) {
+      for (int i = 1; i <= 30; i++) {
         final dynamic dayData = weekData?['day$i'];
         if (dayData is int) {
           dayDataList.add(dayData);
@@ -88,8 +82,7 @@ class BarChartSample2State extends State<BarChartSample2> {
 
       setState(() {
         final items = List.generate(_sessionData.length, (index) {
-          return makeGroupData(index, defaulttime[index].toDouble(),
-              _sessionData[index].toDouble());
+          return makeGroupData(index, _sessionData[index].toDouble());
         });
         rawBarGroups = items;
         showingBarGroups = rawBarGroups;
@@ -136,27 +129,6 @@ class BarChartSample2State extends State<BarChartSample2> {
                           return;
                         }
                         showingBarGroups = List.of(rawBarGroups);
-                        if (touchedGroupIndex != -1) {
-                          var sum = 0.0;
-                          for (final rod
-                              in showingBarGroups[touchedGroupIndex].barRods) {
-                            sum += rod.toY;
-                          }
-                          final avg = sum /
-                              showingBarGroups[touchedGroupIndex]
-                                  .barRods
-                                  .length;
-
-                          showingBarGroups[touchedGroupIndex] =
-                              showingBarGroups[touchedGroupIndex].copyWith(
-                            barRods: showingBarGroups[touchedGroupIndex]
-                                .barRods
-                                .map((rod) {
-                              return rod.copyWith(
-                                  toY: avg, color: widget.avgColor);
-                            }).toList(),
-                          );
-                        }
                       });
                     },
                   ),
@@ -227,15 +199,8 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>[
-      'Day1',
-      'Day2',
-      'Day3',
-      'Day4',
-      'Day5',
-      'Day6',
-      'Day7'
-    ];
+    final List<String> titles =
+        List.generate(30, (index) => (index + 1).toString());
 
     final Widget text = Text(
       titles[value.toInt()],
@@ -253,19 +218,14 @@ class BarChartSample2State extends State<BarChartSample2> {
     );
   }
 
-  BarChartGroupData makeGroupData(int x, double y1, double y2) {
+  BarChartGroupData makeGroupData(int x, double y) {
     return BarChartGroupData(
       barsSpace: 4,
       x: x,
       barRods: [
         BarChartRodData(
-          toY: y1,
-          color: widget.leftBarColor,
-          width: width,
-        ),
-        BarChartRodData(
-          toY: y2,
-          color: widget.rightBarColor,
+          toY: y,
+          color: AppColors.contentColorRed,
           width: width,
         ),
       ],

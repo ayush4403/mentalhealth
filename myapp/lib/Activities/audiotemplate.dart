@@ -51,20 +51,19 @@ class _AudioCardState extends State<AudioCard> {
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
 
-    Timer.periodic(Duration(days: 1), (timer) {
+    Timer.periodic(Duration(seconds: 2), (timer) {
       // Get the current time
       DateTime now = DateTime.now();
       // Check if it's midnight
-      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
-        setState(() {
-          indexday++;
-        });
-        if (indexday > 7) {
-          indexday = 1;
-          indexweek++;
-          _createNewWeekDocument(_sessionDurationInSeconds);
-        }
+
+      // Increment day
+      setState(() {
+        indexday++;
+      });
+      if (indexday > 7) {
+        indexday = 1;
+        indexweek++;
+        _createNewWeekDocument(_sessionDurationInSeconds);
       }
     });
   }
