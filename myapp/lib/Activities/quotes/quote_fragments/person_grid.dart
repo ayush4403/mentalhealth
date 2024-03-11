@@ -39,14 +39,15 @@ class _PersonScreenState extends State<PersonScreen>
     'Elon Musk',
     'Andrew Tate',
   ];
+
   final List<String> queryname = [
     'GuruGopalDas',
     'SwamiVivekananda',
-    'Sadhguru',
+    'SadhGuru',
     'APJ',
     'ViratKohli',
     'MSD',
-    'SadhGuru',
+    'AlbertEinstein',
     'BillGates',
     'ElonMusk',
     'AndrewTate',
