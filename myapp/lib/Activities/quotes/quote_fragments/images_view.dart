@@ -80,11 +80,11 @@ class _ImageWithTextState extends State<ImageWithText> {
               return Center(
                 child: Text(
                   'Error: ${snapshot.error}',
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               );
             } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text(
                   'No images found.',
                   style: TextStyle(color: Colors.grey),

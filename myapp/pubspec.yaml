@@ -110,6 +110,9 @@ flutter:
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
 
+    #Gratitude
+    - assets/Images/Gratitude/scratch.png
+
     #Visualize Gif images
     - assets/GIF/Visualise/VZ1.json
     - assets/GIF/Visualise/VZ2.json

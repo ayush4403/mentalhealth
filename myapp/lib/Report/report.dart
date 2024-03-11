@@ -105,6 +105,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
     if (weekSnapshot.exists) {
       final weekData = weekSnapshot.data();
 
+      // ignore: unused_local_variable
       final List<int> defaultData = List.filled(7, 0);
       final List<int> dayDataList = [];
 
@@ -331,9 +332,9 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                   controller: _graphPageController,
                   children: [
                     BarChartSample2(),
-                    PieChartSample3(),
-                    PieChartSample2(),
-                    BarChartSample3(),
+                    const PieChartSample3(),
+                    const PieChartSample2(),
+                    const BarChartSample3(),
                   ],
                 ),
               ),

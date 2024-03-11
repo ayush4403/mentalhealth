@@ -229,6 +229,7 @@ class ResultPage extends StatelessWidget {
         .collection('SherlockHolmes')
         .doc('data1');
 
+      // ignore: unused_local_variable
       final userData =  userDoc.get();
      userDoc.set({'correctAnswers':correctAnswers,'incorrectAnswer':incorrectAnswers }, SetOptions(merge: true));
     return Scaffold(

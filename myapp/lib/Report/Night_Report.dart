@@ -1,5 +1,5 @@
+// ignore_for_file: file_names
 import 'dart:async';
-
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +50,7 @@ class _BarChartState extends State<_BarChart> {
     if (weekSnapshot.exists) {
       final weekData = weekSnapshot.data();
 
+      // ignore: unused_local_variable
       final List<int> defaultData = List.filled(7, 0);
       final List<int> dayDataList = [];
 
@@ -202,6 +203,7 @@ class _BarChartState extends State<_BarChart> {
 }
 
 class BarChartSample3 extends StatelessWidget {
+  // ignore: use_super_parameters
   const BarChartSample3({Key? key}) : super(key: key);
 
   @override

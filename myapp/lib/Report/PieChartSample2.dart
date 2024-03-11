@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,7 +6,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieChartSample2 extends StatefulWidget {
-  const PieChartSample2({Key? key}) : super(key: key);
+  const PieChartSample2({super.key});
 
   @override
   State<StatefulWidget> createState() => PieChartSample2State();
@@ -39,6 +40,7 @@ class PieChartSample2State extends State<PieChartSample2> {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error fetching data: $e');
     }
   }
@@ -128,7 +130,7 @@ class PieChartSample2State extends State<PieChartSample2> {
           fontSize: touchedIndex == 0 ? 25.0 : 16.0,
           fontWeight: FontWeight.bold,
           color: AppColors.mainTextColor1,
-          shadows: [Shadow(color: Colors.black, blurRadius: 2)],
+          shadows: const [Shadow(color: Colors.black, blurRadius: 2)],
         ),
       ),
     );
@@ -146,7 +148,7 @@ class PieChartSample2State extends State<PieChartSample2> {
           fontSize: touchedIndex == 1 ? 25.0 : 16.0,
           fontWeight: FontWeight.bold,
           color: AppColors.mainTextColor1,
-          shadows: [Shadow(color: Colors.black, blurRadius: 2)],
+          shadows: const [Shadow(color: Colors.black, blurRadius: 2)],
         ),
       ),
     );
@@ -159,7 +161,7 @@ class Indicator extends StatelessWidget {
   final Color color;
   final String text;
 
-  const Indicator({Key? key, required this.color, required this.text});
+  const Indicator({super.key, required this.color, required this.text});
 
   @override
   Widget build(BuildContext context) {

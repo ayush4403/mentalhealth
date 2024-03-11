@@ -1,5 +1,4 @@
 import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
-import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
 import 'package:flutter/material.dart';

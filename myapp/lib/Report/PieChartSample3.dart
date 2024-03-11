@@ -44,6 +44,7 @@ class PieChartSample3State extends State {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error fetching data: $e');
     }
   }
@@ -105,12 +106,15 @@ class PieChartSample3State extends State {
 
     double totalAnswers =
         correctAnswers.toDouble() + incorrectAnswers.toDouble();
+    // ignore: avoid_print
     print('Total Answers: $totalAnswers');
 
     double correctPercentage = (correctAnswers.toDouble() / totalAnswers) * 100;
     double incorrectPercentage =
         (incorrectAnswers.toDouble() / totalAnswers) * 100;
+    // ignore: avoid_print
     print('Total Answers: $correctPercentage');
+    // ignore: avoid_print
     print('Total Answers: $incorrectPercentage');
 
     sections.add(
@@ -123,7 +127,7 @@ class PieChartSample3State extends State {
           fontSize: touchedIndex == 0 ? 25.0 : 16.0,
           fontWeight: FontWeight.bold,
           color: const Color(0xffffffff),
-          shadows: [Shadow(color: Colors.black, blurRadius: 5)],
+          shadows: const [Shadow(color: Colors.black, blurRadius: 5)],
         ),
         badgeWidget: _Badge(
           'assets/Images/Report/Mental_Report/right.svg',
@@ -144,7 +148,7 @@ class PieChartSample3State extends State {
           fontSize: touchedIndex == 1 ? 25.0 : 16.0,
           fontWeight: FontWeight.bold,
           color: const Color(0xffffffff),
-          shadows: [Shadow(color: Colors.black, blurRadius: 5)],
+          shadows: const [Shadow(color: Colors.black, blurRadius: 5)],
         ),
         badgeWidget: _Badge(
           'assets/Images/Report/Mental_Report/wrong.svg',

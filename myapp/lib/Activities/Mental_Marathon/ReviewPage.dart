@@ -88,6 +88,7 @@ class ReviewPage extends StatelessWidget {
                   Center(
                     child: GestureDetector(
                       onTap: () {
+                        // ignore: unused_local_variable
                         final userData = weekDoc.get();
                         weekDoc.set({
                           'correctAnswers': totalScore,
