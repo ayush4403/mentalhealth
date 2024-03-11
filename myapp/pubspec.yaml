@@ -117,6 +117,14 @@ flutter:
     - assets/GIF/Visualise/VZ4.json
     - assets/GIF/Visualise/VZ1.json
 
+    #Power nap images
+    - assets/Images/power_nap/pn_1.jpg
+    - assets/Images/power_nap/pn_2.jpg
+    - assets/Images/power_nap/pn_3.jpg
+    - assets/Images/power_nap/pn_4.jpg
+    - assets/Images/power_nap/pn_5.jpg
+    - assets/Images/power_nap/pn_6.jpg
+
     #morning meditation
     - assets/Images/Morning_meditation/mm_1.jpg
     - assets/Images/Morning_meditation/mm_2.jpg
@@ -153,16 +161,7 @@ flutter:
     - assets/GIF/Card_view/13_journal.json
 
     #sherlockHolmes
-    - assets/SherlockHolmes/1.jpg
-    - assets/SherlockHolmes/2.jpg
-    - assets/SherlockHolmes/3.jpg
-    - assets/SherlockHolmes/4.jpg
-    - assets/SherlockHolmes/5.jpg
-    - assets/SherlockHolmes/6.jpg
-    - assets/SherlockHolmes/7.jpg
-    - assets/SherlockHolmes/8.jpg
-    - assets/SherlockHolmes/9.jpg
-    - assets/SherlockHolmes/10.jpg
+    - assets/SherlockHolmes/
 
     #tratak images and json files
     - assets/Images/Tratak/Tratak.json
