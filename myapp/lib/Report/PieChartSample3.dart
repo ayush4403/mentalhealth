@@ -24,9 +24,9 @@ class PieChartSample3State extends State {
     super.initState();
   }
   @override
-void dispose(){
+  void dispose(){
   super.dispose();
-}
+ }
   Future<void> getPieData() async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;

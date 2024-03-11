@@ -1,11 +1,74 @@
-// ignore_for_file: file_names
+import 'dart:async';
+
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class _BarChart extends StatelessWidget {
-  const _BarChart();
+class _BarChart extends StatefulWidget {
+  @override
+  State<_BarChart> createState() => _BarChartState();
+}
+
+class _BarChartState extends State<_BarChart> {
+  int indexweek = 1;
+  int indexday = 1;
+  late List<int> _sessionData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(days: 1), (timer) {
+      // Get the current time
+      DateTime now = DateTime.now();
+      // Check if it's midnight
+      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
+        // Increment day
+        setState(() {
+          indexday++;
+          if (indexday > 7) {
+            indexday = 1;
+            indexweek++;
+          }
+        });
+      }
+    });
+    _getGraphData();
+  }
+
+  Future<void> _getGraphData() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('NightMusicData')
+        .doc('week$indexweek');
+    final weekSnapshot = await weekDoc.get();
+    if (weekSnapshot.exists) {
+      final weekData = weekSnapshot.data();
+
+      final List<int> defaultData = List.filled(7, 0);
+      final List<int> dayDataList = [];
+
+      for (int i = 1; i <= 7; i++) {
+        final dynamic dayData = weekData?['day$i'];
+        if (dayData is int) {
+          dayDataList.add(dayData~/60);
+        } else if (dayData is List) {
+          dayDataList.addAll(List<int>.from(dayData));
+        } else {
+          dayDataList.add(0); // Fill in zero if day data is missing
+        }
+      }
+
+      setState(() {
+        _sessionData = dayDataList;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,91 +181,32 @@ class _BarChart extends StatelessWidget {
         end: Alignment.topCenter,
       );
 
-  List<BarChartGroupData> get barGroups => [
+  List<BarChartGroupData> get barGroups {
+    List<BarChartGroupData> groups = [];
+    for (int i = 0; i < _sessionData.length; i++) {
+      groups.add(
         BarChartGroupData(
-          x: 0,
+          x: i,
           barRods: [
             BarChartRodData(
-              toY: 8,
+              toY: _sessionData[i].toDouble(),
               gradient: _barsGradient,
             )
           ],
           showingTooltipIndicators: [0],
         ),
-        BarChartGroupData(
-          x: 1,
-          barRods: [
-            BarChartRodData(
-              toY: 10,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 2,
-          barRods: [
-            BarChartRodData(
-              toY: 14,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 3,
-          barRods: [
-            BarChartRodData(
-              toY: 15,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 4,
-          barRods: [
-            BarChartRodData(
-              toY: 13,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 5,
-          barRods: [
-            BarChartRodData(
-              toY: 10,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-        BarChartGroupData(
-          x: 6,
-          barRods: [
-            BarChartRodData(
-              toY: 16,
-              gradient: _barsGradient,
-            )
-          ],
-          showingTooltipIndicators: [0],
-        ),
-      ];
+      );
+    }
+    return groups;
+  }
 }
 
-class BarChartSample3 extends StatefulWidget {
-  const BarChartSample3({super.key});
+class BarChartSample3 extends StatelessWidget {
+  const BarChartSample3({Key? key}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => BarChartSample3State();
-}
-
-class BarChartSample3State extends State<BarChartSample3> {
   @override
   Widget build(BuildContext context) {
-    return const AspectRatio(
+    return AspectRatio(
       aspectRatio: 1.6,
       child: _BarChart(),
     );

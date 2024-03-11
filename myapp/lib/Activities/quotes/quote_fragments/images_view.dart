@@ -50,48 +50,59 @@ class _ImageWithTextState extends State<ImageWithText> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop(const Quotetopic());
-          },
-        ),
-        title: Text(
-          widget.queryname,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _imageData,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            return PageView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return ImageItem(
-                  imageUrl: snapshot.data![index]['imageUrl'],
-                  customDescription: snapshot.data![index]['description'],
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop(const Quotetopic());
+            },
+          ),
+          title: Text(
+            widget.queryname,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        ),
+        body: FutureBuilder<List<Map<String, dynamic>>>(
+          future: _imageData,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Error: ${snapshot.error}',
+                  style: TextStyle(color: Colors.red),
+                ),
+              );
+            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+              return Center(
+                child: Text(
+                  'No images found.',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              );
+            } else {
+              return PageView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return ImageItem(
+                    imageUrl: snapshot.data![index]['imageUrl'],
+                    customDescription: snapshot.data![index]['description'],
+                  );
+                },
+              );
+            }
+          },
+        ));
   }
 }
 
