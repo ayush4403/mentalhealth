@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Sherlock%20Holmes/quizsherdata.dart'
     // ignore: library_prefixes
@@ -18,6 +20,14 @@ class _QuestionPageState extends State<QuestionPage> {
   int selectedOption = -1;
   int currentQuestionIndex = 0;
   bool showCorrectAnswer = false;
+  List<int> selectedAnswers = [];
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedAnswers = List.filled(widget.questions.length, -1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +94,15 @@ class _QuestionPageState extends State<QuestionPage> {
                       });
                     } else {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CardView()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResultPage(
+                            totalQuestions: widget.questions.length,
+                            selectedAnswers: selectedAnswers,
+                            questions: widget.questions,
+                          ),
+                        ),
+                      );
                     }
                   });
                 },
@@ -164,12 +180,79 @@ class _QuestionPageState extends State<QuestionPage> {
             onChanged: isSelected
                 ? null
                 : (value) {
-                    setState(() {
-                      selectedOption = value!;
-                    });
+                    setState(
+                      () {
+                        selectedOption = value!;
+                        selectedAnswers[currentQuestionIndex] = selectedOption;
+                        // ignore: avoid_print
+                        print(selectedAnswers);
+                      },
+                    );
                   },
             activeColor: Colors.white,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ResultPage extends StatelessWidget {
+  final int totalQuestions;
+  final List<int> selectedAnswers;
+  final List<QuizData.Question> questions;
+
+  const ResultPage({
+    super.key,
+    required this.totalQuestions,
+    required this.selectedAnswers,
+    required this.questions,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    int correctAnswers = 0;
+    int incorrectAnswers = 0;
+
+    // Calculate correct and incorrect answers
+    for (int i = 0; i < totalQuestions; i++) {
+      if (selectedAnswers[i] == questions[i].correctAnswerIndex) {
+        correctAnswers++;
+      } else {
+        incorrectAnswers++;
+      }
+    }
+    final User? user = FirebaseAuth.instance.currentUser;
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('SherlockHolmes')
+        .doc('data1');
+
+    // ignore: unused_local_variable
+    final userData = userDoc.get();
+    userDoc.set({
+      'correctAnswers': '$correctAnswers',
+      'incorrectAnswer': '$incorrectAnswers'
+    }, SetOptions(merge: true));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Quiz Result'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Correct Answers: $correctAnswers',
+              style: const TextStyle(fontSize: 24),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Incorrect Answers: $incorrectAnswers',
+              style: const TextStyle(fontSize: 24),
+            ),
+          ],
         ),
       ),
     );

@@ -4,12 +4,13 @@ class CountdownAnimation extends StatefulWidget {
   final int duration;
   final Function onFinish;
 
-  const CountdownAnimation({
+  const CountdownAnimation({super.key, 
     required this.duration,
     required this.onFinish,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CountdownAnimationState createState() => _CountdownAnimationState();
 }
 
@@ -43,7 +44,7 @@ class _CountdownAnimationState extends State<CountdownAnimation>
   Widget build(BuildContext context) {
     return Text(
       _animation.value.toString(),
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.bold,
         color: Colors.red, // Change color as needed

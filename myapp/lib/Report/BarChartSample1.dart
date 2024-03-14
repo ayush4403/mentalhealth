@@ -1,12 +1,12 @@
+// ignore_for_file: file_names
 import 'dart:math';
-
 import 'package:MindFulMe/Graphs/resources/app_colors.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarChartSample1 extends StatefulWidget {
-  BarChartSample1({Key? key});
+  BarChartSample1({super.key});
 
   List<Color> get availableColors => const <Color>[
         AppColors.contentColorPurple,

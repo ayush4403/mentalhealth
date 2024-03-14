@@ -22,8 +22,8 @@ class PieChartSample2State extends State {
       true,
       false,
       true
-    ]; // Replace with actual answers
-
+    ];
+    
     return Container(
       padding: const EdgeInsets.all(16),
       child: Row(

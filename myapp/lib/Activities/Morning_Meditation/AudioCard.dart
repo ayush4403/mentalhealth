@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -14,7 +15,8 @@ class AudioCard1 extends StatefulWidget {
   final bool imageshow;
   final bool timerSelectorfordisplay;
 
-  AudioCard1({
+  // ignore: use_super_parameters
+  const AudioCard1({
     required this.imageUrl,
     required this.title,
     required this.audioFileName,
@@ -243,7 +245,7 @@ class _AudioCard1State extends State<AudioCard1> {
                 padding: const EdgeInsets.only(top: 10.0),
                 child: _playbackControlButton(),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -253,7 +255,7 @@ class _AudioCard1State extends State<AudioCard1> {
                   _customButton("Visualize", _onVisualizePressed),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _volumeControlButton(),
 
               _doneButton(),
@@ -285,7 +287,7 @@ class _AudioCard1State extends State<AudioCard1> {
         onPressed: () {
           // Handle "Done" button tap
         },
-        child: Text("Done"),
+        child: const Text("Done"),
       ),
     );
   }
@@ -417,7 +419,7 @@ class _AudioCard1State extends State<AudioCard1> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          icon: Icon(Icons.volume_down),
+          icon: const Icon(Icons.volume_down),
           onPressed: () {
             setState(() {
               _player.setVolume((_player.volume - 0.1)
@@ -438,7 +440,7 @@ class _AudioCard1State extends State<AudioCard1> {
           ),
         ),
         IconButton(
-          icon: Icon(Icons.volume_up),
+          icon: const Icon(Icons.volume_up),
           onPressed: () {
             setState(() {
               _player.setVolume((_player.volume + 0.1)
@@ -464,6 +466,7 @@ class _AudioCard1State extends State<AudioCard1> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return Container(
       width: MediaQuery.of(context).size.width,
       // ignore: avoid_unnecessary_containers
