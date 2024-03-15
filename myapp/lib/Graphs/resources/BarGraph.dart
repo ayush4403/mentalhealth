@@ -1,4 +1,3 @@
-// ignore_for_file: file_names
 import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
@@ -13,7 +12,7 @@ class BarChartSample2 extends StatefulWidget {
   final Color rightBarColor = AppColors.contentColorRed;
   final Color avgColor =
       AppColors.contentColorOrange.avg(AppColors.contentColorRed);
-  // ignore: use_super_parameters
+
   BarChartSample2({Key? key}) : super(key: key);
 
   @override
@@ -37,11 +36,8 @@ class BarChartSample2State extends State<BarChartSample2> {
   void initState() {
     super.initState();
     Timer.periodic(const Duration(days: 1), (timer) {
-      // Get the current time
       DateTime now = DateTime.now();
-      // Check if it's midnight
       if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
         setState(() {
           indexday++;
           if (indexday > 7) {
@@ -83,15 +79,11 @@ class BarChartSample2State extends State<BarChartSample2> {
       _sessionData = List<int>.from(defaultData);
       _sessionData.setAll(0, dayDataList);
 
-      // Convert seconds to minutes
-      _sessionData =
-          // ignore: division_optimization
-          _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
+      _sessionData = _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
 
       setState(() {
         final items = List.generate(_sessionData.length, (index) {
-          return makeGroupData(index, defaulttime[index].toDouble(),
-              _sessionData[index].toDouble());
+          return makeGroupData(index, defaulttime[index].toDouble(), _sessionData[index].toDouble());
         });
         rawBarGroups = items;
         showingBarGroups = rawBarGroups;
@@ -101,116 +93,123 @@ class BarChartSample2State extends State<BarChartSample2> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(
-              height: 38,
-            ),
-            Expanded(
-              child: _sessionData.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'No meditation has been performed yet.',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    )
-                  : BarChart(
-                      BarChartData(
-                        maxY: 30,
-                        backgroundColor: const Color.fromARGB(255, 170, 196, 241),
-                        barTouchData: BarTouchData(
-                          touchTooltipData: BarTouchTooltipData(
-                            tooltipBgColor: Colors.grey,
-                            getTooltipItem: (a, b, c, d) => null,
-                          ),
-                          touchCallback: (FlTouchEvent event, response) {
-                            if (response == null || response.spot == null) {
-                              setState(() {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
-                              });
-                              return;
-                            }
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildColorIndicator('Total Meditation', widget.leftBarColor),
+            const SizedBox(width: 20),
+            _buildColorIndicator('Performed Meditation', widget.avgColor),
 
-                            touchedGroupIndex =
-                                response.spot!.touchedBarGroupIndex;
-
-                            setState(() {
-                              if (!event.isInterestedForInteractions) {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
-                                return;
-                              }
-                              showingBarGroups = List.of(rawBarGroups);
-                              if (touchedGroupIndex != -1) {
-                                var sum = 0.0;
-                                for (final rod
-                                    in showingBarGroups[touchedGroupIndex]
-                                        .barRods) {
-                                  sum += rod.toY;
-                                }
-                                final avg = sum /
-                                    showingBarGroups[touchedGroupIndex]
-                                        .barRods
-                                        .length;
-
-                                showingBarGroups[touchedGroupIndex] =
-                                    showingBarGroups[touchedGroupIndex]
-                                        .copyWith(
-                                  barRods: showingBarGroups[touchedGroupIndex]
-                                      .barRods
-                                      .map((rod) {
-                                    return rod.copyWith(
-                                        toY: avg, color: widget.avgColor);
-                                  }).toList(),
-                                );
-                              }
-                            });
-                          },
-                        ),
-                        titlesData: FlTitlesData(
-                          show: true,
-                          rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: bottomTitles,
-                              reservedSize: 42,
-                            ),
-                          ),
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 28,
-                              interval: 1,
-                              getTitlesWidget: leftTitles,
-                            ),
-                          ),
-                        ),
-                        borderData: FlBorderData(
-                          show: false,
-                        ),
-                        barGroups: showingBarGroups,
-                        gridData: const FlGridData(show: false),
-                      ),
-                    ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
           ],
         ),
-      ),
+        const SizedBox(height: 20),
+        Expanded(
+          child: _sessionData.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No meditation has been performed yet.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                )
+              : BarChart(
+                  BarChartData(
+                    maxY: 30,
+                    backgroundColor: const Color.fromARGB(255, 170, 196, 241),
+                    barTouchData: BarTouchData(
+                      touchTooltipData: BarTouchTooltipData(
+                        tooltipBgColor: Colors.grey,
+                        getTooltipItem: (a, b, c, d) => null,
+                      ),
+                      touchCallback: (FlTouchEvent event, response) {
+                        if (response == null || response.spot == null) {
+                          setState(() {
+                            touchedGroupIndex = -1;
+                            showingBarGroups = List.of(rawBarGroups);
+                          });
+                          return;
+                        }
+
+                        touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+
+                        setState(() {
+                          if (!event.isInterestedForInteractions) {
+                            touchedGroupIndex = -1;
+                            showingBarGroups = List.of(rawBarGroups);
+                            return;
+                          }
+                          showingBarGroups = List.of(rawBarGroups);
+                          if (touchedGroupIndex != -1) {
+                            var sum = 0.0;
+                            for (final rod
+                                in showingBarGroups[touchedGroupIndex]
+                                    .barRods) {
+                              sum += rod.toY;
+                            }
+                            final avg =
+                                sum / showingBarGroups[touchedGroupIndex].barRods.length;
+
+                            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
+                              barRods: showingBarGroups[touchedGroupIndex]
+                                  .barRods
+                                  .map((rod) {
+                                return rod.copyWith(toY: avg, color: widget.avgColor);
+                              }).toList(),
+                            );
+                          }
+                        });
+                      },
+                    ),
+                    titlesData: FlTitlesData(
+                      show: true,
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: bottomTitles,
+                          reservedSize: 42,
+                        ),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 28,
+                          interval: 1,
+                          getTitlesWidget: leftTitles,
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    barGroups: showingBarGroups,
+                    gridData: const FlGridData(show: false),
+                  ),
+                ),
+        ),
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+
+  Widget _buildColorIndicator(String text, Color color) {
+    return Row(
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          color: color,
+        ),
+        const SizedBox(width: 8),
+        Text(text),
+      ],
     );
   }
 
@@ -221,20 +220,17 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontSize: 14,
     );
     String text = '';
-    
-      if (value == 5) {
-        text = '5';
-      }
-      else if (value == 10){
-        text ='10';
-      }
-      else if(value == 15){
-        text ='15';
-      }
-      else if(value ==20){
-        text ='30';
-      }
-    
+
+    if (value == 5) {
+      text = '5';
+    } else if (value == 10) {
+      text = '10';
+    } else if (value == 15) {
+      text = '15';
+    } else if (value == 20) {
+      text = '30';
+    }
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 8,
@@ -243,15 +239,7 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>[
-      'Day1',
-      'Day2',
-      'Day3',
-      'Day4',
-      'Day5',
-      'Day6',
-      'Day7'
-    ];
+    final titles = ['Day1', 'Day2', 'Day3', 'Day4', 'Day5', 'Day6', 'Day7'];
 
     final Widget text = Text(
       titles[value.toInt()],
