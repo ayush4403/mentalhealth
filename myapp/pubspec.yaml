@@ -350,10 +350,11 @@ flutter:
 
     #Reports
     - assets/Images/Report/1_Meditation.jpg
-    - assets/Images/Report/2_Marathon.jpg
+    - assets/GIF/Card_view/5_sherlock.json
     - assets/Images/Report/3_Sherlock.jpg
     - assets/Images/Report/4_Music.jpg
     - assets/Images/Report/Mental_Report/
+    - assets/GIF/Report/mental_marathon.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

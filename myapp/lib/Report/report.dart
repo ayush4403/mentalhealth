@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:MindFulMe/Report/Monthly.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
@@ -21,7 +21,7 @@ class ChartReportTemplate extends StatefulWidget {
   _ChartReportTemplateState createState() => _ChartReportTemplateState();
 }
 
-class _ChartReportTemplateState extends State<ChartReportTemplate> { 
+class _ChartReportTemplateState extends State<ChartReportTemplate> {
   final PageController _activityPageController = PageController();
   final PageController _graphPageController = PageController();
   int _currentPage = 0;
@@ -39,17 +39,18 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   ];
 
   final List<String> activityImages = [
-    'assets/Images/Report/1_Meditation.jpg',
-    'assets/Images/Report/2_Marathon.jpg',
-    'assets/Images/Report/3_Sherlock.jpg',
-    'assets/Images/Report/4_Music.jpg',
+    'assets/GIF/Card_view/1_morning_meditation.json',
+    'assets/GIF/Report/mental_marathon.json',
+    'assets/GIF/Card_view/5_sherlock.json',
+    'assets/GIF/Card_view/2_night_music.json',
   ];
 
   final List<Color> activityColors = [
-    Colors.purple[200]!,
-    Colors.lime[200]!,
-    Colors.deepOrange[200]!,
-    Colors.teal[200]!,
+    Colors.tealAccent,
+    Colors.tealAccent,
+    Colors.tealAccent,
+    Colors.tealAccent,
+    
   ];
 
   @override
@@ -208,11 +209,11 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
+                          Lottie.asset(
                             activityImages[index],
                             width: 100,
                             height: 100,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                           const SizedBox(
                             width: 10.0,
@@ -226,15 +227,22 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                               ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.5,
-                                child: Text(
-                                  Activities[index],
-                                  style: const TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      Activities[
+                                          index], // Assuming Activities is your list of activity names
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 25.0),
+                              const SizedBox(height: 15.0),
                               Row(
                                 children: List.generate(
                                   7,
@@ -258,32 +266,32 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                               ),
                             ],
                           ),
-                          Column(
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: CircularPercentIndicator(
-                                  radius: 25,
-                                  percent: 0.4,
-                                  lineWidth: 3,
-                                  backgroundColor: Colors.blueAccent,
-                                  center: const Text(
-                                    '40%',
-                                    style: TextStyle(
-                                      fontSize: 13.0,
-                                      color: Color.fromARGB(255, 239, 16, 16),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Column(
+                          //   children: [
+                          //     const SizedBox(
+                          //       height: 20,
+                          //     ),
+                          //     Container(
+                          //       decoration: BoxDecoration(
+                          //         color: Colors.yellow,
+                          //         borderRadius: BorderRadius.circular(25),
+                          //       ),
+                          //       child: CircularPercentIndicator(
+                          //         radius: 25,
+                          //         percent: 0.4,
+                          //         lineWidth: 3,
+                          //         backgroundColor: Colors.blueAccent,
+                          //         center: const Text(
+                          //           '40%',
+                          //           style: TextStyle(
+                          //             fontSize: 13.0,
+                          //             color: Color.fromARGB(255, 239, 16, 16),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
