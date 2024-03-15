@@ -153,7 +153,7 @@ class _NightMusicCustomCardState extends State<NightMusicCustomCard> {
     return SingleChildScrollView(
       child: SafeArea(
         child: Container(
-          height: size.height * 0.8,
+          height: size.height*0.9 ,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,

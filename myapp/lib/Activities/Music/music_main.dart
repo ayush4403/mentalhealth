@@ -1,4 +1,3 @@
-//import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
@@ -21,7 +20,7 @@ class _MainMusicState extends State<MainMusic> {
   @override
   void initState() {
     super.initState();
-    loadIndexFromSharedPreferences(); // Load index before starting the timer
+    loadIndexFromSharedPreferences(); 
     startTimer();
   }
 
@@ -103,13 +102,11 @@ class _MainMusicState extends State<MainMusic> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(
-              const CardView(),
-            );
+            Navigator.of(context).pop();
           },
         ),
-        title: const Text(
-          'Music',
+        title: Text(
+          'Your Music',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -122,13 +119,11 @@ class _MainMusicState extends State<MainMusic> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SingleChildScrollView(
-              child: NightMusicCustomCard(
-                audioFileName: audios[index],
-                imageUrl: images[index],
-                title: titles[index],
-                imageshow: false,
-              ),
+            NightMusicCustomCard(
+              audioFileName: audios[index],
+              imageUrl: images[index],
+              title: titles[index],
+              imageshow: false,
             ),
             const SizedBox(
               height: 20,
@@ -137,7 +132,7 @@ class _MainMusicState extends State<MainMusic> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MusicList()),
+                  MaterialPageRoute(builder: (context) => MusicList()),
                 );
               },
               child: const Text(

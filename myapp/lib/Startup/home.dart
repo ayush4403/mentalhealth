@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         children: const [
           HomePageUI(),
           CardView(),
-          ChartReportTemplate(),
+          const Placeholder(color: Colors.blue),
           GamesPage(),
           ProfileInfoPage(),
         ],

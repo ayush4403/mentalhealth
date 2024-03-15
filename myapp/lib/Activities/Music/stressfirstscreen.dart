@@ -329,10 +329,7 @@ class _MusicListScreenState extends State<MusicListScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MainMusic()),
-            );
+            Navigator.of(context).pop();
           },
         ),
         title: const Text(
