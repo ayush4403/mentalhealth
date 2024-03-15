@@ -41,7 +41,7 @@ class ReviewPage extends StatelessWidget {
         body: Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.80,
+            height: MediaQuery.of(context).size.height * 0.85,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.65),
               borderRadius: const BorderRadius.only(

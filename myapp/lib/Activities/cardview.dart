@@ -218,6 +218,7 @@ class ActivityList extends StatelessWidget {
       },
     );
   }
+  
 
   void handleActivityTap(String activity) {
     // Handle the onPressed action for each activity here
