@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:MindFulMe/Activities/Music/music_main.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Music/stressSecond.dart';
 

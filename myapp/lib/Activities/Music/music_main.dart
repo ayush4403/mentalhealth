@@ -105,7 +105,7 @@ class _MainMusicState extends State<MainMusic> {
             Navigator.of(context).pop();
           },
         ),
-        title: Text(
+        title: const Text(
           'Your Music',
           style: TextStyle(
             color: Colors.white,
@@ -132,7 +132,7 @@ class _MainMusicState extends State<MainMusic> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MusicList()),
+                  MaterialPageRoute(builder: (context) => const MusicList()),
                 );
               },
               child: const Text(

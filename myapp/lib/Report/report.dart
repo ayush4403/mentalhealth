@@ -1,7 +1,8 @@
 // ignore_for_file: constant_identifier_names
 import 'dart:async';
-//import 'package:MindFulMe/Graphs/PieChartSample2.dart';
-//import 'package:MindFulMe/Graphs/PieChartSample3.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:MindFulMe/Report/Monthly.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
@@ -9,9 +10,6 @@ import 'package:MindFulMe/Report/PieChartSample2.dart';
 import 'package:MindFulMe/Report/PieChartSample3.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 enum Timeframe { Weekly, Monthly }
 
@@ -53,9 +51,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
     Colors.deepOrange[200]!,
     Colors.teal[200]!,
   ];
-
-  String formattedDate =
-      DateFormat('EEEE d\'th\', MMM yyyy hh:mm:ss a').format(DateTime.now());
 
   @override
   void initState() {
@@ -105,8 +100,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
     if (weekSnapshot.exists) {
       final weekData = weekSnapshot.data();
 
-      // ignore: unused_local_variable
-      final List<int> defaultData = List.filled(7, 0);
       final List<int> dayDataList = [];
 
       for (int i = 1; i <= 7; i++) {
@@ -124,7 +117,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
       });
     }
   }
-  
 
   @override
   void dispose() {
@@ -152,15 +144,41 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                formattedDate,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+            Container(
+              margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.white, Colors.white],
                 ),
+                borderRadius: BorderRadius.circular(20),
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    DateFormat('EEEE d\'th\', MMM yyyy').format(DateTime.now()),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    DateFormat('hh:mm:ss a').format(DateTime.now()),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             SizedBox(
               height: 117,
@@ -274,7 +292,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.009,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             Container(
               margin: EdgeInsets.only(
@@ -322,36 +340,49 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 ).toList(),
               ),
             ),
-
-            // Display either LineChartSample2 or BarChartSample2 based on the selected timeframe
-            if (selectedTimeframe == Timeframe.Weekly)
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: PageView(
-                  controller: _graphPageController,
-                  children: [
-                    BarChartSample2(),
-                    const PieChartSample3(),
-                    const PieChartSample2(),
-                    const BarChartSample3(),
-                  ],
+            const SizedBox(
+              height: 15,
+            ),
+            // Displayeither LineChartSample2 or BarChartSample2 based on the selected timeframe
+            Container(
+              margin: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.white, Colors.white],
                 ),
+                borderRadius: BorderRadius.circular(20.0),
               ),
-            if (selectedTimeframe == Timeframe.Monthly)
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: PageView(
-                  controller: _graphPageController,
-                  children: const [
-                    MonthlyMeditation(),
-                    MonthlyMeditation(),
-                    MonthlyMeditation(),
-                    MonthlyMeditation(),
-                  ],
-                ),
-              ),
+              child: selectedTimeframe == Timeframe.Weekly
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: PageView(
+                        controller: _graphPageController,
+                        children: [
+                          BarChartSample2(),
+                          const PieChartSample3(),
+                          const PieChartSample2(),
+                          const BarChartSample3(),
+                        ],
+                      ),
+                    )
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: PageView(
+                        controller: _graphPageController,
+                        children: const [
+                          MonthlyMeditation(),
+                          MonthlyMeditation(),
+                          MonthlyMeditation(),
+                          MonthlyMeditation(),
+                        ],
+                      ),
+                    ),
+            ),
           ],
         ),
       ),
