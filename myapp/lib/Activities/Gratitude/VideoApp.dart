@@ -317,9 +317,11 @@ class _VideoAppState extends State<VideoApp> {
                             await saveActivityCompletionStatus();
                             // ignore: use_build_context_synchronously
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const CardView()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CardView(),
+                              ),
+                            );
                           } else {
                             // ignore: avoid_print
                             print('Your text is empty');
