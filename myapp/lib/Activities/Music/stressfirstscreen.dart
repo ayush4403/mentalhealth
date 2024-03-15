@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:MindFulMe/Activities/Music/music_main.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Music/stressSecond.dart';
 
@@ -329,10 +328,7 @@ class _MusicListScreenState extends State<MusicListScreen>
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MainMusic()),
-            );
+            Navigator.of(context).pop();
           },
         ),
         title: const Text(
