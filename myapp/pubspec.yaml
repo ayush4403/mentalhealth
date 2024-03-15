@@ -56,7 +56,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   flutter_screenutil: ^5.9.0
   animated_theme_switcher: ^2.0.10
-  riverpod: ^2.5.0
+  riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:
@@ -110,6 +110,9 @@ flutter:
     - assets/GIF/Registration/signin.json
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
+
+    #Gratitude
+    - assets/Images/Gratitude/scratch.png
 
     #Visualize Gif images
     - assets/GIF/Visualise/VZ1.json

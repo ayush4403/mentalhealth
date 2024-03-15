@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Sherlock%20Holmes/Picturepage.dart';
 
@@ -8,6 +9,24 @@ class LetsPlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop(const CardView());
+          },
+        ),
+        title: const Text(
+          'Sherlock Holmes',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      ),
       backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Center(
         child: Column(
@@ -48,21 +67,22 @@ class LetsPlay extends StatelessWidget {
                           builder: (context) => const PicturePage()));
                 },
                 child: Container(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(16),
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Text(
-                      'Let\'s Play',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    )),
+                  margin: const EdgeInsets.only(bottom: 20),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(16),
+                  width: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text(
+                    'Let\'s Play',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ),
           ],
@@ -73,7 +93,9 @@ class LetsPlay extends StatelessWidget {
 }
 
 void main() {
-  runApp(const MaterialApp(
-    home: LetsPlay(),
-  ));
+  runApp(
+    const MaterialApp(
+      home: LetsPlay(),
+    ),
+  );
 }

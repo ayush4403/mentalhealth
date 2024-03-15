@@ -5,7 +5,6 @@ import 'package:MindFulMe/Activities/nighttemplate.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:MindFulMe/Activities/cardview.dart';
 
 class MainMusic extends StatefulWidget {
   const MainMusic({super.key});
@@ -104,7 +103,9 @@ class _MainMusicState extends State<MainMusic> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(const CardView());
+            Navigator.of(context).pop(
+              const CardView(),
+            );
           },
         ),
         title: const Text(
@@ -122,11 +123,13 @@ class _MainMusicState extends State<MainMusic> {
         child: Column(
           children: [
             SingleChildScrollView(
-                child: NightMusicCustomCard(
-              audioFileName: audios[index],
-              imageUrl: images[index],
-              title: titles[index],
-            )),
+              child: NightMusicCustomCard(
+                audioFileName: audios[index],
+                imageUrl: images[index],
+                title: titles[index],
+                imageshow: false,
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),

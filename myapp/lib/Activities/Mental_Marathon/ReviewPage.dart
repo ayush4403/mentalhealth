@@ -1,4 +1,6 @@
 // ignore_for_file: file_names
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 
@@ -7,15 +9,22 @@ class ReviewPage extends StatelessWidget {
   final List<String> correctAnswers;
   final int totalScore;
 
-  const ReviewPage({
+  ReviewPage({
     super.key,
     required this.selectedAnswers,
     required this.correctAnswers,
     required this.totalScore,
   });
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('mentalmarathon')
+        .doc('data1');
+
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -74,36 +83,52 @@ class ReviewPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Center(
                     child: GestureDetector(
                       onTap: () {
+                        // ignore: unused_local_variable
+                        final userData = weekDoc.get();
+                        weekDoc.set({
+                          'correctAnswers': totalScore,
+                          'incorrectAnswers': 5 - totalScore
+                        }, SetOptions(merge: true));
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const CardView()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CardView(),
+                          ),
+                        );
                       },
-                      child: Container(
-                        //width: 250,
-                        //height: 60,
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.greenAccent,
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: const Column(
-                          children: [
-                            Text(
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CardView(),
+                                ),
+                              );
+                            },
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                const Size(
+                                  200,
+                                  50,
+                                ),
+                              ),
+                            ),
+                            child: const Text(
                               'Activity Done',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   )

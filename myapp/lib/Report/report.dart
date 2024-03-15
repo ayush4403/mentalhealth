@@ -1,10 +1,14 @@
 // ignore_for_file: constant_identifier_names
 import 'dart:async';
-import 'package:MindFulMe/Graphs/PieChartSample2.dart';
-import 'package:MindFulMe/Graphs/PieChartSample3.dart';
+//import 'package:MindFulMe/Graphs/PieChartSample2.dart';
+//import 'package:MindFulMe/Graphs/PieChartSample3.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
 import 'package:MindFulMe/Report/Monthly.dart';
 import 'package:MindFulMe/Report/Night_Report.dart';
+import 'package:MindFulMe/Report/PieChartSample2.dart';
+import 'package:MindFulMe/Report/PieChartSample3.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -25,7 +29,9 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   int _currentPage = 0;
   late Timer _timer;
   Timeframe selectedTimeframe = Timeframe.Weekly; // Default to Weekly
-
+  int indexweek = 1;
+  int indexday = 1;
+  late List<int> _sessionData = [];
   // ignore: non_constant_identifier_names
   List<dynamic> Activities = [
     'Morning Meditation',
@@ -69,11 +75,59 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
         }
       },
     );
+    Timer.periodic(const Duration(days: 1), (timer) {
+      // Get the current time
+      DateTime now = DateTime.now();
+      // Check if it's midnight
+      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
+        // Increment day
+        setState(() {
+          indexday++;
+          if (indexday > 7) {
+            indexday = 1;
+            indexweek++;
+          }
+        });
+      }
+    });
+    _getGraphData();
   }
+
+  Future<void> _getGraphData() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('MeditationData')
+        .doc('week$indexweek');
+    final weekSnapshot = await weekDoc.get();
+    if (weekSnapshot.exists) {
+      final weekData = weekSnapshot.data();
+
+      // ignore: unused_local_variable
+      final List<int> defaultData = List.filled(7, 0);
+      final List<int> dayDataList = [];
+
+      for (int i = 1; i <= 7; i++) {
+        final dynamic dayData = weekData?['day$i'];
+        if (dayData is int) {
+          dayDataList.add(dayData);
+        } else if (dayData is List) {
+          dayDataList.addAll(List<int>.from(dayData));
+        } else {
+          dayDataList.add(0); // Fill in zero if day data is missing
+        }
+      }
+      setState(() {
+        _sessionData = dayDataList;
+      });
+    }
+  }
+  
 
   @override
   void dispose() {
-    // Cancel the timer when the widget is disposed
     _timer.cancel();
     super.dispose();
   }
@@ -167,8 +221,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                                 children: List.generate(
                                   7,
                                   (dayIndex) {
-                                    // Replace the condition with your actual logic
-                                    bool isDayDone = dayIndex % 2 == 0;
+                                    bool isDayDone = _sessionData[dayIndex] > 0;
                                     return Container(
                                       width: 20,
                                       height: 20,

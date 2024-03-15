@@ -193,7 +193,7 @@ class _VideoAppState extends State<VideoApp> {
                   children: [
                     const SizedBox(height: 50.0),
                     Scratcher(
-                      image: Image.asset('assets/Images/scratch.png'),
+                      image: Image.asset('assets/Images/Gratitude/scratch.png'),
                       brushSize: 50,
                       threshold: 50,
                       color: Colors.blue, // Adjust color as needed
@@ -317,34 +317,44 @@ class _VideoAppState extends State<VideoApp> {
                             await saveActivityCompletionStatus();
                             // ignore: use_build_context_synchronously
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const CardView()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CardView(),
+                              ),
+                            );
                           } else {
                             // ignore: avoid_print
                             print('Your text is empty');
                           }
                         },
-                        child: Container(
-                          width: 250,
-                          height: 60,
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.greenAccent,
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CardView(),
+                                  ),
+                                );
+                              },
+                              style: ButtonStyle(
+                                minimumSize: MaterialStateProperty.all(
+                                  const Size(
+                                    200,
+                                    50,
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
                                 'Activity Done',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
