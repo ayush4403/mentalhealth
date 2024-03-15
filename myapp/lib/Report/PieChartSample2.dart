@@ -36,7 +36,7 @@ class PieChartSample2State extends State<PieChartSample2> {
         final weekData = weekSnapshot.data();
         setState(() {
           correctAnswers = weekData?['correctAnswers'] ?? 0;
-          incorrectAnswers = weekData?['incorrectAnswer'] ?? 0;
+          incorrectAnswers = weekData?['incorrectAnswers'] ?? 0;
         });
       }
     } catch (e) {

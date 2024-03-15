@@ -322,13 +322,13 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'HOW MANY GIRLS ARE SITTING IN THE PICTURE?',
-        options: ["2", "3", "4", "1"],
-        correctAnswerIndex: 0,
+        options: ["4", "3", "2", "1"],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'HOW MANY BOYS WEAR CAP?',
-        options: ["1", "2", "NONE", "ALL"],
-        correctAnswerIndex: 0,
+        options: ["2", "1", "NONE", "ALL"],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'HOW MANY TREES ARE THERE?',
@@ -343,8 +343,8 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY KIDS ARE STANDING IN THE PICTURE?',
-        options: ["3", "2", "4", "NONE"],
-        correctAnswerIndex: 0,
+        options: ["4", "2", "3", "NONE"],
+        correctAnswerIndex: 2,
       ),
     ],
   ),
@@ -353,13 +353,13 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'HOW MANY LAPTOPS ARE ON THE TABLE?',
-        options: ['2', '1', '3', 'NONE'],
-        correctAnswerIndex: 0,
+        options: ['3', '1', '2', 'NONE'],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'HOW MANY DRAWERS THE CUPBOARD HAVE?',
-        options: ['5', '4', '6', '3'],
-        correctAnswerIndex: 0,
+        options: ['3', '4', '6', '5'],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'WHAT TIME SHOWN IN THE CLOCK?',
@@ -368,13 +368,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHO WEAR SPECTS?',
-        options: ['BOTH', 'THE GIRL', 'THE BOY', 'NONE'],
-        correctAnswerIndex: 0,
+        options: ['THE GIRL', 'BOTH', 'THE BOY', 'NONE'],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'HOW MANY LAMPS ARE SEEN IN THE PICTURE?',
-        options: ['2', '3', '4', 'NONE'],
-        correctAnswerIndex: 0,
+        options: ['3', '2', '4', 'NONE'],
+        correctAnswerIndex: 1,
       ),
     ],
   ),
@@ -389,18 +389,18 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'THE BOY WITH GREEN TSHIRT , WHAT IS IN HIS HANDS?',
-        options: ["MOBILE", "BOOK", "NOTHING", "BAG"],
-        correctAnswerIndex: 0,
+        options: ["NOTHING", "BOOK", "MOBILE", "BAG"],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'HOW MANY BOYS IN THE PICTURE?',
-        options: ["3", "2", "4", "1"],
-        correctAnswerIndex: 0,
+        options: ["1", "2", "4", "3"],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'HOW MANY BOYS WEAR WHITE SHIRT?',
-        options: ["2", "1", "3", "NONE"],
-        correctAnswerIndex: 0,
+        options: ["1", "2", "3", "NONE"],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'HOW MANY GIRL WEAR SPECTS?',
@@ -419,13 +419,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY FAMILY DOING SKETTING ? ', //Wrong Question
-        options: ['1', '2', 'NONE', '4'],
-        correctAnswerIndex: 0,
+        options: ['NONE', '1','2', '4'],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'WHICH PET IS SEEN IN THE PICTURE ?',
-        options: ['DOG', 'CAT', 'PARROT', 'NONE'],
-        correctAnswerIndex: 0,
+        options: ['PARROT', 'CAT', 'DOG', 'NONE'],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'EACH FAMILY HAVE 1 KID ONLY.   TRUE OR FALSE',
@@ -434,8 +434,8 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY BANCHES ARE IN THE PARK?',
-        options: ["3", "2", "4", "1"],
-        correctAnswerIndex: 0,
+        options: ["1", "2", "3", "4"],
+        correctAnswerIndex: 2,
       ),
     ],
   ),
@@ -444,13 +444,13 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'HOW MANY STICKY NOTES ARE IN THE NOTICE BOARD?',
-        options: ["4", "3", "5", "6"],
-        correctAnswerIndex: 0,
+        options: ["3", "4", "5", "6"],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'WHAT IS COLOR OF MUG ?',
-        options: ['YELLOW', 'GREEN', 'RED', 'BLUE'],
-        correctAnswerIndex: 0,
+        options: ['BLUE', 'GREEN', 'RED', 'YELLOW'],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'HOW MANY WINDOWS ARE IN THE ROOM?',
@@ -459,13 +459,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE GUITAR?',
-        options: ["RED", "GREEN", "BLUE", "PINK"],
-        correctAnswerIndex: 0,
+        options: ["BLUE", "GREEN", "RED", "PINK"],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'HOW MANY SPEAKER ARE IN THE ROOM?',
-        options: ['2', '3', '4', '1'],
-        correctAnswerIndex: 0,
+        options: ['1', '2', '3', '4'],
+        correctAnswerIndex: 1,
       ),
     ],
   ),
@@ -474,13 +474,13 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'HOW MANY CUSHION SEEN IN THE PICTURE ?',
-        options: ["4", "3", "2", "1"],
-        correctAnswerIndex: 0,
+        options: ["3", "2", "4", "1"],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE SOFA?',
-        options: ['RED', 'GREEN', 'YELLOW', 'PURPLE'],
-        correctAnswerIndex: 0,
+        options: ['PURPLE', 'GREEN', 'YELLOW', 'RED'],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE WALL?',
@@ -489,13 +489,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY DOOR AND WINDOW SHOWN IN THE PICTURE?',
-        options: ["2", "1", "3", "NONE"],
-        correctAnswerIndex: 0,
+        options: ["1", "2", "3", "NONE"],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'THE WOODEN CHAIR IS WHICH SIDE OF THE ROOM?',
-        options: ['LEFT', 'RIGHT'],
-        correctAnswerIndex: 0,
+        options: ['RIGHT','LEFT'],
+        correctAnswerIndex: 1,
       ),
     ],
   ),
@@ -504,8 +504,8 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF TV?',
-        options: ["YELLOW", "RED", "BLUE", "GREEN"],
-        correctAnswerIndex: 0,
+        options: ["GREEN", "RED", "BLUE", "YELLOW"],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'HOW MANY STAR HANGING FROM THE CILLING?',
@@ -514,18 +514,18 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHICH COLOR CAR LAYING IN THE MIDDLE OF THE ROOM?',
-        options: ['YELLOW', 'RED', 'BLUE', 'GREEN'],
-        correctAnswerIndex: 0,
+        options: ['BLUE', 'RED', 'YELLOW', 'GREEN'],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'WHERE IS THE GUITAR?',
         options: [
-          "NEAR THE WINDOW",
-          "NEAR THE SOFA ",
+          "NEAR THE SOFA",
+          "NEAR THE WINDOW ",
           "NEAR THE TV",
           "NOT IN PICTURE"
         ],
-        correctAnswerIndex: 0,
+        correctAnswerIndex: 1,
       ),
       Question(
         question:
@@ -545,13 +545,13 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'HOW MANY WINDOWS ARE SEEN IN THE PICTURE?',
-        options: ["2", "1", "4", "3"],
-        correctAnswerIndex: 0,
+        options: ["1", "2", "4", "3"],
+        correctAnswerIndex: 1,
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE TV?',
-        options: ['BLACK -WHITE', 'GREY', 'RED', 'PURPLE'],
-        correctAnswerIndex: 0,
+        options: ['RED', 'GREY', 'BLACK -WHITE', 'PURPLE'],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE CURTAINS?',
@@ -560,13 +560,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE TABLE LAMP ?',
-        options: ["YELLOW", "PINK", "PURPLE", "BLUE"],
-        correctAnswerIndex: 0,
+        options: ["BLUE", "PINK", "PURPLE", "YELLOW"],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'EACH SOFA HAS CUSHION , TRUE OR FALSE',
-        options: ['FALSE', 'TRUE'],
-        correctAnswerIndex: 0,
+        options: ['TRUE','FALSE'],
+        correctAnswerIndex: 1,
       ),
     ],
   ),
@@ -580,17 +580,17 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE CLOCK?',
-        options: ['RED- WHITE', 'RED-PURPLE', 'RED-GREEN', 'WHITE- BLUE'],
-        correctAnswerIndex: 0,
+        options: ['RED- GREEN', 'RED-PURPLE', 'RED- WHITE', 'WHITE- BLUE'],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'WHAT IS WRITTEN ON THE WHITE BOARD?',
-        options: ['NOTHING', 'ALPHABETS', 'NUMBERS', 'MATH FORMULA'],
-        correctAnswerIndex: 0,
+        options: ['ALPHABETS', 'NUMBERS', 'MATH FORMULA', 'NOTHING'],
+        correctAnswerIndex: 3,
       ),
       Question(
         question:
-            'ACCORDING TO YOU, ON WHICH SIDE CHAIR IS AVAILABLE IN THE ROOM ?',
+            'ACCORDING TO YOU, ON WHICH SIDE CHAIR IS AVAILABLE IN THE ROOM ?', //wrong question
         options: ["RIGHT", "LEFT"],
         correctAnswerIndex: 0,
       ),
@@ -612,8 +612,8 @@ List<QuizData> quizDataList = [
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE CURTAIN?',
-        options: ["PINK", "GREEN", "PURPLE", "BLUE"],
-        correctAnswerIndex: 0,
+        options: ["BLUE", "GREEN", "PURPLE", "PINK"],
+        correctAnswerIndex: 3,
       ),
       Question(
         question: 'HOW MANY DRAWERS THE STUDY TABLE HAS?',
@@ -622,8 +622,8 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE BED SHEET ?',
-        options: ['PURPLE', 'BLUE', 'GREEN', 'WHITE'],
-        correctAnswerIndex: 0,
+        options: ['GREEN', 'BLUE', 'PURPLE', 'WHITE'],
+        correctAnswerIndex: 2,
       ),
       Question(
         question: 'WHERE IS THE GLOB?',
@@ -632,8 +632,338 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE LAMP?',
+        options: ['PINK', 'YELLOW', 'BLUE', 'GREEN'],
+        correctAnswerIndex: 1,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/21.jpg',
+    questions: [
+      Question(
+        question: 'WHO IS STANDING IN THE PICTURE?',
+        options: ["THE LADY", "THE GIRL", " 2 KID", "NO ONE"],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHAT IS EXTRA IN PHOTOFRAME OTHER THAN FAMILY?', // wrong question
+        options: ['3', '1', '2', 'NONE'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'TWO KIDS WEARING SAME COLOR TSHIRT ?   YES OR NO ',
+        options: ['NO', 'YES'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'THE LADY AND HER DAUGHTER HAVE SAME COLOR CLOTHS?',
+        options: ["YES", "NO",],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF THE TSHIRT THE FATHER WEAR ?',
+        options: ['RED', 'GREEN', 'PINK', 'BLACK'],
+        correctAnswerIndex: 3,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/22.jpg',
+    questions: [
+      Question(
+        question: 'WHAT IS THE COLOR OF THE CHAIR?',
+        options: ["WOODEN", "BLUE", "YELLOW", "PURPLE"],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHAT IS WRITTEN ON THE BLACK BOARD?',
+        options: [ 'ALPHABETS', 'SUM','NOTHING', 'CHEMISTRY'],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF THE WALL?',
+        options: ['GREEN', 'BLUE', 'PINK', 'WHITE'],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT IS COLOR OF THE TEACHERS TABLE?',
+        options: ["GREEN- WHITE", "PINK - WHITE", "BLUE- WHITE", "YELLOW - WHITE"],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'ACCORDING TO YOU, THE DOOR IS LEFT SIDE OF THE ROOM', //wrong question
         options: ['YELLOW', 'PINK', 'BLUE', 'GREEN'],
         correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/23.jpg',
+    questions: [
+      Question(
+        question: 'HOW MANY GIRLS ARE IN THE PICTURE?',
+        options: ["1", "2", "3", "4"],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'THE BOY WHO SITTING IN SINGLE CHAIR SOFA WEAR SPECTS   TRUE OR FALSE',
+        options: ['TRUE', 'FALSE'],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'HOW MANY STUDY TABLE ARE THERE?',
+        options: ['1', '2', '3', 'NONE'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'THE GIRL NEAR THE BOY , HOW MANY BOOK SHE HAS?',
+        options: ["2", "4", "1", "3"],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHAT TIME SHOWN IN THE CLOCK?',
+        options: ['08:00', '07:00', '06:00', '05:00'],
+        correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/24.jpg',
+    questions: [
+      Question(
+        question: 'WHAT IS COLOR OF WALL?',
+        options: ["PINK", "PURPLE", "SKY BLUE", "WHITE"],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'HOW MANY GLASSES ON THE TABLE?',
+        options: ['3', '2', '1', 'NONE'],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT IS  ON THE TABLE RATHER THAN WATER JUG AND GLASSES',
+        options: ['SANDWITCH', 'BURGER', 'PIZZA', 'FRUITS'],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'HOW MANY LAMPS IN THE ROOM?',
+        options: ['1', '2','3','NONE'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'THERE IS CELLING FAN. TRUE OR FALSE', //wrong question
+        options: ['YELLOW', 'PINK', 'BLUE', 'GREEN'],
+        correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/25.jpg',
+    questions: [
+      Question(
+        question: 'WHAT IS THE COLOR OF THE TOY CAR?',
+        options: ["YELLOW", "RED", "GREEN", "BLUE"],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHICH COLOR THE CURTAINS HAVE?',
+        options: ["GREEN", "PINK", "WHITE", "PURPLE"],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'WHAT IS IN THE BASKET OR BUCKET ?',
+        options: ['CAR', 'TEDDY', 'DOLL', 'BOOKS'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF LAMP?',
+        options: ["PINK- WHITE", "BLUE- WHITE", "PURPLE- WHITE", "GREEN- WHITE"],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'HOW MANY WAGES THE TOY TRAIN HAS?',
+        options: ['2', '3','4','NONE'],
+        correctAnswerIndex: 1,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/26.jpg',
+    questions: [
+      Question(
+        question: 'HOW MANY HOUSES IN THE PICTURE?',
+        options: ['3', '4','5','6'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHO ARE PLAYING WITH BALL?',
+        options: ['2 GIRLS', '2 BOYS', '1 GIRL 1 BOY', '2  BOY 1 GIRL'],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'HOW MANY KIDS ARE PLAYING?',
+        options: ['5', '6','7','8'],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'WHICH COLOR HOUSE IS NOT THERE?',
+        options: ['YELLOW', 'RED', 'GREEN', 'PURPLE'],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHICH COLOR THE SLIDER HAS?',
+        options: ['RED', 'BLUE', 'GREEN', 'YELLOW'],
+        correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/27.jpg',
+    questions: [
+      Question(
+        question: 'WHO IS ON THE BED?',
+        options: ["TEDDY", "BOY", "GIRL", "NONE"],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'HOW MANY BOOKS ON THE STUDY TABLE?',
+        options: ['4', '2', '3', 'NONE'],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF NOTICE BOARD ?',
+        options: ['PINK', 'RED', 'BLACK', 'GREEN'],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'HOW MANY DRAWERS THE BED HAS?',
+        options: ['2', '3', '4', 'NONE'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF THE CLOCK?',
+        options: ['YELLOW- WHITE', 'YELLOW - RED', 'WHITE -RED', 'WHITE - PINK'],
+        correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/28.jpg',
+    questions: [
+      Question(
+        question: 'HOW MANY BED ARE IN THE ROOM',
+        options: ['1', '3', '2', 'NONE'],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'WHAT TIME SEEN IN THE CLOCK?',
+        options: ['03:00', '12:15', '02:00', '09:00'],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT COLOR THE BAG HAS WHICH IS ON THE TABLE?',
+        options: ['GREEN', 'RED', 'YELLOW', 'BLUE'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHOSE PICTURE IS STICK ON THE WALL?',
+        options: ["ROBOT", "GIRAFFE", "LION", "ELEPHANT"],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHO IS ON THE BED?',
+        options: ['RABBIT', 'DOG', 'DOLL', 'KID'],
+        correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/29.jpg',
+    questions: [
+      Question(
+        question: 'WHAT KIDS ARE DOING?',
+        options: ["READING", "PLAYING", "SLEEPING", "EATING"],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'IT’S A MORNING TIME OR NIGHT TIME?',
+        options: [ 'MORNING', 'NIGHT'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHAT IS COLOR OF CURTAIN?',
+        options: ['BLUE', 'PINK', 'YELLOW', 'PURPLE'],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHAT IS IN THE RACK?',
+        options: ["GLOB", "TOYS", "BOOKS", "PHOTO FRAME"],
+        correctAnswerIndex: 2,
+      ),
+      Question(
+        question: 'WHAT IS ON THE TABLE ?',
+        options: ['ROBOT', 'BOOK', 'JUG', 'LAPTOP'],
+        correctAnswerIndex: 0,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/30.jpg',
+    questions: [
+      Question(
+        question: 'HOW MANY PILLOW ON THE BED?',
+        options: ['1', '2', '3', 'NONE'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHAT IS A BOY DOING?',
+        options: ['READING BOOK', 'PLAYING WITH TOYS', 'PLAYING WITH  PHONE', 'PLAYING WITH BALL'],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHAT IS WRITTEN ON THE BOX WHICH LAY DOWN NEAR BED?',
+        options: ['TOY BOX', 'TOOL BOX', 'TOYS', 'BOX'],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT IS ON THE CUPBOARD ?',
+        options: ["TOYS", "FOOTBALL", "BOOKS", "PHOTO FRAME"],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHICH COLOR TSHIRT THE BOY WEAR?',
+        options: ['GREEN', 'PURPLE', 'RED', 'PINK'],
+        correctAnswerIndex: 2,
+      ),
+    ],
+  ),
+  QuizData(
+    imagePath: 'assets/SherlockHolmes/31.jpg',
+    questions: [
+      Question(
+        question: 'WHAT IS THE COLOR O THE LAMP?',
+        options: ['BLACK', 'GREEN', 'YELLOW', 'RED'],
+        correctAnswerIndex: 3,
+      ),
+      Question(
+        question: 'WHAT IS UNDER THE TABLE?',
+        options: ['DUSTBIN', 'BALL', 'DOG', 'TOYS '],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF PEN STAND?',
+        options: ['BLACK', 'YELLOW', 'GREEN', 'RED'],
+        correctAnswerIndex: 1,
+      ),
+      Question(
+        question: 'WHAT TIME SEEN IN THE CLOCK?',
+        options: ["04:00", "05:00", "03:00", "10:00"],
+        correctAnswerIndex: 0,
+      ),
+      Question(
+        question: 'WHAT IS THE COLOR OF THE CHAIR?',
+        options: ['BLACK', 'WHITE', 'BROWN', 'YELLOW'],
+        correctAnswerIndex: 2,
       ),
     ],
   ),

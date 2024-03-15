@@ -196,18 +196,17 @@ class _QuestionPageState extends State<QuestionPage> {
     );
   }
 }
-
 class ResultPage extends StatelessWidget {
   final int totalQuestions;
   final List<int> selectedAnswers;
   final List<QuizData.Question> questions;
 
   const ResultPage({
-    super.key,
+    Key? key,
     required this.totalQuestions,
     required this.selectedAnswers,
     required this.questions,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -222,6 +221,7 @@ class ResultPage extends StatelessWidget {
         incorrectAnswers++;
       }
     }
+
     final User? user = FirebaseAuth.instance.currentUser;
     final userDoc = FirebaseFirestore.instance
         .collection('Users')
@@ -229,29 +229,12 @@ class ResultPage extends StatelessWidget {
         .collection('SherlockHolmes')
         .doc('data1');
 
-      // ignore: unused_local_variable
-      final userData =  userDoc.get();
-     userDoc.set({'correctAnswers':correctAnswers,'incorrectAnswer':incorrectAnswers }, SetOptions(merge: true));
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quiz Result'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Correct Answers: $correctAnswers',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Incorrect Answers: $incorrectAnswers',
-              style: const TextStyle(fontSize: 24),
-            ),
-          ],
-        ),
-      ),
-    );
+    // Add data to Firestore without displaying any UI
+    userDoc.set({
+      'correctAnswers': correctAnswers,
+      'incorrectAnswers': incorrectAnswers,
+    }, SetOptions(merge: true));
+
+    return CardView(); // Return an empty container since no UI is displayed
   }
 }
