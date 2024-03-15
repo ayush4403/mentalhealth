@@ -1,9 +1,9 @@
+// ignore_for_file: file_names
 import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class BarChartSample2 extends StatefulWidget {
   final Color avgColor =
       AppColors.contentColorOrange.avg(AppColors.contentColorRed);
 
-  BarChartSample2({Key? key}) : super(key: key);
+  BarChartSample2({super.key});
 
   @override
   State<StatefulWidget> createState() => BarChartSample2State();
@@ -79,11 +79,15 @@ class BarChartSample2State extends State<BarChartSample2> {
       _sessionData = List<int>.from(defaultData);
       _sessionData.setAll(0, dayDataList);
 
-      _sessionData = _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
+      // ignore: division_optimization
+      _sessionData =
+          // ignore: division_optimization
+          _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
 
       setState(() {
         final items = List.generate(_sessionData.length, (index) {
-          return makeGroupData(index, defaulttime[index].toDouble(), _sessionData[index].toDouble());
+          return makeGroupData(index, defaulttime[index].toDouble(),
+              _sessionData[index].toDouble());
         });
         rawBarGroups = items;
         showingBarGroups = rawBarGroups;
@@ -102,7 +106,6 @@ class BarChartSample2State extends State<BarChartSample2> {
             _buildColorIndicator('Total Meditation', widget.leftBarColor),
             const SizedBox(width: 20),
             _buildColorIndicator('Performed Meditation', widget.avgColor),
-
           ],
         ),
         const SizedBox(height: 20),
@@ -148,14 +151,18 @@ class BarChartSample2State extends State<BarChartSample2> {
                                     .barRods) {
                               sum += rod.toY;
                             }
-                            final avg =
-                                sum / showingBarGroups[touchedGroupIndex].barRods.length;
+                            final avg = sum /
+                                showingBarGroups[touchedGroupIndex]
+                                    .barRods
+                                    .length;
 
-                            showingBarGroups[touchedGroupIndex] = showingBarGroups[touchedGroupIndex].copyWith(
+                            showingBarGroups[touchedGroupIndex] =
+                                showingBarGroups[touchedGroupIndex].copyWith(
                               barRods: showingBarGroups[touchedGroupIndex]
                                   .barRods
                                   .map((rod) {
-                                return rod.copyWith(toY: avg, color: widget.avgColor);
+                                return rod.copyWith(
+                                    toY: avg, color: widget.avgColor);
                               }).toList(),
                             );
                           }

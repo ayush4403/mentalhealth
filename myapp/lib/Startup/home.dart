@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
-        children:  [
+        children:  const [
           HomePageUI(),
           CardView(),
           ChartReportTemplate(),
