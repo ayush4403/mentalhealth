@@ -236,26 +236,29 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                               ),
                               const SizedBox(height: 25.0),
                               Row(
-                                children: List.generate(
-                                  7,
-                                  (dayIndex) {
-                                    bool isDayDone = _sessionData[dayIndex] > 0;
-                                    return Container(
-                                      width: 20,
-                                      height: 20,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 2.0),
-                                      decoration: BoxDecoration(
-                                        color: isDayDone
-                                            ? Colors.green
-                                            : Colors.red,
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
+  children: List.generate(
+    7,
+    (dayIndex) {
+      bool isDayDone;
+      if (_sessionData.isNotEmpty && dayIndex < _sessionData.length) {
+        isDayDone = _sessionData[dayIndex] > 0;
+      } else {
+        isDayDone = false; // or set to a default value as needed
+      }
+      return Container(
+        width: 20,
+        height: 20,
+        margin: const EdgeInsets.symmetric(horizontal: 2.0),
+        decoration: BoxDecoration(
+          color: isDayDone ? Colors.green : Colors.red,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(5),
+        ),
+      );
+    },
+  ),
+),
+
                             ],
                           ),
                           Column(

@@ -30,6 +30,7 @@ class _CardViewState extends State<CardView> {
   @override
   void initState() {
     super.initState();
+    activityCompleted = false;
     initializeActivityCompletionStatus();
   }
 
@@ -97,7 +98,7 @@ class _CardViewState extends State<CardView> {
 
 class ActivityList extends StatelessWidget {
   final Function checkActivityCompletionStatus;
-  final bool activityCompleted;
+  late bool activityCompleted = false;
 
   ActivityList({
     super.key,
@@ -218,7 +219,6 @@ class ActivityList extends StatelessWidget {
       },
     );
   }
-  
 
   void handleActivityTap(String activity) {
     // Handle the onPressed action for each activity here
@@ -361,6 +361,9 @@ class ActivityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (activityCompleted == null) {
+      return const CircularProgressIndicator(); // Show loading indicator while initializing
+    }
     return ListView.builder(
       itemCount: activities.length,
       itemBuilder: (context, index) {
