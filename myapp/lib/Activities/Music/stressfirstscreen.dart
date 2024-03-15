@@ -40,6 +40,7 @@ class _MusicListScreenState extends State<MusicListScreen>
   // ignore: unused_field
   bool _animationCompleted = false;
   late String selectedCategory;
+  late PageController _pageController;
 
   @override
   void initState() {
@@ -56,11 +57,13 @@ class _MusicListScreenState extends State<MusicListScreen>
       });
     _controller.forward();
     selectedCategory = 'Chanting';
+    _pageController = PageController();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -107,30 +110,25 @@ class _MusicListScreenState extends State<MusicListScreen>
     musicDataListChanting,
   ];
   Widget _buildCategorySlider(BuildContext context, List<MusicData> musicList) {
-    // Shuffle the musicList to display random cards
-
-    final PageController controller = PageController();
-
-    // Start automatic sliding using a timer
     Timer? timer;
 
     void startTimer() {
       timer = Timer.periodic(
         const Duration(seconds: 2),
         (Timer timer) {
-          if (controller.page == null ||
-              controller.page! >= musicList.length - 1) {
-            controller.jumpToPage(0);
+          if (_pageController.page == null ||
+              _pageController.page! >= musicList.length - 1) {
+            _pageController.jumpToPage(0);
           } else {
-            controller.nextPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease);
+            _pageController.nextPage(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.ease,
+            );
           }
         },
       );
     }
 
-    // ignore: unused_element
     void cancelTimer() {
       timer?.cancel();
     }
@@ -148,16 +146,14 @@ class _MusicListScreenState extends State<MusicListScreen>
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the slider
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  // Wrap with Center widget
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.25,
-                    width: MediaQuery.of(context).size.width *
-                        0.95, // Adjusted width here
+                    width: MediaQuery.of(context).size.width * 0.95,
                     child: PageView.builder(
-                      controller: controller,
+                      controller: _pageController, // Use _pageController here
                       itemCount: musicList.length,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -170,12 +166,11 @@ class _MusicListScreenState extends State<MusicListScreen>
                                 color: Colors.white,
                               ),
                               child: ClipRRect(
-                                // ClipRRect to apply rounded corners
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.asset(
                                   musicList[index].imageUrl,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.95, // Adjusted width here
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.95,
                                   height:
                                       MediaQuery.of(context).size.height * 0.25,
                                   fit: BoxFit.fill,

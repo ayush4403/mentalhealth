@@ -16,17 +16,20 @@ class MainMusic extends StatefulWidget {
 class _MainMusicState extends State<MainMusic> {
   late int index = 0;
   late Timer timer;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    loadIndexFromSharedPreferences(); 
+_pageController = PageController(); 
+    loadIndexFromSharedPreferences();
     startTimer();
   }
 
   @override
   void dispose() {
     timer.cancel();
+       _pageController.dispose(); 
     super.dispose();
   }
 
