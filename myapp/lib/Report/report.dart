@@ -345,6 +345,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
             ),
             // Displayeither LineChartSample2 or BarChartSample2 based on the selected timeframe
             Container(
+              alignment: Alignment.center,
               margin: const EdgeInsets.all(10.0),
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
