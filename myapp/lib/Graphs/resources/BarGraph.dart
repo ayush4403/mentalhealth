@@ -91,6 +91,7 @@ class BarChartSample2State extends State<BarChartSample2> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Column(

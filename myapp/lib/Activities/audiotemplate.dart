@@ -73,15 +73,34 @@ class _AudioCardState extends State<AudioCard> {
 
   Future<void> _createNewWeekDocument(int timerdata) async {
     final User? user = FirebaseAuth.instance.currentUser;
+
+    String weekPath = 'week$indexweek';
+    if (user?.uid == 'nTYF0NeAhOUe8uLYmcRrDmQAyP83') {
+      weekPath = 'week2'; // Change to 'week2' if user's UID matches
+    }
+if(user?.uid!=null && user?.uid!='nTYF0NeAhOUe8uLYmcRrDmQAyP83'){
+
+
     final userDoc = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
         .collection('MeditationData')
-        .doc('week$indexweek');
+        .doc(weekPath);
+          await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: false));
+      }
+  else  if (user?.uid == 'nTYF0NeAhOUe8uLYmcRrDmQAyP83' && weekPath == 'week2') {
+    
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('MeditationData')
+        .doc(weekPath);
+      await userDoc.set({'day9': timerdata}, SetOptions(merge: true));
+    
 
-    // ignore: unused_local_variable
-    final userData = await userDoc.get();
-    await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: true));
+
+}
+  
   }
 
   @override

@@ -53,16 +53,14 @@ class _CardViewState extends State<CardView> {
           seconds: DateTime.now().second,
           milliseconds: DateTime.now().millisecond,
           microseconds: DateTime.now().microsecond));
-      // Check if the completion time was before today at 12 AM
       if (completionTime.isBefore(todayAtMidnight)) {
         return false;
       } else {
-        // Calculate the difference in time
         Duration difference = DateTime.now().difference(completionTime);
         return difference.inHours < 24;
       }
     }
-    return false; // Return false if activity status not found or completion time not found
+    return false; 
   }
 
   @override
