@@ -24,13 +24,17 @@ class ChartReportTemplate extends StatefulWidget {
 class _ChartReportTemplateState extends State<ChartReportTemplate> {
   final PageController _activityPageController = PageController();
   final PageController _graphPageController = PageController();
+
   int _currentPage = 0;
   late Timer _timer;
+
   Timeframe selectedTimeframe = Timeframe.Weekly; // Default to Weekly
   int indexweek = 1;
   int indexday = 1;
+
   // ignore: unused_field
   late List<int> _sessionData = [];
+
   // ignore: non_constant_identifier_names
   List<dynamic> Activities = [
     'Morning Meditation',
@@ -40,10 +44,10 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   ];
 
   final List<String> activityImages = [
-    'assets/GIF/Card_view/1_morning_meditation.json',
-    'assets/GIF/Report/mental_marathon.json',
-    'assets/GIF/Card_view/5_sherlock.json',
-    'assets/GIF/Card_view/2_night_music.json',
+    'assets/Images/Report/1_Meditation.jpg',
+    'assets/Images/Report/2_Marathon.jpg',
+    'assets/Images/Report/3_Sherlock.jpg',
+    'assets/Images/Report/4_Music.jpg',
   ];
 
   @override
@@ -137,7 +141,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
             Container(
               margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
               decoration: BoxDecoration(
-                gradient:  LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [AppColors.primaryColor, AppColors.primaryColor],
@@ -150,7 +154,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 children: [
                   Text(
                     DateFormat('EEEE d\'th\', MMM yyyy').format(DateTime.now()),
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.whiteColor,
@@ -158,7 +162,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                   ),
                   Text(
                     DateFormat('hh:mm a').format(DateTime.now()),
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.whiteColor,
@@ -190,8 +194,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(20), 
+                        borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
                           activityImages[index],
                           fit: BoxFit.cover,
@@ -238,7 +241,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           value == Timeframe.Weekly ? 'Weekly' : 'Monthly',
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: AppColors.blackColor,
                           ),
                         ),
@@ -256,7 +259,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
               margin: const EdgeInsets.all(10.0),
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                gradient:  LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [AppColors.whiteColor, AppColors.whiteColor],
