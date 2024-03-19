@@ -25,52 +25,10 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
   int indexweek = 1;
   int indexday = 1;
   late List<int> _sessionData = [];
-// Add a parameter for weekIndex
-  Future<void> _getGraphData(int currentWeek) async {
-    final User? user = FirebaseAuth.instance.currentUser;
-
-    // Initialize session data with zeros for each day
-    _sessionData = List<int>.filled(30, 0);
-
-    // Loop through weeks from 1 to currentWeek
-    for (int weekIndex = 1; weekIndex <= currentWeek; weekIndex++) {
-      final weekDoc = FirebaseFirestore.instance
-          .collection('Users')
-          .doc(user!.uid)
-          .collection('MeditationData')
-          .doc('week$weekIndex');
-
-      final weekSnapshot = await weekDoc.get();
-      if (weekSnapshot.exists) {
-        final weekData = weekSnapshot.data();
-
-        for (int i = 1; i <= 30; i++) {
-          final dynamic dayData = weekData?['day$i'];
-          if (dayData is int) {
-            _sessionData[i - 1] += dayData; // Aggregate data for each day
-          }
-        }
-      }
-    }
-
-    // Convert seconds to minutes
-    _sessionData =
-        // ignore: division_optimization
-        _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
-
-    setState(() {
-      final items = List.generate(_sessionData.length, (index) {
-        return makeGroupData(index, _sessionData[index].toDouble());
-      });
-      rawBarGroups = items;
-      showingBarGroups = rawBarGroups;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _getGraphData(2); // Fetch data for initial week
     Timer.periodic(const Duration(days: 1), (timer) {
       // Get the current time
       DateTime now = DateTime.now();
@@ -82,11 +40,55 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
           if (indexday > 7) {
             indexday = 1;
             indexweek++;
-            _getGraphData(indexweek); // Fetch data for new week
-          } 
+          }
         });
       }
     });
+    _getGraphData();
+  }
+
+  Future<void> _getGraphData() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('MeditationData')
+        .doc('week$indexweek');
+    final weekSnapshot = await weekDoc.get();
+    if (weekSnapshot.exists) {
+      final weekData = weekSnapshot.data();
+
+      final List<int> defaultData = List.filled(30, 0);
+      final List<int> dayDataList = [];
+
+      for (int i = 1; i <= 30; i++) {
+        final dynamic dayData = weekData?['day$i'];
+        if (dayData is int) {
+          dayDataList.add(dayData);
+        } else if (dayData is List) {
+          dayDataList.addAll(List<int>.from(dayData));
+        } else {
+          dayDataList.add(0); // Fill in zero if day data is missing
+        }
+      }
+
+      _sessionData = List<int>.from(defaultData);
+      _sessionData.setAll(0, dayDataList);
+
+      // Convert seconds to minutes
+      _sessionData =
+          // ignore: division_optimization
+          _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
+
+      setState(() {
+        final items = List.generate(_sessionData.length, (index) {
+          return makeGroupData(index, _sessionData[index].toDouble());
+        });
+        rawBarGroups = items;
+        showingBarGroups = rawBarGroups;
+      });
+    }
   }
 
   @override
@@ -198,24 +200,11 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    String data = '';
     final List<String> titles =
         List.generate(30, (index) => (index + 1).toString());
-    if (titles[value.toInt()] == '5') {
-      data = '5';
-    } else if (titles[value.toInt()] == '10') {
-      data = '10';
-    } else if (titles[value.toInt()] == '15') {
-      data = '15';
-    } else if (titles[value.toInt()] == '20') {
-      data = '20';
-    } else if (titles[value.toInt()] == '25') {
-      data = '25';
-    } else if (titles[value.toInt()] == '30') {
-      data = '30';
-    }
+
     final Widget text = Text(
-      data,
+      titles[value.toInt()],
       style: const TextStyle(
         color: Color(0xff7589a2),
         fontWeight: FontWeight.bold,

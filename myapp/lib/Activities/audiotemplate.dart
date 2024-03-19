@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioCard extends StatefulWidget {
   final String imageUrl;
@@ -40,48 +41,97 @@ class _AudioCardState extends State<AudioCard> {
   bool isSessionActive = false;
   late Timer _sessionTimer;
   int _sessionDurationInSeconds = 0;
-  int indexweek = 1;
-  int indexday = 1;
+   int indexweek=1;
+  int indexday=1;
   // ignore: unused_field
   final List<int> _sessionData = List.filled(7, 0);
+  late SharedPreferences _prefs;
 
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
+    _setupSharedPreferences();
 
-    Timer.periodic(const Duration(days: 1), (timer) {
-      // Get the current time
-      DateTime now = DateTime.now();
-      // Check if it's midnight
-      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
-        setState(() {
-          indexday++;
-        });
+    // Get the current time
+    DateTime now = DateTime.now();
+    // Calculate the time until the next midnight
+    DateTime nextMidnight =
+        DateTime(now.year, now.month, now.day, now.hour, now.minute + 3);
+    Duration durationUntilMidnight = nextMidnight.difference(now);
+
+    _createNewWeekDocument(indexday);
+    // Set a timer to run at the next midnight
+    Timer(durationUntilMidnight, () {
+      setState(() {
+        indexday++;
         if (indexday > 7) {
           indexday = 1;
           indexweek++;
-          _createNewWeekDocument(0);
+          _updateIndexDay(indexday);
+          _updateIndexWeek(indexweek);
+          _createNewWeekDocument(indexday);
         }
-      }
-      // ignore: avoid_print
-      print(indexday);
+      });
     });
   }
 
-  Future<void> _createNewWeekDocument(int timerdata) async {
+  Future<void> _createNewWeekDocument(int day) async {
     final User? user = FirebaseAuth.instance.currentUser;
+    String weekPath = 'week$indexweek';
+
     final userDoc = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
         .collection('MeditationData')
-        .doc('week$indexweek');
+        .doc(weekPath);
 
-    // ignore: unused_local_variable
-    final userData = await userDoc.get();
-    await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: true));
+    // Create a new week document with the specified day
+    await userDoc.set({'day$day': 0}, SetOptions(merge: true));
+  }
+
+  Future<void> _updateMeditationData(int day, int durationInSeconds) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String weekPath = 'week$indexweek';
+
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('MeditationData')
+        .doc(weekPath);
+
+    // Update the specified day with the duration
+    await userDoc.update({'day$day': durationInSeconds});
+  }
+
+  Future<void> _setupSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    int savedIndexDay = _prefs.getInt('indexday') ?? 1;
+    int savedIndexWeek = _prefs.getInt('indexweek') ?? 1; // Default value is 1
+    setState(() {
+      indexday = savedIndexDay;
+      indexweek = savedIndexWeek;
+    });
+  }
+
+  Future<void> _saveIndexDay(int day) async {
+    await _prefs.setInt('indexday', day);
+  }
+
+  // Update the indexday value and save it in SharedPreferences
+  void _updateIndexDay(int day) {
+    setState(() {
+      indexday = day;
+    });
+    _saveIndexDay(day);
+  }
+
+  void _updateIndexWeek(int week) {
+    setState(() {
+      indexweek = week;
+    });
+    _saveIndexWeek(week);
   }
 
   @override
@@ -90,6 +140,10 @@ class _AudioCardState extends State<AudioCard> {
     if (oldWidget.audioFileName != widget.audioFileName) {
       _updateAudioSource(widget.audioFileName);
     }
+  }
+
+  Future<void> _saveIndexWeek(int week) async {
+    await _prefs.setInt('indexweek', week);
   }
 
   Future<void> _updateAudioSource(String audioFileName) async {
@@ -315,6 +369,8 @@ class _AudioCardState extends State<AudioCard> {
                                 // Increment the day index
                               });
                               // Update the user's data in Firestore
+                              _updateMeditationData(
+                                  indexday, _sessionDurationInSeconds);
                             },
                             child: const Text("Yes"),
                           ),
@@ -345,13 +401,9 @@ class _AudioCardState extends State<AudioCard> {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
-                              // ignore: avoid_print
-                              print(
-                                  'Session Timer: $_sessionDurationInSeconds seconds');
-                              // ignore: unused_local_variable
-                              final User? user = FirebaseAuth
-                                  .instance.currentUser; // Close the dialog
-                              _createNewWeekDocument(_sessionDurationInSeconds);
+                              // Update the meditation data when stopping the session
+                              _updateMeditationData(
+                                  indexday, _sessionDurationInSeconds);
                               setState(() {
                                 isSessionActive = false;
                                 _player.pause();
@@ -375,6 +427,7 @@ class _AudioCardState extends State<AudioCard> {
                 },
                 child: const Text('Stop Meditation Session'),
               ),
+
               const SizedBox(
                 height: 50,
               ),

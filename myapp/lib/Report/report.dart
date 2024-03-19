@@ -40,10 +40,10 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   ];
 
   final List<String> activityImages = [
-    'assets/Images/Report/1_Meditation.jpg',
-    'assets/Images/Report/2_Marathon.jpg',
-    'assets/Images/Report/3_Sherlock.jpg',
-    'assets/Images/Report/4_Music.jpg',
+    'assets/GIF/Card_view/1_morning_meditation.json',
+    'assets/GIF/Report/mental_marathon.json',
+    'assets/GIF/Card_view/5_sherlock.json',
+    'assets/GIF/Card_view/2_night_music.json',
   ];
 
   @override

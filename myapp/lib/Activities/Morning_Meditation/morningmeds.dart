@@ -1,11 +1,8 @@
-import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:MindFulMe/Activities/cardview.dart';
 
 class MorningMeds extends StatefulWidget {
   const MorningMeds({super.key});
@@ -15,99 +12,109 @@ class MorningMeds extends StatefulWidget {
 }
 
 class _MorningMedsState extends State<MorningMeds> {
-  late int index = 0;
+  late int index ;
   late Timer timer;
-  late DateTime sessionStartTime;
-  bool isSessionActive = false;
+  late FirebaseFirestore firestore;
+   User? user;
 
   @override
   void initState() {
     super.initState();
-    loadIndexFromSharedPreferences(); // Load index before starting the timer
-    startTimer();
+    initializeUser();
+    initializeFirestore();
+    initializeIndex();
+    startDailyTimer();
   }
 
-  @override
-  void dispose() {
-    timer.cancel();
-    if (isSessionActive) {
-      saveMeditationSessionToFirestore(
-          DateTime.now().difference(sessionStartTime).inSeconds);
+  void initializeUser() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    user = auth.currentUser;
+  }
+
+  void initializeFirestore() {
+    firestore = FirebaseFirestore.instance;
+  }
+void startDailyTimer() {
+    DateTime now = DateTime.now();
+    DateTime nextFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
+    if (now.isAfter(nextFiveAM)) {
+      updateDailyIndex(); // Update index immediately if it's past 5 AM
     }
-    super.dispose();
-    super.dispose();
-  }
 
-  void saveMeditationSessionToFirestore(int meditationDuration) async {
-    String userId = ''; // Get the user ID from authentication
-    DateTime sessionDate = sessionStartTime; // Date of the session
-    // Firestore instance
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    try {
-      await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('meditation_sessions')
-          .add({
-        'date': sessionDate,
-        'duration_seconds': meditationDuration,
-      });
-    } catch (error) {
-      // ignore: avoid_print
-      print('Error saving meditation session: $error');
-    }
-  }
-
-  void startSession() {
-    setState(() {
-      isSessionActive = true;
-      sessionStartTime = DateTime.now();
-      startTimer();
+    timer = Timer.periodic(const Duration(days: 1), (Timer t) {
+      DateTime now = DateTime.now();
+      if (now.hour == 5 && now.minute == 0) {
+        updateDailyIndex();
+      }
     });
   }
 
-  void loadIndexFromSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime lastUpdated = DateTime.fromMillisecondsSinceEpoch(
-      prefs.getInt('last_updated') ?? 0,
-    );
-    DateTime now = DateTime.now();
-
-    if (lastUpdated.day != now.day) {
-      // If it's a new day, set index to last index + 1
-      int lastIndex = prefs.getInt('meditation_index') ?? 0;
-      index = (lastIndex + 1) % 14;
-      prefs.setInt('last_updated', now.millisecondsSinceEpoch);
-      prefs.setInt('meditation_index', index);
+  void updateDailyIndex() {
+    // Increment index by 1 every day
+    int newIndex = (index + 1) % 15; // Ensure index stays within 0 to 14
+    if (newIndex == 0) {
+      resetIndex(); // Reset index to 0 after 15 days
     } else {
-      // If it's the same day, load index from SharedPreferences
-      index = prefs.getInt('meditation_index') ?? 0;
+      updateFirestoreIndex(newIndex);
     }
   }
 
-  void saveIndexToSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('meditation_index', index);
+  void resetIndex() {
+    updateFirestoreIndex(0);
   }
 
-  void startTimer() {
-    DateTime now = DateTime.now();
-    DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1, 0, 0);
-    Duration durationUntilMidnight = nextMidnight.difference(now);
+  void updateFirestoreIndex(int newIndex) {
+    if (user != null) {
+      firestore
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('meditationindex')
+          .doc('indexdata')
+          .update({
+        'meditationIndex': newIndex,
+        'lastUpdated': Timestamp.now(),
+      }).then((_) {
+        setState(() {
+          index = newIndex;
+        });
+        // ignore: avoid_print
+        print('Index updated in Firestore to $newIndex.');
+      }).catchError((error) {
+      });
+    }
+  }
 
-    timer = Timer(
-      durationUntilMidnight,
-      () {
-        setState(
-          () {
-            index = (index + 1) % 14; // Increment index by 1 every day
-            saveIndexToSharedPreferences();
-            startTimer();
-          },
-        );
-      },
-    );
+  void initializeIndex() async {
+    if (user != null) {
+      DocumentSnapshot documentSnapshot = await firestore
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('meditationindex')
+          .doc('indexdata')
+          .get();
+
+      if (documentSnapshot.exists) {
+        setState(() {
+          index = documentSnapshot.get('meditationIndex') ?? 0;
+        });
+      } else {
+        // Create the document if it doesn't exist
+        firestore
+            .collection('Users')
+            .doc(user!.uid)
+            .collection('meditationindex')
+            .doc('indexdata')
+            .set({
+          'meditationIndex': index,
+          'lastUpdated': Timestamp.now(),
+        }, SetOptions(merge: true)).then((_) {
+          setState(() {
+            index = 0;
+          });
+        }).catchError((error) {
+        });
+      }
+    }
   }
 
   @override
@@ -172,7 +179,7 @@ class _MorningMedsState extends State<MorningMeds> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(const CardView());
+            Navigator.of(context).pop();
           },
         ),
         title: const Text(
@@ -191,46 +198,26 @@ class _MorningMedsState extends State<MorningMeds> {
           children: [
             SingleChildScrollView(
               child: AudioCard(
-                imageUrl: images[index],
+                audioFileName: audios[index],
                 title: titles[index],
+                imageUrl: images[index],
+                showTimerSelector: false,
                 imageshow: false,
                 timerSelectorfordisplay: false,
-                audioFileName: audios[index],
                 showPlaybackControlButton: false,
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MorningMeditation()),
-                );
-              },
-              child: const Text(
-                "Want more?",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Colors.white,
-                ),
-              ),
-            ),
             const SizedBox(
               height: 10,
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(
-                  const CardView(),
-                );
+                Navigator.of(context).pop();
               },
-              child: const Text('Activity done'),
+              child: Text(index.toString()),
             ),
           ],
         ),
