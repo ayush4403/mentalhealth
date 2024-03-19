@@ -235,6 +235,7 @@ class ResultPage extends StatelessWidget {
       'incorrectAnswers': incorrectAnswers,
     }, SetOptions(merge: true));
 
-    return CardView(); // Return an empty container since no UI is displayed
+    return CardView();
+     // Return an empty container since no UI is displayed
   }
 }
