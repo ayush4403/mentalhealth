@@ -70,7 +70,7 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
   @override
   void initState() {
     super.initState();
-    _getGraphData(indexweek); // Fetch data for initial week
+    _getGraphData(2); // Fetch data for initial week
     Timer.periodic(const Duration(days: 1), (timer) {
       // Get the current time
       DateTime now = DateTime.now();

@@ -22,7 +22,7 @@ class _MainMusicState extends State<MainMusic> {
   @override
   void initState() {
     super.initState();
-_pageController = PageController(); 
+    _pageController = PageController();
     loadIndexFromSharedPreferences();
     startTimer();
   }
@@ -30,7 +30,7 @@ _pageController = PageController();
   @override
   void dispose() {
     timer.cancel();
-       _pageController.dispose(); 
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -155,7 +155,7 @@ _pageController = PageController();
             ),
             ElevatedButton(
               onPressed: () {
-
+                _openAnimatedDialog(context); // Show the dialog
                 Navigator.of(context).pop(
                   const CardView(),
                 );
@@ -227,7 +227,7 @@ _pageController = PageController();
                             const SizedBox(height: 16),
                             ElevatedButton(
                               onPressed: () {
-                                _openAnimatedDialog(context); // Show the dialog
+                              
                                 Navigator.pop(context); // Close the dialog box
                               },
                               style: ElevatedButton.styleFrom(

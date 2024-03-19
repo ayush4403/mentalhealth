@@ -1,118 +1,71 @@
-import 'package:MindFulMe/Activities/Morning_Meditation/mindfulmeditation.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
-import 'package:MindFulMe/Activities/cardview.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:MindFulMe/Activities/cardview.dart';
 
 class MorningMeds extends StatefulWidget {
-  const MorningMeds({super.key});
+  const MorningMeds({Key? key}) : super(key: key);
 
   @override
   State<MorningMeds> createState() => _MorningMedsState();
 }
 
 class _MorningMedsState extends State<MorningMeds> {
-  late int index = 0;
+  late int index;
   late Timer timer;
-  late DateTime sessionStartTime;
-  bool isSessionActive = false;
 
   @override
   void initState() {
     super.initState();
-    loadIndexFromSharedPreferences(); // Load index before starting the timer
+    checkAndUpdateIndex();
+    initializeIndex();
     startTimer();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
+      checkAndUpdateIndex();
+    });
+  }
+
+   void checkAndUpdateIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DateTime? lastUpdate = prefs.getString('lastUpdate') != null
+        ? DateTime.parse(prefs.getString('lastUpdate')!)
+        : null;
+
+    DateTime now = DateTime.now();
+   
+if (now.hour == 10 && now.minute >= 48 && now.minute <= 50) {
+  print('Updating index between 10:22 AM and 10:23 AM...');
+  int currentIndex = prefs.getInt('index') ?? 0;
+  prefs.setInt('index', (currentIndex + 1) % 14);
+  setState(() {
+    index = prefs.getInt('index') ?? 0;
+  });
+  prefs.setString('lastUpdate', now.toString());
+  print('Index updated to: $index');
+} else {
+  print('Conditions not met for index update.');
+}
+
   }
 
   @override
   void dispose() {
     timer.cancel();
-    if (isSessionActive) {
-      saveMeditationSessionToFirestore(
-          DateTime.now().difference(sessionStartTime).inSeconds);
-    }
-    super.dispose();
     super.dispose();
   }
-
-  void saveMeditationSessionToFirestore(int meditationDuration) async {
-    String userId = ''; // Get the user ID from authentication
-    DateTime sessionDate = sessionStartTime; // Date of the session
-    // Firestore instance
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    try {
-      await firestore
-          .collection('users')
-          .doc(userId)
-          .collection('meditation_sessions')
-          .add({
-        'date': sessionDate,
-        'duration_seconds': meditationDuration,
-      });
-    } catch (error) {
-      // ignore: avoid_print
-      print('Error saving meditation session: $error');
-    }
-  }
-
-  void startSession() {
+    void initializeIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      isSessionActive = true;
-      sessionStartTime = DateTime.now();
-      startTimer();
+      index = prefs.getInt('index') ?? 0; // Use last stored index as default
     });
-  }
-
-  void loadIndexFromSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime lastUpdated = DateTime.fromMillisecondsSinceEpoch(
-      prefs.getInt('last_updated') ?? 0,
-    );
-    DateTime now = DateTime.now();
-
-    if (lastUpdated.day != now.day) {
-      // If it's a new day, set index to last index + 1
-      int lastIndex = prefs.getInt('meditation_index') ?? 0;
-      index = (lastIndex + 1) % 14;
-      prefs.setInt('last_updated', now.millisecondsSinceEpoch);
-      prefs.setInt('meditation_index', index);
-    } else {
-      // If it's the same day, load index from SharedPreferences
-      index = prefs.getInt('meditation_index') ?? 0;
-    }
-  }
-
-  void saveIndexToSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('meditation_index', index);
-  }
-
-  void startTimer() {
-    DateTime now = DateTime.now();
-    DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1, 0, 0);
-    Duration durationUntilMidnight = nextMidnight.difference(now);
-
-    timer = Timer(
-      durationUntilMidnight,
-      () {
-        setState(
-          () {
-            index = (index + 1) % 14; // Increment index by 1 every day
-            saveIndexToSharedPreferences();
-            startTimer();
-          },
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> images = [
+       List<String> images = [
       'assets/Images/Morning_meditation/mm_1.jpg',
       'assets/Images/Morning_meditation/mm_2.jpg',
       'assets/Images/Morning_meditation/mm_3.jpg',
@@ -166,13 +119,14 @@ class _MorningMedsState extends State<MorningMeds> {
       'MORNING MEDITATION/Brainbeats/I-CREATIVITY.mp3',
     ];
 
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(const CardView());
+            Navigator.of(context).pop();
           },
         ),
         title: const Text(
@@ -190,14 +144,15 @@ class _MorningMedsState extends State<MorningMeds> {
         child: Column(
           children: [
             SingleChildScrollView(
-              child: AudioCard(
-                imageUrl: images[index],
-                title: titles[index],
-                imageshow: false,
-                timerSelectorfordisplay: false,
-                audioFileName: audios[index],
-                showPlaybackControlButton: false,
-              ),
+              child:AudioCard(
+              audioFileName: audios[index],
+              title: titles[index],
+              imageUrl: images[index],
+              showTimerSelector: false,
+              imageshow: false,
+              timerSelectorfordisplay: false,
+              showPlaybackControlButton: false,
+              )
             ),
             const SizedBox(
               height: 20,
@@ -206,8 +161,7 @@ class _MorningMedsState extends State<MorningMeds> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const MorningMeditation()),
+                  MaterialPageRoute(builder: (context) => const MorningMeds()),
                 );
               },
               child: const Text(
@@ -226,11 +180,9 @@ class _MorningMedsState extends State<MorningMeds> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(
-                  const CardView(),
-                );
+                Navigator.of(context).pop();
               },
-              child: const Text('Activity done'),
+              child:  Text(index.toString()),
             ),
           ],
         ),

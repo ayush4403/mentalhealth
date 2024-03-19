@@ -1,11 +1,10 @@
 import 'dart:math';
-import 'package:MindFulMe/Activities/cardview.dart';
-import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class PowerNapList extends StatefulWidget {
-  const PowerNapList({super.key});
+  const PowerNapList({Key? key}) : super(key: key);
 
   @override
   State<PowerNapList> createState() => _PowerNapListListState();
@@ -51,6 +50,15 @@ class _PowerNapListListState extends State<PowerNapList> {
     ),
   ];
 
+  final List<String> PowerNapDescription = [
+    "A 10-minute power nap offers a quick energy boost and helps improve alertness and concentration. It's perfect for a brief mental refresh during busy days, reducing stress and enhancing mood.",
+    "With a 15-minute power nap, you can strike a balance between rest and productivity. It provides a mental recharge, improves cognitive function, and contributes to better memory retention.",
+    "Opting for a 20-minute power nap allows for deeper relaxation and stress reduction. It enhances creativity, problem-solving skills, and overall mental well-being, making it ideal for a mid-day rejuvenation.",
+    "A 25-minute power nap offers a significant boost in alertness and cognitive performance. It helps alleviate fatigue, promotes relaxation, and enhances memory recall and learning ability.",
+    "With a 30-minute power nap, you can experience a more complete sleep cycle, leading to improved mood and creativity. It reduces the risk of burnout, increases resilience to stress, and enhances cognitive function.",
+    "Opting for a 45-minute power nap allows for a deeper dive into restorative sleep. It offers comprehensive rejuvenation for both the mind and body, leading to better overall well-being and increased productivity.",
+  ];
+
   // Color options
   final List<Color> colors = [
     Colors.blue[100]!,
@@ -69,7 +77,6 @@ class _PowerNapListListState extends State<PowerNapList> {
 
   // Randomly shuffle the colors
   late final List<Color> shuffledColors = []
-    // ignore: prefer_spread_collections
     ..addAll(colors)
     ..shuffle(Random());
 
@@ -85,7 +92,7 @@ class _PowerNapListListState extends State<PowerNapList> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(const CardView());
+            Navigator.of(context).pop(); // Pop the current screen
           },
         ),
         title: const Text(
@@ -105,130 +112,23 @@ class _PowerNapListListState extends State<PowerNapList> {
           itemBuilder: (context, index) {
             int colorIndex = cardColorIndices.removeAt(0);
             return _buildCategory(
-                musicDataListChanting[index], shuffledColors[colorIndex]);
+              musicDataListChanting[index],
+              shuffledColors[colorIndex],
+              PowerNapDescription[index],
+            );
           },
         ),
       ),
     );
   }
 
-  void _openAnimatedDialog(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      pageBuilder: (context, animation1, animation2) {
-        return Container();
-      },
-      transitionBuilder: (context, a1, a2, widget) {
-        return ScaleTransition(
-          scale: Tween<double>(begin: 0.5, end: 1).animate(a1),
-          child: AlertDialog(
-            backgroundColor: Colors.transparent,
-            content: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Stack(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 100, // Adjust height as needed
-                        color: Colors.red, // Upper part background color
-                      ),
-                      SizedBox(
-                        height:
-                            2, // Adjust the thickness of the horizontal line
-                        child: Container(
-                          color: Colors.grey, // Color of the horizontal line
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Great Job!',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'You have successfully completed today\'s activity. You have earned 50 coins for it. Come back tomorrow for more.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context); // Close the dialog box
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors
-                                    .blue, // Change button color if needed
-                              ),
-                              child: const Text(
-                                'OK',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                    top: 40, // Adjust positioning as needed
-                    left: MediaQuery.of(context).size.width / 2 - 125,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white, // Circular background color
-                        border: Border.all(
-                          color: Colors.black, // Border color
-                          width: 2, // Adjust the border width as needed
-                        ),
-                      ),
-                      child: Lottie.asset(
-                        'assets/GIF/ShowDialog/trophy.json',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   // ignore: non_constant_identifier_names
-  Widget _buildCategory(MusicData musicData, Color cardColor) {
+  Widget _buildCategory(
+      MusicData musicData, Color cardColor, String description) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: GestureDetector(
         onTap: () {
-          _openAnimatedDialog(context); // Show the dialog
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -265,12 +165,21 @@ class _PowerNapListListState extends State<PowerNapList> {
                   child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           musicData.title,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          description,
+                          maxLines: 3, // Limit to 3 lines
+                          overflow: TextOverflow.ellipsis, // Truncate overflow
+                          style: TextStyle(
+                            color: Colors.black54,
                           ),
                         ),
                       ],
