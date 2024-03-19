@@ -22,4 +22,13 @@ class AppColors {
   static const Color contentColorPink = Color(0xFFFF3AF2);
   static const Color contentColorRed = Color(0xFFE80054);
   static const Color contentColorCyan = Color(0xFF50E4FF);
+
+  static Color bgColor = const Color.fromARGB(255, 228, 241, 254);
+  static Color bgSecondColor = const Color.fromARGB(127, 212, 240, 253);
+  static Color primaryColor = const Color.fromARGB(255, 0, 111, 186);
+  static Color blackColor = const Color(0xFF000000);
+  static Color redColor = const Color(0xFFFC584A);
+  static Color greenColor = const Color(0xFF6FCF1E);
+  static Color iconColor = const Color(0xFFF1F2FC);
+  static Color whiteColor = const Color(0xFFFFFFFF);
 }
