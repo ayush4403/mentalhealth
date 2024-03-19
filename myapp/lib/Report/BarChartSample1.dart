@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 import 'dart:math';
-import 'package:MindFulMe/Graphs/resources/app_colors.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:MindFulMe/Graphs/resources/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
