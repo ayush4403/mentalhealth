@@ -43,8 +43,14 @@ class _AudioCardState extends State<AudioCard> {
   bool isSessionActive = false;
   late Timer _sessionTimer;
   int _sessionDurationInSeconds = 0;
+<<<<<<< HEAD
   late int indexweek = 1;
   late int indexday = 1;
+=======
+   int indexweek=1;
+  int indexday=1;
+  // ignore: unused_field
+>>>>>>> ace68a79b52790eb8cf0a18b78347dab4af746f0
   final List<int> _sessionData = List.filled(7, 0);
 
   @override

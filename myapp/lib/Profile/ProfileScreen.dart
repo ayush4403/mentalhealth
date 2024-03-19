@@ -24,7 +24,11 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 16),
-            _buildSectionTitle(context, 'General Settings', Colors.white),
+            _buildSectionTitle(
+              context,
+              'General Settings',
+              Colors.white,
+            ),
             const SizedBox(height: 8),
             _buildSectionButton(
               context,

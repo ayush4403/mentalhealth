@@ -1,3 +1,4 @@
+import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
@@ -97,7 +98,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(
-                  0, 0, 0, MediaQuery.of(context).size.height * 0.05),
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.02),
               child: AudioCard(
                 imageUrl: widget.imageUrl,
                 title: widget.title,
@@ -108,6 +109,19 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
                 showTimerSelector: false,
                 timerSelectorfordisplay: false,
               ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(
+                    const CardView(),
+                  );
+                },
+                child: const Text('Activity done'),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
           ],
         ),
@@ -131,52 +145,54 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: musicList.map((musicData) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedAudioUrl = musicData.audioUrl;
-                      });
-                    },
-                    child: Container(
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
-                            ),
-                            child: Image.asset(
-                              musicData.imageUrl,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              musicData.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+              children: musicList.map(
+                (musicData) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedAudioUrl = musicData.audioUrl;
+                        });
+                      },
+                      child: Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: Image.asset(
+                                musicData.imageUrl,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.fitWidth,
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                musicData.title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                },
+              ).toList(),
             ),
           ),
         ],

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class MorningMeds extends StatefulWidget {
-  const MorningMeds({Key? key}) : super(key: key);
+  const MorningMeds({super.key});
 
   @override
   State<MorningMeds> createState() => _MorningMedsState();
@@ -41,7 +41,7 @@ void startDailyTimer() {
       updateDailyIndex(); // Update index immediately if it's past 5 AM
     }
 
-    timer = Timer.periodic(Duration(days: 1), (Timer t) {
+    timer = Timer.periodic(const Duration(days: 1), (Timer t) {
       DateTime now = DateTime.now();
       if (now.hour == 5 && now.minute == 0) {
         updateDailyIndex();
@@ -77,9 +77,9 @@ void startDailyTimer() {
         setState(() {
           index = newIndex;
         });
+        // ignore: avoid_print
         print('Index updated in Firestore to $newIndex.');
       }).catchError((error) {
-        print('Error updating index: $error');
       });
     }
   }
@@ -97,7 +97,6 @@ void startDailyTimer() {
         setState(() {
           index = documentSnapshot.get('meditationIndex') ?? 0;
         });
-        print('Index initialized to $index from Firestore.');
       } else {
         // Create the document if it doesn't exist
         firestore
@@ -112,9 +111,7 @@ void startDailyTimer() {
           setState(() {
             index = 0;
           });
-          print('Document created with initial index.');
         }).catchError((error) {
-          print('Error creating document: $error');
         });
       }
     }

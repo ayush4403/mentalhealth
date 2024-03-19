@@ -78,6 +78,7 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
 
       // Convert seconds to minutes
       _sessionData =
+          // ignore: division_optimization
           _sessionData.map((seconds) => (seconds / 60).toInt()).toList();
 
       setState(() {
