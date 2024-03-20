@@ -44,10 +44,10 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   ];
 
   final List<String> activityImages = [
-    'assets/Images/Report/1_Meditation.jpg',
-    'assets/Images/Report/2_Marathon.jpg',
-    'assets/Images/Report/3_Sherlock.jpg',
-    'assets/Images/Report/4_Music.jpg',
+    'assets/Images/Report/1_morning_meditation.jpg',
+    'assets/Images/Report/2_mental_marathon.jpg',
+    'assets/Images/Report/3_shelock_holmes.jpg',
+    'assets/Images/Report/4_night_music.jpg',
   ];
 
   @override
@@ -138,6 +138,9 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 8,
+            ),
             Container(
               margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
               decoration: BoxDecoration(
@@ -193,12 +196,64 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          activityImages[index],
-                          fit: BoxFit.cover,
-                        ),
+                      child: Stack(
+                        children: [
+                          // Image
+                          Positioned.fill(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                activityImages[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          // Percentage Circle
+                          Positioned(
+                            top: 25,
+                            right: 10,
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.primaryColor,
+                              ),
+                              child: Text(
+                                '${(index + 1) * 10}%', // Change this to your percentage value
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Card Name
+                          Positioned(
+                            bottom: 10,
+                            left: 10,
+                            child: Container(
+                              // color: AppColors.bgColor,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: AppColors.bgColor,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                ),
+                              ),
+                              child: Text(
+                                Activities[index],
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  backgroundColor: AppColors.bgColor,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -208,47 +263,90 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            Container(
-              margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.02),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-              child: DropdownButton<Timeframe>(
-                value: selectedTimeframe,
-                onChanged: (Timeframe? newValue) {
-                  setState(
-                    () {
-                      selectedTimeframe = newValue!;
-                    },
-                  );
-                },
-                items: Timeframe.values.map<DropdownMenuItem<Timeframe>>(
-                  (Timeframe value) {
-                    return DropdownMenuItem<Timeframe>(
-                      value: value,
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          value == Timeframe.Weekly ? 'Weekly' : 'Monthly',
-                          style: TextStyle(
-                            color: AppColors.blackColor,
-                          ),
-                        ),
-                      ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.6777, 0, 0, 0),
+              child: Container(
+                margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.02),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: DropdownButton<Timeframe>(
+                  dropdownColor: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(20),
+                  value: selectedTimeframe,
+                  onChanged: (Timeframe? newValue) {
+                    setState(
+                      () {
+                        selectedTimeframe = newValue!;
+                      },
                     );
                   },
-                ).toList(),
+                  items: Timeframe.values.map<DropdownMenuItem<Timeframe>>(
+                    (Timeframe value) {
+                      if (value == Timeframe.Weekly) {
+                        return DropdownMenuItem<Timeframe>(
+                          value: value,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Weekly',
+                                  style: TextStyle(
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
+                              ),
+                              Divider(
+                                height: 7,
+                                thickness: 2,
+                                color: AppColors.whiteColor,
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (value == Timeframe.Monthly) {
+                        return DropdownMenuItem<Timeframe>(
+                          value: value,
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Monthly',
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return DropdownMenuItem<Timeframe>(
+                          value: value,
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              value.toString(),
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ).toList(),
+                ),
               ),
             ),
             const SizedBox(
