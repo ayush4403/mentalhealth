@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioCard extends StatefulWidget {
   final String imageUrl;
@@ -34,6 +34,8 @@ class AudioCard extends StatefulWidget {
   _AudioCardState createState() => _AudioCardState();
 }
 
+
+
 class _AudioCardState extends State<AudioCard> {
   final _player = AudioPlayer();
   double selectedDuration = 0.0;
@@ -45,51 +47,49 @@ class _AudioCardState extends State<AudioCard> {
   int indexday=1;
   // ignore: unused_field
   final List<int> _sessionData = List.filled(7, 0);
-  late SharedPreferences _prefs;
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsFlutterBinding.ensureInitialized();
-    _setupAudioPlayer();
-    _setupSharedPreferences();
+void initState() {
+  super.initState();
+  WidgetsFlutterBinding.ensureInitialized();
+  _setupAudioPlayer();
 
-    // Get the current time
-    DateTime now = DateTime.now();
-    // Calculate the time until the next midnight
-    DateTime nextMidnight =
-        DateTime(now.year, now.month, now.day, now.hour, now.minute + 3);
-    Duration durationUntilMidnight = nextMidnight.difference(now);
-
-    _createNewWeekDocument(indexday);
-    // Set a timer to run at the next midnight
-    Timer(durationUntilMidnight, () {
-      setState(() {
-        indexday++;
-        if (indexday > 7) {
-          indexday = 1;
-          indexweek++;
-          _updateIndexDay(indexday);
-          _updateIndexWeek(indexweek);
-          _createNewWeekDocument(indexday);
-        }
-      });
+  // Create a timer that runs every three minutes
+  Timer.periodic(const Duration(minutes: 1), (timer) {
+    setState(() {
+      indexday++;
+      if (indexday > 7) {
+        indexday = 1;
+        indexweek++;
+        _createNewWeekDocument();
+      }
     });
-  }
+  });
+}
 
-  Future<void> _createNewWeekDocument(int day) async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    String weekPath = 'week$indexweek';
+Future<void> _createNewWeekDocument() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+  String weekPath = 'week$indexweek';
 
-    final userDoc = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(user!.uid)
-        .collection('MeditationData')
-        .doc(weekPath);
+  final userDoc = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user!.uid)
+      .collection('MeditationData')
+      .doc(weekPath);
 
-    // Create a new week document with the specified day
-    await userDoc.set({'day$day': 0}, SetOptions(merge: true));
-  }
+  // Get the last day with data from Firestore
+  QuerySnapshot<Map<String, dynamic>> lastDaySnapshot = await userDoc.collection('MeditationData').orderBy('day', descending: true).limit(1).get();
+  int lastDay = lastDaySnapshot.docs.isNotEmpty ? lastDaySnapshot.docs.first['day'] as int : 1;
+
+  // Use the last day with data as the default indexday value
+  setState(() {
+    indexday = lastDay + 1; // Increment the last day by 1 for the next day
+  });
+
+  // Create a new week document with the default indexday value
+  await userDoc.set({'day$indexday': 0}, SetOptions(merge: true));
+}
+
 
   Future<void> _updateMeditationData(int day, int durationInSeconds) async {
     final User? user = FirebaseAuth.instance.currentUser;
@@ -105,45 +105,8 @@ class _AudioCardState extends State<AudioCard> {
     await userDoc.update({'day$day': durationInSeconds});
   }
 
-  Future<void> _setupSharedPreferences() async {
-    _prefs = await SharedPreferences.getInstance();
-    int savedIndexDay = _prefs.getInt('indexday') ?? 1;
-    int savedIndexWeek = _prefs.getInt('indexweek') ?? 1; // Default value is 1
-    setState(() {
-      indexday = savedIndexDay;
-      indexweek = savedIndexWeek;
-    });
-  }
-
-  Future<void> _saveIndexDay(int day) async {
-    await _prefs.setInt('indexday', day);
-  }
-
-  // Update the indexday value and save it in SharedPreferences
-  void _updateIndexDay(int day) {
-    setState(() {
-      indexday = day;
-    });
-    _saveIndexDay(day);
-  }
-
-  void _updateIndexWeek(int week) {
-    setState(() {
-      indexweek = week;
-    });
-    _saveIndexWeek(week);
-  }
-
-  @override
-  void didUpdateWidget(AudioCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.audioFileName != widget.audioFileName) {
-      _updateAudioSource(widget.audioFileName);
-    }
-  }
-
-  Future<void> _saveIndexWeek(int week) async {
-    await _prefs.setInt('indexweek', week);
+  Future<void> _setupAudioPlayer() async {
+    await _updateAudioSource(widget.audioFileName);
   }
 
   Future<void> _updateAudioSource(String audioFileName) async {
@@ -164,7 +127,6 @@ class _AudioCardState extends State<AudioCard> {
 
   void _stopSessionTimer() {
     _sessionTimer.cancel();
-
     _sessionDurationInSeconds = 0;
   }
 
@@ -177,10 +139,6 @@ class _AudioCardState extends State<AudioCard> {
       print("Error getting audio URL: $e");
       return '';
     }
-  }
-
-  Future<void> _setupAudioPlayer() async {
-    await _updateAudioSource(widget.audioFileName);
   }
 
   void _startSessionTimer() {
@@ -385,6 +343,10 @@ class _AudioCardState extends State<AudioCard> {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Start Meditation Session'),
               ),
 
@@ -425,6 +387,10 @@ class _AudioCardState extends State<AudioCard> {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Stop Meditation Session'),
               ),
 

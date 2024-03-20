@@ -221,22 +221,22 @@ class ActivityCardRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ActivityCard(
-          image: 'assets/Images/Report/1_Meditation.jpg',
+          image: 'assets/Images/Report/1_morning_meditation.jpg',
           name: 'Morning Meditation',
           progress: 40,
         ),
         ActivityCard(
-          image: 'assets/Images/Report/2_Marathon.jpg',
+          image: 'assets/Images/Report/2_mental_marathon.jpg',
           name: 'Mental Marathon',
           progress: 70,
         ),
         ActivityCard(
-          image: 'assets/Images/Report/3_Sherlock.jpg',
+          image: 'assets/Images/Report/3_shelock_holmes.jpg',
           name: 'Sherlock Holmes',
           progress: 20,
         ),
         ActivityCard(
-          image: 'assets/Images/Report/4_Music.jpg',
+          image: 'assets/Images/Report/4_night_music.jpg',
           name: 'Night Music',
           progress: 90,
         ),

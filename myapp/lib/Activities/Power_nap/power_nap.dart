@@ -1,7 +1,9 @@
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
+import 'package:lottie/lottie.dart';
 
 class MusicData {
   final String title;
@@ -73,7 +75,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -90,7 +92,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -117,6 +119,10 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
                     const CardView(),
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Activity done'),
               ),
             ),
@@ -126,6 +132,117 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  // ignore: unused_element
+  void _openAnimatedDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (context, animation1, animation2) {
+        return Container();
+      },
+      transitionBuilder: (context, a1, a2, widget) {
+        return ScaleTransition(
+          scale: Tween<double>(begin: 0.5, end: 1).animate(a1),
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: 100, // Adjust height as needed
+                        color: Colors.red, // Upper part background color
+                      ),
+                      SizedBox(
+                        height:
+                            2, // Adjust the thickness of the horizontal line
+                        child: Container(
+                          color: Colors.grey, // Color of the horizontal line
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            const Text(
+                              'Great Job!',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'You have successfully completed today\'s activity. You have earned 50 coins for it. Come back tomorrow for more.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context); // Close the dialog box
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors
+                                    .blue, // Change button color if needed
+                              ),
+                              child: const Text(
+                                'OK',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 40, // Adjust positioning as needed
+                    left: MediaQuery.of(context).size.width / 2 - 125,
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white, // Circular background color
+                        border: Border.all(
+                          color: Colors.black, // Border color
+                          width: 2, // Adjust the border width as needed
+                        ),
+                      ),
+                      child: Lottie.asset(
+                        'assets/GIF/ShowDialog/trophy.json',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

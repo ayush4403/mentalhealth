@@ -1,4 +1,4 @@
-import 'package:MindFulMe/Report/report.dart';
+import 'package:MindFulMe/Startup/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +11,7 @@ final theme = ThemeData(
     brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 0, 111, 186),
   ),
-  textTheme: GoogleFonts.montserratTextTheme(),
+  textTheme: GoogleFonts.montserratTextTheme(),  
 );
 
 void main() async {
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-      home: const ChartReportTemplate(),
+      home: const HomePage(),
     );
   }
 }
