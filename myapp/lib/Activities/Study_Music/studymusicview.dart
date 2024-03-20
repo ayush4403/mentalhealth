@@ -1,4 +1,5 @@
-import 'package:MindFulMe/Graphs/resources/app_resources.dart';
+import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
@@ -98,7 +99,7 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(
-                  0, 0, 0, MediaQuery.of(context).size.height * 0.05),
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.02),
               child: AudioCard(
                 imageUrl: widget.imageUrl,
                 title: widget.title,
@@ -109,6 +110,19 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
                 showTimerSelector: false,
                 timerSelectorfordisplay: true,
               ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(
+                    const CardView(),
+                  );
+                },
+                child: const Text('Activity done'),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
           ],
         ),

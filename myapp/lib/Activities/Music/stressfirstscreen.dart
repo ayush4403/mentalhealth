@@ -129,6 +129,7 @@ class _MusicListScreenState extends State<MusicListScreen>
       );
     }
 
+    // ignore: unused_element
     void cancelTimer() {
       timer?.cancel();
     }

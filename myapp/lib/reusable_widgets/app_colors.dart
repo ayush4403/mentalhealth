@@ -23,7 +23,7 @@ class AppColors {
   static const Color contentColorRed = Color(0xFFE80054);
   static const Color contentColorCyan = Color(0xFF50E4FF);
 
-  static Color bgColor = Colors.white;
+  static Color bgColor = const Color.fromARGB(255, 228, 241, 254);
   static Color bgSecondColor = const Color.fromARGB(127, 212, 240, 253);
   static Color primaryColor = const Color.fromARGB(255, 0, 111, 186);
   static Color blackColor = const Color(0xFF000000);
