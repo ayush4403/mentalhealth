@@ -1,71 +1,125 @@
 import 'package:MindFulMe/Activities/audiotemplate.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MorningMeds extends StatefulWidget {
-  const MorningMeds({Key? key}) : super(key: key);
+  const MorningMeds({super.key});
 
   @override
   State<MorningMeds> createState() => _MorningMedsState();
 }
 
 class _MorningMedsState extends State<MorningMeds> {
-  late int index;
+  late int index =0;
   late Timer timer;
+  late FirebaseFirestore firestore;
+   User? user;
 
   @override
   void initState() {
     super.initState();
-    checkAndUpdateIndex();
+    initializeUser();
+    initializeFirestore();
     initializeIndex();
-    startTimer();
+    startDailyTimer();
   }
 
-  void startTimer() {
-    timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
-      checkAndUpdateIndex();
-    });
+  void initializeUser() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    user = auth.currentUser;
   }
 
-   void checkAndUpdateIndex() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime? lastUpdate = prefs.getString('lastUpdate') != null
-        ? DateTime.parse(prefs.getString('lastUpdate')!)
-        : null;
-
+  void initializeFirestore() {
+    firestore = FirebaseFirestore.instance;
+  }
+void startDailyTimer() {
     DateTime now = DateTime.now();
-   
-if (now.hour == 10 && now.minute >= 48 && now.minute <= 50) {
-  print('Updating index between 10:22 AM and 10:23 AM...');
-  int currentIndex = prefs.getInt('index') ?? 0;
-  prefs.setInt('index', (currentIndex + 1) % 14);
-  setState(() {
-    index = prefs.getInt('index') ?? 0;
-  });
-  prefs.setString('lastUpdate', now.toString());
-  print('Index updated to: $index');
-} else {
-  print('Conditions not met for index update.');
-}
+    DateTime nextFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
+    if (now.isAfter(nextFiveAM)) {
+      updateDailyIndex(); // Update index immediately if it's past 5 AM
+    }
 
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-    void initializeIndex() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      index = prefs.getInt('index') ?? 0; // Use last stored index as default
+    timer = Timer.periodic(const Duration(days: 1), (Timer t) {
+      DateTime now = DateTime.now();
+      if (now.hour == 5 && now.minute == 0) {
+        updateDailyIndex();
+      }
     });
+  }
+
+  void updateDailyIndex() {
+    // Increment index by 1 every day
+    int newIndex = (index + 1) % 15; // Ensure index stays within 0 to 14
+    if (newIndex == 0) {
+      resetIndex(); // Reset index to 0 after 15 days
+    } else {
+      updateFirestoreIndex(newIndex);
+    }
+  }
+
+  void resetIndex() {
+    updateFirestoreIndex(0);
+  }
+
+  void updateFirestoreIndex(int newIndex) {
+    if (user != null) {
+      firestore
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('meditationindex')
+          .doc('indexdata')
+          .update({
+        'meditationIndex': newIndex,
+        'lastUpdated': Timestamp.now(),
+      }).then((_) {
+        setState(() {
+          index = newIndex;
+        });
+        // ignore: avoid_print
+        print('Index updated in Firestore to $newIndex.');
+      }).catchError((error) {
+      });
+    }
+  }
+
+  void initializeIndex() async {
+    if (user != null) {
+      DocumentSnapshot documentSnapshot = await firestore
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('meditationindex')
+          .doc('indexdata')
+          .get();
+
+      if (documentSnapshot.exists) {
+        setState(() {
+          index = documentSnapshot.get('meditationIndex') ?? 0;
+        });
+      } else {
+        // Create the document if it doesn't exist
+        firestore
+            .collection('Users')
+            .doc(user!.uid)
+            .collection('meditationindex')
+            .doc('indexdata')
+            .set({
+          'meditationIndex': index,
+          'lastUpdated': Timestamp.now(),
+        }, SetOptions(merge: true)).then((_) {
+          setState(() {
+            index = 0;
+          });
+        }).catchError((error) {
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-       List<String> images = [
+    List<String> images = [
       'assets/Images/Morning_meditation/mm_1.jpg',
       'assets/Images/Morning_meditation/mm_2.jpg',
       'assets/Images/Morning_meditation/mm_3.jpg',
@@ -119,7 +173,6 @@ if (now.hour == 10 && now.minute >= 48 && now.minute <= 50) {
       'MORNING MEDITATION/Brainbeats/I-CREATIVITY.mp3',
     ];
 
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -144,36 +197,18 @@ if (now.hour == 10 && now.minute >= 48 && now.minute <= 50) {
         child: Column(
           children: [
             SingleChildScrollView(
-              child:AudioCard(
-              audioFileName: audios[index],
-              title: titles[index],
-              imageUrl: images[index],
-              showTimerSelector: false,
-              imageshow: false,
-              timerSelectorfordisplay: false,
-              showPlaybackControlButton: false,
-              )
+              child: AudioCard(
+                audioFileName: audios[index],
+                title: titles[index],
+                imageUrl: images[index],
+                showTimerSelector: false,
+                imageshow: false,
+                timerSelectorfordisplay: false,
+                showPlaybackControlButton: false,
+              ),
             ),
             const SizedBox(
               height: 20,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MorningMeds()),
-                );
-              },
-              child: const Text(
-                "Want more?",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Colors.white,
-                ),
-              ),
             ),
             const SizedBox(
               height: 10,
@@ -182,7 +217,7 @@ if (now.hour == 10 && now.minute >= 48 && now.minute <= 50) {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child:  Text(index.toString()),
+              child: Text(index.toString()),
             ),
           ],
         ),

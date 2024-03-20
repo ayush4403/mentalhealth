@@ -114,7 +114,6 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  _openAnimatedDialog(context); // Show the dialog
                   Navigator.of(context).pop(
                     const CardView(),
                   );

@@ -85,7 +85,7 @@ class _PicturePageState extends State<PicturePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               CircularCountDownTimer(

@@ -1,5 +1,6 @@
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Games/games.dart';
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Home/homeui.dart';
 import 'package:MindFulMe/Profile/pro_info.dart';
 import 'package:MindFulMe/Report/report.dart';
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
-        children:  [
+        children: const [
           HomePageUI(),
           CardView(),
           ChartReportTemplate(),
@@ -51,18 +52,18 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: Container(
-        color: Colors.black,
+        color: AppColors.primaryColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-            vertical: 15,
+            horizontal: 13.0,
+            vertical: 11,
           ),
           child: GNav(
-            backgroundColor: Colors.black,
+            backgroundColor: AppColors.primaryColor,
             color: Colors.white,
-            activeColor: Colors.white,
-            tabBackgroundColor: Colors.grey,
-            gap: 8,
+            activeColor: Colors.black,
+            tabBackgroundColor: Colors.white,
+            gap: 6,
             padding: const EdgeInsets.all(16),
             tabs: const [
               GButton(

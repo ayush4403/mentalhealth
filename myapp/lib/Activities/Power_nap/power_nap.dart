@@ -114,7 +114,6 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  _openAnimatedDialog(context); // Show the dialog
                   Navigator.of(context).pop(
                     const CardView(),
                   );

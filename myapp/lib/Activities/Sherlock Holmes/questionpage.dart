@@ -202,11 +202,11 @@ class ResultPage extends StatelessWidget {
   final List<QuizData.Question> questions;
 
   const ResultPage({
-    Key? key,
+    super.key,
     required this.totalQuestions,
     required this.selectedAnswers,
     required this.questions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +235,6 @@ class ResultPage extends StatelessWidget {
       'incorrectAnswers': incorrectAnswers,
     }, SetOptions(merge: true));
 
-    return CardView();
-     // Return an empty container since no UI is displayed
+    return const CardView(); // Return an empty container since no UI is displayed
   }
 }
