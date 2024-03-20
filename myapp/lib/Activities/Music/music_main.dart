@@ -1,6 +1,7 @@
 import 'package:MindFulMe/Activities/Music/stressfirstscreen.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -116,9 +117,9 @@ _pageController = PageController();
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -138,14 +139,15 @@ _pageController = PageController();
                   MaterialPageRoute(builder: (context) => const MusicList()),
                 );
               },
+              
               child: const Text(
                 "Want more?",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline,
-                  decorationColor: Colors.white,
+                  decorationColor: Colors.black,
                 ),
               ),
             ),
@@ -158,6 +160,10 @@ _pageController = PageController();
                   const CardView(),
                 );
               },
+              style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
               child: const Text('Activity done'),
             ),
           ],

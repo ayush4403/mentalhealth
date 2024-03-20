@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/QuizModule.dart';
 
@@ -26,9 +27,9 @@ class GetStartedPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +80,7 @@ class GetStartedPage extends StatelessWidget {
                     child: const Text(
                       'Get Started',
                       style: TextStyle(
+                        
                           color: Colors.blue,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),

@@ -1,4 +1,5 @@
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -130,7 +131,7 @@ class _JournalScreenState extends State<JournalScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
@@ -211,7 +212,7 @@ class _JournalScreenState extends State<JournalScreen>
           ),
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       body: isGridView ? _buildGridView() : _buildListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

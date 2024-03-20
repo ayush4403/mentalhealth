@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:MindFulMe/Activities/Tratak/TratakPage.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -10,7 +11,7 @@ class TratakaIntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -27,7 +28,7 @@ class TratakaIntroScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: Center(
         child: Column(
@@ -45,7 +46,7 @@ class TratakaIntroScreen extends StatelessWidget {
             const Text(
               'Welcome to Tratak',
               style: TextStyle(
-                color: Colors.white, // Set your desired text color
+                color: Colors.black, // Set your desired text color
                 fontSize: 24, // Adjust the font size as needed
                 fontWeight: FontWeight.bold,
               ),
@@ -56,7 +57,7 @@ class TratakaIntroScreen extends StatelessWidget {
             const Text(
               'Instructions:',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -69,7 +70,7 @@ class TratakaIntroScreen extends StatelessWidget {
               child: const Text(
                 '1. Find a quiet and comfortable place to sit.',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16,
                 ),
               ),
@@ -80,7 +81,7 @@ class TratakaIntroScreen extends StatelessWidget {
               child: const Text(
                 '2. Look at the candle\'s flame.',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16,
                 ),
               ),
@@ -91,7 +92,7 @@ class TratakaIntroScreen extends StatelessWidget {
               child: const Text(
                 '3. Focus your gaze on the flame without blinking.',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16,
                 ),
               ),
@@ -102,7 +103,7 @@ class TratakaIntroScreen extends StatelessWidget {
               child: const Text(
                 '4. Try to maintain your focus for the entire duration of the activity.',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16,
                 ),
               ),
@@ -125,13 +126,13 @@ class TratakaIntroScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   width: 250,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
                     'Start Tratak',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

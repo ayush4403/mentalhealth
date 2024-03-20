@@ -6,6 +6,7 @@ import 'package:MindFulMe/Activities/Music/music_main.dart';
 import 'package:MindFulMe/Activities/Night_Music/night_main.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:MindFulMe/Activities/Gratitude/VideoApp.dart';
@@ -60,7 +61,7 @@ class _CardViewState extends State<CardView> {
         return difference.inHours < 24;
       }
     }
-    return false; 
+    return false;
   }
 
   @override
@@ -72,17 +73,17 @@ class _CardViewState extends State<CardView> {
 
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.bgColor,
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'Activities',
             style: TextStyle(
-              color: Colors.white, // Change text color to white
+              color: AppColors.bgColor, // Change text color to white
               fontSize: 20, // Change font size
               fontWeight: FontWeight.bold, // Make the text bold
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+          backgroundColor: AppColors.primaryColor,
         ),
         body: ActivityList(
           checkActivityCompletionStatus: checkActivityCompletionStatus,
@@ -94,6 +95,7 @@ class _CardViewState extends State<CardView> {
   }
 }
 
+// ignore: must_be_immutable
 class ActivityList extends StatelessWidget {
   final Function checkActivityCompletionStatus;
   late bool activityCompleted = false;
@@ -359,6 +361,7 @@ class ActivityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unnecessary_null_comparison
     if (activityCompleted == null) {
       return const CircularProgressIndicator(); // Show loading indicator while initializing
     }
@@ -443,9 +446,15 @@ class ActivityList extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => handleStartButtonTap(
                                 context, activities[index]),
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: AppColors.bgColor,
+                              backgroundColor: AppColors.primaryColor,
+                            ),
                             child: const Text(
                               'Start',
-                              style: TextStyle(fontSize: 15),
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ),

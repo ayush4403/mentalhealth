@@ -1,10 +1,11 @@
 import 'dart:math';
-import 'package:MindFulMe/Activities/cardview.dart';
-import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class PowerNapList extends StatefulWidget {
-  const PowerNapList({super.key});
+  const PowerNapList({Key? key}) : super(key: key);
 
   @override
   State<PowerNapList> createState() => _PowerNapListListState();
@@ -50,6 +51,15 @@ class _PowerNapListListState extends State<PowerNapList> {
     ),
   ];
 
+  final List<String> PowerNapDescription = [
+    "A 10-minute power nap offers a quick energy boost and helps improve alertness and concentration. It's perfect for a brief mental refresh during busy days, reducing stress and enhancing mood.",
+    "With a 15-minute power nap, you can strike a balance between rest and productivity. It provides a mental recharge, improves cognitive function, and contributes to better memory retention.",
+    "Opting for a 20-minute power nap allows for deeper relaxation and stress reduction. It enhances creativity, problem-solving skills, and overall mental well-being, making it ideal for a mid-day rejuvenation.",
+    "A 25-minute power nap offers a significant boost in alertness and cognitive performance. It helps alleviate fatigue, promotes relaxation, and enhances memory recall and learning ability.",
+    "With a 30-minute power nap, you can experience a more complete sleep cycle, leading to improved mood and creativity. It reduces the risk of burnout, increases resilience to stress, and enhances cognitive function.",
+    "Opting for a 45-minute power nap allows for a deeper dive into restorative sleep. It offers comprehensive rejuvenation for both the mind and body, leading to better overall well-being and increased productivity.",
+  ];
+
   // Color options
   final List<Color> colors = [
     Colors.blue[100]!,
@@ -68,7 +78,6 @@ class _PowerNapListListState extends State<PowerNapList> {
 
   // Randomly shuffle the colors
   late final List<Color> shuffledColors = []
-    // ignore: prefer_spread_collections
     ..addAll(colors)
     ..shuffle(Random());
 
@@ -84,7 +93,7 @@ class _PowerNapListListState extends State<PowerNapList> {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop(const CardView());
+            Navigator.of(context).pop(); // Pop the current screen
           },
         ),
         title: const Text(
@@ -95,16 +104,19 @@ class _PowerNapListListState extends State<PowerNapList> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: Container(
-        color: const Color.fromARGB(255, 0, 111, 186),
+        color:  AppColors.bgColor,
         child: ListView.builder(
           itemCount: musicDataListChanting.length,
           itemBuilder: (context, index) {
             int colorIndex = cardColorIndices.removeAt(0);
             return _buildCategory(
-                musicDataListChanting[index], shuffledColors[colorIndex]);
+              musicDataListChanting[index],
+              shuffledColors[colorIndex],
+              PowerNapDescription[index],
+            );
           },
         ),
       ),
@@ -112,7 +124,8 @@ class _PowerNapListListState extends State<PowerNapList> {
   }
 
   // ignore: non_constant_identifier_names
-  Widget _buildCategory(MusicData musicData, Color cardColor) {
+  Widget _buildCategory(
+      MusicData musicData, Color cardColor, String description) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: GestureDetector(
@@ -153,12 +166,21 @@ class _PowerNapListListState extends State<PowerNapList> {
                   child: Padding(
                     padding: const EdgeInsets.all(4),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           musicData.title,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          description,
+                          maxLines: 3, // Limit to 3 lines
+                          overflow: TextOverflow.ellipsis, // Truncate overflow
+                          style: TextStyle(
+                            color: Colors.black54,
                           ),
                         ),
                       ],
