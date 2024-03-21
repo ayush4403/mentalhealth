@@ -22,8 +22,8 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
 
   int touchedGroupIndex = -1;
 
-  int indexweek = 1;
-  int indexday = 1;
+ late int indexweek = 1;
+  late int indexday = 1;
   late List<int> _sessionData = [];
 // Add a parameter for weekIndex
   Future<void> _getGraphData(int currentWeek) async {
@@ -66,27 +66,36 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
       showingBarGroups = rawBarGroups;
     });
   }
-
+Future<void> _fetchdata() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+  final userDoc = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user!.uid)
+      .collection('MeditationDataforday')
+      .doc('currentweekandday');
+  DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+  if (docSnapshot.exists) {
+    int currentDay = docSnapshot.get('currentday');
+    int currentWeek = docSnapshot.get('currentweek');
+    setState(() {
+      indexday = currentDay;
+      indexweek = currentWeek;
+    });
+    print('Current day and week index updated to: Day $indexday, Week $indexweek');
+  } else {
+     setState(() {
+      indexday = 1;
+      indexweek = 1;
+    });
+    print('Document does not exist');
+  }
+}
   @override
   void initState() {
     super.initState();
-    _getGraphData(2); // Fetch data for initial week
-    Timer.periodic(const Duration(days: 1), (timer) {
-      // Get the current time
-      DateTime now = DateTime.now();
-      // Check if it's midnight
-      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
-        setState(() {
-          indexday++;
-          if (indexday > 7) {
-            indexday = 1;
-            indexweek++;
-            _getGraphData(indexweek); // Fetch data for new week
-          } 
-        });
-      }
-    });
+    _fetchdata();
+    _getGraphData(indexweek); // Fetch data for initial week
+
   }
 
   @override
