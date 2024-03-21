@@ -57,8 +57,9 @@ void initState() {
   WidgetsFlutterBinding.ensureInitialized();
   _setupAudioPlayer();
   _fetchdata();
+    // ignore: unused_local_variable
     DateTime now = DateTime.now();
-  Timer.periodic(Duration(hours: 1), (timer) {
+  Timer.periodic(const Duration(hours: 1), (timer) {
   DateTime now = DateTime.now();
   if (now.hour == 5 && now.minute == 0) {
     setState(() {
@@ -92,18 +93,21 @@ Future<void> _fetchdata() async {
       indexday = currentDay;
       indexweek = currentWeek;
     });
+    // ignore: avoid_print
     print('Current day and week index updated to: Day $indexday, Week $indexweek');
   } else {
      setState(() {
       indexday = 1;
       indexweek = 1;
     });
+    // ignore: avoid_print
     print('Document does not exist');
   }
 }
 
 Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async {
   final User? user = FirebaseAuth.instance.currentUser;
+  // ignore: unused_local_variable
   String weekPath = 'week$indexweek';
 
   final userDoc = FirebaseFirestore.instance
@@ -118,6 +122,7 @@ Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async 
       indexday=indexday1;
       indexweek=indexweek1;
     });
+    // ignore: avoid_print
     print('Current day and week index updated to: Day $indexday, Week $indexweek');
   } else {
     await userDoc.set({'currentday': indexday1, 'currentweek': indexweek1});
@@ -125,6 +130,7 @@ Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async 
       indexday=indexday1;
       indexweek=indexweek1;
     });
+    // ignore: avoid_print
     print('New document created with day $indexday, Week $indexweek');
   }
 }
@@ -144,13 +150,16 @@ Future<void> _createNewWeekDocument(int timer) async {
     if (docSnapshot.exists) {
       
       await userDoc.set({'day$indexday': timer}, SetOptions(merge: true));
+      // ignore: avoid_print
       print('Week document updated with timer data for Day $indexday');
     } else {
       
       await userDoc.set({'day$indexday': timer});
+      // ignore: avoid_print
       print('New week document created with timer data for Day $indexday');
     }
   } catch (e) {
+    // ignore: avoid_print
     print('Error creating/updating week document: $e');
     
   }

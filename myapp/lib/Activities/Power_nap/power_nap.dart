@@ -135,6 +135,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
     );
   }
 
+  // ignore: unused_element
   void _openAnimatedDialog(BuildContext context) {
     showGeneralDialog(
       context: context,
@@ -171,7 +172,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             const Text(

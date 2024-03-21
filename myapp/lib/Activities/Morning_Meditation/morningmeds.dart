@@ -80,8 +80,10 @@ class _MorningMedsState extends State<MorningMeds> {
       setState(() {
         index = newIndex;
       });
+      // ignore: avoid_print
       print('Index updated in Firestore to $newIndex.');
     }).catchError((error) {
+      // ignore: avoid_print
       print('Error updating index in Firestore: $error');
     });
   }
@@ -97,8 +99,10 @@ class _MorningMedsState extends State<MorningMeds> {
       'lastUpdated': Timestamp.now(),
       'dayUpdated': DateTime.now().day,
     }).then((_) {
+      // ignore: avoid_print
       print('Index document created in Firestore.');
     }).catchError((error) {
+      // ignore: avoid_print
       print('Error creating index document in Firestore: $error');
     });
   }

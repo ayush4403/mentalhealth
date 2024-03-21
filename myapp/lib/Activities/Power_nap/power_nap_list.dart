@@ -4,7 +4,7 @@ import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class PowerNapList extends StatefulWidget {
-  const PowerNapList({Key? key}) : super(key: key);
+  const PowerNapList({super.key});
 
   @override
   State<PowerNapList> createState() => _PowerNapListListState();
@@ -78,6 +78,7 @@ class _PowerNapListListState extends State<PowerNapList> {
 
   // Randomly shuffle the colors
   late final List<Color> shuffledColors = []
+    // ignore: prefer_spread_collections
     ..addAll(colors)
     ..shuffle(Random());
 

@@ -18,7 +18,7 @@ class HomePageUI extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hello Pratham!",
+                    "Hello, MindFulMe!",
                     style: TextStyle(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w900,
@@ -130,15 +130,27 @@ class HomePageUI extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MoodMoji(emoji: '🤩', title: ' Overjoy'),
-                        MoodMoji(emoji: '😀', title: 'Happy'),
-                        MoodMoji(emoji: '😑', title: 'Neutral'),
-                        MoodMoji(emoji: '😢', title: 'Sad'),
-                        MoodMoji(emoji: '😣', title: 'Depressed'),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const MoodMoji(emoji: '🤩'),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.03),
+                          const MoodMoji(emoji: '😀'),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.03),
+                          const MoodMoji(emoji: '😑'),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.03),
+                          const MoodMoji(emoji: '😢'),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.03),
+                          const MoodMoji(emoji: '😣'),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
                   ],
@@ -180,10 +192,9 @@ class MoodMoji extends StatelessWidget {
   const MoodMoji({
     super.key,
     required this.emoji,
-    required this.title,
   });
   final String emoji;
-  final String title;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -199,13 +210,6 @@ class MoodMoji extends StatelessWidget {
             style: const TextStyle(
               fontSize: 30,
             ),
-          ),
-        ),
-        Text(
-          title,
-          style: TextStyle(
-            color: AppColors.whiteColor,
-            fontSize: 16,
           ),
         ),
       ],

@@ -210,7 +210,7 @@ class _MainMusicState extends State<MainMusic> {
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             const Text(

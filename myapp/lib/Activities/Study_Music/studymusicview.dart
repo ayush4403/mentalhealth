@@ -131,6 +131,7 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
     );
   }
 
+  // ignore: unused_element
   void _openAnimatedDialog(BuildContext context) {
     showGeneralDialog(
       context: context,
@@ -167,7 +168,7 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             const Text(
