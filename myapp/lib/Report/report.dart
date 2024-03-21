@@ -262,13 +262,10 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                           ],
                         ),
                       ),
-                      
                     );
                   },
                 ),
-                
               ),
-              
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
@@ -278,96 +275,88 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 child: Container(
                   height: 1,
                   width: 500,
-                  color: Colors
-                      .white, // This color won't be used as we're using Shimmer
+                  color: Colors.white,
                 ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(
-                    MediaQuery.of(context).size.width * 0.6777, 0, 0, 0),
-                child: Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.02),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  child: DropdownButton<Timeframe>(
-                    dropdownColor: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(20),
-                    value: selectedTimeframe,
-                    onChanged: (Timeframe? newValue) {
-                      setState(
-                        () {
-                          selectedTimeframe = newValue!;
-                        },
-                      );
-                    },
-                    items: Timeframe.values.map<DropdownMenuItem<Timeframe>>(
-                      (Timeframe value) {
-                        if (value == Timeframe.Weekly) {
-                          return DropdownMenuItem<Timeframe>(
-                            value: value,
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Weekly',
-                                    style: TextStyle(
-                                      color: AppColors.whiteColor,
-                                    ),
-                                  ),
-                                ),
-                                Divider(
-                                  height: 7,
-                                  thickness: 2,
-                                  color: AppColors.whiteColor,
-                                ),
-                              ],
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.bgColor,
+                      borderRadius: BorderRadius.circular(20.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                selectedTimeframe == Timeframe.Weekly
+                                    ? AppColors.primaryColor
+                                    : Colors.grey[300],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          );
-                        } else if (value == Timeframe.Monthly) {
-                          return DropdownMenuItem<Timeframe>(
-                            value: value,
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Monthly',
-                                style: TextStyle(
-                                  color: AppColors.whiteColor,
-                                ),
-                              ),
+                            minimumSize: const Size(
+                              150,
+                              40,
                             ),
-                          );
-                        } else {
-                          return DropdownMenuItem<Timeframe>(
-                            value: value,
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                value.toString(),
-                                style: TextStyle(
-                                  color: AppColors.whiteColor,
-                                ),
-                              ),
+                          ),
+                          onPressed: () {
+                            setState(
+                              () {
+                                selectedTimeframe = Timeframe.Weekly;
+                              },
+                            );
+                          },
+                          child: Text(
+                            'Weekly',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
                             ),
-                          );
-                        }
-                      },
-                    ).toList(),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                selectedTimeframe == Timeframe.Monthly
+                                    ? AppColors.primaryColor
+                                    : Colors.grey[300],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            minimumSize: const Size(
+                              150,
+                              40,
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              selectedTimeframe = Timeframe.Monthly;
+                            });
+                          },
+                          child: Text(
+                            'Monthly',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -423,8 +412,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                 child: Container(
                   height: 1,
                   width: 500,
-                  color: Colors
-                      .white, // This color won't be used as we're using Shimmer
+                  color: Colors.white,
                 ),
               ),
               SizedBox(

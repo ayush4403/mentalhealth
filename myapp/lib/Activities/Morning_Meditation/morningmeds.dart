@@ -23,7 +23,6 @@ class _MorningMedsState extends State<MorningMeds> {
     initializeUser();
     initializeFirestore();
     initializeIndex();
-    startDailyTimer();
   }
 
   void initializeUser() {
@@ -35,56 +34,7 @@ class _MorningMedsState extends State<MorningMeds> {
     firestore = FirebaseFirestore.instance;
   }
 
-  void startDailyTimer() {
-    DateTime now = DateTime.now();
-    DateTime nextFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
-    if (now.isAfter(nextFiveAM)) {
-      updateDailyIndex(); // Update index immediately if it's past 5 AM
-    }
-
-    timer = Timer.periodic(const Duration(days: 1), (Timer t) {
-      DateTime now = DateTime.now();
-      if (now.hour == 5 && now.minute == 0) {
-        updateDailyIndex();
-      }
-    });
-  }
-
-  void updateDailyIndex() {
-    // Increment index by 1 every day
-    int newIndex = (index + 1) % 15; // Ensure index stays within 0 to 14
-    if (newIndex == 0) {
-      resetIndex(); // Reset index to 0 after 15 days
-    } else {
-      updateFirestoreIndex(newIndex);
-    }
-  }
-
-  void resetIndex() {
-    updateFirestoreIndex(0);
-  }
-
-  void updateFirestoreIndex(int newIndex) {
-    if (user != null) {
-      firestore
-          .collection('Users')
-          .doc(user!.uid)
-          .collection('meditationindex')
-          .doc('indexdata')
-          .update({
-        'meditationIndex': newIndex,
-        'lastUpdated': Timestamp.now(),
-      }).then((_) {
-        setState(() {
-          index = newIndex;
-        });
-        // ignore: avoid_print
-        print('Index updated in Firestore to $newIndex.');
-      }).catchError((error) {});
-    }
-  }
-
-  void initializeIndex() async {
+  Future<void> initializeIndex() async {
     if (user != null) {
       DocumentSnapshot documentSnapshot = await firestore
           .collection('Users')
@@ -94,26 +44,63 @@ class _MorningMedsState extends State<MorningMeds> {
           .get();
 
       if (documentSnapshot.exists) {
-        setState(() {
-          index = documentSnapshot.get('meditationIndex') ?? 0;
-        });
+        Map<String, dynamic>? data =
+            documentSnapshot.data() as Map<String, dynamic>?;
+
+        if (data != null) {
+          int lastUpdatedDay = data['dayUpdated'] ?? 0;
+          int currentDay = DateTime.now().day;
+
+          if (lastUpdatedDay == currentDay) {
+            setState(() {
+              index = data['meditationIndex'] ?? 0; // Get current index
+            });
+          } else {
+            updateFirestoreIndex(1, currentDay); // Update index to 1 for a new day
+          }
+        }
       } else {
-        // Create the document if it doesn't exist
-        firestore
-            .collection('Users')
-            .doc(user!.uid)
-            .collection('meditationindex')
-            .doc('indexdata')
-            .set({
-          'meditationIndex': index,
-          'lastUpdated': Timestamp.now(),
-        }, SetOptions(merge: true)).then((_) {
-          setState(() {
-            index = 0;
-          });
-        }).catchError((error) {});
+        // Create the document if it doesn't exist and set index to 0
+        createIndexDocument();
       }
     }
+  }
+
+  void updateFirestoreIndex(int newIndex, int currentDay) {
+    firestore
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('meditationindex')
+        .doc('indexdata')
+        .update({
+      'meditationIndex': newIndex,
+      'lastUpdated': Timestamp.now(),
+      'dayUpdated': currentDay,
+    }).then((_) {
+      setState(() {
+        index = newIndex;
+      });
+      print('Index updated in Firestore to $newIndex.');
+    }).catchError((error) {
+      print('Error updating index in Firestore: $error');
+    });
+  }
+
+  void createIndexDocument() {
+    firestore
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('meditationindex')
+        .doc('indexdata')
+        .set({
+      'meditationIndex': index,
+      'lastUpdated': Timestamp.now(),
+      'dayUpdated': DateTime.now().day,
+    }).then((_) {
+      print('Index document created in Firestore.');
+    }).catchError((error) {
+      print('Error creating index document in Firestore: $error');
+    });
   }
 
   @override

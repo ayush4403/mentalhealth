@@ -42,9 +42,12 @@ class _AudioCardState extends State<AudioCard> {
   bool timerSelectorforexample = false;
   bool isSessionActive = false;
   late Timer _sessionTimer;
+  // ignore: unused_field
   int _sessionDurationInSeconds = 0;
-   int indexweek=1;
-  int indexday=1;
+
+  late int indexweek = 1;
+  late int indexday = 1;
+
   // ignore: unused_field
   final List<int> _sessionData = List.filled(7, 0);
 
@@ -53,45 +56,80 @@ void initState() {
   super.initState();
   WidgetsFlutterBinding.ensureInitialized();
   _setupAudioPlayer();
-
-  // Create a timer that runs every three minutes
-  Timer.periodic(const Duration(minutes: 1), (timer) {
+  _fetchdata();
+    DateTime now = DateTime.now();
+  Timer.periodic(Duration(hours: 1), (timer) {
+  DateTime now = DateTime.now();
+  if (now.hour == 5 && now.minute == 0) {
     setState(() {
       indexday++;
-      if (indexday > 7) {
-        indexday = 1;
+      _updateCurrentDayAndWeekIndex(indexday, indexweek);
+      _createNewWeekDocument(120);
+      if (indexday % 7==1) {
         indexweek++;
-        _createNewWeekDocument();
+        indexday++;
+      _updateCurrentDayAndWeekIndex(indexday, indexweek);
+      _createNewWeekDocument(120);
       }
     });
-  });
+  }
+});
+
+
+}
+Future<void> _fetchdata() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+  final userDoc = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user!.uid)
+      .collection('MeditationDataforday')
+      .doc('currentweekandday');
+  DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+  if (docSnapshot.exists) {
+    int currentDay = docSnapshot.get('currentday');
+    int currentWeek = docSnapshot.get('currentweek');
+    setState(() {
+      indexday = currentDay;
+      indexweek = currentWeek;
+    });
+    print('Current day and week index updated to: Day $indexday, Week $indexweek');
+  } else {
+     setState(() {
+      indexday = 1;
+      indexweek = 1;
+    });
+    print('Document does not exist');
+  }
 }
 
-Future<void> _createNewWeekDocument() async {
+Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async {
   final User? user = FirebaseAuth.instance.currentUser;
   String weekPath = 'week$indexweek';
 
   final userDoc = FirebaseFirestore.instance
       .collection('Users')
       .doc(user!.uid)
-      .collection('MeditationData')
-      .doc(weekPath);
-
-  // Get the last day with data from Firestore
-  QuerySnapshot<Map<String, dynamic>> lastDaySnapshot = await userDoc.collection('MeditationData').orderBy('day', descending: true).limit(1).get();
-  int lastDay = lastDaySnapshot.docs.isNotEmpty ? lastDaySnapshot.docs.first['day'] as int : 1;
-
-  // Use the last day with data as the default indexday value
-  setState(() {
-    indexday = lastDay + 1; // Increment the last day by 1 for the next day
-  });
-
-  // Create a new week document with the default indexday value
-  await userDoc.set({'day$indexday': 0}, SetOptions(merge: true));
+      .collection('MeditationDataforday')
+      .doc('currentweekandday');
+  DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+  if (docSnapshot.exists) {
+    await userDoc.update({'currentday': indexday1, 'currentweek': indexweek1});
+    setState(() {
+      indexday=indexday1;
+      indexweek=indexweek1;
+    });
+    print('Current day and week index updated to: Day $indexday, Week $indexweek');
+  } else {
+    await userDoc.set({'currentday': indexday1, 'currentweek': indexweek1});
+       setState(() {
+      indexday=indexday1;
+      indexweek=indexweek1;
+    });
+    print('New document created with day $indexday, Week $indexweek');
+  }
 }
-
-
-  Future<void> _updateMeditationData(int day, int durationInSeconds) async {
+Future<void> _createNewWeekDocument(int timer) async {
+  try {
     final User? user = FirebaseAuth.instance.currentUser;
     String weekPath = 'week$indexweek';
 
@@ -101,9 +139,25 @@ Future<void> _createNewWeekDocument() async {
         .collection('MeditationData')
         .doc(weekPath);
 
-    // Update the specified day with the duration
-    await userDoc.update({'day$day': durationInSeconds});
+    // Check if the document exists before updating
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      
+      await userDoc.set({'day$indexday': timer}, SetOptions(merge: true));
+      print('Week document updated with timer data for Day $indexday');
+    } else {
+      
+      await userDoc.set({'day$indexday': timer});
+      print('New week document created with timer data for Day $indexday');
+    }
+  } catch (e) {
+    print('Error creating/updating week document: $e');
+    
   }
+}
+
+
+  
 
   Future<void> _setupAudioPlayer() async {
     await _updateAudioSource(widget.audioFileName);
@@ -327,8 +381,7 @@ Future<void> _createNewWeekDocument() async {
                                 // Increment the day index
                               });
                               // Update the user's data in Firestore
-                              _updateMeditationData(
-                                  indexday, _sessionDurationInSeconds);
+                             
                             },
                             child: const Text("Yes"),
                           ),
@@ -363,9 +416,8 @@ Future<void> _createNewWeekDocument() async {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
-                              // Update the meditation data when stopping the session
-                              _updateMeditationData(
-                                  indexday, _sessionDurationInSeconds);
+                             _createNewWeekDocument(120);
+                             
                               setState(() {
                                 isSessionActive = false;
                                 _player.pause();

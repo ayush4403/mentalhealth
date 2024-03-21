@@ -26,8 +26,8 @@ class HomePageUI extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(1001),
@@ -42,7 +42,7 @@ class HomePageUI extends StatelessWidget {
                             color: AppColors.whiteColor,
                           ),
                           child: Image.asset(
-                            'assets/GIF/Gamification/coin.png',
+                            'assets/Images/Gamification/coin.png',
                             height: 55,
                           ),
                         ),
@@ -89,7 +89,7 @@ class HomePageUI extends StatelessWidget {
                                   color: AppColors.primaryColor,
                                 ),
                                 child: Image.asset(
-                                  'assets/GIF/Gamification/coin.png',
+                                  'assets/Images/Gamification/coin.png',
                                   height: 55,
                                 ),
                               ),
