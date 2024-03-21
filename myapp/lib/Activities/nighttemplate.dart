@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -338,6 +339,10 @@ class _NightMusicCustomCardState extends State<NightMusicCustomCard> {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Start Session'),
               ),
 
@@ -382,6 +387,10 @@ class _NightMusicCustomCardState extends State<NightMusicCustomCard> {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Stop Session'),
               ),
             ],

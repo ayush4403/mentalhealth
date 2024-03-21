@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusicview.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
@@ -303,9 +304,9 @@ class _StudyMusicScreenState extends State<StudyMusicScreen>
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

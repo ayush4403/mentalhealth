@@ -58,6 +58,7 @@ dependencies:
   animated_theme_switcher: ^2.0.10
   riverpod: ^2.5.1
   timezone: ^0.9.2
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +100,9 @@ flutter:
     - assets/GIF/Features/gif4.json
     - assets/GIF/Features/gif5.json
     - assets/GIF/Features/getStarted.json
+
+    #Gamification
+    - assets/Images/Gamification/coin.png
 
     #Questions's page images
     - assets/GIF/Questions/Qgif1.json
@@ -350,10 +354,10 @@ flutter:
     - assets/Images/Mental Mararthon/Baloon.png
 
     #Reports
-    - assets/Images/Report/1_Meditation.jpg
-    - assets/Images/Report/2_Marathon.jpg
-    - assets/Images/Report/3_Sherlock.jpg
-    - assets/Images/Report/4_Music.jpg
+    - assets/Images/Report/1_morning_meditation.jpg
+    - assets/Images/Report/2_mental_marathon.jpg
+    - assets/Images/Report/3_shelock_holmes.jpg
+    - assets/Images/Report/4_night_music.jpg
     - assets/Images/Report/Mental_Report/
     - assets/GIF/Report/mental_marathon.json
 

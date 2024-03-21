@@ -15,7 +15,7 @@ class _MorningMedsState extends State<MorningMeds> {
   late int index =0;
   late Timer timer;
   late FirebaseFirestore firestore;
-   User? user;
+  User? user;
 
   @override
   void initState() {

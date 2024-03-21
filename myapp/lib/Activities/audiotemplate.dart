@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioCard extends StatefulWidget {
   final String imageUrl;
@@ -42,13 +42,13 @@ class _AudioCardState extends State<AudioCard> {
   bool timerSelectorforexample = false;
   bool isSessionActive = false;
   late Timer _sessionTimer;
+  // ignore: unused_field
   int _sessionDurationInSeconds = 0;
 
   late int indexweek = 1;
   late int indexday = 1;
 
   // ignore: unused_field
-
   final List<int> _sessionData = List.filled(7, 0);
 
   @override
@@ -168,6 +168,7 @@ Future<void> _createNewWeekDocument(int timer) async {
       final audioUrl = await getAudioUrl(audioFileName);
       await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
+      // ignore: avoid_print
       print("Error loading audio source: $e");
     }
   }
@@ -188,6 +189,7 @@ Future<void> _createNewWeekDocument(int timer) async {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
+      // ignore: avoid_print
       print("Error getting audio URL: $e");
       return '';
     }
@@ -394,6 +396,10 @@ Future<void> _createNewWeekDocument(int timer) async {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Start Meditation Session'),
               ),
 
@@ -433,6 +439,10 @@ Future<void> _createNewWeekDocument(int timer) async {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Stop Meditation Session'),
               ),
 
