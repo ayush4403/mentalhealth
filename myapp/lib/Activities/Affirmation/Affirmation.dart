@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:lottie/lottie.dart';
@@ -88,9 +89,9 @@ class _AffirmationAppState extends State<AffirmationApp> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+          backgroundColor: AppColors.primaryColor,
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: true,
         // ignore: deprecated_member_use
         body: WillPopScope(
@@ -227,13 +228,9 @@ class _AffirmationAppState extends State<AffirmationApp> {
                                   ),
                                 );
                               },
-                              style: ButtonStyle(
-                                minimumSize: MaterialStateProperty.all(
-                                  const Size(
-                                    200,
-                                    50,
-                                  ),
-                                ),
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
                               ),
                               child: const Text(
                                 'Activity Done',

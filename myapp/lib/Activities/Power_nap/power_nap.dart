@@ -1,4 +1,5 @@
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
@@ -74,7 +75,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -91,7 +92,7 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -118,6 +119,10 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
                     const CardView(),
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: AppColors.bgColor,
+                  backgroundColor: AppColors.primaryColor,
+                ),
                 child: const Text('Activity done'),
               ),
             ),
@@ -239,6 +244,8 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
       },
     );
   }
+
+  // ignore: unused_element
 
   // ignore: unused_element
   Widget _buildCategory(BuildContext context, List<MusicData> musicList) {

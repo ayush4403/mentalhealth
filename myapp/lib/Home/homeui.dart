@@ -1,7 +1,6 @@
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class HomePageUI extends StatelessWidget {
   const HomePageUI({super.key});
@@ -42,9 +41,9 @@ class HomePageUI extends StatelessWidget {
                             shape: BoxShape.circle,
                             color: AppColors.whiteColor,
                           ),
-                          child: Lottie.asset(
-                            'assets/GIF/Gamification/coin.json',
-                            
+                          child: Image.asset(
+                            'assets/GIF/Gamification/coin.png',
+                            height: 55,
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -89,13 +88,13 @@ class HomePageUI extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   color: AppColors.primaryColor,
                                 ),
-                                child: Lottie.asset(
-                                  'assets/GIF/Gamification/coin.json',
-                                  height: 45,
+                                child: Image.asset(
+                                  'assets/GIF/Gamification/coin.png',
+                                  height: 55,
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              const Text("Mood Tracker"),
+                              const Text("+ 10 Points"),
                               const SizedBox(width: 10),
                             ],
                           ),
@@ -106,14 +105,14 @@ class HomePageUI extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                "View Details",
+                                "Today's Question",
                                 style: TextStyle(
-                                  color: AppColors.whiteColor.withOpacity(.8),
+                                  color: AppColors.whiteColor,
                                 ),
                               ),
                               const SizedBox(width: 5),
                               Icon(
-                                Icons.accessibility_sharp,
+                                Icons.add_reaction_rounded,
                                 color: AppColors.whiteColor.withOpacity(.8),
                               )
                             ],
@@ -134,11 +133,11 @@ class HomePageUI extends StatelessWidget {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        MoodMoji(emoji: '😣', title: 'Depressed'),
-                        MoodMoji(emoji: '😢', title: 'Sad'),
-                        MoodMoji(emoji: '😑', title: 'Neutral'),
+                        MoodMoji(emoji: '🤩', title: ' Overjoy'),
                         MoodMoji(emoji: '😀', title: 'Happy'),
-                        MoodMoji(emoji: '🤩', title: 'Overjoy'),
+                        MoodMoji(emoji: '😑', title: 'Neutral'),
+                        MoodMoji(emoji: '😢', title: 'Sad'),
+                        MoodMoji(emoji: '😣', title: 'Depressed'),
                       ],
                     ),
                     const SizedBox(height: 20),

@@ -15,7 +15,7 @@ class _MorningMedsState extends State<MorningMeds> {
   late int index =0;
   late Timer timer;
   late FirebaseFirestore firestore;
-   User? user;
+  User? user;
 
   @override
   void initState() {
@@ -34,7 +34,8 @@ class _MorningMedsState extends State<MorningMeds> {
   void initializeFirestore() {
     firestore = FirebaseFirestore.instance;
   }
-void startDailyTimer() {
+
+  void startDailyTimer() {
     DateTime now = DateTime.now();
     DateTime nextFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
     if (now.isAfter(nextFiveAM)) {
@@ -79,8 +80,7 @@ void startDailyTimer() {
         });
         // ignore: avoid_print
         print('Index updated in Firestore to $newIndex.');
-      }).catchError((error) {
-      });
+      }).catchError((error) {});
     }
   }
 
@@ -111,8 +111,7 @@ void startDailyTimer() {
           setState(() {
             index = 0;
           });
-        }).catchError((error) {
-        });
+        }).catchError((error) {});
       }
     }
   }

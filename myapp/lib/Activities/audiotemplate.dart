@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ void initState() {
   _setupAudioPlayer();
 
   // Create a timer that runs every three minutes
-  Timer.periodic(Duration(minutes: 1), (timer) {
+  Timer.periodic(const Duration(minutes: 1), (timer) {
     setState(() {
       indexday++;
       if (indexday > 7) {
@@ -113,6 +114,7 @@ Future<void> _createNewWeekDocument() async {
       final audioUrl = await getAudioUrl(audioFileName);
       await _player.setAudioSource(AudioSource.uri(Uri.parse(audioUrl)));
     } catch (e) {
+      // ignore: avoid_print
       print("Error loading audio source: $e");
     }
   }
@@ -133,6 +135,7 @@ Future<void> _createNewWeekDocument() async {
       Reference audioRef = FirebaseStorage.instance.ref().child(audioFileName);
       return await audioRef.getDownloadURL();
     } catch (e) {
+      // ignore: avoid_print
       print("Error getting audio URL: $e");
       return '';
     }
@@ -340,6 +343,10 @@ Future<void> _createNewWeekDocument() async {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Start Meditation Session'),
               ),
 
@@ -380,6 +387,10 @@ Future<void> _createNewWeekDocument() async {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                 child: const Text('Stop Meditation Session'),
               ),
 

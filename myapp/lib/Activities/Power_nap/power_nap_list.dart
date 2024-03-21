@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:MindFulMe/Activities/Power_nap/power_nap.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class PowerNapList extends StatefulWidget {
   const PowerNapList({Key? key}) : super(key: key);
@@ -50,6 +50,7 @@ class _PowerNapListListState extends State<PowerNapList> {
     ),
   ];
 
+  // ignore: non_constant_identifier_names
   final List<String> PowerNapDescription = [
     "A 10-minute power nap offers a quick energy boost and helps improve alertness and concentration. It's perfect for a brief mental refresh during busy days, reducing stress and enhancing mood.",
     "With a 15-minute power nap, you can strike a balance between rest and productivity. It provides a mental recharge, improves cognitive function, and contributes to better memory retention.",
@@ -103,10 +104,10 @@ class _PowerNapListListState extends State<PowerNapList> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: Container(
-        color: const Color.fromARGB(255, 0, 111, 186),
+        color: AppColors.bgColor,
         child: ListView.builder(
           itemCount: musicDataListChanting.length,
           itemBuilder: (context, index) {
@@ -173,12 +174,14 @@ class _PowerNapListListState extends State<PowerNapList> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         Text(
                           description,
                           maxLines: 3, // Limit to 3 lines
                           overflow: TextOverflow.ellipsis, // Truncate overflow
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black54,
                           ),
                         ),

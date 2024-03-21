@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:image_picker/image_picker.dart';
@@ -49,7 +50,7 @@ class _KindnessPageState extends State<KindnessPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -67,7 +68,7 @@ class _KindnessPageState extends State<KindnessPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: Center(
         child: Container(
@@ -158,11 +159,9 @@ class _KindnessPageState extends State<KindnessPage> {
                             await _pickImage();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.purpleAccent
-                                .withOpacity(0.50), // Background color
-                            foregroundColor:
-                                Colors.black, // Text and icon color
-                          ),
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -215,14 +214,10 @@ class _KindnessPageState extends State<KindnessPage> {
                                       ),
                                     );
                                   },
-                                  style: ButtonStyle(
-                                    minimumSize: MaterialStateProperty.all(
-                                      const Size(
-                                        200,
-                                        50,
-                                      ),
-                                    ),
-                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
                                   child: const Text(
                                     'Activity Done',
                                     style: TextStyle(

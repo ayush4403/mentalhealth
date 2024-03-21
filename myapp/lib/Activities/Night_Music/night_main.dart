@@ -1,6 +1,7 @@
 import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
@@ -104,7 +105,7 @@ class _NightMainState extends State<NightMain> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: AppColors.primaryColor,
           onPressed: () {
             Navigator.of(context).pop(const CardView());
           },
@@ -117,9 +118,9 @@ class _NightMainState extends State<NightMain> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -147,11 +148,11 @@ class _NightMainState extends State<NightMain> {
               child: const Text(
                 "Want more?",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline,
-                  decorationColor: Colors.white,
+                  decorationColor: Colors.black,
                 ),
               ),
             ),
@@ -165,6 +166,10 @@ class _NightMainState extends State<NightMain> {
                   const CardView(),
                 );
               },
+              style: ElevatedButton.styleFrom(
+                                foregroundColor: AppColors.bgColor,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
               child: const Text('Activity done'),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:MindFulMe/Activities/cardview.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Study_Music/studymusic.dart';
 import 'package:MindFulMe/Activities/audiotemplate.dart';
@@ -74,7 +75,7 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -91,7 +92,7 @@ class _StudyMusicViewScreenState extends State<StudyMusicViewScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: SingleChildScrollView(
         child: Column(
