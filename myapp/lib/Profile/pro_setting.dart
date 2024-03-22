@@ -1,8 +1,11 @@
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Profile/PersonelInfo.dart';
+import 'package:MindFulMe/Profile/pro_info.dart';
 import 'package:MindFulMe/Startup/Registration/signin.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
-const double kSpacingUnit = 10.0; // Define your spacing unit here
+const double kSpacingUnit = 10.0;
 
 class ProSetting extends StatefulWidget {
   const ProSetting({super.key});
@@ -15,25 +18,34 @@ class _ProSettingState extends State<ProSetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
-        title: const Text(''),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(const ProfileInfoPage());
           },
         ),
+        title: const Text(
+          'Settings',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 16),
             _buildSectionTitle(
               context,
               'General Settings',
-              Colors.white,
+              Colors.black,
             ),
             const SizedBox(height: 8),
             _buildSectionButton(
@@ -56,9 +68,22 @@ class _ProSettingState extends State<ProSetting> {
               Icons.feedback,
               Colors.green[100]!,
             ),
-            const Divider(),
-            const SizedBox(height: 16),
-            _buildSectionTitle(context, 'Security & Privacy', Colors.white),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Shimmer.fromColors(
+              baseColor: Colors.white,
+              highlightColor: Colors.grey,
+              child: Container(
+                height: 1,
+                width: 500,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            _buildSectionTitle(context, 'Security & Privacy', Colors.black),
             const SizedBox(height: 8),
             _buildSectionButton(
               context,
@@ -73,9 +98,22 @@ class _ProSettingState extends State<ProSetting> {
               Icons.help,
               Colors.orange[100]!,
             ),
-            const Divider(),
-            const SizedBox(height: 16),
-            _buildSectionTitle(context, 'Danger Zone', Colors.white),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Shimmer.fromColors(
+              baseColor: Colors.white,
+              highlightColor: Colors.grey,
+              child: Container(
+                height: 1,
+                width: 500,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            _buildSectionTitle(context, 'Danger Zone', Colors.black),
             const SizedBox(height: 8),
             _buildSectionButton(
               context,
@@ -83,11 +121,24 @@ class _ProSettingState extends State<ProSetting> {
               Icons.close,
               Colors.purple[100]!,
             ),
-            const Divider(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Shimmer.fromColors(
+              baseColor: Colors.white,
+              highlightColor: Colors.grey,
+              child: Container(
+                height: 1,
+                width: 500,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            _buildSectionTitle(context, 'Log Out', Colors.black),
             const SizedBox(height: 16),
-            _buildSectionTitle(context, 'Log Out', Colors.white),
-            const SizedBox(height: 8),
-            _buildLogoutButton(context), // Changed to call the logout method
+            _buildLogoutButton(context),
             const SizedBox(height: 16),
           ],
         ),
@@ -98,12 +149,45 @@ class _ProSettingState extends State<ProSetting> {
   Widget _buildSectionTitle(BuildContext context, String title, Color color) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: color,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 18.0, horizontal: 18.0),
+            ),
+            Positioned(
+              top: 1.0,
+              left: 18.0,
+              right: 18.0,
+              child: Center(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -135,7 +219,8 @@ class _ProSettingState extends State<ProSetting> {
           title,
           style: const TextStyle(
             fontSize: 18,
-            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            color: Colors.black54,
           ),
         ),
         trailing: Icon(Icons.arrow_forward_ios,
@@ -149,7 +234,6 @@ class _ProSettingState extends State<ProSetting> {
               ),
             );
           }
-          // Add navigation logic for other buttons here
         },
       ),
     );
@@ -176,16 +260,18 @@ class _ProSettingState extends State<ProSetting> {
         title: const Text(
           'Log Out',
           style: TextStyle(
-            fontSize: 18,
-            color: Colors.black,
+             fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black54,
           ),
         ),
         trailing: Icon(Icons.logout,
-            color: Colors.primaries.last), // Logout icon added
+            color: Colors.primaries.last),
         onTap: () {
-          _showLogoutDialog(context); // Show logout confirmation dialog
+          _showLogoutDialog(context);
         },
       ),
+
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Startup/Features/onbording.dart';
 import 'package:lottie/lottie.dart';
@@ -16,7 +17,7 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber,
+      backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -42,7 +43,7 @@ class _WelcomeState extends State<Welcome> {
               child: Text(
                 'Your mindful mental health companion for everyone, anywhere 🍃',
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Colors.amber,
+                      color: Colors.white,
                       fontWeight: FontWeight.normal,
                     ),
                 textAlign: TextAlign.center,
