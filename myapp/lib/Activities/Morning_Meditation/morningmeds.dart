@@ -12,7 +12,7 @@ class MorningMeds extends StatefulWidget {
 }
 
 class _MorningMedsState extends State<MorningMeds> {
-  late int index =0;
+  late int index = 0;
   late Timer timer;
   late FirebaseFirestore firestore;
   User? user;
@@ -48,22 +48,30 @@ class _MorningMedsState extends State<MorningMeds> {
             documentSnapshot.data() as Map<String, dynamic>?;
 
         if (data != null) {
-          int lastUpdatedDay = data['dayUpdated'] ?? 0;
+          int lastUpdatedDay = data['lastUpdated'] ?? 0;
           int currentDay = DateTime.now().day;
-
+          int currentindexstate = data['meditationIndex'] ?? 0;
           if (lastUpdatedDay == currentDay) {
             setState(() {
-              index = data['meditationIndex'] ?? 0; // Get current index
+              index = currentindexstate;
             });
+            print('your current day: $index');
           } else {
-            updateFirestoreIndex(1, currentDay); // Update index to 1 for a new day
+            setState(() {
+              index = currentindexstate + 1;
+            });
+            print('your current day:$index ');
+            updateFirestoreIndex(index, currentDay);
           }
         }
       } else {
-        // Create the document if it doesn't exist and set index to 0
         createIndexDocument();
       }
     }
+  }
+
+  DateTime timestampToDateTime(Timestamp timestamp) {
+    return timestamp.toDate();
   }
 
   void updateFirestoreIndex(int newIndex, int currentDay) {
@@ -74,12 +82,9 @@ class _MorningMedsState extends State<MorningMeds> {
         .doc('indexdata')
         .update({
       'meditationIndex': newIndex,
-      'lastUpdated': Timestamp.now(),
+      'lastUpdated': Timestamp.now().toDate().day,
       'dayUpdated': currentDay,
     }).then((_) {
-      setState(() {
-        index = newIndex;
-      });
       // ignore: avoid_print
       print('Index updated in Firestore to $newIndex.');
     }).catchError((error) {
@@ -96,7 +101,7 @@ class _MorningMedsState extends State<MorningMeds> {
         .doc('indexdata')
         .set({
       'meditationIndex': index,
-      'lastUpdated': Timestamp.now(),
+      'lastUpdated': Timestamp.now().toDate().day,
       'dayUpdated': DateTime.now().day,
     }).then((_) {
       // ignore: avoid_print
@@ -207,7 +212,7 @@ class _MorningMedsState extends State<MorningMeds> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(index.toString()),
+              child: Text(Timestamp.now().toDate().day.toString()),
             ),
           ],
         ),
