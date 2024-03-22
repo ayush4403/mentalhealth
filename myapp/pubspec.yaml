@@ -361,6 +361,13 @@ flutter:
     - assets/Images/Report/Mental_Report/
     - assets/GIF/Report/mental_marathon.json
 
+    #ShowDialog
+    - assets/GIF/ShowDialog/trophy.json
+
+    #Gamification
+    - assets/GIF/Gamification/coin.json
+    - assets/GIF/Gamification/coin.png
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

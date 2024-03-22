@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

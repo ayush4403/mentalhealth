@@ -120,9 +120,9 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.bgColor,
-                                backgroundColor: AppColors.primaryColor,
-                              ),
+                  foregroundColor: AppColors.bgColor,
+                  backgroundColor: AppColors.primaryColor,
+                ),
                 child: const Text('Activity done'),
               ),
             ),
@@ -245,6 +245,8 @@ class _PowerNapScreenState extends State<PowerNapScreen> {
       },
     );
   }
+
+  // ignore: unused_element
 
   // ignore: unused_element
   Widget _buildCategory(BuildContext context, List<MusicData> musicList) {
