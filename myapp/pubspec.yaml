@@ -115,7 +115,9 @@ flutter:
     - assets/GIF/Registration/signin.json
     - assets/GIF/Registration/signup.json
     - assets/GIF/Registration/password.json
-
+    - assets/icons/
+    - assets/images/
+    - assets/lottie/
     #Gratitude
     - assets/Images/Gratitude/scratch.png
 

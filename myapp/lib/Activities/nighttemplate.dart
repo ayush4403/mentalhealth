@@ -52,47 +52,103 @@ class _NightMusicCustomCardState extends State<NightMusicCustomCard> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _setupAudioPlayer();
-
-    Timer.periodic(const Duration(days: 1), (timer) {
-      // Get the current time
-      DateTime now = DateTime.now();
-      // Check if it's midnight
-      if (now.hour == 0 && now.minute == 0 && now.second == 0) {
-        // Increment day
-        setState(() {
-          indexday++;
-        });
-        if (indexday > 7) {
-          indexday = 1;
-          indexweek++;
-          _createNewWeekDocument(_sessionDurationInSeconds);
-        }
-      }
-    });
+    _fetchdata();
   }
+  Future<void> _fetchdata() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+  final userDoc = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user!.uid)
+      .collection('MeditationDataforday')
+      .doc('currentweekandday');
+  DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+  if (docSnapshot.exists) {
+    
+    int currentDay = docSnapshot.get('currentday');
+    int currentWeek = docSnapshot.get('currentweek');
+    int currentday =DateTime.now().day;
+    int lastUpdatedDay= docSnapshot.get('lastupdatedday');
+    if(currentday-lastUpdatedDay==0){
+    setState(() {
+      indexday = currentDay;
+      indexweek = currentWeek;
+    });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, currentday);
+    }else {
+      setState((){
+      indexday = currentDay+(currentday-lastUpdatedDay);
+      if(indexday%7==1){
+      indexweek = currentWeek+1;
+      }
+      else{
+        indexweek=currentWeek;
+      }
+      });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, currentday);
+    }
+    // ignore: avoid_print
+    print('Current day and week index updated to: Day $indexday, Week $indexweek');
+  } else {
+     setState(() {
+      indexday = 1;
+      indexweek = 1;
+    });
+    _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
+    // ignore: avoid_print
+    print('Document does not exist');
+  }
+}
+
+Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1,int currentday) async {
+  final User? user = FirebaseAuth.instance.currentUser;
+  // ignore: unused_local_variable
+  String weekPath = 'week$indexweek';
+
+  final userDoc = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user!.uid)
+      .collection('MeditationDataforday')
+      .doc('currentweekandday');
+  DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+  if (docSnapshot.exists) {
+    await userDoc.update({'currentday': indexday1, 'currentweek': indexweek1 , 'dayupdated':currentday,'lastupdatedday':Timestamp.now().toDate().day});
+    setState(() {
+      indexday=indexday1;
+      indexweek=indexweek1;
+    });
+    // ignore: avoid_print
+    print('Current day and week index updated to: Day $indexday, Week $indexweek');
+  } else {
+    await userDoc.set({'currentday': indexday1, 'currentweek': indexweek1,'dayupdated':currentday,'lastupdatedday':Timestamp.now().toDate().day});
+       setState(() {
+      indexday=indexday1;
+      indexweek=indexweek1;
+    });
+    // ignore: avoid_print
+    print('New document created with day $indexday, Week $indexweek');
+  }
+}
 
   Future<void> _createNewWeekDocument(int timerdata) async {
     final User? user = FirebaseAuth.instance.currentUser;
     final userDoc = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
-        .collection('NightMusicData')
-        .doc('week$indexweek');
-
-    final userData = await userDoc.get();
-    if (userData.exists) {
-      // If the document exists, update the corresponding day field
-      final Map<String, dynamic> updatedData = {
-        ...userData.data()!,
-        'day$indexday': timerdata
-      };
-      await userDoc.set(updatedData);
+        .collection('NightMusicData').doc('week$indexweek');
+     DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      
+      await userDoc.set({'day$indexday': timerdata}, SetOptions(merge: true));
+      // ignore: avoid_print
+      print('Week document updated with timer data for Day $indexday');
     } else {
-      // If the document does not exist, create a new document
-      final Map<String, dynamic> initialData = {'day$indexday': timerdata};
-      await userDoc.set(initialData);
+      
+      await userDoc.set({'day$indexday': timerdata});
+      // ignore: avoid_print
+      print('New week document created with timer data for Day $indexday');
     }
   }
+  
 
   @override
   void didUpdateWidget(NightMusicCustomCard oldWidget) {
