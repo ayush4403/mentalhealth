@@ -1,8 +1,9 @@
 import 'package:MindFulMe/Profile/pro_setting.dart';
+import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shimmer/shimmer.dart'; // Import shimmer package
 
 class ProfileInfoPage extends StatefulWidget {
   const ProfileInfoPage({super.key});
@@ -18,10 +19,39 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
+      appBar: AppBar(
+        title: Text(
+          'Profile',
+          style: TextStyle(
+            color: AppColors.bgColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: AppColors.primaryColor,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: AppColors.bgColor,
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProSetting(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
               padding: const EdgeInsets.only(top: 0.0),
               child: Column(
                 children: <Widget>[
@@ -31,142 +61,145 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                     height: MediaQuery.of(context).size.height * 0.34,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.66,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 0, 111, 186),
-                      borderRadius: BorderRadius.only(
+                    width: double.infinity, // Make it fill the entire width
+                    decoration: BoxDecoration(
+                      color: AppColors.bgColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30.0),
                         topRight: Radius.circular(30.0),
                       ),
                     ),
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            20, MediaQuery.of(context).size.width * 0.1, 20, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Manan Goradiya',
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Manan Goradiya',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primaryColor,
                                     ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      'Gujarat, India',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      ),
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    'Gujarat, India',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.primaryColor,
                                     ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.primaryColor.withOpacity(0.2),
                                 ),
-                                const Spacer(),
-                                IconButton(
+                                padding: const EdgeInsets.all(2),
+                                child: IconButton(
                                   icon: const Icon(Icons.edit_rounded),
                                   iconSize: 30,
+                                  color: AppColors.primaryColor,
                                   onPressed: () {},
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Divider(
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Shimmer.fromColors(
+                            baseColor: Colors.white,
+                            highlightColor: Colors.grey,
+                            child: Container(
+                              height: 1,
+                              width: double.infinity,
                               color: Colors.white,
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                buildCombinedRoundedBox('15', 'Streak'),
-                                buildCombinedRoundedBox('100', 'Points'),
-                                buildCombinedRoundedBox('21', 'Age'),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const Divider(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              buildCombinedRoundedBox('15', 'Streak'),
+                              buildCombinedRoundedBox('100', 'Points'),
+                              buildCombinedRoundedBox('21', 'Age'),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Shimmer.fromColors(
+                            baseColor: Colors.white,
+                            highlightColor: Colors.grey,
+                            child: Container(
+                              height: 1,
+                              width: double.infinity,
                               color: Colors.white,
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                buildAvtarIcon(FontAwesomeIcons.award),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                buildAvtarIcon(FontAwesomeIcons.award),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                buildAvtarIcon(FontAwesomeIcons.award),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                buildAvtarIcon(FontAwesomeIcons.award),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Divider(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              buildAvtarIcon(FontAwesomeIcons.award),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              buildAvtarIcon(FontAwesomeIcons.award),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              buildAvtarIcon(FontAwesomeIcons.award),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              buildAvtarIcon(FontAwesomeIcons.award),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Shimmer.fromColors(
+                            baseColor: Colors.white,
+                            highlightColor: Colors.grey,
+                            child: Container(
+                              height: 1,
+                              width: double.infinity,
                               color: Colors.white,
                             ),
-                            const Column(
-                              children: [
-                                ActivityCardRow(),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const ActivityCardRow(),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.04,
-            right: MediaQuery.of(context).size.height * 0.001,
-            child: IconButton(
-              iconSize: 30,
-              icon: const Icon(
-                Icons.settings,
-                color: Colors.black54,
-              ),
-              onPressed: () {
-                // Navigate to the profile screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProSetting(),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -263,85 +296,62 @@ class ActivityCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(8),
       child: Card(
-        elevation: 12.0,
-        color: Colors.purple[200],
+        elevation: 14.0,
+        color: Colors.cyan[100],
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              image,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                image,
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(
-              width: 10.0,
+              width: 10,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Text(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 15,),
+                  Text(
                     name,
                     style: const TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(height: 25.0),
-                Row(
-                  children: List.generate(
-                    7,
-                    (dayIndex) {
-                      // Replace the condition with your actual logic
-                      bool isDayDone = dayIndex % 2 == 0;
-                      return Container(
-                        width: 20,
-                        height: 20,
-                        margin: const EdgeInsets.symmetric(horizontal: 2.0),
-                        decoration: BoxDecoration(
-                          color: isDayDone ? Colors.green : Colors.red,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: CircularPercentIndicator(
-                    radius: 25,
-                    percent: 0.4,
-                    lineWidth: 3,
-                    backgroundColor: Colors.blueAccent,
-                    center: const Text(
-                      '40%',
-                      style: TextStyle(
-                        fontSize: 13.0,
-                        color: Color.fromARGB(255, 239, 16, 16),
-                      ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: List.generate(
+                      7,
+                      (dayIndex) {
+                        // Replace the condition with your actual logic
+                        bool isDayDone = dayIndex % 2 == 0;
+                        return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                            decoration: BoxDecoration(
+                              color: isDayDone ? Colors.green : Colors.red,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

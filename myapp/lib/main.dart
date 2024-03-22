@@ -1,4 +1,3 @@
-import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
 import 'package:MindFulMe/Startup/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ final theme = ThemeData(
     brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 0, 111, 186),
   ),
-  textTheme: GoogleFonts.montserratTextTheme(),  
+  textTheme: GoogleFonts.montserratTextTheme(),
 );
 
 void main() async {
@@ -48,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-      home: SplashScreen(),
+      home: const HomePage(),
     );
   }
 }
