@@ -55,11 +55,13 @@ class _MorningMedsState extends State<MorningMeds> {
             setState(() {
               index = currentindexstate;
             });
+            // ignore: avoid_print
             print('your current day: $index');
           } else {
             setState(() {
               index = currentindexstate + 1;
             });
+            // ignore: avoid_print
             print('your current day:$index ');
             updateFirestoreIndex(index, currentDay);
           }

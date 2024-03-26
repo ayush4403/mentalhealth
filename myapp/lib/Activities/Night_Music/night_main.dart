@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
@@ -6,9 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:MindFulMe/Activities/cardview.dart';
 
 class NightMain extends StatefulWidget {
   const NightMain({super.key});
@@ -61,11 +59,13 @@ class _NightMainState extends State<NightMain> {
             setState(() {
               index = currentindexstate;
             });
+            // ignore: avoid_print
             print('your current day: $index');
           } else {
             setState(() {
               index = currentindexstate + 1;
             });
+            // ignore: avoid_print
             print('your current day:$index ');
             updateFirestoreIndex(index, currentDay);
           }
@@ -210,9 +210,9 @@ class _NightMainState extends State<NightMain> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.bgColor,
-                                backgroundColor: AppColors.primaryColor,
-                              ),
+                foregroundColor: AppColors.bgColor,
+                backgroundColor: AppColors.primaryColor,
+              ),
               child: const Text('Activity done'),
             ),
           ],

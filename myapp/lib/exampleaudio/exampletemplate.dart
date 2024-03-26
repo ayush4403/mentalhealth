@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:MindFulMe/exampleaudio/recommendation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,17 +25,20 @@ class _PlayerScreenState extends State<PlayerScreen>
   final ValueNotifier<double> _player = ValueNotifier<double>(0);
   bool _isDark = false;
 
+  // ignore: unused_field
   final _player1 = AudioPlayer();
   double selectedDuration = 0.0;
   bool timerSelectorforexample = false;
   bool isSessionActive = false;
   late Timer _sessionTimer;
   late final AudioPlayer _audioPlayer;
+  // ignore: unused_field
   int _sessionDurationInSeconds = 0;
 
   late int indexweek = 1;
   late int indexday = 1;
 
+  // ignore: unused_field
   final List<int> _sessionData = List.filled(7, 0);
 
   controllerListener() {
@@ -65,14 +67,15 @@ class _PlayerScreenState extends State<PlayerScreen>
     }
   }
 
-Future<void> _loadAudio(Future<String> audioUrlFuture) async {
-  try {
-    String audioUrl = await audioUrlFuture;
-    await _audioPlayer.setUrl(audioUrl);
-  } catch (e) {
-    print('Error loading audio: $e');
+  Future<void> _loadAudio(Future<String> audioUrlFuture) async {
+    try {
+      String audioUrl = await audioUrlFuture;
+      await _audioPlayer.setUrl(audioUrl);
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error loading audio: $e');
+    }
   }
-}
 
   void _togglePlayback() {
     if (_audioPlayer.playing) {
@@ -102,6 +105,7 @@ Future<void> _loadAudio(Future<String> audioUrlFuture) async {
     });
   }
 
+  // ignore: unused_element
   Future<void> _fetchdata() async {
     final User? user = FirebaseAuth.instance.currentUser;
     final userDoc = FirebaseFirestore.instance
@@ -188,6 +192,7 @@ Future<void> _loadAudio(Future<String> audioUrlFuture) async {
     }
   }
 
+  // ignore: unused_element
   Future<void> _createNewWeekDocument(int timer) async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
@@ -222,6 +227,7 @@ Future<void> _loadAudio(Future<String> audioUrlFuture) async {
     super.dispose();
   }
 
+  // ignore: unused_element
   void _stopSessionTimer() {
     _sessionTimer.cancel();
     _sessionDurationInSeconds = 0;
@@ -238,6 +244,7 @@ Future<void> _loadAudio(Future<String> audioUrlFuture) async {
     }
   }
 
+  // ignore: unused_element
   void _startSessionTimer() {
     _sessionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -366,7 +373,7 @@ Future<void> _loadAudio(Future<String> audioUrlFuture) async {
                         _togglePlayback();
                       } else {
                         _controller.forward();
-                       // _togglePlayback();
+                        // _togglePlayback();
                       }
                     },
                     icon: AnimatedIcon(
