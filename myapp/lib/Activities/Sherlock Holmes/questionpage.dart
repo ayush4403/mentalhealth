@@ -1,3 +1,4 @@
+import 'package:MindFulMe/globalindex.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class _QuestionPageState extends State<QuestionPage> {
   bool showCorrectAnswer = false;
   List<int> selectedAnswers = [];
   final User? user = FirebaseAuth.instance.currentUser;
+ 
+
 
   @override
   void initState() {
@@ -99,7 +102,7 @@ class _QuestionPageState extends State<QuestionPage> {
                           builder: (context) => ResultPage(
                             totalQuestions: widget.questions.length,
                             selectedAnswers: selectedAnswers,
-                            questions: widget.questions,
+                            questions: widget.questions, indexweek: 1, indexday: 1,
                           ),
                         ),
                       );
@@ -195,46 +198,200 @@ class _QuestionPageState extends State<QuestionPage> {
       ),
     );
   }
+  
 }
-class ResultPage extends StatelessWidget {
+
+class ResultPage extends StatefulWidget {
   final int totalQuestions;
   final List<int> selectedAnswers;
   final List<QuizData.Question> questions;
+  
+ final  int indexweek;
+  
+ final int indexday;
 
   const ResultPage({
-    super.key,
+    Key? key,
     required this.totalQuestions,
     required this.selectedAnswers,
     required this.questions,
-  });
+    required this.indexweek,
+    required this.indexday,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    int correctAnswers = 0;
-    int incorrectAnswers = 0;
+  _ResultPageState createState() => _ResultPageState();
+}
 
-    // Calculate correct and incorrect answers
-    for (int i = 0; i < totalQuestions; i++) {
-      if (selectedAnswers[i] == questions[i].correctAnswerIndex) {
-        correctAnswers++;
-      } else {
-        incorrectAnswers++;
-      }
-    }
+class _ResultPageState extends State<ResultPage> {
+  int indexweek = 1;
+  int indexday = 1;
 
+  @override
+  void initState() {
+    super.initState();
+    _fetchdata();
+    _createNewWeekDocument();
+  }
+
+  Future<void> _fetchdata() async {
     final User? user = FirebaseAuth.instance.currentUser;
     final userDoc = FirebaseFirestore.instance
         .collection('Users')
         .doc(user!.uid)
-        .collection('SherlockHolmes')
-        .doc('data1');
+        .collection('sherlockdata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      int currentDay = docSnapshot.get('currentday');
+      int currentWeek = docSnapshot.get('currentweek');
+      int currentdaylatest = DateTime.now().day;
+      int lastUpdatedDay = docSnapshot.get('lastupdatedday');
+      if (currentdaylatest - lastUpdatedDay == 0) {
+        setState(() {
+          indexday = currentDay;
+          indexweek = currentWeek;
+        });
+        _updateCurrentDayAndWeekIndex(
+            indexday, indexweek, currentdaylatest);
+      } else {
+        // Calculate the missing days and add them with a value of 0
+        int missingDays = currentdaylatest - lastUpdatedDay;
+        for (int i = 1; i < missingDays; i++) {
+          int missingDayIndex = currentDay + i;
+          await _addMissingDay(user.uid, missingDayIndex, currentWeek);
+        }
+        setState(() {
+          indexday = currentDay + missingDays;
+          if (indexday % 7 == 1) {
+            indexweek = currentWeek + 1;
+          } else {
+            indexweek = currentWeek;
+          }
+        });
+        _updateCurrentDayAndWeekIndex(
+            indexday, indexweek, currentdaylatest);
+      }
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+    } else {
+      setState(() {
+        indexday = 1;
+        indexweek = 1;
+      });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek,
+          DateTime.now().day);
+      print('Document does not exist');
+    }
+  }
 
-    // Add data to Firestore without displaying any UI
-    userDoc.set({
-      'correctAnswers': correctAnswers,
-      'incorrectAnswers': incorrectAnswers,
-    }, SetOptions(merge: true));
+  Future<void> _addMissingDay(
+      String userId, int dayIndex, int weekIndex) async {
+     final User? user = FirebaseAuth.instance.currentUser;
+    try {
+        final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('SherlockHolmes')
+          .doc('week$weekIndex}')
+          .collection('day$dayIndex')
+          .doc('data');
+      await  userDoc.set({
+        'correctAnswers': 0,
+        'incorrectAnswers': 0,
+      }, SetOptions(merge: true));
+      print('Added missing day $dayIndex for Week $weekIndex with value 0');
+    } catch (e) {
+      print('Error adding missing day: $e');
+    }
+  }
 
+  Future<void> _updateCurrentDayAndWeekIndex(
+      int indexday1, int indexweek1, int currentday) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String weekPath = 'week$indexweek';
+
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('sherlockdata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+        await userDoc.get();
+    if (docSnapshot.exists) {
+      await userDoc.update({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+    } else {
+      await userDoc.set({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday':Timestamp.now().toDate().day,
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print('New document created with day $indexday, Week $indexweek');
+    }
+  }
+
+  Future<void> _createNewWeekDocument() async {
+    try {
+      int correctAnswers = 0;
+      int incorrectAnswers = 0;
+
+      // Calculate correct and incorrect answers
+      for (int i = 0; i < widget.totalQuestions; i++) {
+        if (widget.selectedAnswers[i] == widget.questions[i].correctAnswerIndex) {
+          correctAnswers++;
+        } else {
+          incorrectAnswers++;
+        }
+      }
+
+      final User? user = FirebaseAuth.instance.currentUser;
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('SherlockHolmes')
+          .doc('week$indexweek')
+          .collection('day$indexday')
+          .doc('data');
+     
+
+      // Check if the document exists before updating
+      DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+      if (docSnapshot.exists) {
+        await  userDoc.update({
+        'correctAnswers': correctAnswers,
+        'incorrectAnswers': incorrectAnswers,
+      },);
+        print('Week document updated with timer data for Day $indexday');
+      } else {
+        await  userDoc.set({
+        'correctAnswers': correctAnswers,
+        'incorrectAnswers': incorrectAnswers,
+      }, SetOptions(merge: true));
+        print('New week document created with timer data for Day $indexday');
+      }
+    } catch (e) {
+      print('Error creating/updating week document: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return const CardView(); // Return an empty container since no UI is displayed
   }
 }

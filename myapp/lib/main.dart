@@ -1,8 +1,5 @@
 import 'package:MindFulMe/Startup/Splash_screen/splash.dart';
-<<<<<<< HEAD
 import 'package:MindFulMe/Startup/home.dart';
-=======
->>>>>>> ebb9648491e4ad0d862f571d4093b838a1eb4053
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,11 +48,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme,
-<<<<<<< HEAD
       home: SplashScreen(),
-=======
-      home: const SplashScreen(),
->>>>>>> ebb9648491e4ad0d862f571d4093b838a1eb4053
     );
   }
 }
