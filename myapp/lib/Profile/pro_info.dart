@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:MindFulMe/Profile/pro_setting.dart';
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -378,7 +377,9 @@ class ActivityCard extends StatelessWidget {
                             height: 20,
                             margin: const EdgeInsets.symmetric(horizontal: 2.0),
                             decoration: BoxDecoration(
-                              color: isDayDone ? Colors.green : Colors.red,
+                              color: isDayDone
+                                  ? AppColors.primaryColor
+                                  : Colors.grey,
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(8),
                             ),
