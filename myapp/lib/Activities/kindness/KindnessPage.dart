@@ -54,7 +54,7 @@ class _KindnessPageState extends State<KindnessPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: AppColors.whiteColor,
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const CardView()));
@@ -74,9 +74,8 @@ class _KindnessPageState extends State<KindnessPage> {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.95,
           height: MediaQuery.of(context).size.height * 0.79,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.65),
-            borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40.0),
               topRight: Radius.circular(40.0),
               bottomLeft: Radius.circular(40.0),
@@ -88,13 +87,6 @@ class _KindnessPageState extends State<KindnessPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Daily Kindness Challenge',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 const SizedBox(height: 16),
                 KindnessChallengeCard(
                   challenge: todayChallenge,
@@ -133,19 +125,19 @@ class _KindnessPageState extends State<KindnessPage> {
                               style: const TextStyle(
                                 color: Colors.black,
                               ),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Write about your kind act.',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                   color: Colors.black,
                                 ),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.greenAccent,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.yellow,
+                                    color: AppColors.primaryColor,
                                   ),
                                 ),
                               ),
@@ -159,9 +151,9 @@ class _KindnessPageState extends State<KindnessPage> {
                             await _pickImage();
                           },
                           style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.bgColor,
-                                backgroundColor: AppColors.primaryColor,
-                              ),
+                            foregroundColor: AppColors.bgColor,
+                            backgroundColor: AppColors.primaryColor,
+                          ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -206,7 +198,8 @@ class _KindnessPageState extends State<KindnessPage> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    _openAnimatedDialog(context); // Show the dialog
+                                    _openAnimatedDialog(
+                                        context); // Show the dialog
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -215,9 +208,9 @@ class _KindnessPageState extends State<KindnessPage> {
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.bgColor,
-                                backgroundColor: AppColors.primaryColor,
-                              ),
+                                    foregroundColor: AppColors.bgColor,
+                                    backgroundColor: AppColors.primaryColor,
+                                  ),
                                   child: const Text(
                                     'Activity Done',
                                     style: TextStyle(
@@ -374,25 +367,44 @@ class KindnessChallengeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 12,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.yellow.withOpacity(0.70), // Add background color
-        ),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: Stack(
           children: [
-            const Text(
-              'Today\'s Challenge:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            Container(
+              height: 220,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                border: Border.all(
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              challenge,
-              style: const TextStyle(fontSize: 18),
+            Positioned.fill(
+              top: 35,
+              left: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Today's Challenge",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    challenge,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(.8),
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ],
         ),

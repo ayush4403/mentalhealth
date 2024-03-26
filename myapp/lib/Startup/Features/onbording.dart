@@ -1,166 +1,153 @@
+import 'package:MindFulMe/Startup/home.dart';
 import 'package:flutter/material.dart';
-import 'package:MindFulMe/Startup/Features/content_model.dart';
 import 'package:lottie/lottie.dart';
-import 'package:MindFulMe/Startup/Registration/signin.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+// Define hexToColor function
+Color hexToColor(String hex) {
+  assert(RegExp(r'^#([0-9a-fA-F]{6})|([0-9a-fA-F]{8})$').hasMatch(hex));
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+  return Color(int.parse(hex.substring(1), radix: 16) +
+      (hex.length == 7 ? 0xFF000000 : 0x00000000));
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  int currentPage = 0; // Variable to keep track of the current slide index
-  bool isButtonPressed = false;
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({
+    super.key,
+    required this.color,
+    required this.title,
+    required this.description,
+    required this.skip,
+    required this.jsonFile,
+    required this.onTab,
+    required this.index,
+  });
+
+  final String color;
+  final String title;
+  final String description;
+  final bool skip;
+  final String jsonFile;
+  final VoidCallback onTab;
+  final int index;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      body: Stack(
+    return ColoredBox(
+      color: hexToColor(color),
+      child: Stack(
         children: [
-          Column(
-            children: [
-              Expanded(
-                child: PageView.builder(
-                  itemCount: contents.length,
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentPage = index;
-                    });
-                  },
-                  itemBuilder: (_, i) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 140, 30, 40),
-                      child: Column(
-                        children: [
-                          Lottie.asset(
-                            'assets/GIF/Features/gif${i + 1}.json',
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width * 0.75,
-                            fit: BoxFit.fill,
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            contents[i].title,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            contents[i].discription,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.052,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 1.86,
+            child: Lottie.asset(jsonFile),
           ),
           Positioned(
-            top: 50,
-            right: 25,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignInScreen(),
-                  ),
-                );
-              },
-              onTapDown: (_) {
-                setState(() {
-                  isButtonPressed = true;
-                });
-              },
-              onTapUp: (_) {
-                setState(() {
-                  isButtonPressed = false;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 20,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 2.16,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: index == 0
+                      ? const Radius.circular(100)
+                      : const Radius.circular(0),
+                  topRight: index == 2
+                      ? const Radius.circular(100)
+                      : const Radius.circular(0),
                 ),
-                decoration: BoxDecoration(
-                  color: isButtonPressed
-                      ? Colors.white
-                      : const Color.fromARGB(255, 47, 207, 255),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 45),
+                child: Column(
                   children: [
+                    const SizedBox(
+                      height: 62,
+                    ),
                     Text(
-                      'Skip',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.normal,
-                        color: isButtonPressed
-                            ? const Color.fromARGB(255, 47, 207, 255)
-                            : Colors.white,
-                      ),
+                      title,
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                        width: 2), // Adjust the spacing between text and icon
-                    Icon(
-                      Icons.skip_next,
-                      color: isButtonPressed
-                          ? const Color.fromARGB(255, 47, 207, 255)
-                          : Colors.white,
-                    )
+                      height: 16,
+                    ),
+                    Text(
+                      description,
+                      style: const TextStyle(
+                          fontSize: 18, height: 1.5, color: Colors.grey),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Positioned(
-            bottom: 40,
-            left: 0,
+            bottom: 20,
             right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                contents.length,
-                (index) => buildDot(index),
-              ),
+            left: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: skip
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const HomePage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Skip Now',
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: onTab,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: hexToColor(color),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: const Icon(
+                              Icons.arrow_circle_right,
+                              color: Colors.white,
+                              size: 42,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox(
+                      height: 46,
+                      child: MaterialButton(
+                        color: hexToColor(color),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const HomePage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Get Started',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildDot(int index) {
-    return Container(
-      margin: const EdgeInsets.all(4),
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: currentPage == index
-            ? const Color.fromARGB(255, 47, 207, 255)
-            : Colors.white,
       ),
     );
   }

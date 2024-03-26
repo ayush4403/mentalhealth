@@ -1,4 +1,3 @@
-// ignore_for_file: file_names
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
@@ -10,7 +9,6 @@ class AffirmationApp extends StatefulWidget {
   const AffirmationApp({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _AffirmationAppState createState() => _AffirmationAppState();
 }
 
@@ -26,7 +24,6 @@ class _AffirmationAppState extends State<AffirmationApp> {
     super.initState();
     currentDay = DateTime.now().day;
     _controller =
-        // ignore: deprecated_member_use
         VideoPlayerController.network(""); // Initialize with an empty URL
     _initializeVideoPlayer();
     fetchVideoUrl(currentDay);
@@ -44,7 +41,6 @@ class _AffirmationAppState extends State<AffirmationApp> {
           .ref('Gratitude thought/GRATITUTE_THOUGHT/${day + 45}.mp4')
           .getDownloadURL();
 
-      // ignore: deprecated_member_use
       _controller = VideoPlayerController.network(videoUrl);
       initializeVideoPlayerFuture = _controller.initialize();
 
@@ -62,7 +58,6 @@ class _AffirmationAppState extends State<AffirmationApp> {
 
       _controller.play();
     } catch (error) {
-      // ignore: avoid_print
       print('Error fetching video URL: $error');
     }
   }
@@ -93,7 +88,6 @@ class _AffirmationAppState extends State<AffirmationApp> {
         ),
         backgroundColor: AppColors.bgColor,
         resizeToAvoidBottomInset: true,
-        // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
             return false;
@@ -152,26 +146,6 @@ class _AffirmationAppState extends State<AffirmationApp> {
                               ),
                             ),
                         ],
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    FloatingActionButton(
-                      onPressed: () {
-                        setState(
-                          () {
-                            if (_controller.value.isPlaying) {
-                              _controller.pause();
-                            } else {
-                              _controller.play();
-                            }
-                          },
-                        );
-                      },
-                      backgroundColor: Colors.yellow,
-                      child: Icon(
-                        _controller.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow,
                       ),
                     ),
                     const SizedBox(height: 20.0),
