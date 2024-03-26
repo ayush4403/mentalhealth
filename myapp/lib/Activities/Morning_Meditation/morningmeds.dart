@@ -1,4 +1,7 @@
 import 'package:MindFulMe/Activities/audiotemplate.dart';
+import 'package:MindFulMe/exampleaudio/exampletemplate.dart';
+import 'package:MindFulMe/exampleaudio/recommendation_model.dart';
+import 'package:MindFulMe/exampleaudio/recommendations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -168,55 +171,8 @@ class _MorningMedsState extends State<MorningMeds> {
       'MORNING MEDITATION/Brainbeats/I-CREATIVITY.mp3',
     ];
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: const Text(
-          'Morning Meditation',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      ),
-      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: AudioCard(
-                audioFileName: audios[index],
-                title: titles[index],
-                imageUrl: images[index],
-                showTimerSelector: false,
-                imageshow: false,
-                timerSelectorfordisplay: false,
-                showPlaybackControlButton: false,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(Timestamp.now().toDate().day.toString()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+    return PlayerScreen(
+                    model: RecommendationsData.mindfulMoments,
+                    audiourl: audios[index], name: titles[index],);
+                      }
 }

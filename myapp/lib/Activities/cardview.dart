@@ -239,7 +239,7 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PlayerScreen(model: RecommendationsData.mindfulMoments,),
+          builder: (context) => MorningMeds()
         ),
       );
     }

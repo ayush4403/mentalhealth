@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
+import 'package:MindFulMe/Graphs/resources/linechart.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
@@ -394,9 +396,9 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                         height: MediaQuery.of(context).size.height * 0.4,
                         child: PageView(
                           controller: _graphPageController,
-                          children: const [
+                          children:   [
                             MonthlyMeditation(),
-                            MonthlyMeditation(),
+                            LineChartSample2(),
                             MonthlyMeditation(),
                             MonthlyMeditation(),
                           ],
