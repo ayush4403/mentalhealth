@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:MindFulMe/Activities/Affirmation/Affirmation.dart';
 import 'package:MindFulMe/Activities/Journal/journal.dart';
+import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
 import 'package:MindFulMe/Activities/Music/music_main.dart';
 import 'package:MindFulMe/Activities/Night_Music/night_main.dart';
 import 'package:MindFulMe/Activities/Power_nap/power_nap_list.dart';
 import 'package:MindFulMe/Activities/Tratak/TratakIntroScreen.dart';
-import 'package:MindFulMe/exampleaudio/exampletemplate.dart';
-import 'package:MindFulMe/exampleaudio/recommendations.dart';
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -237,7 +236,7 @@ class ActivityList extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PlayerScreen(model: RecommendationsData.mindfulMoments,),
+          builder: (context) => const MorningMeds()
         ),
       );
     }

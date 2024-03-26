@@ -17,7 +17,7 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
   final double width = 7;
 
   late List<BarChartGroupData> rawBarGroups;
-  late List<BarChartGroupData> showingBarGroups;
+  late List<BarChartGroupData> showingBarGroups = []; 
   List<int> defaulttime = [5, 7, 9, 13, 15, 20, 5];
 
   int touchedGroupIndex = -1;
@@ -28,11 +28,7 @@ class MonthlyMeditationState extends State<MonthlyMeditation> {
 // Add a parameter for weekIndex
   Future<void> _getGraphData(int currentWeek) async {
     final User? user = FirebaseAuth.instance.currentUser;
-
-    // Initialize session data with zeros for each day
     _sessionData = List<int>.filled(30, 0);
-
-    // Loop through weeks from 1 to currentWeek
     for (int weekIndex = 1; weekIndex <= currentWeek; weekIndex++) {
       final weekDoc = FirebaseFirestore.instance
           .collection('Users')

@@ -1,6 +1,5 @@
-import 'package:MindFulMe/Graphs/resources/app_resources.dart';
+import 'package:MindFulMe/Startup/Features/content_model.dart';
 import 'package:flutter/material.dart';
-import 'package:MindFulMe/Startup/Features/onbording.dart';
 import 'package:lottie/lottie.dart';
 
 class Welcome extends StatefulWidget {
@@ -12,101 +11,96 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
-  bool isButtonPressed = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Lottie.asset(
-              'assets/GIF/Features/getStarted.json',
-              height: MediaQuery.of(context).size.height * 0.38,
-              width: MediaQuery.of(context).size.width * 0.9,
-              fit: BoxFit.fill,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.indigo.shade800,
+                  Colors.indigoAccent.shade200,
+                  Colors.indigoAccent.shade200,
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              'Hey Welcome!',
+          ),
+          const Positioned(
+            top: 250,
+            left: 0,
+            right: 0,
+            child: Text(
+              "Hey Welcome!",
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                height: 1.2,
+              ),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: 350,
-              child: Text(
-                'Your mindful mental health companion for everyone, anywhere 🍃',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                    ),
-                textAlign: TextAlign.center,
+          ),
+          const Positioned(
+            top: 300,
+            left: 5,
+            right: 5,
+            child: Text(
+              "Your Mental Health Companion   is here🍃",
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                height: 1.2,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 40),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const OnboardingScreen(),
+          ),
+          Container(),
+          Positioned(
+            bottom: 0,
+            left: -10,
+            right: -10,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(.9),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(
+                    2000,
                   ),
-                );
-              },
-              onTapDown: (_) {
-                setState(() {
-                  isButtonPressed = true;
-                });
-              },
-              onTapUp: (_) {
-                setState(() {
-                  isButtonPressed = false;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 15,
-                ),
-                decoration: BoxDecoration(
-                  color: isButtonPressed
-                      ? Colors.white
-                      : const Color.fromARGB(255, 47, 207, 255),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Get Started',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: isButtonPressed
-                            ? Colors.white
-                            : Colors.white,
-                      ),
-                    ),
-                    const SizedBox(
-                        width: 9), // Adjust the spacing between text and icon
-                    Icon(
-                      Icons.add_reaction_rounded,
-                      color: isButtonPressed
-                          ? const Color.fromARGB(255, 47, 207, 255)
-                          : Colors.white,
-                    ),
-                  ],
                 ),
               ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 300),
+                  FractionallySizedBox(
+                    widthFactor: .6,
+                    child: FilledButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const OnbordingContent(),
+                            ),
+                          );
+                        },
+                        child: const Text("GET STARTED")),
+                  ),
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 120,
+            left: 0,
+            right: 0,
+            child: Lottie.asset('assets/GIF/Welcome/Welcome.json'),
+          ),
+        ],
       ),
     );
   }

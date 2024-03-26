@@ -9,12 +9,19 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 
 class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({super.key, required this.model});
+  const PlayerScreen({
+    super.key,
+    required this.model,
+    required this.audiourl,
+    required this.name,
+  });
 
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
 
   final RecommendationModel model;
+  final String audiourl;
+  final String name;
 }
 
 class _PlayerScreenState extends State<PlayerScreen>
@@ -77,19 +84,11 @@ class _PlayerScreenState extends State<PlayerScreen>
     }
   }
 
-  void _togglePlayback() {
-    if (_audioPlayer.playing) {
-      _audioPlayer.pause();
-    } else {
-      _audioPlayer.play();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
-    _loadAudio(getAudioUrl('MORNING MEDITATION/Guided/Guided 1.mp3'));
+    _loadAudio(getAudioUrl(widget.audiourl));
     _controller = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -103,6 +102,23 @@ class _PlayerScreenState extends State<PlayerScreen>
     _controller.addListener(() {
       controllerListener();
     });
+
+    _audioPlayer.positionStream.listen((position) {
+      // Update the slider and animation controller based on audio playback position
+      if (_audioPlayer.duration != null) {
+        double progressValue =
+            position.inMilliseconds / _audioPlayer.duration!.inMilliseconds;
+        _player.value = progressValue;
+        _controller.value = progressValue;
+
+        if (_player.value >= 1) {
+          _controller.stop();
+          _player.value = 0;
+        }
+      }
+    });
+
+    _fetchdata();
   }
 
   // ignore: unused_element
@@ -117,24 +133,30 @@ class _PlayerScreenState extends State<PlayerScreen>
     if (docSnapshot.exists) {
       int currentDay = docSnapshot.get('currentday');
       int currentWeek = docSnapshot.get('currentweek');
-      int currentday = DateTime.now().day;
+      int currentdaylatest = DateTime.now().day;
       int lastUpdatedDay = docSnapshot.get('lastupdatedday');
-      if (currentday - lastUpdatedDay == 0) {
+      if (currentdaylatest - lastUpdatedDay == 0) {
         setState(() {
           indexday = currentDay;
           indexweek = currentWeek;
         });
-        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentday);
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
       } else {
+        // Calculate the missing days and add them with a value of 0
+        int missingDays = currentdaylatest - lastUpdatedDay;
+        for (int i = 1; i < missingDays; i++) {
+          int missingDayIndex = currentDay + i;
+          await _addMissingDay(user.uid, missingDayIndex, currentWeek);
+        }
         setState(() {
-          indexday = currentDay + (currentday - lastUpdatedDay);
+          indexday = currentDay + missingDays;
           if (indexday % 7 == 1) {
             indexweek = currentWeek + 1;
           } else {
             indexweek = currentWeek;
           }
         });
-        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentday);
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
       }
       // ignore: avoid_print
       print(
@@ -147,6 +169,23 @@ class _PlayerScreenState extends State<PlayerScreen>
       _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
       // ignore: avoid_print
       print('Document does not exist');
+    }
+  }
+
+  Future<void> _addMissingDay(
+      String userId, int dayIndex, int weekIndex) async {
+    try {
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('MeditationData')
+          .doc('week$weekIndex');
+      await userDoc.set({'day$dayIndex': 0}, SetOptions(merge: true));
+      // ignore: avoid_print
+      print('Added missing day $dayIndex for Week $weekIndex with value 0');
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error adding missing day: $e');
     }
   }
 
@@ -253,6 +292,9 @@ class _PlayerScreenState extends State<PlayerScreen>
     });
   }
 
+  // ignore: unused_element
+  void _togglePlayback() {}
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -337,17 +379,10 @@ class _PlayerScreenState extends State<PlayerScreen>
               ),
               const SizedBox(height: 20),
               Text(
-                widget.model.title,
+                widget.name,
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w900,
-                  color: widget.model.color.shade300,
-                ),
-              ),
-              Text(
-                widget.model.author,
-                style: TextStyle(
-                  fontSize: 16,
                   color: widget.model.color.shade300,
                 ),
               ),
@@ -355,22 +390,84 @@ class _PlayerScreenState extends State<PlayerScreen>
               Row(
                 children: [
                   const Spacer(),
-                  IconButton(
-                    highlightColor: widget.model.color.withOpacity(.2),
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.skip_previous_rounded,
-                      size: 50,
-                      color: widget.model.color.withOpacity(.3),
-                    ),
-                  ),
                   const SizedBox(width: 30),
                   IconButton(
                     highlightColor: widget.model.color.withOpacity(.2),
                     onPressed: () {
+                      if (_audioPlayer.playing) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Confirmation"),
+                              content: const Text(
+                                  "Are you sure you want to stop the meditation session?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    _createNewWeekDocument(
+                                        _sessionDurationInSeconds);
+
+                                    setState(() {
+                                      isSessionActive = false;
+                                      _audioPlayer.pause();
+                                      _audioPlayer.seek(Duration.zero);
+
+                                      _player.value = 0;
+                                      _stopSessionTimer();
+                                    });
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: const Text("No"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Confirmation"),
+                              content: const Text(
+                                  "Are you sure you want to start the meditation session?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
+                                    setState(() {
+                                      isSessionActive = true;
+
+                                      _audioPlayer.play();
+                                      _startSessionTimer();
+                                      // Increment the day index
+                                    });
+                                    //
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: const Text("No"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                       if (_controller.status == AnimationStatus.completed) {
                         _controller.reverse();
-                        _togglePlayback();
                       } else {
                         _controller.forward();
                         // _togglePlayback();
@@ -384,21 +481,12 @@ class _PlayerScreenState extends State<PlayerScreen>
                     ),
                   ),
                   const SizedBox(width: 30),
-                  IconButton(
-                    highlightColor: widget.model.color.withOpacity(.2),
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.skip_next_rounded,
-                      size: 50,
-                      color: widget.model.color.withOpacity(.3),
-                    ),
-                  ),
                   const Spacer(),
                 ],
               ),
               ValueListenableBuilder(
                 valueListenable: _player,
-                builder: (context, value, _) {
+                builder: (context, value, newvalue) {
                   return Slider(
                     thumbColor: widget.model.color.shade300,
                     activeColor: widget.model.color.shade300,
@@ -406,9 +494,15 @@ class _PlayerScreenState extends State<PlayerScreen>
                     secondaryActiveColor: widget.model.color.withOpacity(.4),
                     secondaryTrackValue: .8,
                     value: value,
-                    onChanged: (_) {
-                      _controller.reverse();
-                      _player.value = _;
+                    onChanged: (newValue) {
+                      //
+                      int newPositionInMilliseconds =
+                          (_audioPlayer.duration!.inSeconds * newValue).toInt();
+                      _audioPlayer
+                          .seek(Duration(seconds: newPositionInMilliseconds));
+                      // Update the player value based on the slider's value
+                      _player.value = newValue;
+                      _controller.value = newValue;
                     },
                   );
                 },

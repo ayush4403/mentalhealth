@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           );
         },
         children: const [
-          HomePageUI(),
+          HomeScreen(),
           CardView(),
           ChartReportTemplate(),
           GamesPage(),

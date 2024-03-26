@@ -155,26 +155,6 @@ class _AffirmationAppState extends State<AffirmationApp> {
                       ),
                     ),
                     const SizedBox(height: 20.0),
-                    FloatingActionButton(
-                      onPressed: () {
-                        setState(
-                          () {
-                            if (_controller.value.isPlaying) {
-                              _controller.pause();
-                            } else {
-                              _controller.play();
-                            }
-                          },
-                        );
-                      },
-                      backgroundColor: Colors.yellow,
-                      child: Icon(
-                        _controller.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                      ),
-                    ),
-                    const SizedBox(height: 20.0),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.89,
                       height: MediaQuery.of(context).size.height * 0.16,

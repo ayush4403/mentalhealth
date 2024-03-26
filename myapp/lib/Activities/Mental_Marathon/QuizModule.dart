@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'dart:math';
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/QuizData.dart';
 import 'package:MindFulMe/Activities/Mental_Marathon/ReviewPage.dart';
@@ -24,9 +25,7 @@ class _QuizModuleState extends State<QuizModule> {
   @override
   void initState() {
     super.initState();
-    // Select random topics
     selectedTopics = getRandomTopics();
-    // Load questions for selected topics
     loadQuizQuestions();
   }
 
@@ -53,17 +52,12 @@ class _QuizModuleState extends State<QuizModule> {
       return questions[random.nextInt(questions.length)];
     }
 
-    // Return null if questions are not available for the given topic
     return null;
   }
 
   void answerQuestion(String selectedOption) {
-    // Check if an option is selected before processing
     if (selectedOption.isNotEmpty) {
-      // Add selected answer to the list
       selectedAnswers.add(selectedOption);
-
-      // Check if the selected option is the correct answer
       bool isAnswerCorrect = selectedOption ==
           quizQuestions[currentQuestionIndex]['correctAnswer'];
 
@@ -71,7 +65,6 @@ class _QuizModuleState extends State<QuizModule> {
         correctAnswers++;
       }
 
-      // Move to the next question immediately after checking the answer
       moveToNextQuestion();
     }
   }
@@ -79,12 +72,10 @@ class _QuizModuleState extends State<QuizModule> {
   void moveToNextQuestion() {
     setState(() {
       currentQuestionIndex++;
-      selectedAnswer = null; // Reset selected answer
+      selectedAnswer = null;
     });
 
-    // Check if the quiz is completed
     if (currentQuestionIndex == selectedTopics.length) {
-      // Navigate to the review page
       showResult();
     }
   }
@@ -130,93 +121,102 @@ class _QuizModuleState extends State<QuizModule> {
         // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
-            // Return false to disable the system back button
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const CardView()));
             return true;
           },
-          child: Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.95,
-              height: MediaQuery.of(context).size.height * 0.75,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.65),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
-                  bottomLeft: Radius.circular(30.0),
-                  bottomRight: Radius.circular(30.0),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.indigo.shade800,
+                        Colors.indigoAccent.shade200,
+                        Colors.indigoAccent.shade200,
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Question ${currentQuestionIndex + 1}:',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
+              Positioned(
+                top: 50,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Question ${currentQuestionIndex + 1}:',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        quizQuestions[currentQuestionIndex]['text'],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 250,
+                left: 10,
+                right: 10,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(.9),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(
+                        100,
+                      ),
+                      bottom: Radius.circular(
+                        100,
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    Text(
-                      quizQuestions[currentQuestionIndex]['text'],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Column(
-                      children: (quizQuestions[currentQuestionIndex]['options']
-                              as List<String>)
-                          .map((option) {
-                        bool isSelected = selectedAnswer == option;
-                        // ignore: unused_local_variable
-                        bool isCorrect = isSelected &&
-                            selectedAnswer ==
-                                quizQuestions[currentQuestionIndex]
-                                    ['correctAnswer'];
-
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          alignment: Alignment.center,
-                          width: 400,
-                          height: 80,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white,
-                          ),
-                          child: RadioListTile<String>(
-                            title: Text(
-                              option,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            value: option,
-                            groupValue: selectedAnswer,
-                            onChanged: (String? value) {
+                  ),
+                  child: Column(
+                    children: [
+                      for (var option in quizQuestions[currentQuestionIndex]
+                          ['options'])
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () {
                               setState(() {
-                                selectedAnswer = value;
-                                answerQuestion(value!);
+                                selectedAnswer = option;
+                                answerQuestion(option);
                               });
                             },
+                            child: Text(
+                              option,
+                              style: TextStyle(
+                                  fontSize: 18, color: AppColors.primaryColor),
+                            ),
                           ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       );
     } else {
-      // No need to display anything here
       return const SizedBox.shrink();
     }
   }

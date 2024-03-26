@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
+import 'package:MindFulMe/Graphs/resources/linechart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';
@@ -241,13 +242,10 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: AppColors.bgColor,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
-                                  ),
+                                  borderRadius: BorderRadius.circular(14),
                                 ),
                                 child: Text(
-                                   Activities[index].replaceAll(' ', '\n'),
+                                  Activities[index].replaceAll(' ', '\n'),
                                   style: TextStyle(
                                     fontSize: 14,
                                     backgroundColor: AppColors.bgColor,
@@ -396,7 +394,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                           controller: _graphPageController,
                           children: const [
                             MonthlyMeditation(),
-                            MonthlyMeditation(),
+                            LineChartSample2(),
                             MonthlyMeditation(),
                             MonthlyMeditation(),
                           ],
