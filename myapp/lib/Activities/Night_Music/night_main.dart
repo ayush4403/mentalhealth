@@ -2,6 +2,8 @@ import 'package:MindFulMe/Activities/Night_Music/nightmusic.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 import 'package:MindFulMe/Activities/nighttemplate.dart';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
@@ -18,61 +20,102 @@ class NightMain extends StatefulWidget {
 class _NightMainState extends State<NightMain> {
   late int index = 0;
   late Timer timer;
+  late FirebaseFirestore firestore;
+  User? user;
 
   @override
   void initState() {
     super.initState();
-    loadIndexFromSharedPreferences(); // Load index before starting the timer
-    startTimer();
+    initializeUser();
+    initializeFirestore();
+    initializeIndex();
   }
 
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
+  void initializeUser() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    user = auth.currentUser;
   }
 
-  void loadIndexFromSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime lastUpdated = DateTime.fromMillisecondsSinceEpoch(
-      prefs.getInt('last_updated') ?? 0,
-    );
-    DateTime now = DateTime.now();
+  void initializeFirestore() {
+    firestore = FirebaseFirestore.instance;
+  }
 
-    if (lastUpdated.day != now.day) {
-      // If it's a new day, set index to last index + 1
-      int lastIndex = prefs.getInt('meditation_index') ?? 0;
-      index = (lastIndex + 1) % 14;
-      prefs.setInt('last_updated', now.millisecondsSinceEpoch);
-      prefs.setInt('meditation_index', index);
-    } else {
-      // If it's the same day, load index from SharedPreferences
-      index = prefs.getInt('meditation_index') ?? 0;
+  Future<void> initializeIndex() async {
+    if (user != null) {
+      DocumentSnapshot documentSnapshot = await firestore
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('nightmusicindex')
+          .doc('indexdata')
+          .get();
+
+      if (documentSnapshot.exists) {
+        Map<String, dynamic>? data =
+            documentSnapshot.data() as Map<String, dynamic>?;
+
+        if (data != null) {
+          int lastUpdatedDay = data['lastUpdated'] ?? 0;
+          int currentDay = DateTime.now().day;
+          int currentindexstate = data['nightIndex'] ?? 0;
+          if (lastUpdatedDay == currentDay) {
+            setState(() {
+              index = currentindexstate;
+            });
+            print('your current day: $index');
+          } else {
+            setState(() {
+              index = currentindexstate + 1;
+            });
+            print('your current day:$index ');
+            updateFirestoreIndex(index, currentDay);
+          }
+        }
+      } else {
+        createIndexDocument();
+      }
     }
   }
 
-  void saveIndexToSharedPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('meditation_index', index);
+  DateTime timestampToDateTime(Timestamp timestamp) {
+    return timestamp.toDate();
   }
 
-  void startTimer() {
-    DateTime now = DateTime.now();
-    DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1, 0, 0);
-    Duration durationUntilMidnight = nextMidnight.difference(now);
+  void updateFirestoreIndex(int newIndex, int currentDay) {
+    firestore
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('nightmusicindex')
+        .doc('indexdata')
+        .update({
+      'nightIndex': newIndex,
+      'lastUpdated': Timestamp.now().toDate().day,
+      'dayUpdated': currentDay,
+    }).then((_) {
+      // ignore: avoid_print
+      print('Index updated in Firestore to $newIndex.');
+    }).catchError((error) {
+      // ignore: avoid_print
+      print('Error updating index in Firestore: $error');
+    });
+  }
 
-    timer = Timer(
-      durationUntilMidnight,
-      () {
-        setState(
-          () {
-            index = (index + 1) % 14; // Increment index by 1 every day
-            saveIndexToSharedPreferences();
-            startTimer();
-          },
-        );
-      },
-    );
+  void createIndexDocument() {
+    firestore
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('nightmusicindex')
+        .doc('indexdata')
+        .set({
+      'nightIndex': index,
+      'lastUpdated': Timestamp.now().toDate().day,
+      'dayUpdated': DateTime.now().day,
+    }).then((_) {
+      // ignore: avoid_print
+      print('Index document created in Firestore.');
+    }).catchError((error) {
+      // ignore: avoid_print
+      print('Error creating index document in Firestore: $error');
+    });
   }
 
   @override

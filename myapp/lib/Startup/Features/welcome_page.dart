@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import 'package:MindFulMe/Startup/Features/content_model.dart';
+=======
+import 'package:MindFulMe/Graphs/resources/app_resources.dart';
+>>>>>>> 7ce2e9795b4ca207b96ad9981a06d88be17140d3
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -14,6 +18,7 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       body: Stack(
         children: [
           Container(
@@ -27,6 +32,18 @@ class _WelcomeState extends State<Welcome> {
                   Colors.indigoAccent.shade200,
                 ],
               ),
+=======
+      backgroundColor: AppColors.primaryColor,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Lottie.asset(
+              'assets/GIF/Features/getStarted.json',
+              height: MediaQuery.of(context).size.height * 0.38,
+              width: MediaQuery.of(context).size.width * 0.9,
+              fit: BoxFit.fill,
+>>>>>>> 7ce2e9795b4ca207b96ad9981a06d88be17140d3
             ),
           ),
           const Positioned(
@@ -43,6 +60,7 @@ class _WelcomeState extends State<Welcome> {
               ),
               textAlign: TextAlign.center,
             ),
+<<<<<<< HEAD
           ),
           const Positioned(
             top: 300,
@@ -55,6 +73,18 @@ class _WelcomeState extends State<Welcome> {
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
                 height: 1.2,
+=======
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 350,
+              child: Text(
+                'Your mindful mental health companion for everyone, anywhere 🍃',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    ),
+                textAlign: TextAlign.center,
+>>>>>>> 7ce2e9795b4ca207b96ad9981a06d88be17140d3
               ),
               textAlign: TextAlign.center,
             ),

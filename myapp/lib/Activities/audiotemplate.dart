@@ -42,13 +42,13 @@ class _AudioCardState extends State<AudioCard> {
   bool timerSelectorforexample = false;
   bool isSessionActive = false;
   late Timer _sessionTimer;
-  // ignore: unused_field
+  
   int _sessionDurationInSeconds = 0;
 
   late int indexweek = 1;
   late int indexday = 1;
 
-  // ignore: unused_field
+  
   final List<int> _sessionData = List.filled(7, 0);
 
   @override
@@ -56,25 +56,9 @@ void initState() {
   super.initState();
   WidgetsFlutterBinding.ensureInitialized();
   _setupAudioPlayer();
+  
   _fetchdata();
-    // ignore: unused_local_variable
-    DateTime now = DateTime.now();
-  Timer.periodic(const Duration(hours: 1), (timer) {
-  DateTime now = DateTime.now();
-  if (now.hour == 5 && now.minute == 0) {
-    setState(() {
-      indexday++;
-      _updateCurrentDayAndWeekIndex(indexday, indexweek);
-      _createNewWeekDocument(120);
-      if (indexday % 7==1) {
-        indexweek++;
-        indexday++;
-      _updateCurrentDayAndWeekIndex(indexday, indexweek);
-      _createNewWeekDocument(120);
-      }
-    });
-  }
-});
+    
 
 
 }
@@ -87,12 +71,29 @@ Future<void> _fetchdata() async {
       .doc('currentweekandday');
   DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
   if (docSnapshot.exists) {
+    
     int currentDay = docSnapshot.get('currentday');
     int currentWeek = docSnapshot.get('currentweek');
+    int currentday =DateTime.now().day;
+    int lastUpdatedDay= docSnapshot.get('lastupdatedday');
+    if(currentday-lastUpdatedDay==0){
     setState(() {
       indexday = currentDay;
       indexweek = currentWeek;
     });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, currentday);
+    }else {
+      setState((){
+      indexday = currentDay+(currentday-lastUpdatedDay);
+      if(indexday%7==1){
+      indexweek = currentWeek+1;
+      }
+      else{
+        indexweek=currentWeek;
+      }
+      });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, currentday);
+    }
     // ignore: avoid_print
     print('Current day and week index updated to: Day $indexday, Week $indexweek');
   } else {
@@ -100,12 +101,13 @@ Future<void> _fetchdata() async {
       indexday = 1;
       indexweek = 1;
     });
+    _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
     // ignore: avoid_print
     print('Document does not exist');
   }
 }
 
-Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async {
+Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1,int currentday) async {
   final User? user = FirebaseAuth.instance.currentUser;
   // ignore: unused_local_variable
   String weekPath = 'week$indexweek';
@@ -117,7 +119,7 @@ Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async 
       .doc('currentweekandday');
   DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
   if (docSnapshot.exists) {
-    await userDoc.update({'currentday': indexday1, 'currentweek': indexweek1});
+    await userDoc.update({'currentday': indexday1, 'currentweek': indexweek1 , 'dayupdated':currentday,'lastupdatedday':Timestamp.now().toDate().day});
     setState(() {
       indexday=indexday1;
       indexweek=indexweek1;
@@ -125,7 +127,7 @@ Future<void> _updateCurrentDayAndWeekIndex(int indexday1, int indexweek1) async 
     // ignore: avoid_print
     print('Current day and week index updated to: Day $indexday, Week $indexweek');
   } else {
-    await userDoc.set({'currentday': indexday1, 'currentweek': indexweek1});
+    await userDoc.set({'currentday': indexday1, 'currentweek': indexweek1,'dayupdated':currentday,'lastupdatedday':Timestamp.now().toDate().day});
        setState(() {
       indexday=indexday1;
       indexweek=indexweek1;
@@ -425,7 +427,7 @@ Future<void> _createNewWeekDocument(int timer) async {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
-                             _createNewWeekDocument(120);
+                             _createNewWeekDocument(_sessionDurationInSeconds);
                              
                               setState(() {
                                 isSessionActive = false;
