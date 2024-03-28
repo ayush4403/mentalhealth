@@ -9,13 +9,14 @@ class ReviewPage extends StatefulWidget {
   final List<String> correctAnswers;
   final int totalScore;
 
-  ReviewPage({
+  const ReviewPage({
     super.key,
     required this.selectedAnswers,
     required this.correctAnswers,
     required this.totalScore,
   });
   @override
+  // ignore: library_private_types_in_public_api
   _ReviewPageState createState() => _ReviewPageState();
 }
 
@@ -30,6 +31,7 @@ class _ReviewPageState extends State<ReviewPage> {
     _fetchdata();
 
     super.initState();
+    // ignore: avoid_print
     print("list: $percentageData");
   }
 
@@ -69,6 +71,7 @@ class _ReviewPageState extends State<ReviewPage> {
         });
         _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
       }
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
     } else {
@@ -77,6 +80,7 @@ class _ReviewPageState extends State<ReviewPage> {
         indexweek = 1;
       });
       _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
+      // ignore: avoid_print
       print('Document does not exist');
     }
     await getPieData();
@@ -87,6 +91,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Future<void> _addMissingDay(
       String userId, int dayIndex, int weekIndex) async {
+    // ignore: unused_local_variable
     final User? user = FirebaseAuth.instance.currentUser;
     try {
       final userDoc = FirebaseFirestore.instance
@@ -100,8 +105,10 @@ class _ReviewPageState extends State<ReviewPage> {
         'correctAnswers': 0,
         'incorrectAnswers': 0,
       }, SetOptions(merge: true));
+      // ignore: avoid_print
       print('Added missing day $dayIndex for Week $weekIndex with value 0');
     } catch (e) {
+      // ignore: avoid_print
       print('Error adding missing day: $e');
     }
   }
@@ -109,6 +116,7 @@ class _ReviewPageState extends State<ReviewPage> {
   Future<void> _updateCurrentDayAndWeekIndex(
       int indexday1, int indexweek1, int currentday) async {
     final User? user = FirebaseAuth.instance.currentUser;
+    // ignore: unused_local_variable
     String weekPath = 'week$indexweek';
 
     final userDoc = FirebaseFirestore.instance
@@ -128,6 +136,7 @@ class _ReviewPageState extends State<ReviewPage> {
         indexday = indexday1;
         indexweek = indexweek1;
       });
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
           _createNewWeekDocument();
@@ -142,6 +151,7 @@ class _ReviewPageState extends State<ReviewPage> {
         indexday = indexday1;
         indexweek = indexweek1;
       });
+      // ignore: avoid_print
       print('New document created with day $indexday, Week $indexweek');
       _createNewWeekDocument();
     }
@@ -167,6 +177,7 @@ class _ReviewPageState extends State<ReviewPage> {
                           'correctAnswers': widget.totalScore,
                           'incorrectAnswers': 5 - widget.totalScore
                         },SetOptions(merge: true));
+        // ignore: avoid_print
         print('Week document updated with timer data for Day $indexday');
         
       } else {
@@ -174,9 +185,11 @@ class _ReviewPageState extends State<ReviewPage> {
                           'correctAnswers': widget.totalScore,
                           'incorrectAnswers': 5 - widget.totalScore
                         },SetOptions(merge: true));
+        // ignore: avoid_print
         print('New week document created with timer data for Day $indexday');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error creating/updating week document: $e');
     }
   }
@@ -221,6 +234,7 @@ Future<void> getPieData() async {
     // Assuming the percentage data list is available in the state
     
   } catch (e) {
+    // ignore: avoid_print
     print('Error fetching data: $e');
   }
 }
@@ -228,6 +242,7 @@ Future<void> getPieData() async {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final weekDoc = FirebaseFirestore.instance
         .collection('Users')
           .doc(user!.uid)

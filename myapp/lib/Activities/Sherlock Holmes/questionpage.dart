@@ -211,15 +211,16 @@ class ResultPage extends StatefulWidget {
  final int indexday;
 
   const ResultPage({
-    Key? key,
+    super.key,
     required this.totalQuestions,
     required this.selectedAnswers,
     required this.questions,
     required this.indexweek,
     required this.indexday,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _ResultPageState createState() => _ResultPageState();
 }
 
@@ -272,6 +273,7 @@ class _ResultPageState extends State<ResultPage> {
         _updateCurrentDayAndWeekIndex(
             indexday, indexweek, currentdaylatest);
       }
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
     } else {
@@ -281,12 +283,14 @@ class _ResultPageState extends State<ResultPage> {
       });
       _updateCurrentDayAndWeekIndex(indexday, indexweek,
           DateTime.now().day);
+      // ignore: avoid_print
       print('Document does not exist');
     }
   }
 
   Future<void> _addMissingDay(
       String userId, int dayIndex, int weekIndex) async {
+     // ignore: unused_local_variable
      final User? user = FirebaseAuth.instance.currentUser;
     try {
         final userDoc = FirebaseFirestore.instance
@@ -300,8 +304,10 @@ class _ResultPageState extends State<ResultPage> {
         'correctAnswers': 0,
         'incorrectAnswers': 0,
       }, SetOptions(merge: true));
+      // ignore: avoid_print
       print('Added missing day $dayIndex for Week $weekIndex with value 0');
     } catch (e) {
+      // ignore: avoid_print
       print('Error adding missing day: $e');
     }
   }
@@ -309,6 +315,7 @@ class _ResultPageState extends State<ResultPage> {
   Future<void> _updateCurrentDayAndWeekIndex(
       int indexday1, int indexweek1, int currentday) async {
     final User? user = FirebaseAuth.instance.currentUser;
+    // ignore: unused_local_variable
     String weekPath = 'week$indexweek';
 
     final userDoc = FirebaseFirestore.instance
@@ -329,6 +336,7 @@ class _ResultPageState extends State<ResultPage> {
         indexday = indexday1;
         indexweek = indexweek1;
       });
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
           _createNewWeekDocument();
@@ -343,6 +351,7 @@ class _ResultPageState extends State<ResultPage> {
         indexday = indexday1;
         indexweek = indexweek1;
       });
+      // ignore: avoid_print
       print('New document created with day $indexday, Week $indexweek');
       _createNewWeekDocument();
     }
@@ -379,15 +388,18 @@ class _ResultPageState extends State<ResultPage> {
         'correctAnswers': correctAnswers,
         'incorrectAnswers': incorrectAnswers,
       },SetOptions(merge: true));
+        // ignore: avoid_print
         print('Week document updated with timer data for Day $indexday');
       } else {
         await  userDoc.set({
         'correctAnswers': correctAnswers,
         'incorrectAnswers': incorrectAnswers,
       }, SetOptions(merge: true));
+        // ignore: avoid_print
         print('New week document created with timer data for Day $indexday');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error creating/updating week document: $e');
     }
   }

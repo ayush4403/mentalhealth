@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Graphs/resources/linechart.dart';
 import 'package:MindFulMe/Graphs/resources/monthlymarathon.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:MindFulMe/Graphs/resources/BarGraph.dart';

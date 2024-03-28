@@ -65,6 +65,7 @@ class PieChartSample2State extends State<PieChartSample2> {
             indexday, indexweek, currentdaylatest);
             getPieData();
       }
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
     } else {
@@ -74,12 +75,14 @@ class PieChartSample2State extends State<PieChartSample2> {
       });
       _updateCurrentDayAndWeekIndex(indexday, indexweek,
           DateTime.now().day);
+      // ignore: avoid_print
       print('Document does not exist');
     }
   }
 
   Future<void> _addMissingDay(
       String userId, int dayIndex, int weekIndex) async {
+     // ignore: unused_local_variable
      final User? user = FirebaseAuth.instance.currentUser;
     try {
         final userDoc = FirebaseFirestore.instance
@@ -93,8 +96,10 @@ class PieChartSample2State extends State<PieChartSample2> {
         'correctAnswers': 0,
         'incorrectAnswers': 0,
       }, SetOptions(merge: true));
+      // ignore: avoid_print
       print('Added missing day $dayIndex for Week $weekIndex with value 0');
     } catch (e) {
+      // ignore: avoid_print
       print('Error adding missing day: $e');
     }
   }
@@ -102,6 +107,7 @@ class PieChartSample2State extends State<PieChartSample2> {
   Future<void> _updateCurrentDayAndWeekIndex(
       int indexday1, int indexweek1, int currentday) async {
     final User? user = FirebaseAuth.instance.currentUser;
+    // ignore: unused_local_variable
     String weekPath = 'week$indexweek';
 
     final userDoc = FirebaseFirestore.instance
@@ -122,6 +128,7 @@ class PieChartSample2State extends State<PieChartSample2> {
         indexday = indexday1;
         indexweek = indexweek1;
       });
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
     } else {
@@ -135,6 +142,7 @@ class PieChartSample2State extends State<PieChartSample2> {
         indexday = indexday1;
         indexweek = indexweek1;
       });
+      // ignore: avoid_print
       print('New document created with day $indexday, Week $indexweek');
     }
   }
