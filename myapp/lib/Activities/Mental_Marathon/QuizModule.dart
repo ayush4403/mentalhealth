@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'dart:math';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,10 @@ import 'package:MindFulMe/Activities/Mental_Marathon/ReviewPage.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 
 class QuizModule extends StatefulWidget {
-  const QuizModule({Key? key}) : super(key: key);
+  const QuizModule({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QuizModuleState createState() => _QuizModuleState();
 }
 
@@ -116,6 +118,7 @@ class _QuizModuleState extends State<QuizModule> {
           ),
           backgroundColor: const Color.fromARGB(255, 0, 111, 186),
         ),
+        // ignore: deprecated_member_use
         body: WillPopScope(
           onWillPop: () async {
             Navigator.push(context,

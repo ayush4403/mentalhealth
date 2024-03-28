@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:MindFulMe/Activities/cardview.dart';
 
-class ReviewPage extends StatelessWidget {
+class ReviewPage extends StatefulWidget {
   final List<String> selectedAnswers;
   final List<String> correctAnswers;
   final int totalScore;
@@ -15,15 +15,226 @@ class ReviewPage extends StatelessWidget {
     required this.correctAnswers,
     required this.totalScore,
   });
+  @override
+  _ReviewPageState createState() => _ReviewPageState();
+}
+
+class _ReviewPageState extends State<ReviewPage> {
   final User? user = FirebaseAuth.instance.currentUser;
+   int indexday = 1;
+  int indexweek = 1;
+  List<double> percentageData = [];
+  bool dataFetched = false;
+  @override
+  void initState() {
+    _fetchdata();
+
+    super.initState();
+    print("list: $percentageData");
+  }
+
+  Future<void> _fetchdata() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('mentalmarathondata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      int currentDay = docSnapshot.get('currentday');
+      int currentWeek = docSnapshot.get('currentweek');
+      int currentdaylatest = DateTime.now().day;
+      int lastUpdatedDay = docSnapshot.get('lastupdatedday');
+      if (currentdaylatest - lastUpdatedDay == 0) {
+        setState(() {
+          indexday = currentDay;
+          indexweek = currentWeek;
+        });
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
+      } else {
+        // Calculate the missing days and add them with a value of 0
+        int missingDays = currentdaylatest - lastUpdatedDay;
+        for (int i = 1; i < missingDays; i++) {
+          int missingDayIndex = currentDay + i;
+          await _addMissingDay(user.uid, missingDayIndex, currentWeek);
+        }
+        setState(() {
+          indexday = currentDay + missingDays;
+          if (indexday % 7 == 1) {
+            indexweek = currentWeek + 1;
+          } else {
+            indexweek = currentWeek;
+          }
+        });
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
+      }
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+    } else {
+      setState(() {
+        indexday = 1;
+        indexweek = 1;
+      });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
+      print('Document does not exist');
+    }
+    await getPieData();
+    setState(() {
+      dataFetched = true;
+    });
+  }
+
+  Future<void> _addMissingDay(
+      String userId, int dayIndex, int weekIndex) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    try {
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('mentalmarathon')
+          .doc('week$weekIndex')
+          .collection('day$dayIndex')
+          .doc('data');
+      await userDoc.set({
+        'correctAnswers': 0,
+        'incorrectAnswers': 0,
+      }, SetOptions(merge: true));
+      print('Added missing day $dayIndex for Week $weekIndex with value 0');
+    } catch (e) {
+      print('Error adding missing day: $e');
+    }
+  }
+
+  Future<void> _updateCurrentDayAndWeekIndex(
+      int indexday1, int indexweek1, int currentday) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String weekPath = 'week$indexweek';
+
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('mentalmarathondata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      await userDoc.update({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+          _createNewWeekDocument();
+    } else {
+      await userDoc.set({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day,
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print('New document created with day $indexday, Week $indexweek');
+      _createNewWeekDocument();
+    }
+  }
+   Future<void> _createNewWeekDocument() async {
+    try {
+      
+
+     
+      final User? user = FirebaseAuth.instance.currentUser;
+    final weekDoc = FirebaseFirestore.instance
+        .collection('Users')
+          .doc(user!.uid)
+          .collection('mentalmarathon')
+          .doc('week$indexweek')
+          .collection('day$indexday')
+          .doc('data');
+
+      // Check if the document exists before updating
+      DocumentSnapshot<Map<String, dynamic>> docSnapshot = await weekDoc.get();
+      if (docSnapshot.exists) {
+         weekDoc.set({
+                          'correctAnswers': widget.totalScore,
+                          'incorrectAnswers': 5 - widget.totalScore
+                        },SetOptions(merge: true));
+        print('Week document updated with timer data for Day $indexday');
+        
+      } else {
+              weekDoc.set({
+                          'correctAnswers': widget.totalScore,
+                          'incorrectAnswers': 5 - widget.totalScore
+                        },SetOptions(merge: true));
+        print('New week document created with timer data for Day $indexday');
+      }
+    } catch (e) {
+      print('Error creating/updating week document: $e');
+    }
+  }
+Future<void> getPieData() async {
+  try {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    // Initialize a list to hold all the data for each day in a week
+    List<double> allWeekData = [];
+
+    // Loop through each day in the week (assuming you want data for day1 and day2)
+    for (int dayIndex = 1; dayIndex <= 30; dayIndex++) {
+      // Construct the document path for the current day
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('mentalmarathon')
+          .doc('week$indexweek')
+          .collection('day$dayIndex')
+          .doc('data');
+
+      // Get the data for the current day
+      final daySnapshot = await userDoc.get();
+      if (daySnapshot.exists) {
+        final dayData = daySnapshot.data();
+        int totalQuestions = (dayData?['correctAnswers'] ?? 0) +
+            (dayData?['incorrectAnswers'] ?? 0);
+        double percentage = totalQuestions == 0
+            ? 0
+            : (dayData?['correctAnswers'] ?? 0) / totalQuestions * 100;
+
+        // Add the percentage data to the list for this day
+        allWeekData.add(percentage);
+      }
+    }
+
+    // Update the state's percentageData list with all the week's data
+    setState(() {
+      percentageData = allWeekData;
+    });
+
+    // Assuming the percentage data list is available in the state
+    
+  } catch (e) {
+    print('Error fetching data: $e');
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
     final weekDoc = FirebaseFirestore.instance
         .collection('Users')
-        .doc(user!.uid)
-        .collection('mentalmarathon')
-        .doc('data1');
+          .doc(user!.uid)
+          .collection('mentalmarathon')
+          .doc('week$indexweek')
+          .collection('day$indexday')
+          .doc('data');
 
     // ignore: deprecated_member_use
     return WillPopScope(
@@ -64,18 +275,18 @@ class ReviewPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  for (int i = 0; i < selectedAnswers.length; i++)
+                  for (int i = 0; i < widget.selectedAnswers.length; i++)
                     ReviewItem(
                       questionNumber: i + 1,
-                      selectedAnswer: selectedAnswers[i],
-                      correctAnswer: correctAnswers[i],
+                      selectedAnswer: widget.selectedAnswers[i],
+                      correctAnswer: widget.correctAnswers[i],
                     ),
                   const SizedBox(
                     height: 20,
                   ),
                   Center(
                     child: Text(
-                      'Total Score: $totalScore/5',
+                      'Total Score: ${widget.totalScore}/5',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
@@ -88,12 +299,7 @@ class ReviewPage extends StatelessWidget {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        // ignore: unused_local_variable
-                        final userData = weekDoc.get();
-                        weekDoc.set({
-                          'correctAnswers': totalScore,
-                          'incorrectAnswers': 5 - totalScore
-                        }, SetOptions(merge: true));
+                      _createNewWeekDocument();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -102,6 +308,7 @@ class ReviewPage extends StatelessWidget {
                         );
                       },
                       child: Column(
+
                         children: [
                           ElevatedButton(
                             onPressed: () {

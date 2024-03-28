@@ -1,6 +1,8 @@
 import 'dart:async';
+//import 'package:MindFulMe/Graphs/resources/Line.dart';
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
 import 'package:MindFulMe/Graphs/resources/linechart.dart';
+import 'package:MindFulMe/Graphs/resources/monthlymarathon.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -57,7 +59,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(
-      const Duration(seconds: 15),
+      const Duration(seconds: 120),
       (Timer timer) {
         if (_currentPage < Activities.length - 1) {
           _activityPageController.animateToPage(
@@ -206,7 +208,6 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                         ),
                         child: Stack(
                           children: [
-                            // Image
                             Positioned.fill(
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
@@ -227,7 +228,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                                   color: AppColors.primaryColor,
                                 ),
                                 child: Text(
-                                  '${(index + 1) * 10}%', // Change this to your percentage value
+                                  '${(index + 1) * 10}%',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -238,20 +239,16 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                             ),
                             // Card Name
                             Positioned(
-                              bottom: 10,
+                              bottom: 20,
                               left: 10,
                               child: Container(
-                                // color: AppColors.bgColor,
-                                padding: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: AppColors.bgColor,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
-                                  ),
+                                  borderRadius: BorderRadius.circular(14),
                                 ),
                                 child: Text(
-                                  Activities[index],
+                                  Activities[index].replaceAll(' ', '\n'),
                                   style: TextStyle(
                                     fontSize: 14,
                                     backgroundColor: AppColors.bgColor,
@@ -327,6 +324,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                           child: Text(
                             'Weekly',
                             style: TextStyle(
+                              fontSize: 16,
                               color: AppColors.whiteColor,
                             ),
                           ),
@@ -353,6 +351,7 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                           child: Text(
                             'Monthly',
                             style: TextStyle(
+                              fontSize: 16,
                               color: AppColors.whiteColor,
                             ),
                           ),
@@ -396,11 +395,14 @@ class _ChartReportTemplateState extends State<ChartReportTemplate> {
                         height: MediaQuery.of(context).size.height * 0.4,
                         child: PageView(
                           controller: _graphPageController,
-                          children:   [
+                          children: const [
+                            //MonthlyMeditation(),
                             MonthlyMeditation(),
+                            LineChartSample1(),
                             LineChartSample2(),
                             MonthlyMeditation(),
-                            MonthlyMeditation(),
+                            
+                            //MonthlyMeditation(),
                           ],
                         ),
                       ),
@@ -519,12 +521,13 @@ class ActivityCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 25.0),
+                const SizedBox(
+                  height: 25.0,
+                ),
                 Row(
                   children: List.generate(
                     7,
                     (dayIndex) {
-                      // Replace the condition with your actual logic
                       bool isDayDone = dayIndex % 2 == 0;
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -533,7 +536,9 @@ class ActivityCard extends StatelessWidget {
                           height: 20,
                           margin: const EdgeInsets.symmetric(horizontal: 2.0),
                           decoration: BoxDecoration(
-                            color: isDayDone ? Colors.green : Colors.red,
+                            color: isDayDone
+                                ? AppColors.primaryColor
+                                : Colors.grey,
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -544,32 +549,6 @@ class ActivityCard extends StatelessWidget {
                 ),
               ],
             ),
-            // Column(
-            //   children: [
-            //     const SizedBox(
-            //       height: 20,
-            //     ),
-            //     Container(
-            //       decoration: BoxDecoration(
-            //         color: Colors.yellow,
-            //         borderRadius: BorderRadius.circular(25),
-            //       ),
-            //       child: CircularPercentIndicator(
-            //         radius: 25,
-            //         percent: 0.4,
-            //         lineWidth: 3,
-            //         backgroundColor: Colors.blueAccent,
-            //         center: const Text(
-            //           '40%',
-            //           style: TextStyle(
-            //             fontSize: 13.0,
-            //             color: Color.fromARGB(255, 239, 16, 16),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

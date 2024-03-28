@@ -1,6 +1,4 @@
-import 'package:MindFulMe/Activities/audiotemplate.dart';
 import 'package:MindFulMe/exampleaudio/exampletemplate.dart';
-import 'package:MindFulMe/exampleaudio/recommendation_model.dart';
 import 'package:MindFulMe/exampleaudio/recommendations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,11 +56,13 @@ class _MorningMedsState extends State<MorningMeds> {
             setState(() {
               index = currentindexstate;
             });
+            // ignore: avoid_print
             print('your current day: $index');
           } else {
             setState(() {
               index = currentindexstate + 1;
             });
+            // ignore: avoid_print
             print('your current day:$index ');
             updateFirestoreIndex(index, currentDay);
           }
@@ -117,6 +117,7 @@ class _MorningMedsState extends State<MorningMeds> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     List<String> images = [
       'assets/Images/Morning_meditation/mm_1.jpg',
       'assets/Images/Morning_meditation/mm_2.jpg',

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:MindFulMe/exampleaudio/recommendation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,17 +32,20 @@ class _PlayerScreenState extends State<PlayerScreen>
   final ValueNotifier<double> _player = ValueNotifier<double>(0);
   bool _isDark = false;
 
+  // ignore: unused_field
   final _player1 = AudioPlayer();
   double selectedDuration = 0.0;
   bool timerSelectorforexample = false;
   bool isSessionActive = false;
   late Timer _sessionTimer;
   late final AudioPlayer _audioPlayer;
+  // ignore: unused_field
   int _sessionDurationInSeconds = 0;
 
   late int indexweek = 1;
   late int indexday = 1;
 
+  // ignore: unused_field
   final List<int> _sessionData = List.filled(7, 0);
 
   controllerListener() {
@@ -77,6 +79,7 @@ class _PlayerScreenState extends State<PlayerScreen>
       String audioUrl = await audioUrlFuture;
       await _audioPlayer.setUrl(audioUrl);
     } catch (e) {
+      // ignore: avoid_print
       print('Error loading audio: $e');
     }
   }
@@ -118,6 +121,7 @@ class _PlayerScreenState extends State<PlayerScreen>
     _fetchdata();
   }
 
+  // ignore: unused_element
   Future<void> _fetchdata() async {
     final User? user = FirebaseAuth.instance.currentUser;
     final userDoc = FirebaseFirestore.instance
@@ -154,6 +158,7 @@ class _PlayerScreenState extends State<PlayerScreen>
         });
         _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
       }
+      // ignore: avoid_print
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
     } else {
@@ -162,6 +167,7 @@ class _PlayerScreenState extends State<PlayerScreen>
         indexweek = 1;
       });
       _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
+      // ignore: avoid_print
       print('Document does not exist');
     }
   }
@@ -175,8 +181,10 @@ class _PlayerScreenState extends State<PlayerScreen>
           .collection('MeditationData')
           .doc('week$weekIndex');
       await userDoc.set({'day$dayIndex': 0}, SetOptions(merge: true));
+      // ignore: avoid_print
       print('Added missing day $dayIndex for Week $weekIndex with value 0');
     } catch (e) {
+      // ignore: avoid_print
       print('Error adding missing day: $e');
     }
   }
@@ -223,6 +231,7 @@ class _PlayerScreenState extends State<PlayerScreen>
     }
   }
 
+  // ignore: unused_element
   Future<void> _createNewWeekDocument(int timer) async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
@@ -257,6 +266,7 @@ class _PlayerScreenState extends State<PlayerScreen>
     super.dispose();
   }
 
+  // ignore: unused_element
   void _stopSessionTimer() {
     _sessionTimer.cancel();
     _sessionDurationInSeconds = 0;
@@ -273,6 +283,7 @@ class _PlayerScreenState extends State<PlayerScreen>
     }
   }
 
+  // ignore: unused_element
   void _startSessionTimer() {
     _sessionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -281,6 +292,7 @@ class _PlayerScreenState extends State<PlayerScreen>
     });
   }
 
+  // ignore: unused_element
   void _togglePlayback() {}
 
   @override
@@ -458,7 +470,6 @@ class _PlayerScreenState extends State<PlayerScreen>
                         _controller.reverse();
                       } else {
                         _controller.forward();
-
                         // _togglePlayback();
                       }
                     },

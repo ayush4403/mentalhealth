@@ -1,4 +1,4 @@
-import 'package:MindFulMe/globalindex.dart';
+//import 'package:MindFulMe/globalindex.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -231,7 +231,7 @@ class _ResultPageState extends State<ResultPage> {
   void initState() {
     super.initState();
     _fetchdata();
-    _createNewWeekDocument();
+    //_createNewWeekDocument();
   }
 
   Future<void> _fetchdata() async {
@@ -331,6 +331,7 @@ class _ResultPageState extends State<ResultPage> {
       });
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
+          _createNewWeekDocument();
     } else {
       await userDoc.set({
         'currentday': indexday1,
@@ -343,6 +344,7 @@ class _ResultPageState extends State<ResultPage> {
         indexweek = indexweek1;
       });
       print('New document created with day $indexday, Week $indexweek');
+      _createNewWeekDocument();
     }
   }
 
@@ -373,10 +375,10 @@ class _ResultPageState extends State<ResultPage> {
       // Check if the document exists before updating
       DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
       if (docSnapshot.exists) {
-        await  userDoc.update({
+        await  userDoc.set({
         'correctAnswers': correctAnswers,
         'incorrectAnswers': incorrectAnswers,
-      },);
+      },SetOptions(merge: true));
         print('Week document updated with timer data for Day $indexday');
       } else {
         await  userDoc.set({

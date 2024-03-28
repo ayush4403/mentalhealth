@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:MindFulMe/Profile/pro_setting.dart';
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shimmer/shimmer.dart'; // Import shimmer package
+import 'package:shimmer/shimmer.dart';
 
 class ProfileInfoPage extends StatefulWidget {
   const ProfileInfoPage({super.key});
@@ -14,6 +17,18 @@ class ProfileInfoPage extends StatefulWidget {
 }
 
 class _ProfileInfoPageState extends State<ProfileInfoPage> {
+  File? _pickedImage;
+
+  Future<void> _pickImage() async {
+    final pickedImageFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImageFile != null) {
+      setState(() {
+        _pickedImage = File(pickedImageFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,13 +70,23 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
               padding: const EdgeInsets.only(top: 0.0),
               child: Column(
                 children: <Widget>[
-                  Lottie.asset(
-                    'assets/GIF/Profile/profile.json',
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.34,
+                  InkWell(
+                    onTap: _pickImage,
+                    child: _pickedImage != null
+                        ? Image.file(
+                            _pickedImage!,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.34,
+                            fit: BoxFit.cover,
+                          )
+                        : Lottie.asset(
+                            'assets/GIF/Profile/profile.json',
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.34,
+                          ),
                   ),
                   Container(
-                    width: double.infinity, // Make it fill the entire width
+                    width: double.infinity,
                     decoration: BoxDecoration(
                       color: AppColors.bgColor,
                       borderRadius: const BorderRadius.only(
@@ -104,14 +129,15 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                               Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: AppColors.primaryColor.withOpacity(0.2),
+                                  color:
+                                      AppColors.primaryColor.withOpacity(0.2),
                                 ),
                                 padding: const EdgeInsets.all(2),
                                 child: IconButton(
                                   icon: const Icon(Icons.edit_rounded),
                                   iconSize: 30,
                                   color: AppColors.primaryColor,
-                                  onPressed: () {},
+                                  onPressed: _pickImage,
                                 ),
                               ),
                             ],
@@ -204,35 +230,44 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     );
   }
 
-  Widget buildCombinedRoundedBox(String number, String text) => Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.blue,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              number,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+  Widget buildCombinedRoundedBox(String number, String text) {
+    return Builder(
+      builder: (BuildContext context) {
+        double boxWidth = MediaQuery.of(context).size.width * 0.2;
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.all(8),
+          width: boxWidth,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.primaryColor.withOpacity(0.8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                number,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+              const SizedBox(height: 5),
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
-        ),
-      );
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Widget buildAvtarIcon(IconData icon) => CircleAvatar(
         radius: 35,
@@ -319,7 +354,9 @@ class ActivityCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Text(
                     name,
                     style: const TextStyle(

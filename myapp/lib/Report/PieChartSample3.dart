@@ -18,23 +18,143 @@ class PieChartSample3State extends State {
   int touchedIndex = -1;
   int correctAnswers = 0;
   int incorrectAnswers = 0;
+  int indexday=1;
+  int indexweek=1;
+  bool dataFetched=false;
   @override
   void initState() {
+    _fetchdata();
     getPieData();
+    
     super.initState();
   }
   @override
   void dispose(){
   super.dispose();
  }
+  Future<void> _fetchdata() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('mentalmarathondata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      int currentDay = docSnapshot.get('currentday');
+      int currentWeek = docSnapshot.get('currentweek');
+      int currentdaylatest = DateTime.now().day;
+      int lastUpdatedDay = docSnapshot.get('lastupdatedday');
+      if (currentdaylatest - lastUpdatedDay == 0) {
+        setState(() {
+          indexday = currentDay;
+          indexweek = currentWeek;
+        });
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
+      } else {
+        // Calculate the missing days and add them with a value of 0
+        int missingDays = currentdaylatest - lastUpdatedDay;
+        for (int i = 1; i < missingDays; i++) {
+          int missingDayIndex = currentDay + i;
+          await _addMissingDay(user.uid, missingDayIndex, currentWeek);
+        }
+        setState(() {
+          indexday = currentDay + missingDays;
+          if (indexday % 7 == 1) {
+            indexweek = currentWeek + 1;
+          } else {
+            indexweek = currentWeek;
+          }
+        });
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
+      }
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+    } else {
+      setState(() {
+        indexday = 1;
+        indexweek = 1;
+      });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
+      print('Document does not exist');
+    }
+    await getPieData();
+    setState(() {
+      dataFetched = true;
+    });
+  }
+
+  Future<void> _addMissingDay(
+      String userId, int dayIndex, int weekIndex) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    try {
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('mentalmarathon')
+          .doc('week$weekIndex')
+          .collection('day$dayIndex')
+          .doc('data');
+      await userDoc.set({
+        'correctAnswers': 0,
+        'incorrectAnswers': 0,
+      }, SetOptions(merge: true));
+      print('Added missing day $dayIndex for Week $weekIndex with value 0');
+    } catch (e) {
+      print('Error adding missing day: $e');
+    }
+  }
+
+  Future<void> _updateCurrentDayAndWeekIndex(
+      int indexday1, int indexweek1, int currentday) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String weekPath = 'week$indexweek';
+
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('mentalmarathondata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      await userDoc.update({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+          
+    } else {
+      await userDoc.set({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day,
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print('New document created with day $indexday, Week $indexweek');
+      
+    }
+  }
   Future<void> getPieData() async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
       final weekDoc = FirebaseFirestore.instance
-          .collection('Users')
+           .collection('Users')
           .doc(user!.uid)
           .collection('mentalmarathon')
-          .doc('data1');
+          .doc('week$indexweek')
+          .collection('day$indexday')
+          .doc('data');
       final weekSnapshot = await weekDoc.get();
       if (weekSnapshot.exists) {
         final weekData = weekSnapshot.data();

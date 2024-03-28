@@ -49,6 +49,7 @@ class _AudioCardState extends State<AudioCard> {
   late int indexday = 1;
 
   
+  // ignore: unused_field
   final List<int> _sessionData = List.filled(7, 0);
 
   @override

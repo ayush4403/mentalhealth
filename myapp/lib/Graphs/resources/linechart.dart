@@ -1,5 +1,8 @@
 
+
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,178 @@ class LineChartSample2 extends StatefulWidget {
 }
 
 class _LineChartSample2State extends State<LineChartSample2> {
+  int touchedIndex = -1;
+  int correctAnswers = 0;
+  int incorrectAnswers = 0;
+  int indexday = 1;
+  int indexweek = 1;
+  List<double> percentageData = [];
+  bool dataFetched = false;
+  @override
+  void initState() {
+    _fetchdata();
+
+    super.initState();
+    print("list: $percentageData");
+  }
+
+  Future<void> _fetchdata() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('sherlockdata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      int currentDay = docSnapshot.get('currentday');
+      int currentWeek = docSnapshot.get('currentweek');
+      int currentdaylatest = DateTime.now().day;
+      int lastUpdatedDay = docSnapshot.get('lastupdatedday');
+      if (currentdaylatest - lastUpdatedDay == 0) {
+        setState(() {
+          indexday = currentDay;
+          indexweek = currentWeek;
+        });
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
+      } else {
+        // Calculate the missing days and add them with a value of 0
+        int missingDays = currentdaylatest - lastUpdatedDay;
+        for (int i = 1; i < missingDays; i++) {
+          int missingDayIndex = currentDay + i;
+          await _addMissingDay(user.uid, missingDayIndex, currentWeek);
+        }
+        setState(() {
+          indexday = currentDay + missingDays;
+          if (indexday % 7 == 1) {
+            indexweek = currentWeek + 1;
+          } else {
+            indexweek = currentWeek;
+          }
+        });
+        _updateCurrentDayAndWeekIndex(indexday, indexweek, currentdaylatest);
+      }
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+    } else {
+      setState(() {
+        indexday = 1;
+        indexweek = 1;
+      });
+      _updateCurrentDayAndWeekIndex(indexday, indexweek, DateTime.now().day);
+      print('Document does not exist');
+    }
+    await getPieData();
+    setState(() {
+      dataFetched = true;
+    });
+  }
+
+  Future<void> _addMissingDay(
+      String userId, int dayIndex, int weekIndex) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    try {
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .collection('SherlockHolmes')
+          .doc('week$weekIndex')
+          .collection('day$dayIndex')
+          .doc('data');
+      await userDoc.set({
+        'correctAnswers': 0,
+        'incorrectAnswers': 0,
+      }, SetOptions(merge: true));
+      print('Added missing day $dayIndex for Week $weekIndex with value 0');
+    } catch (e) {
+      print('Error adding missing day: $e');
+    }
+  }
+
+  Future<void> _updateCurrentDayAndWeekIndex(
+      int indexday1, int indexweek1, int currentday) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String weekPath = 'week$indexweek';
+
+    final userDoc = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user!.uid)
+        .collection('sherlockdata')
+        .doc('currentweekandday');
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await userDoc.get();
+    if (docSnapshot.exists) {
+      await userDoc.update({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print(
+          'Current day and week index updated to: Day $indexday, Week $indexweek');
+    } else {
+      await userDoc.set({
+        'currentday': indexday1,
+        'currentweek': indexweek1,
+        'dayupdated': currentday,
+        'lastupdatedday': Timestamp.now().toDate().day,
+      });
+      setState(() {
+        indexday = indexday1;
+        indexweek = indexweek1;
+      });
+      print('New document created with day $indexday, Week $indexweek');
+    }
+  }
+Future<void> getPieData() async {
+  try {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    // Initialize a list to hold all the data for each day in a week
+    List<double> allWeekData = [];
+
+    // Loop through each day in the week (assuming you want data for day1 and day2)
+    for (int dayIndex = 1; dayIndex <= 30; dayIndex++) {
+      // Construct the document path for the current day
+      final userDoc = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user!.uid)
+          .collection('SherlockHolmes')
+          .doc('week$indexweek')
+          .collection('day$dayIndex')
+          .doc('data');
+
+      // Get the data for the current day
+      final daySnapshot = await userDoc.get();
+      if (daySnapshot.exists) {
+        final dayData = daySnapshot.data();
+        int totalQuestions = (dayData?['correctAnswers'] ?? 0) +
+            (dayData?['incorrectAnswers'] ?? 0);
+        double percentage = totalQuestions == 0
+            ? 0
+            : (dayData?['correctAnswers'] ?? 0) / totalQuestions * 100;
+
+        // Add the percentage data to the list for this day
+        allWeekData.add(percentage);
+      }
+    }
+
+    // Update the state's percentageData list with all the week's data
+    setState(() {
+      percentageData = allWeekData;
+    });
+
+    // Assuming the percentage data list is available in the state
+    mainData(percentageData);
+  } catch (e) {
+    print('Error fetching data: $e');
+  }
+}
+
+
   List<Color> gradientColors = [
     AppColors.contentColorCyan,
     AppColors.contentColorBlue,
@@ -23,7 +198,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.70,
+          aspectRatio: MediaQuery.of(context).size.width *
+              2.5 /
+              MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.only(
               right: 18,
@@ -31,27 +208,11 @@ class _LineChartSample2State extends State<LineChartSample2> {
               top: 24,
               bottom: 12,
             ),
-            child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width*0.8,
-          height: MediaQuery.of(context).size.height*0.5,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              'avg',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-              ),
-            ),
+             child: dataFetched
+                ? LineChart(
+                    mainData(percentageData),
+                  )
+                : SizedBox(width: 20,height: 20, child: CircularProgressIndicator()),
           ),
         ),
       ],
@@ -59,31 +220,24 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('MAR', style: style);
-        break;
-      case 5:
-        text = const Text('JUN', style: style);
-        break;
-      case 8:
-        text = const Text('SEP', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
-    }
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      child: text,
-    );
+  const style = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+  );
+  Widget text;
+  int intValue = value.toInt();
+  if (intValue >= 1 && intValue < 30) {
+    text = Text('$intValue', style: style);
+  } else {
+    text = const Text('', style: style);
   }
+
+  return SideTitleWidget(
+    axisSide: meta.axisSide,
+    child: text,
+  );
+}
+
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
@@ -92,14 +246,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
     String text;
     switch (value.toInt()) {
-      case 1:
-        text = '10K';
+      case 10:
+        text = '${value.toInt()}';
         break;
-      case 3:
-        text = '30k';
+      case 20:
+        text = '${value.toInt()}';
         break;
-      case 5:
-        text = '50k';
+      case 100:
+        text = '100';
         break;
       default:
         return Container();
@@ -108,13 +262,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return Text(text, style: style, textAlign: TextAlign.left);
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(List<double> percentageData) {
     return LineChartData(
       gridData: FlGridData(
         show: false,
         drawVerticalLine: false,
         horizontalInterval: 1,
-        verticalInterval: 1,
+        verticalInterval: 10, // Adjust vertical interval as per your data range
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: AppColors.mainGridLineColor,
@@ -147,7 +301,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            interval: 1,
+            interval: 10, // Adjust interval as per your data range
             getTitlesWidget: leftTitleWidgets,
             reservedSize: 42,
           ),
@@ -158,20 +312,15 @@ class _LineChartSample2State extends State<LineChartSample2> {
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
-      maxX: 11,
+      maxX: percentageData.length.toDouble() -
+          1, // Set max X based on data length
       minY: 0,
-      maxY: 6,
+      maxY: 100, // Assuming percentage range is from 0 to 100
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-          ],
+          spots: List.generate(percentageData.length, (index) {
+            return FlSpot(index.toDouble(), percentageData[index]);
+          }),
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
