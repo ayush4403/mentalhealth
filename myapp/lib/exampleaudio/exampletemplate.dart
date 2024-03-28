@@ -369,7 +369,7 @@ class _PlayerScreenState extends State<PlayerScreen>
                           color: widget.model.color.shade300,
                           child: Transform.scale(
                             scale: 3,
-                            child: Lottie.asset('assets/lottie/yoga.json'),
+                            child: Lottie.asset('assets/GIF/Music/yoga.json'),
                           ),
                         ),
                       ),

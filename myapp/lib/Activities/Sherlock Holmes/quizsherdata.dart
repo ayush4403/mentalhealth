@@ -7,7 +7,7 @@ class QuizData {
 
 List<QuizData> quizDataList = [
   QuizData(
-    imagePath: 'assets/SherlockHolmes/1.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/1.jpg',
     questions: [
       Question(
         question: 'HOW MANY LAMPS IN THE PICTURE ?',
@@ -37,7 +37,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/2.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/2.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE CLOCK ?',
@@ -67,7 +67,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/3.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/3.jpg',
     questions: [
       Question(
         question: 'HOW MANY PEOPLE ARE IN THE CLASS?',
@@ -97,7 +97,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/4.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/4.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE CHAIR?',
@@ -132,7 +132,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/5.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/5.jpg',
     questions: [
       Question(
         question: 'HOW MANY GIRLS ARE IN THE CLASS EXCEPT TEACHER ?',
@@ -162,7 +162,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/6.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/6.jpg',
     questions: [
       Question(
         question: 'HOW MANY PHOTOFRAME IN THE PICTURE?',
@@ -197,7 +197,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/7.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/7.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE CYCLE?',
@@ -227,7 +227,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/8.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/8.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF SOFA?',
@@ -257,7 +257,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/9.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/9.jpg',
     questions: [
       Question(
         question: 'HOW MANY CUSHION ON THE SOFA?',
@@ -287,7 +287,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/10.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/10.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE GUITAR ?',
@@ -318,7 +318,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/11.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/11.jpg',
     questions: [
       Question(
         question: 'HOW MANY GIRLS ARE SITTING IN THE PICTURE?',
@@ -349,7 +349,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/12.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/12.jpg',
     questions: [
       Question(
         question: 'HOW MANY LAPTOPS ARE ON THE TABLE?',
@@ -379,7 +379,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/13.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/13.jpg',
     questions: [
       Question(
         question:
@@ -410,7 +410,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/14.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/14.jpg',
     questions: [
       Question(
         question: 'HOW MANY STREET LAMP ARE SEEN IN THE PICTURE?',
@@ -419,7 +419,7 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY FAMILY DOING SKETTING ? ', //Wrong Question
-        options: ['NONE', '1','2', '4'],
+        options: ['NONE', '1', '2', '4'],
         correctAnswerIndex: 1,
       ),
       Question(
@@ -440,7 +440,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/15.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/15.jpg',
     questions: [
       Question(
         question: 'HOW MANY STICKY NOTES ARE IN THE NOTICE BOARD?',
@@ -470,7 +470,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/16.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/16.jpg',
     questions: [
       Question(
         question: 'HOW MANY CUSHION SEEN IN THE PICTURE ?',
@@ -494,13 +494,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'THE WOODEN CHAIR IS WHICH SIDE OF THE ROOM?',
-        options: ['RIGHT','LEFT'],
+        options: ['RIGHT', 'LEFT'],
         correctAnswerIndex: 1,
       ),
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/17.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/17.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF TV?',
@@ -541,7 +541,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/18.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/18.jpg',
     questions: [
       Question(
         question: 'HOW MANY WINDOWS ARE SEEN IN THE PICTURE?',
@@ -565,13 +565,13 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'EACH SOFA HAS CUSHION , TRUE OR FALSE',
-        options: ['TRUE','FALSE'],
+        options: ['TRUE', 'FALSE'],
         correctAnswerIndex: 1,
       ),
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/19.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/19.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF BEDSHEET',
@@ -608,7 +608,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/20.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/20.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE CURTAIN?',
@@ -638,7 +638,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/21.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/21.jpg',
     questions: [
       Question(
         question: 'WHO IS STANDING IN THE PICTURE?',
@@ -646,7 +646,8 @@ List<QuizData> quizDataList = [
         correctAnswerIndex: 1,
       ),
       Question(
-        question: 'WHAT IS EXTRA IN PHOTOFRAME OTHER THAN FAMILY?', // wrong question
+        question:
+            'WHAT IS EXTRA IN PHOTOFRAME OTHER THAN FAMILY?', // wrong question
         options: ['3', '1', '2', 'NONE'],
         correctAnswerIndex: 1,
       ),
@@ -657,7 +658,10 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'THE LADY AND HER DAUGHTER HAVE SAME COLOR CLOTHS?',
-        options: ["YES", "NO",],
+        options: [
+          "YES",
+          "NO",
+        ],
         correctAnswerIndex: 0,
       ),
       Question(
@@ -668,7 +672,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/22.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/22.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE CHAIR?',
@@ -677,7 +681,7 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS WRITTEN ON THE BLACK BOARD?',
-        options: [ 'ALPHABETS', 'SUM','NOTHING', 'CHEMISTRY'],
+        options: ['ALPHABETS', 'SUM', 'NOTHING', 'CHEMISTRY'],
         correctAnswerIndex: 2,
       ),
       Question(
@@ -687,18 +691,24 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS COLOR OF THE TEACHERS TABLE?',
-        options: ["GREEN- WHITE", "PINK - WHITE", "BLUE- WHITE", "YELLOW - WHITE"],
+        options: [
+          "GREEN- WHITE",
+          "PINK - WHITE",
+          "BLUE- WHITE",
+          "YELLOW - WHITE"
+        ],
         correctAnswerIndex: 1,
       ),
       Question(
-        question: 'ACCORDING TO YOU, THE DOOR IS LEFT SIDE OF THE ROOM', //wrong question
+        question:
+            'ACCORDING TO YOU, THE DOOR IS LEFT SIDE OF THE ROOM', //wrong question
         options: ['YELLOW', 'PINK', 'BLUE', 'GREEN'],
         correctAnswerIndex: 0,
       ),
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/23.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/23.jpg',
     questions: [
       Question(
         question: 'HOW MANY GIRLS ARE IN THE PICTURE?',
@@ -706,7 +716,8 @@ List<QuizData> quizDataList = [
         correctAnswerIndex: 2,
       ),
       Question(
-        question: 'THE BOY WHO SITTING IN SINGLE CHAIR SOFA WEAR SPECTS   TRUE OR FALSE',
+        question:
+            'THE BOY WHO SITTING IN SINGLE CHAIR SOFA WEAR SPECTS   TRUE OR FALSE',
         options: ['TRUE', 'FALSE'],
         correctAnswerIndex: 0,
       ),
@@ -728,7 +739,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/24.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/24.jpg',
     questions: [
       Question(
         question: 'WHAT IS COLOR OF WALL?',
@@ -747,7 +758,7 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY LAMPS IN THE ROOM?',
-        options: ['1', '2','3','NONE'],
+        options: ['1', '2', '3', 'NONE'],
         correctAnswerIndex: 1,
       ),
       Question(
@@ -758,7 +769,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/25.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/25.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR OF THE TOY CAR?',
@@ -777,22 +788,27 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF LAMP?',
-        options: ["PINK- WHITE", "BLUE- WHITE", "PURPLE- WHITE", "GREEN- WHITE"],
+        options: [
+          "PINK- WHITE",
+          "BLUE- WHITE",
+          "PURPLE- WHITE",
+          "GREEN- WHITE"
+        ],
         correctAnswerIndex: 3,
       ),
       Question(
         question: 'HOW MANY WAGES THE TOY TRAIN HAS?',
-        options: ['2', '3','4','NONE'],
+        options: ['2', '3', '4', 'NONE'],
         correctAnswerIndex: 1,
       ),
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/26.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/26.jpg',
     questions: [
       Question(
         question: 'HOW MANY HOUSES IN THE PICTURE?',
-        options: ['3', '4','5','6'],
+        options: ['3', '4', '5', '6'],
         correctAnswerIndex: 1,
       ),
       Question(
@@ -802,7 +818,7 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'HOW MANY KIDS ARE PLAYING?',
-        options: ['5', '6','7','8'],
+        options: ['5', '6', '7', '8'],
         correctAnswerIndex: 2,
       ),
       Question(
@@ -818,7 +834,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/27.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/27.jpg',
     questions: [
       Question(
         question: 'WHO IS ON THE BED?',
@@ -842,13 +858,18 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS THE COLOR OF THE CLOCK?',
-        options: ['YELLOW- WHITE', 'YELLOW - RED', 'WHITE -RED', 'WHITE - PINK'],
+        options: [
+          'YELLOW- WHITE',
+          'YELLOW - RED',
+          'WHITE -RED',
+          'WHITE - PINK'
+        ],
         correctAnswerIndex: 0,
       ),
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/28.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/28.jpg',
     questions: [
       Question(
         question: 'HOW MANY BED ARE IN THE ROOM',
@@ -878,7 +899,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/29.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/29.jpg',
     questions: [
       Question(
         question: 'WHAT KIDS ARE DOING?',
@@ -887,7 +908,7 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'IT’S A MORNING TIME OR NIGHT TIME?',
-        options: [ 'MORNING', 'NIGHT'],
+        options: ['MORNING', 'NIGHT'],
         correctAnswerIndex: 1,
       ),
       Question(
@@ -908,7 +929,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/30.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/30.jpg',
     questions: [
       Question(
         question: 'HOW MANY PILLOW ON THE BED?',
@@ -917,7 +938,12 @@ List<QuizData> quizDataList = [
       ),
       Question(
         question: 'WHAT IS A BOY DOING?',
-        options: ['READING BOOK', 'PLAYING WITH TOYS', 'PLAYING WITH  PHONE', 'PLAYING WITH BALL'],
+        options: [
+          'READING BOOK',
+          'PLAYING WITH TOYS',
+          'PLAYING WITH  PHONE',
+          'PLAYING WITH BALL'
+        ],
         correctAnswerIndex: 3,
       ),
       Question(
@@ -938,7 +964,7 @@ List<QuizData> quizDataList = [
     ],
   ),
   QuizData(
-    imagePath: 'assets/SherlockHolmes/31.jpg',
+    imagePath: 'assets/Images/SherlockHolmes/31.jpg',
     questions: [
       Question(
         question: 'WHAT IS THE COLOR O THE LAMP?',

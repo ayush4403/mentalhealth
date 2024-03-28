@@ -86,7 +86,7 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                               : const DecorationImage(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                    'assets/Images/profile_temp.jpg',
+                                    'assets/Images/Profile/profile_temp.jpg',
                                   ),
                                 ),
                         ),

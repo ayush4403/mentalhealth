@@ -3,7 +3,6 @@ import 'package:MindFulMe/Activities/Morning_Meditation/morningmeds.dart';
 import 'package:MindFulMe/Home/recommendation_model.dart';
 import 'package:flutter/material.dart';
 
-
 class Balls extends StatefulWidget {
   const Balls({
     super.key,
@@ -132,7 +131,7 @@ class _BallsState extends State<Balls> {
                             shape: BoxShape.circle,
                           ),
                           child: Image.asset(
-                            'assets/icons/play.png',
+                            'assets/Icons/Home/play.png',
                             height: 30,
                             width: 30,
                             color: Colors.white,

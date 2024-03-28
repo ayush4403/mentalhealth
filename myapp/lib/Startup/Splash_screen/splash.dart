@@ -80,8 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(
-          255, 0, 111, 186), // Set your desired background color here
+      backgroundColor: const Color.fromARGB(255, 0, 111, 186),
       body: Center(
         child: AnimatedBuilder(
           animation: _animationController,
@@ -96,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen>
                     Hero(
                       tag: 'logo',
                       child: SvgPicture.asset(
-                        'assets/SVGS/Splash/newlogo.svg',
+                        'assets/Logo/newlogo.svg',
                         width: 150,
                         height: 150,
                       ),
