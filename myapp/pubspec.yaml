@@ -119,6 +119,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/lottie/
+
     #Gratitude
     - assets/Images/Gratitude/scratch.png
 
@@ -156,6 +157,7 @@ flutter:
 
     #Audio file
     - assets/audio/
+    - assets/Images/profile_temp.jpg
 
     #CardView stuff
     - assets/GIF/Card_view/1_morning_meditation.json

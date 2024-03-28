@@ -144,38 +144,46 @@ Future<void> getPieData() async {
   try {
     final User? user = FirebaseAuth.instance.currentUser;
 
-    // Initialize a list to hold all the data for each day in a week
+    if (user == null) return;
+
+    // Initialize a list to hold all the data for each day in all weeks
     List<double> allWeekData = [];
 
-    // Loop through each day in the week (assuming you want data for day1 and day2)
-    for (int dayIndex = 1; dayIndex <= 30; dayIndex++) {
-      // Construct the document path for the current day
-      final userDoc = FirebaseFirestore.instance
-          .collection('Users')
-          .doc(user!.uid)
-          .collection('SherlockHolmes')
-          .doc('week$indexweek')
-          .collection('day$dayIndex')
-          .doc('data');
+    // Loop through each week (assuming 4 weeks)
+    for (int weekIndex = 1; weekIndex <= indexweek; weekIndex++) {
+      int startDayIndex = (weekIndex - 1) * 7 + 1; // Calculate the starting day index for each week
 
-      // Get the data for the current day
-      final daySnapshot = await userDoc.get();
-      if (daySnapshot.exists) {
-        final dayData = daySnapshot.data();
-        int totalQuestions = (dayData?['correctAnswers'] ?? 0) +
-            (dayData?['incorrectAnswers'] ?? 0);
-        double percentage = totalQuestions == 0
-            ? 0
-            : (dayData?['correctAnswers'] ?? 0) / totalQuestions * 100;
+      // Loop through each day in the week (assuming each week has 7 days)
+      for (int dayIndex = startDayIndex; dayIndex < startDayIndex + 7; dayIndex++) {
+        // Construct the document path for the current day
+        final userDoc = FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .collection('SherlockHolmes')
+            .doc('week$weekIndex')
+            .collection('day$dayIndex')
+            .doc('data');
 
-        // Add the percentage data to the list for this day
-        allWeekData.add(percentage);
+        // Get the data for the current day
+        final daySnapshot = await userDoc.get();
+        if (daySnapshot.exists) {
+          final dayData = daySnapshot.data();
+          int totalQuestions =
+              (dayData?['correctAnswers'] ?? 0) + (dayData?['incorrectAnswers'] ?? 0);
+          double percentage = totalQuestions == 0
+              ? 0
+              : (dayData?['correctAnswers'] ?? 0) / totalQuestions * 100;
+
+          // Add the percentage data to the list for this day
+          allWeekData.add(percentage);
+        }
       }
     }
 
-    // Update the state's percentageData list with all the week's data
+    // Update the state's percentageData list with all the data for all weeks
     setState(() {
       percentageData = allWeekData;
+      dataFetched = true;
     });
 
     // Assuming the percentage data list is available in the state
@@ -184,6 +192,7 @@ Future<void> getPieData() async {
     print('Error fetching data: $e');
   }
 }
+
 
 
   List<Color> gradientColors = [

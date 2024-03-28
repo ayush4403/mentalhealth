@@ -1,5 +1,5 @@
 import 'package:MindFulMe/Graphs/resources/app_resources.dart';
-import 'package:MindFulMe/Profile/PersonelInfo.dart';
+import 'package:MindFulMe/Profile/Settings/Personel_Info.dart';
 import 'package:MindFulMe/Profile/pro_info.dart';
 import 'package:MindFulMe/Startup/Registration/signin.dart';
 import 'package:flutter/material.dart';
@@ -205,7 +205,7 @@ class _ProSettingState extends State<ProSetting> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), 
           ),
         ],
       ),
@@ -213,7 +213,7 @@ class _ProSettingState extends State<ProSetting> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
         leading: Icon(
           icon,
-          color: Colors.primaries.last, // Icon color changed to black
+          color: Colors.primaries.last, 
         ),
         title: Text(
           title,

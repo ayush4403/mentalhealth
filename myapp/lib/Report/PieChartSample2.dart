@@ -22,7 +22,7 @@ class PieChartSample2State extends State<PieChartSample2> {
   @override
   void initState() {
     _fetchdata();
-    getPieData();
+    //getPieData();
     super.initState();
   }
  Future<void> _fetchdata() async {
@@ -45,6 +45,7 @@ class PieChartSample2State extends State<PieChartSample2> {
         });
         _updateCurrentDayAndWeekIndex(
             indexday, indexweek, currentdaylatest);
+            getPieData();
       } else {
         // Calculate the missing days and add them with a value of 0
         int missingDays = currentdaylatest - lastUpdatedDay;
@@ -62,6 +63,7 @@ class PieChartSample2State extends State<PieChartSample2> {
         });
         _updateCurrentDayAndWeekIndex(
             indexday, indexweek, currentdaylatest);
+            getPieData();
       }
       print(
           'Current day and week index updated to: Day $indexday, Week $indexweek');
