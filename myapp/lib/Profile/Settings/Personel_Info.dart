@@ -1,6 +1,9 @@
 // ignore_for_file: file_names
+import 'dart:io';
+
 import 'package:MindFulMe/reusable_widgets/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PersonalInformationPage extends StatefulWidget {
@@ -14,6 +17,19 @@ class PersonalInformationPage extends StatefulWidget {
 
 class _PersonalInformationPageState extends State<PersonalInformationPage> {
   bool showPassword = false;
+  File? _image;
+
+  final picker = ImagePicker();
+
+  Future<void> getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,27 +78,35 @@ class _PersonalInformationPageState extends State<PersonalInformationPage> {
                           ],
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(20),
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(
-                              'assets/Images/profile_temp.jpg',
-                            ),
-                          ),
+                          image: _image != null
+                              ? DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(_image!),
+                                )
+                              : const DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(
+                                    'assets/Images/profile_temp.jpg',
+                                  ),
+                                ),
                         ),
                       ),
                       Positioned(
                         bottom: MediaQuery.of(context).size.height * 0.01,
                         right: MediaQuery.of(context).size.width * 0.02,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
-                          ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
+                        child: GestureDetector(
+                          onTap: getImage,
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primaryColor,
+                            ),
+                            child: const Icon(
+                              Icons.add_photo_alternate,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
