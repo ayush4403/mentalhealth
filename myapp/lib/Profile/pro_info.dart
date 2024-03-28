@@ -105,7 +105,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Manan Goradiya',
+                                    'CerboTech Pvt. Ltd.',
                                     style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -119,6 +119,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                                     'Gujarat, India',
                                     style: TextStyle(
                                       fontSize: 14,
+                                      fontWeight: FontWeight.bold,
                                       color: AppColors.primaryColor,
                                     ),
                                   ),
@@ -159,9 +160,10 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              buildCombinedRoundedBox('15', 'Streak'),
-                              buildCombinedRoundedBox('100', 'Points'),
-                              buildCombinedRoundedBox('21', 'Age'),
+                              buildCombinedRoundedBox(
+                                ['15', '100', '21'],
+                                ['Streak', 'Points', 'Age'],
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -229,39 +231,58 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     );
   }
 
-  Widget buildCombinedRoundedBox(String number, String text) {
+  Widget buildCombinedRoundedBox(List<String> numbers, List<String> labels) {
     return Builder(
       builder: (BuildContext context) {
-        double boxWidth = MediaQuery.of(context).size.width * 0.2;
+        double boxWidth = MediaQuery.of(context).size.width * 0.9;
 
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.all(8),
           width: boxWidth,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: AppColors.primaryColor.withOpacity(0.8),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                number,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (var i = 0; i < numbers.length; i++) ...[
+                      Text(
+                        numbers[i],
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (i < numbers.length - 1) const SizedBox(width: 20),
+                    ],
+                  ],
                 ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (var i = 0; i < labels.length; i++) ...[
+                      Text(
+                        labels[i],
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (i < labels.length - 1) const SizedBox(width: 20),
+                    ],
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

@@ -1,4 +1,4 @@
-import 'package:MindFulMe/Startup/home.dart';
+import 'package:MindFulMe/Startup/Registration/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -98,13 +98,16 @@ class OnboardingScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const HomePage(),
+                                builder: (_) => const SignInScreen(),
                               ),
                             );
                           },
                           child: const Text(
                             'Skip Now',
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                         ),
                         GestureDetector(
@@ -135,7 +138,7 @@ class OnboardingScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const HomePage(),
+                              builder: (_) => const SignInScreen(),
                             ),
                           );
                         },
